@@ -207,7 +207,7 @@ function comment_write($blogid, $name, $email, $url, $body, $date) {
   fwrite($fd, $body);
   fclose($fd);
 
-  $msg = "On " . date($date) . ", " . $name . "said:<br />";
+  $msg =  $name . " said:<br />";
   $msg .= $body;
   notify_to_admin("new comment", $blogid, $msg);
 }
