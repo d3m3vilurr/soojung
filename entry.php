@@ -47,11 +47,11 @@ if (!$template->is_cached('entry.tpl', $blogid)) {
   $template->assign('entry', $entry);
   $template->assign('trackbacks', $entry->getTrackbacks());
   $template->assign('comments', $entry->getComments());
+}
 
-  foreach (array('w_id','w_name','w_email','w_url') as $key) {
-    if (isset($HTTP_COOKIE_VARS[$key])) {
-      $template->assign("$key", $HTTP_COOKIE_VARS[$key]);
-    }
+foreach (array('w_id','w_name','w_email','w_url') as $key) {
+  if (isset($HTTP_COOKIE_VARS[$key])) {
+    $template->assign("$key", $HTTP_COOKIE_VARS[$key]);
   }
 }
 
