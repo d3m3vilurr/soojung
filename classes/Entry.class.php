@@ -75,7 +75,7 @@ class Entry {
     // body convert to html
     if ($toHtml == true) {
       if ($this->format == "plain") {
-	$body = pre_nl2br($body);
+	$body = Formatter::plainToHtml($body);
       } else if ($this->format == "html") {
 	//do nothing :)
       }

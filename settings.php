@@ -9,6 +9,7 @@ if (file_exists("config.php")) {
 
 include_once("libs/util.php");
 
+include_once("classes/Formatter.class.php");
 include_once("classes/Entry.class.php");
 include_once("classes/Soojung.class.php");
 include_once("classes/Comment.class.php");
