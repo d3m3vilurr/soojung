@@ -445,5 +445,82 @@ class Import {
 
 }
 
+function importMoniWiki($wikiPath, $encoding) {
+  if (strcasecmp($encoding, 'UTF-8') == 0 || strcasecmp($encoding, 'UTF8') == 0) {
+    $needtoconvert = FALSE;
+  } else {
+    $needtoconvert = TRUE;
+  }
+
+  $cachePath = $wikiPath."/data/cache/blog/";
+  $textPath = $wikiPath."/data/text/";
+  $blogs=array();
+  $entries=array();
+  $dir_handle = opendir($cachePath);
+
+  if (!$dir_handle) {
+    //error handling
+    exit;
+  }
+
+  while ($fileName = readdir($dir_handle)) {
+    if (!is_dir($fileName)) {
+      $blogs[] = $fileName;
+    }
+  }
+
+  foreach ($blogs as $blog) {
+    $blogPath = $textPath.$blog;
+    $fp = fopen($blogPath, "r");
+    if ($fp) {
+      $size = filesize($blogPath);
+      $raw = fread($fp,$size);
+      fclose($fp);
+    }
+
+    $lines = explode("\n", $raw);
+
+    foreach ($lines as $line) {
+      if (!$state) {
+	if (preg_match("/^({{{)?#!blog\s([^ ]+\s($date"."[^ ]+)\s.*)$/",$line,$match)) {
+	  $entry = explode(' ',$pageurl.' '.$match[2], 4);
+	  if ($match[1]) $endtag = '}}}';
+	  $state = 1;
+	}
+	continue;
+      }
+      if (preg_match("/^$endtag$/",$line)) {
+	$state = 0;
+	list($content,$comments) = explode("----\n", $summary, 2);
+	$entry[] = $content;
+	$entries[] = $entry;
+	$summary='';
+	continue;
+      }
+      $summary.=$line."\n";
+    }
+  }
+
+  foreach ($entries as $entry) {
+    $date = $entry[2];
+    $title = $entry[3];
+    $body = $entry[4];
+    $body = preg_replace("\\}}}", "}}}", $body);
+    $date = strtotime(str_replace("T", " ", $date));
+    $category = "moniwiki";
+
+    if ($needtoconvert) {
+      $t_title = iconv($encoding, "UTF-8", $title);
+      echo "en : ".$t_title."<br>";
+      $body = iconv($encoding, "UTF-8", $body);
+      $category = iconv($encoding, "UTF-8", $category);
+    }
+    $title = trim($title);
+    $body = trim($body);
+    $date = trim($date);
+    Entry::createEntry($title, $body, $date, $category, $options, "moniwiki");
+  }
+}
+
 # vim: ts=8 sw=2 sts=2 noet
 ?>
