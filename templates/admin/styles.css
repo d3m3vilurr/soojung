@@ -176,3 +176,15 @@ h2
   display:none;
 }
 
+table
+{
+    margin: 5px 0px 5px 0px;
+    padding: 0px;
+    background: #7cb4fb;
+}
+table td
+{
+    margin: 0px;
+    padding: 2px;
+    background: white;
+}
