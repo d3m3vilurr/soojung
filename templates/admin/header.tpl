@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/admin/styles.css"/>
 <script type="text/javascript" src="{$baseurl}/templates/admin/javascript.js"></script>
 <script type="text/javascript" src="{$baseurl}/libs/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 <title>Admin</title>
 </head>
 <body>

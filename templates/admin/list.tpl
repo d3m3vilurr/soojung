@@ -15,34 +15,65 @@
 {/if}
 </p>
 
-<span class="subject"><b>Subject</b></span>
-<span class="trackback_ping"><b>Trackback</b></span>
-<span class="delete"><b>Delete</b></span>
+<table class="entries">
+    <tr>
+        <td class="subject"><b>Subject</b></td>
+        <td class="comments"><b>Comment</b></td>
+        <td class="trackbacks"><b>Trackback</b></td>
+        <td class="trackback_ping"><b>Ping</b></td>
+        <td class="delete"><b>Delete</b></td>
+    </tr>
+    
+    {foreach from=$entries item=entry}
+    <tr class="entry">
+        <td><div class="subject"><a href="{$baseurl}/post.php?blogid={$entry->entryId}">{$entry->title}</a></div></td>
+        <td class="comments">
+            {if $entry->isSetOption("NO_COMMENT") == false && $entry->getCommentCount() != 0}
+            <a href="#none" onclick="return fold_sidebar('CO_{$entry->entryId}');">({$entry->getCommentCount()})</a>
+            {else}
+            (0)
+            {/if}
+        </td>
+        <td class="trackbacks">
+            {if $entry->isSetOption("NO_TRACKBACK") == false && $entry->getTrackbackCount() != 0}
+            <a href="#none" onclick="return fold_sidebar('TB_{$entry->entryId}');">({$entry->getTrackbackCount()})</a>
+            {else}
+            (0)
+            {/if}
+        </td>
+        <td class="trackback_ping"><a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">Ping</a></td>
+        <td class="delete"><a href="{$baseurl}/admin.php?mode=delete_entry&amp;blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a></td>
+    </tr>
+    
+    {if $entry->isSetOption("NO_COMMENT") == false && $entry->getCommentCount() != 0}
+    <tr><td colspan="5" id="CO_{$entry->entryId}" class="div_hide">
+        {foreach from=$entry->getComments() item=comment}
+        <table class="comment"><tr>
+            <td><div class="subject">{$comment->getBody()|strip_tags|substring:70}</div></td>
+            <td class="comments">&nbsp;</td>
+            <td class="trackbacks">&nbsp;</td>
+    	    <td class="trackback_ping">&nbsp;</td>
+        	<td class="delete"><a href="{$baseurl}/admin.php?mode=delete&amp;file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a></td>
+        </tr></table>
+        {/foreach}
+    </td></tr>
+    {/if}
 
-{foreach from=$entries item=entry}
-<div class="entry">
-	<span class="subject"><a href="{$baseurl}/post.php?blogid={$entry->entryId}">{$entry->title}</a></span>
-	<span class="trackback_ping"><a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">Ping</a></span>
-	<span class="delete"><a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a></span>
-</div>
-
-	{foreach from=$entry->getComments() item=comment}
-	<div class="comment">
-		<span class="subject">{$comment->getBody()|strip_tags|substring:70}</span>
-		<span class="trackback_ping">&nbsp;</span>
-		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a></span>
-	</div>
-	{/foreach}
-
-	{foreach from=$entry->getTrackbacks() item=trackback}
-	<div class="trackback">
-		<span class="subject">{$trackback->url|strip_tags|substring:70}</span>
-		<span class="trackback_ping">&nbsp;</span>
-		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a></span>
-	</div>
-	{/foreach}
-
-{/foreach}
+    {if $entry->isSetOption("NO_TRACKBACK") == false && $entry->getTrackbackCount() != 0}
+    <tr><td colspan="5" id="TB_{$entry->entryId}" class="div_hide">
+        {foreach from=$entry->getTrackbacks() item=trackback}
+        <table class="trackback"><tr>
+            <td><div class="subject">{$trackback->getExcerpt()|strip_tags|substring:70}</div></td>
+            <td class="comments">&nbsp;</td>
+            <td class="trackbacks">&nbsp;</td>
+    	    <td class="trackback_ping">&nbsp;</td>
+            <td class="delete"><a href="{$baseurl}/admin.php?mode=delete&amp;file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a></td>
+        </tr></table>
+        {/foreach}
+    </td></tr>
+    {/if}
+    {/foreach}
+</table>
 
 </div>
 

@@ -99,41 +99,46 @@ tr .row:hover a
 }
 
 /* list */
-.entry
+#list table
 {
-  padding-top: 25px;
+  border-spacing: 0;
+  border-collapse: collapse;  
+  text-align: center;
 }
 
-.comment, .trackback
-{ 
-  padding-top: 20px;
+.entries
+{
+  margin-left: 10px;
 }
 
 .subject
 {
   white-space:nowrap;
   overflow:hidden;
-  position:absolute;
-  left: 200px;
   width: 400px;
+  text-align: left;         
+}
+
+.comments,  .trackbacks
+{
+  font-size: 12px;
+  width: 65px;
 }
 
 .comment .subject, .trackback .subject
 { 
-  left: 220px;
+  margin-left: 20px;
   width: 380px;
 }
 
 .trackback_ping
 {
-  position:absolute;
-  left: 610px;
+  width: 40px;
 }
 
 .delete
 {
-  position:absolute;
-  left: 700px;
+  width: 52px;
 }
 
 .navbar
@@ -142,7 +147,7 @@ tr .row:hover a
   padding: 5px 10px 20px 10px;
 }
 
-.hide
+.div_hide, .hide
 {
   display:none;
 }
