@@ -57,7 +57,7 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   echo Export::export();
   flush();
   exit();
-} else if (strpos($_POST["mode"], "import") == 0) { // import
+} else if (strpos($_POST["mode"], "import") === 0) { // import
   if ($_POST["mode"] == "import") {
     if (isset($_FILES['file']['name'])) {
       Import::importSoojung($_FILES['file'], $_POST["version"]);
