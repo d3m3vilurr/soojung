@@ -36,7 +36,7 @@ function query_filename_match($query, $dir="contents/") {
 
 function create_new_id() {
   $f = fopen("contents/.info", "r");
-  $i = fread($f, filesize("contents/.info"));
+  $i = trim(fread($f, filesize("contents/.info")));
   fclose($f);
   $f = fopen("contents/.info", "w");
   fwrite($f, $i + 1);
