@@ -1,11 +1,7 @@
 <?php
 @include_once("config.php");
 
-define('SMARTY_DIR', 'libs/smarty/');
-require(SMARTY_DIR . 'Smarty.class.php');
-
 setcookie("soojungcountercookie", "on", 0);
-
 
 if (get_magic_quotes_gpc()) {
   function stripslashes_deep($value) {
@@ -237,7 +233,7 @@ function cmp_filename($a, $b) {
   return ($filename1 < $filename2) ? 1 : -1;
 }
 
-function get_recent_comments() {
+function get_recent_comments($n) {
   $comment_filenames = array();
   $dirs = query_filename_match("^[0-9]+$", "contents/");
   foreach ($dirs as $dir) {
@@ -248,7 +244,7 @@ function get_recent_comments() {
   }
   usort($comment_filenames, "cmp_filename");
 
-  $comment_filenames = array_slice($comment_filenames, 0, 10);
+  $comment_filenames = array_slice($comment_filenames, 0, $n);
   $comments = array();
   foreach ($comment_filenames as $f) {
     $comments[] = comment_open($f);
@@ -311,7 +307,7 @@ function get_trackback_count($blogid) {
   return count($r);
 }
 
-function get_recent_trackbacks() {
+function get_recent_trackbacks($n) {
   $filenames = array();
   $dirs = query_filename_match("^[0-9]+$", "contents/");
   foreach ($dirs as $dir) {
@@ -321,7 +317,7 @@ function get_recent_trackbacks() {
     }
   }
   usort($filenames, "cmp_filename");
-  $filenames = array_slice($filenames, 0, 10);
+  $filenames = array_slice($filenames, 0, $n);
   $trackbacks = array();
   foreach ($filenames as $f) {
     $trackbacks[] = trackback_open($f);
@@ -536,6 +532,37 @@ function get_count() {
     fwrite($fp, $total_count);
     fwrite($fp, "\n");
     fclose($fp);
+  }
+}
+
+function add_referer() {
+  if (isset($_SERVER['HTTP_REFERER'])) {
+    global $blog_baseurl;
+    $referer = $_SERVER['HTTP_REFERER'];
+
+    if(strstr($referer, $blog_baseurl) != FALSE) { //local
+      return;
+    }
+
+    if ($fp = @fopen("contents/.referer", "r")) {
+      $data = fread($fp, filesize("contents/.referer"));
+      fclose($fp);
+      $data = $data . "\r\n" . $referer;
+    } else {
+      $data = $referer;
+    }
+
+    //TODO: 최근 10개만 저장하기
+    $fp = fopen("contents/.referer", "w");
+    fwrite($fp, $data);
+    fclose($fp);
+  }
+}
+
+function get_recent_referers($n) {
+  if ($fp = @fopen("contents/.referer", "r")) {
+    $data = fread($fp, filesize("contents/.referer"));
+    return split("\r\n", $data, $n);
   }
 }
 

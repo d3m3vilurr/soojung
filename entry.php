@@ -1,5 +1,6 @@
 <?php
 include_once("soojung.php");
+include("Template.class.php");
 
 if (isset($_POST["blogid"])) {
   $blogid = $_POST["blogid"];
@@ -37,35 +38,17 @@ if (isset($_POST["blogid"])) {
 ?>
 
 <?php
-$smarty = new Smarty;
-$smarty->template_dir = "templates/" . $blog_skin . "/";
-$smarty->compile_dir = "templates/.compile/";
-$smarty->config_dir = "templates/.configs/";
-$smarty->cache_dir = "templates/.cache/";
+$template = new Template;
 
-$smarty->assign('title', $blog_name);
-$smarty->assign('baseurl', $blog_baseurl);
-
-$smarty->assign('entry', $entry);
-$smarty->assign('trackbacks', get_trackbacks($entry['id']));
-$smarty->assign('comments', get_comments($entry['id']));
-
-$smarty->assign('categories', get_category_list());
-$smarty->assign('archvies', get_archive_list());
-$smarty->assign('recent_entries', get_recent_entries(10));
-$smarty->assign('recent_comments', get_recent_comments());
-$smarty->assign('recent_trackbacks', get_recent_trackbacks());
-
-get_count();
-
-$smarty->assign('today_count', $today_count);
-$smarty->assign('total_count', $total_count);
+$template->assign('entry', $entry);
+$template->assign('trackbacks', get_trackbacks($entry['id']));
+$template->assign('comments', get_comments($entry['id']));
 
 foreach (array('w_id','w_name','w_email','w_url') as $key) {
   if (isset($HTTP_COOKIE_VARS[$key])) {
-    $smarty->assign("$key", $HTTP_COOKIE_VARS[$key]);
+    $template->assign("$key", $HTTP_COOKIE_VARS[$key]);
   }
 }
 
-$smarty->display('entry.tpl');
+$template->display('entry.tpl');
 ?>
