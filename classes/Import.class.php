@@ -12,12 +12,20 @@ class Import {
 
     while (($pos_s = strpos($data, "<file>", $pos_e)) !== FALSE) {
       $pos_e = strpos($data, "</file>", $pos_s) + strlen("</file>");
+      $file = substr($data, $pos_s, $pos_e - $pos_s);
+
+      if ($version == "0.3.2") {
+	Import::createFileFromVer032($file);
+      } else if ($version == "0.4") {
+	Import::createFile($file);
+      }
+      /*
       if ($version == "0.2") {
         Import::createFileFromVer02(substr($data, $pos_s, $pos_e - $pos_s));
-      } else { //0.3+
-        Import::createFile(substr($data, $pos_s, $pos_e - $pos_s));
       }
+      */
     }
+    exit;
   }
 
   /**
@@ -294,6 +302,27 @@ class Import {
     fclose($fd);
   }
 
+  function createFileFromVer032($xml) {
+    $name = Import::getNameFromXml($xml);
+    if (strpos($name, ".entry") != false) {
+      $info = explode("_", $name);
+      $dot = strpos($info[1], ".");
+      $id = substr($info[1], 0, $dot);
+
+      $data = explode("\r\n", Import::trans(Import::getDataFromXml($xml)), 6);
+      $date = trim(strstr($data[0], ' '));
+      $title = trim(strstr($data[1], ' '));
+      $category = trim(strstr($data[2], ' '));
+      $options = explode("|", trim(strstr($data[3], ' ')));
+      $format = "html";
+      $body = $data[5];
+      Entry::editEntry($id, $title, $body, $date, $category, $options, $format);
+    } else {
+      Import::createFile($xml);
+    }
+  }
+
+  /**
   function createFileFromVer02($xml) {
     $name = Import::getNameFromXml($xml);
     if (strpos($name, ".entry") != false) { // entry file
@@ -332,6 +361,7 @@ class Import {
       Import::createFile($xml);
     }
   }
+  **/
 
   function getNameFromXml($xml) {
     $name_pos = strpos($xml, "<name>") + strlen("<name>");
