@@ -4,27 +4,41 @@ class Archive {
   var $year;
   var $month;
 
-  function Archive($year, $month) {
+  function Archive($year, $month, $day = 0) {
     $this->year = intval($year);
     $this->month = intval($month);
+    $this->day = intval($day);
   }
 
   function getDate() {
-    return mktime(0, 0, 0, $this->month, 1, $this->year);
+    return mktime(0, 0, 0, $this->month, $this->day ? $this->day : 1, $this->year);
   }
 
   function getHref() {
     global $blog_baseurl, $blog_fancyurl;
 
-    if ($blog_fancyurl) {
-      return sprintf('%s/%04d/%02d', $blog_baseurl, $this->year, $this->month);
+    if ($this->day) {
+      if ($blog_fancyurl) {
+	return sprintf('%s/%04d/%02d/%02d', $blog_baseurl, $this->year, $this->month, $this->day);
+      } else {
+	return sprintf('%s/index.php?archive=%04d%02d%02d', $blog_baseurl, $this->year, $this->month, $this->day);
+      }
     } else {
-      return sprintf('%s/index.php?archive=%04d%02d', $blog_baseurl, $this->year, $this->month);
+      if ($blog_fancyurl) {
+	return sprintf('%s/%04d/%02d', $blog_baseurl, $this->year, $this->month);
+      } else {
+	return sprintf('%s/index.php?archive=%04d%02d', $blog_baseurl, $this->year, $this->month);
+      }
     }
   }
 
   function getEntries() {
-    $filenames = Soojung::queryFilenameMatch(sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month));
+    if ($this->day) {
+      $pattern = sprintf("^%04d%02d%02d[^.]+[.]entry$", $this->year, $this->month, $this->day);
+    } else {
+      $pattern = sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month);
+    }
+    $filenames = Soojung::queryFilenameMatch($pattern);
     rsort($filenames);
     $entries = array();
     foreach($filenames as $filename) {
@@ -33,13 +47,23 @@ class Archive {
     return $entries;
   }
 
+  function getEntryCount() {
+    if ($this->day) {
+      $pattern = sprintf("^%04d%02d%02d[^.]+[.]entry$", $this->year, $this->month, $this->day);
+    } else {
+      $pattern = sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month);
+    }
+    return Soojung::queryNumFilenameMatch($pattern);
+  }
+
   /**
    * static method
    */
   function getArchive($name) {
-    $year = substr($name, 0, 4);
-    $month = substr($name, 4, 2);
-    return new Archive($year, $month);
+    $year = intval(substr($name, 0, 4));
+    $month = intval(substr($name, 4, 2));
+    $day = intval(substr($name, 6, 2));
+    return new Archive($year, $month, $day);
   }
 
   /**

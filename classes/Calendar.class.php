@@ -62,15 +62,17 @@ class Calendar {
       }
       if ($day < 1) {
         $cal .= "<td></td>";
-      } elseif($entries[$day]) {
+      } elseif ($entries[$day]) {
         $nentries = count($entries[$day]);
-        if($nentries > 1) {
+        if ($nentries > 1) {
           $title = "$nentries entries posted on this day";
+          $archive = new Archive($year, $month, $day);
+          $cal .= "<td><a href=\"".$archive->getHref()."\" title=\"$title\">$day</a></td>";
         } else {
           $title = "$nentries entry posted on this day";
+          $entry = new Entry($entries[$day][0]);
+          $cal .= "<td><a href=\"".$entry->getHref()."\" title=\"$title\">$day</a></td>";
         }
-        $entry = new Entry($entries[$day][0]);
-        $cal .= "<td><a href=\"".$entry->getHref()."\" title=\"$title\">$day</a></td>";
       } else {
         $cal .= "<td>$day</td>";
       }
