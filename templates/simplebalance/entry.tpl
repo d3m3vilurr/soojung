@@ -14,7 +14,7 @@
 <div id="trackbacks">
 	<p class="trackback_url"><b>TrackBack URL:</b> {$baseurl}/trackback.php?blogid={$entry->entryId}</p>
 {foreach from=$trackbacks item=trackback}
-	<div class="trackback" id="{$trackback->date}">
+	<div class="trackback" id="TB{$trackback->date}">
 		<h3>
 			<a href="{$trackback->url|escape}" class="box_title">Trackback: {$trackback->url|escape}</a> <span class="hide">| trackbacked on</span>
 			<span class="box_header">{$trackback->date|date_format:"%Y/%m/%d %p %I:%M"}</span>
@@ -30,7 +30,7 @@
 {if $entry->isSetOption("NO_COMMENT") == false}
 <div id="comments">
 {foreach from=$comments item=comment}
-	<div class="comment" id="{$comment->date}">
+	<div class="comment" id="CO{$comment->date}">
 		<h3>
 		{if $comment->homepage != ""}
 			<span class="box_title">Comment by <a href="{$comment->homepage|escape}">{$comment->name|escape}</a></span>

@@ -12,7 +12,7 @@
 <a name="trackback"></a>
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
-	<a name="{$trackback->date}"></a>
+	<a name="TB{$trackback->date}"></a>
 	<a href="{$trackback->url|escape}">{$trackback->url|escape}</a><br />
 	{$trackback->title|escape}<br />
 	{$trackback->getExcerpt()|strip_tags|escape}

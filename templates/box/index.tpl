@@ -19,7 +19,7 @@
 					&nbsp;Track this back : <span class="trackbackurl" onclick="copy_clip(this.innerHTML);">{$baseurl}/trackback.php?blogid={$entry->entryId}</span>
 				</div>
 				{foreach from=$entry->getTrackbacks() item=trackback}
-				<div id="{$trackback->date}" class="blue8" style="width: 100%; margin: 5px 5px 0 0; color: #999999;">
+				<div id="TB{$trackback->date}" class="blue8" style="width: 100%; margin: 5px 5px 0 0; color: #999999;">
 					<img src="{$baseurl}/templates/{$skin}/imgs/comment.gif" alt="" /> Tracked from <a href="{$trackback->url|escape}" {if #targetBlank# == 1}onclick="seturltarget(this,'_blank');"{/if}><b>{$trackback->name|escape}</b></a>
 					at {$trackback->date|date_format:"%y/%m/%d %H:%M"}
 				</div>
@@ -36,7 +36,7 @@
 		<div id="div_CO_{$entry->entryId}" style="text-align: left;" class="div_hide">
 			<div class="graybox">
 			    {foreach from=$entry->getComments() item=comment}
-		    	<div id="{$comment->date}" class="blue8" style="margin: 5px 5px 0 0; color: #999999;">
+		    	<div id="CO{$comment->date}" class="blue8" style="margin: 5px 5px 0 0; color: #999999;">
 					<img src="{$baseurl}/templates/{$skin}/imgs/comment.gif" alt="" /> Commented by<b>
 					{if $comment->homepage != ""}
 					<a href="{$comment->homepage|escape}" {if #targetBlank# == 1}onclick="seturltarget(this,'_blank');"{/if}>{$comment->name|escape}</a>

@@ -32,7 +32,7 @@ class Comment {
   function getHref() {
     $id = Soojung::filenameToEntryId($this->filename);
     $e = Entry::getEntry($id);
-    return $e->getHref() . "#" . $this->date;
+    return $e->getHref() . "#CO" . $this->date;
   }
 
   function getBody() {

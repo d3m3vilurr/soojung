@@ -29,7 +29,7 @@
 		</p>
 	{foreach from=$trackbacks item=trackback}
 		<div class="trackback">
-			<a name="{$trackback->date}"></a>
+			<a name="TB{$trackback->date}"></a>
 			<p>Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a></p>
 			<p>{$trackback->title|escape}:</p>
 			<p>
@@ -46,7 +46,7 @@
 		<h3>Comments on this entry:</h3>
 	{foreach from=$comments item=comment}
 		<div class="comment">
-			<a name="{$comment->date}"></a>
+			<a name="CO{$comment->date}"></a>
 			<div class="info">
 				Left by <span class="author">
 				{if $comment->homepage != ""}

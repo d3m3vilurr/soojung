@@ -29,7 +29,7 @@
 <ol id="trackbacklist">
 {foreach from=$trackbacks item=trackback}
 	<li>
-		<a name="{$trackback->date}"></a>
+		<a name="TB{$trackback->date}"></a>
 		<p>
 			Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a>
 		</p>
@@ -49,7 +49,7 @@
 <ol id="commentlist">
 {foreach from=$comments item=comment}
 	<li>
-		<a name="{$comment->date}"></a>
+		<a name="CO{$comment->date}"></a>
 			
 		<p>
 			{$comment->getBody()}

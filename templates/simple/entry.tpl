@@ -12,7 +12,7 @@
 <a name="trackback"></a>
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
-	<a name="{$trackback->date}"></a>
+	<a name="TB{$trackback->date}"></a>
 	<a href="{$trackback->url|escape}">{$trackback->url|escape}</a><br />
 	{$trackback->title|escape}<br />
 	{$trackback->getExcerpt()|strip_tags|escape}
@@ -27,7 +27,7 @@
 <a name="comment"></a>
 {foreach from=$comments item=comment}
 	<div class="comment">
-	<a name="{$comment->date}"></a>
+	<a name="CO{$comment->date}"></a>
 	On {$comment->date|date_format:"%B %d, %Y %I:%M %p"}, 
 	{if $comment->homepage != ""}
 		<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
