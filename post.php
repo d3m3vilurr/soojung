@@ -9,6 +9,7 @@ if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password)
     $_SESSION['auth'] = TRUE;
   $_POST["mode"] = $_POST["original_mode"];
+  $_POST["body"] = base64_decode($_POST["body"]);
 #  echo "mode = ". $_POST["mode"];
 } 
 
@@ -22,7 +23,10 @@ if (!isset($_SESSION["auth"])) {
   foreach ($list as $key) {
     if (array_key_exists($key, $_POST)) {
       $param["name"] = $key;
-      $param["value"] = htmlspecialchars($_POST[$key]);
+      if ($key == "body")
+	$param["value"] = base64_encode($_POST[$key]);
+      else
+	$param["value"] = htmlspecialchars($_POST[$key]);
       $hidden_attr[] = $param;
     }
   }
