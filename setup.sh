@@ -1,10 +1,10 @@
 #!/bin/sh
-# $Id: setup.sh,v 1.1 2005/02/20 02:00:56 ddt Exp $
+# $Id: setup.sh,v 1.2 2005/02/20 02:20:14 mithrandir Exp $
 
 curdir=`pwd`
 
 # 수정 블로그의 루트 디렉토리에서 실행하고 있는지 간단히 체크
-if [ ! -f $curdir/soojungsetup.sh -o ! -f $curdir/index.php ] ; then
+if [ ! -f $curdir/setup.sh -o ! -f $curdir/index.php ] ; then
 	echo "Oops! Execute this at soojung blog's root directory please."
 	echo
 	echo "  (ex) cd ~/public_html/soojung ; ./$0"
