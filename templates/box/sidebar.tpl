@@ -69,7 +69,7 @@
     <ul id="div_recent_trackback" {if #showRecentTrackbacks# == 0}class="hide"{/if}>
         {foreach from=$recent_trackbacks item=trackback}
         <li>
-            <a href="{$trackback->getHref()|escape}">{$trackback->url|substring:27|escape}</a>
+            <a href="{$trackback->getHref()|escape}">{$trackback->getExcerpt()|strip_tags|substring:27|escape}</a>
         </li>
         {/foreach}
     </ul>
