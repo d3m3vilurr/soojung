@@ -9,6 +9,7 @@ require(SMARTY_DIR . 'Smarty.class.php');
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password) {
     $_SESSION['auth'] = TRUE;
+    header("Location: admin.php");
   }
 }
 
@@ -55,7 +56,10 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   if (isset($_FILES['file']['name'])) {
     import($_FILES['file']);
   }
-  //header("Location: admin.php");
+  header("Location: admin.php");
+} else if ($_POST["mode"] == "import_tt") {
+  import_tt($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"]);
+  header("Location: admin.php");
 }
 
 if ($_GET["mode"] == "config") {
