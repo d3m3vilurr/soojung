@@ -29,15 +29,12 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   exit;
 }
 
-if (isset($_POST["url"]) || isset($_GET["blogid"])) {
-  $id = $_GET["blogid"];
-  if (!isset($id))
-    $id = $_POST["blogid"];
-
-  $url = $_POST["url"];
-  $title = $_POST["title"];
-  $excerpt = $_POST["excerpt"];
-  $name = $_POST["blog_name"];
+if (isset($_REQUEST["url"]) || isset($_REQUEST["blogid"])) {
+  $id = $_REQUEST["blogid"];
+  $url = $_REQUEST["url"];
+  $title = $_REQUEST["title"];
+  $excerpt = $_REQUEST["excerpt"];
+  $name = $_REQUEST["blog_name"];
 
 
 #  $encoding_title = detect_encoding ($title);
@@ -50,9 +47,9 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
 #    $name = iconv($encoding, "UTF-8", $_POST["blog_name"]);
 #  }
 
-  $title = convert_to_utf8($_POST["title"]);
-  $excerpt = convert_to_utf8($_POST["excerpt"]);
-  $name = convert_to_utf8($_POST["blog_name"]);
+  $title = convert_to_utf8($title);
+  $excerpt = convert_to_utf8($excerpt);
+  $name = convert_to_utf8($name);
   
   if (empty($url)) {
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
