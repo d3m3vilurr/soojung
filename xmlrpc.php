@@ -133,9 +133,9 @@ function blogger_getRecentPosts($params) {
 				       "postid" => new xmlrpcval($e['id'], "string"),
 				       "content" => new xmlrpcval($content, "string")
 				       ), "struct");
-    array_push($structarray, $entrystruct);
+    $structarray[] = $entrystruct;
   }
-  return new xmlrpcresp(new xmlrpcval($sturctarray, "array"));
+  return new xmlrpcresp(new xmlrpcval($structarray, "array"));
 }
 
 function blogger_getUsersBlogs($params) {
@@ -154,8 +154,8 @@ function blogger_getUsersBlogs($params) {
 				    "blogid" => new xmlrpcval($blog_name, "string"),
 				    "blogName" => new xmlrpcval($blog_name, "string")
 				    ), "struct");
-  array_push($structarray, $blogstruct);
-  return new xmlrpcresp(new xmlrpcval($sturctarray, "array"));
+  $structarray[] = $blogstruct;
+  return new xmlrpcresp(new xmlrpcval($structarray, "array"));
 }
 
 function blogger_getUserInfo($params) {
