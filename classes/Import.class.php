@@ -114,7 +114,7 @@ class Import {
       $category = $info[1];
       $dot = strpos($info[2], ".");
       $id = substr($info[2], 0, $dot);
-      $data = explode("\r\n", Import::getDataFromXml($xml), 3);
+      $data = explode("\r\n", Import::trans(Import::getDataFromXml($xml)), 3);
       $title = $data[0];
       $date = $data[1];
       $body = $data[2];

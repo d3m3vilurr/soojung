@@ -35,18 +35,16 @@
 	<input type="checkbox" name="NO_RSS" {if $no_rss}checked{/if}>NO_RSS
 	<br />
 
-<!--
-	Format:
-	<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')">plain
-	<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')">html
-	<br />
--->
 	Body: <br/>
 		<script type="text/javascript">
 			var oFCKeditor = new FCKeditor( 'body' ) ;
-			oFCKeditor.BasePath = "templates/admin/fckeditor/";  
-			oFCKeditor.Value = '{$body}';
+			oFCKeditor.BasePath = "templates/admin/fckeditor/";	
+
+			oFCKeditor.Value = '{$body|replace:"\r\n":"<br />"}';
+			oFCKeditor.Width = "80%";
+			oFCKeditor.Height = "300";
 			oFCKeditor.Create() ;
+
 		</script>
 	<br />
 
