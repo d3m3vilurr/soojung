@@ -124,7 +124,7 @@
 <div id="footer">
 <p>
 	<i>your copyright message goes here.</i><br />
-	Powered by <a href="http://soojung.kldp.net/">soojung {$soojung_version}</a> &copy; 2004 soojung devel team. "The Simple Balance" template designed by Tokigun.
+	Powered by <a href="http://soojung.kldp.net/">soojung {$soojung_version}</a> &copy; 2004-2005 soojung devel team. "The Simple Balance" template designed by Tokigun.
 </p>
 </div>
 
