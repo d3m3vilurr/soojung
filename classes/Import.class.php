@@ -23,16 +23,16 @@ class Import {
   /**
    * static method
    */
-  function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $encoding) {
+  function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $encoding, $tblprefix="t3_") {
     $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
     mysql_select_db($dbName) or die("could not select database");
 
-    $query = "SELECT title, body, regdate, category1 FROM t3_tts";
+    $query = "SELECT title, body, regdate, category1 FROM ${tblprefix}tts";
     $result = mysql_query($query) or die("query failed");
 
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
       $c_no = $line['category1'];
-      $c_query = "SELECT label FROM t3_tts_ct1 WHERE no = " . $c_no;
+      $c_query = "SELECT label FROM ${tblprefix}tts_ct1 WHERE no = " . $c_no;
       $c_result = mysql_query($c_query);
       $c_line = mysql_fetch_array($c_result);
 
