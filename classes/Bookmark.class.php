@@ -21,14 +21,38 @@ class Bookmark {
     Bookmark::writeBookmark($bookmarks);
     return true;
   }
+  
+  function moveBookmark($url, $offset) {
+    $bookmarks = Bookmark::getBookmarkList();
+    $index = null;
+    foreach ($bookmarks as $key => $b) {
+      if ($b['url'] == $url) {
+	$index = $key;
+	break;
+      }
+    }
+    
+    if (is_null($index)) return false;
+    $item = array_splice($bookmarks, $index, 1);
+    $index += $offset;
+    if ($index < 0) {
+      $index = 0;
+    }
+    if ($index > count($bookmarks)) {
+      $index = count($bookmarks);
+    }
+    array_splice($bookmarks, $index, 0, $item);
+    Bookmark::writeBookmark($bookmarks);
+    return true;
+  }
 
   /** 
    * delete personal bookmark, key is url (not description) 
    */
   function deleteBookmark($url) {
-    $bookmakrs = Bookmark::getBookmarkList();
-    $new_bookmakrs = array();
-    foreach($bookmakrs as $b) {
+    $bookmarks = Bookmark::getBookmarkList();
+    $new_bookmarks = array();
+    foreach($bookmarks as $b) {
       if ($b['url'] !== $url) {
 	$new_bookmarks[] = $b;
       }

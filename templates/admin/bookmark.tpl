@@ -15,9 +15,21 @@
 	<input type="submit" name="mode" value="post">
 </form>
 
-{foreach from=$bookmarks item=bookmark}
-	<a href="{$baseurl}/bookmark.php?mode=delete&amp;url={$bookmark.url}">delete</a> 
-	<a href="{$bookmark.url}">{$bookmark.desc}</a><br />
+{foreach from=$bookmarks item=bookmark name=bookmark}
+<strong>
+	<a href="{$baseurl}/bookmark.php?mode=delete&amp;url={$bookmark.url|escape:'url'|escape}">delete</a>
+{if $smarty.foreach.bookmark.first}
+	<span style="color:white;">&uArr;</span>
+{else}
+	<a href="{$baseurl}/bookmark.php?mode=move&amp;offset=-1&amp;url={$bookmark.url|escape:'url'|escape}">&uArr;</a>
+{/if}
+{if $smarty.foreach.bookmark.last}
+	<span style="color:white;">&dArr;</span>
+{else}
+	<a href="{$baseurl}/bookmark.php?mode=move&amp;offset=1&amp;url={$bookmark.url|escape:'url'|escape}">&dArr;</a>
+{/if}
+</strong>
+<a href="{$bookmark.url|escape}">{$bookmark.desc|escape}</a><br />
 {/foreach}
 
 

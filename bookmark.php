@@ -27,6 +27,9 @@ if ($_POST["mode"] == "post") {
 } else if ($_GET["mode"] == "delete") {
   $url = $_GET["url"];
   Bookmark::deleteBookmark($url);
+} else if ($_GET["mode"] == "move") {
+  $offset = intval($_GET["offset"]);
+  Bookmark::moveBookmark($url, $offset);
 }
 
 $template = new AdminTemplate;
