@@ -14,6 +14,7 @@ Version:
 <select name="version">
 <!--<option value="0.2">0.2.*</option>-->
 <option value="0.3.2">0.3.2</option>
+<option value="0.4">0.4</option>
 </select>
 <br />
 <input type="hidden" name="mode" value="import" />
