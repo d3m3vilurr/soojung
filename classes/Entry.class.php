@@ -55,7 +55,8 @@ class Entry {
     global $blog_baseurl, $blog_fancyurl;
 
     if ($blog_fancyurl) {
-      return $blog_baseurl . "/" . urlencode($this->category->name) . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
+      $_category = preg_replace('/%2F/i','/',urlencode($this->category->name));
+      return $blog_baseurl . "/" . $_category . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
     } else {
       return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;
     }
