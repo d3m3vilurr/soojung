@@ -76,8 +76,10 @@ class Entry {
     if ($toHtml == true) {
       if ($this->format == "plain") {
 	$body = Formatter::plainToHtml($body);
-      } else if ($this->format == "html") {
+      } elseif ($this->format == "html") {
 	//do nothing :)
+      } elseif ($this->format == "bbcode") {
+        $body = Formatter::bbcodeToHtml($body);
       }
     } else {
       if ($this->format == "html") {
