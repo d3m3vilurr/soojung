@@ -196,6 +196,9 @@ pre
 #calendar {
   text-align: center;
 }
+#calendar table {
+  margin: auto;
+}
 .calendar_days {
   text-align: left;
 }
