@@ -34,7 +34,7 @@
 <div class="row">
 <span class="label">Entries License:</span>
 <span class="formw">
-<select name="skin">
+<select name="license">
 <option value="none" {if $license == "none"}selected{/if}>None (All rights reserved)</option>
 <option value="4" >Attribution License</option>
 <option value="6" >Attribution-NoDerivs License</option>
