@@ -440,6 +440,7 @@ function get_category_list() {
     }
     $category["name"] = $file;
     $category["link"] = $link;
+    $category["rss"] = $blog_baseurl . "/rss2.php?category=" . $file;
     $category["count"] = get_entry_count_by_category($file);
     $categories[] = $category;
   }
