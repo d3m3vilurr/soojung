@@ -22,9 +22,19 @@ Version:
 <input type="submit" value="import!" />
 </form>
 
-<h3>import from wordpress</h3>
-<form action="{$baseurl}/admin.php" method="post">
-Input wordpress database info<br />
+<h3>import from other blogs</h3>
+<p>select your blog:
+<select onchange="return switchDiv(this);">
+<option selected="selected"></option>
+<option value="import_wp">Wordpress</option>
+<option value="import_tt">Tattertools</option>
+<option value="import_b2">B2</option>
+<option value="import_zb">Zeroboard (or ZOG)</option>
+</select>
+</p>
+
+<form action="{$baseurl}/admin.php" method="post" id="import_wp" class="hide">
+<h4>Wordpress</h4>
 DB server: <input type="text" name="db_server" /><br />
 DB username: <input type="text" name="db_user" /><br />
 DB password: <input type="password" name="db_pass" /><br />
@@ -35,9 +45,8 @@ Encoding: <input type="text" name="encoding" value="utf-8" /><br />
 <input type="submit" value="import!" />
 </form>
 
-<h3>import from tattertools</h3>
-<form action="{$baseurl}/admin.php" method="post">
-Input tettertools database info<br />
+<form action="{$baseurl}/admin.php" method="post" id="import_tt" class="hide">
+<h4>Tattertools</h4>
 DB server: <input type="text" name="db_server" /><br />
 DB username: <input type="text" name="db_user" /><br />
 DB password: <input type="password" name="db_pass" /><br />
@@ -48,9 +57,8 @@ Encoding: <input type="text" name="encoding" value="cp949" /><br />
 <input type="submit" value="import!" />
 </form>
 
-<h3>import from B2</h3>
-<form action="{$baseurl}/admin.php" method="post">
-Input B2 database info<br />
+<form action="{$baseurl}/admin.php" method="post" id="import_b2" class="hide">
+<h4>B2</h4>
 DB server: <input type="text" name="db_server" /><br />
 DB username: <input type="text" name="db_user" /><br />
 DB password: <input type="password" name="db_pass" /><br />
@@ -61,9 +69,8 @@ Encoding: <input type="text" name="encoding" value="utf-8" /><br />
 <input type="submit" value="import!" />
 </form>
 
-<h3>import from Zeroboard (or ZOG)</h3>
-<form action="{$baseurl}/admin.php" method="post">
-Input Zeroboard database info<br />
+<form action="{$baseurl}/admin.php" method="post" id="import_zb" class="hide">
+<h4>Zeroboard (or ZOG)</h4>
 DB server: <input type="text" name="db_server" /><br />
 DB username: <input type="text" name="db_user" /><br />
 DB password: <input type="password" name="db_pass" /><br />

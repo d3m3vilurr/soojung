@@ -164,3 +164,9 @@ h2
   position:absolute;
   left: 700px;
 }
+
+.hide
+{
+  display:none;
+}
+
