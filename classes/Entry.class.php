@@ -79,6 +79,10 @@ class Entry {
       } else if ($this->format == "html") {
 	//do nothing :)
       }
+    } else {
+      if ($this->format == "html") {
+	$body = addslashes($body);
+      }
     }
     return $body;
   }

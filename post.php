@@ -54,7 +54,6 @@ if ($_POST["mode"] == "Post") {
   $mode = "edit";
   $title = $entry->title;
   $body = $entry->getBody(false);
-  $body = addslashes($body);
   $date = $entry->date;
   $category = $entry->category->name;
   $options = $entry->options;
