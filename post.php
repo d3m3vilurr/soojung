@@ -44,7 +44,7 @@ $smarty->assign('baseurl', $blog_baseurl);
 
 $smarty->assign("title", $title);
 $smarty->assign("body", br2nl($body));
-$smarty->assign("date", date('Y-m-d H:i:s', $date));
+$smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()));
 $smarty->assign("category", $category);
 $smarty->assign("id", $id);
 
