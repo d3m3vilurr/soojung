@@ -40,7 +40,7 @@
 <h3><a href="#none" onclick="return fold_sidebar('div_archive');">Archives</a></h3>
 <ul id="div_archive"{if #showArchives# == 0} class="hide"{/if}>
 {foreach from=$archvies item=archive}
-	<li><a href="{$archive->getHref()|escape}">{$archive->getName()|escape}</a></li>
+	<li><a href="{$archive->getHref()|escape}">{$archive->getDate()|date_format:"%B %Y"}</a></li>
 {foreachelse}
 	<li></li>
 {/foreach}

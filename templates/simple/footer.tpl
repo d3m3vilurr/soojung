@@ -26,7 +26,7 @@
 <ul id="div_archive" class="div_hide">
 {foreach from=$archvies item=archive}
 	<li>
-		<a href="{$archive->getHref()}">{$archive->getName()}</a>
+		<a href="{$archive->getHref()}">{$archive->getDate()|date_format:"%B %Y"}</a>
 	</li>
 {foreachelse}
 	<li></li>
