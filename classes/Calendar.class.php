@@ -91,7 +91,7 @@ class Calendar {
     $filenames = Soojung::queryFilenameMatch(sprintf("^%04d%02d[^.]+[.]entry$", $year, $month));
     sort($filenames);
     foreach($filenames as $filename) {
-      list($datetime, $category, $entryid) = explode("_", substr($filename, 9, -6));
+      list($datetime, $category, $entryid) = explode("_", substr(basename($filename), 0, -6));
       $day = intval(substr($datetime, 6, 2));
       if($entries[$day]) {
         $entries[$day][] = $filename;
