@@ -154,7 +154,6 @@ class Trackback {
       // Cannot open trackback url
       $response['error'] = 1;
       $response['message'] = "Cannot connect to host \"".$tb_url['host']."\"";
-      echo "merong<br>\n";
       return $response;
     } 
 
