@@ -14,7 +14,7 @@ if ($_POST["mode"] == "config_update" && isset($_SESSION["auth"])) {
   write_config_file($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 		    $_POST["fancyurl"], $_POST["adminname"], $_POST["email"],
 		    FALSE, $_POST["skin"]);
-  echo "<meta http-equiv='refresh' content='0;URL=admin.php?mode=config'>";
+  echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
 }
 ?>
 
