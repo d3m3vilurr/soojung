@@ -85,6 +85,7 @@ class Entry {
       if ($this->format == "html") {
 	$body = addslashes($body);
       }
+      $body = htmlspecialchars($body);
     }
     return $body;
   }
