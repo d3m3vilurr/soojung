@@ -11,10 +11,10 @@ include_once("soojung.php");
 
 <?php
 if (!is_writable(".")) {
-  echo "<font color=\"red\">this directory is not writeable</font><br />";
+  echo "<font color=\"red\">WARNING: This directory is not writeable</font><br />";
 }
 if (!is_writable("templates")) {
-  echo "<font color=\"red\">templates directory is not writeable</font><br />";
+  echo "<font color=\"red\">WARNING: Templates directory is not writeable</font><br />";
 }
 ?>
 
@@ -69,22 +69,22 @@ if (isset($_POST["name"])) {
 
 <tr>
 <td>Blog Name:</td>
-<td><input type="text" name="name" size="20" value="<?=$_POST['name']?>"></td>
+<td><input type="text" name="name" size="30" value="<?=$_POST['name']?>"></td>
 </tr>
 
 <tr>
 <td>Blog Description:</td>
-<td><input type="text" name="desc" size="30" value="<?=$_POST['desc']?>"></td>
+<td><input type="text" name="desc" size="50" value="<?=$_POST['desc']?>"></td>
 </tr>
 
 <tr>
 <td>Blog URL:</td>
-<td><input type="text" name="url" size="30" value="<?=$_POST['url']?>"></td>
+<td><input type="text" name="url" size="50" value="<?=($_POST['url'] ? $_POST['url'] : 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']))?>"></td>
 </tr>
 
 <tr>
 <td>entries per page</td>
-<td><input type="text" name="perpage" size="30" value="<?=$_POST['perpage']?>"></td>
+<td><input type="text" name="perpage" size="2" value="<?=($_POST['perpage'] ? $_POST['perpage'] : 5)?>"></td>
 </tr>
 
 <tr>
