@@ -164,7 +164,7 @@ class Soojung {
   // referer spam check
   function isSpam($text) {
     $words = array("search", "blogspot", "naked", "nude", "boobs", "viagra",
-		   "poker", "password");
+		   "poker", "password", "sex", "porn", "hentai");
     foreach ($words as $word) {
       if (strpos($text, $word) !== FALSE) {
 	return true;
