@@ -498,7 +498,7 @@ function get_count() {
     fclose($fp);
   }
 
-  if ($soojungcountercookie != "on") {
+  if ($soojungcountercookie != "on" && !stristr($_SERVER['HTTP_USER_AGENT'], "googlebot")) {
     $today_count += 1;
     $total_count += 1;
     $modified = true;
