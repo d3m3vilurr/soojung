@@ -23,7 +23,7 @@
 
 {if $entry->isSetOption("NO_COMMENT") == false}
 <div class="comments">
-{$entry.comment_count} Comments<br />
+{$entry->getCommentCount()} Comments<br />
 <a name="comment"></a>
 {foreach from=$comments item=comment}
 	<div class="comment">
