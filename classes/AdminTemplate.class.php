@@ -4,7 +4,6 @@ include_once("settings.php");
 class AdminTemplate extends Template {
   function AdminTemplate()
   {
-    $this->force_compile = true;
     $this->Template();
     $this->compile_dir = "templates/.admin_compile/";
     $this->config_dir = "templates/.admin_configs/";
