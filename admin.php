@@ -82,13 +82,17 @@ if ($_GET["mode"] == "config") {
   $template->assign("admin_name", $admin_name);
   $template->assign("admin_email", $admin_email);
   $template->assign("templates", Soojung::getTemplates());
-
   $template->display('config.tpl');
 } else if ($_GET["mode"] == "data") {
   $template->display('data.tpl');
-} else {
+} else if ($_GET["mode"] == "list") {
   $entry_structs = array();
   $template->assign('entries', Entry::getAllEntries(false));
   $template->display('list.tpl');
+} else {
+  $template->assign('recent_entries', Entry::getRecentEntries(5));
+  $template->assign('recent_comments', Comment::getRecentComments(5));
+  $template->assign('recent_trackbacks', Trackback::getRecentTrackbacks(5));
+  $template->display('overview.tpl');
 }
 ?>

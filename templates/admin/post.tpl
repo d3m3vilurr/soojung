@@ -9,69 +9,89 @@
 {$category}, {$date}
 <hr />
 {/if}
+
+<div id="post">
 <form action="{$baseurl}/post.php" method="post">
-	Title:
-	<input type="text" name="title" value="{$title}">
-	<br />
+<div class="row">
+<span class="label">Title:</span>
+<span class="formw"><input type="text" name="title" value="{$title}"></span>
+</div>
 
-	Date:
-	<input type="text" name="date" value="{$date}">
-	<br />
+<div class="row">
+<span class="label">Date:</span>
+<span class="formw"><input type="text" name="date" value="{$date}">
+</div>
 
-	Category:
-	<input type="text" name="category_input" value="{$category}"> or 
+<div class="row">
+<span class="label">Category:</span>
+<span class="formw">
+<input type="text" name="category_input" value="{$category}"> or 
+{foreach name=categories from=$categories item=cate}
+{if $smarty.foreach.categories.first}
+<select name="category">
+{/if}
+	<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
+{foreachelse}
+<select name="category" disabled>
+{/foreach}
+</select>
+</span>
+</div>
 
-	{foreach name=categories from=$categories item=cate}
-		{if $smarty.foreach.categories.first}
-			<select name="category">
-		{/if}
-		<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
-	{foreachelse}
-		<select name="category" disabled>
-	{/foreach}
-	</select>
-	<br />
+<div class="row">
+<span class="label">Options:</span>
+<span class="formw">
+<input type="checkbox" name="SECRET" {if $secret}checked{/if}>SECRET
+<input type="checkbox" name="NO_COMMENT" {if $no_comment}checked{/if}>NO_COMMENT
+<input type="checkbox" name="NO_TRACKBACK" {if $no_trackback}checked{/if}>NO_TRACKBACK
+<input type="checkbox" name="STATIC" {if $static}checked{/if}>STATIC
+<input type="checkbox" name="NO_RSS" {if $no_rss}checked{/if}>NO_RSS
+</span>
+</div>
 
-	Options:
-	<input type="checkbox" name="SECRET" {if $secret}checked{/if}>SECRET
-	<input type="checkbox" name="NO_COMMENT" {if $no_comment}checked{/if}>NO_COMMENT
-	<input type="checkbox" name="NO_TRACKBACK" {if $no_trackback}checked{/if}>NO_TRACKBACK
-	<input type="checkbox" name="STATIC" {if $static}checked{/if}>STATIC
-	<input type="checkbox" name="NO_RSS" {if $no_rss}checked{/if}>NO_RSS
-	<br />
+<div class="row">
+<span class="label">Format:</span>
+<span class="formw">
+<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')">plain
+<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')">html
+<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=bbcode')">bbcode
+</span>
+</div>
 
-	Format:
-	<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')">plain
-	<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')">html
-	<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=bbcode')">bbcode
-	<br />
-	
-	Body: <br />
-	{if $format == "plain" || $format == "bbcode" || $format == ""}
-		<textarea name="body" rows="15" cols="80">{$body}</textarea>
-	{else}
-		<script type="text/javascript">
-			var oFCKeditor = new FCKeditor( 'body' ) ;
-			oFCKeditor.BasePath = "libs/fckeditor/";	
+<div class="row">
+<span class="label">Body:</span>
+<span class="formw">
+<textarea id="body" name="body" rows="10" cols="65">{$body}</textarea>
+{if $format == "html"}
+<script type="text/javascript">
+	var oFCKeditor = new FCKeditor('body');
+	oFCKeditor.BasePath = "libs/fckeditor/";
+	oFCKeditor.Width = "80%";
+	oFCKeditor.Height = "300";
+	oFCKeditor.ReplaceTextarea();
+</script>
+{/if}
+</span>
+</div>
 
-			oFCKeditor.Value = '{$body|replace:"\r\n":"<br />"}';
-			oFCKeditor.Width = "80%";
-			oFCKeditor.Height = "300";
-			oFCKeditor.Create() ;
+<div class="row">
+<span class="label">Upload:</span>
+<span class="formw">
+<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=500,height=300')">Upload Files</a>
+</span>
+</div>
 
-		</script>
-	{/if}
-	<br />
+{if $id != null}
+<input type="hidden" name="id" value="{$id}">
+{/if}
 
-	Upload:	<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=500,height=300')">Upload Files</a>
-	<br />
+<div class="row">
+<span class="formw">
+<input type="submit" name="mode" value="Preview">
+<input type="submit" name="mode" value="Post">
+</span>
+</div>
 
-	{if $id != null}
-	  <input type="hidden" name="id" value="{$id}">
-	{/if}
-
-	<input type="submit" name="mode" value="Preview">
-	<input type="submit" name="mode" value="Post">
 </form>
-
+</div>
 {include file="footer.tpl"}

@@ -1,19 +1,109 @@
-body
-{ 
-  font-family: tahoma, sans-serif;
+body { 
+       font-family: tahoma, sans-serif;
+       margin:10px 10px 0px 10px;
 }
 
-.menu
-{ 
-  margin: 10px;
+/* tabless css */
+div.row {
+	clear: both;
+	padding-bottom: 10px;
 }
 
-.menu a
+div.row span.label {
+	float: left;
+	width: 150px;
+	text-align: right;
+}
+
+div.row span.formw {
+	text-align: left;
+	padding-left: 15px;
+}
+
+#menu
 {
-  color: #000;
+  position:absolute;
+  left:20px;
+  width:120px;
+  padding:10px;
+  background-color:#eee;
+  border:1px dashed #999;
+  line-height:17px;
 }
 
-a
+#menu a
+{
+  color: #09c;
+  text-decoration:none;
+}
+
+#menu .menu_item
+{
+}
+
+#menu .menu_item:hover
+{
+  background-color: #4a5e7d;
+}
+
+#menu .menu_item:hover a
+{
+  color: #fff;
+}
+
+#list, #post, #config, #data, #bookmark, #overview
 { 
-  color: #930;
+  margin:0px 0px 10px 170px;
+  padding:10px;
+}
+
+
+/* post */
+#post div.row span.label
+{
+  width: 70px;
+}
+.content_entry
+{
+  position:absolute;
+  left:auto;
+  width:auto;
+  height: 200px;
+  border:1px solid black;
+  background-color:white;
+  padding:20px;
+}
+
+.content_comment
+{
+  position:absolute;
+  right:30px;
+  width:auto;
+  height: 200px;
+  border:1px solid black;
+  background-color:white;
+  padding:20px;
+}
+
+.content_trackback
+{
+  position:absolute;
+  top: 290px;
+  left:auto;
+  height: 200px;
+  border:1px solid black;
+  background-color:white;
+  padding:20px;
+}
+
+.content_info
+{
+  position:absolute;
+  top: 290px;
+  right: 30px;
+  width:auto;
+  height: 200px;
+  border:1px solid black;
+  background-color:white;
+  padding:20px;
 }

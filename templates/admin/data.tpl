@@ -1,5 +1,6 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
+<div id="data">
 
 <h2>Export</h2>
 <h3>export to soojung data file</h3>
@@ -20,7 +21,6 @@ Version:
 <input type="hidden" name="mode" value="import" />
 <input type="submit" value="import!" />
 </form>
-<br />
 
 <h3>import from wordpress</h3>
 <form action="{$baseurl}/admin.php" method="post">
@@ -61,4 +61,5 @@ Encoding: <input type="text" name="encoding" value="utf-8" /><br />
 <input type="submit" value="import!" />
 </form>
 
+</div>
 {include file="footer.tpl"}

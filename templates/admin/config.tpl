@@ -1,60 +1,87 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
+<div id="config">
+
 <form action="{$baseurl}/admin.php" method="post">
-Blog Name:
-<input type="text" name="blogname" value="{$blog_name}">
-<br />
 
-Blog Description:
-<input type="text" name="desc" value="{$blog_desc}">
-<br />
+<div class="row">
+<span class="label">Blog Name:</span>
+<span class="formw"><input type="text" name="blogname" value="{$blog_name}"></span>
+</div>
 
-Blog URL:
-<input type="text" name="url" value="{$baseurl}">
-<br />
+<div class="row">
+<span class="label">Blog Description:</span>
+<span class="formw"><input type="text" name="desc" value="{$blog_desc}"></span>
+</div>
 
-Blog Skin:
+<div class="row">
+<span class="label">Blog URL:</span>
+<span class="formw"><input type="text" name="url" value="{$baseurl}"></span>
+</div>
+
+<div class="row">
+<span class="label">Blog Skin:</span>
+<span class="formw">
 <select name="skin">
 {foreach from=$templates item=template}
 <option value="{$template}" {if $blog_skin == $template}selected{/if}>{$template}
 {/foreach}
 </select>
-<br />
-<br />
+</span>
+</div>
 
-Admin Name: <input type="text" name="adminname" value="{$admin_name}">
-<br />
+<div class="row">
+<span class="label">Admin Name:</span>
+<span class="formw"><input type="text" name="adminname" value="{$admin_name}"></span>
+</div>
 
-Admin Email: <input type="text" name="email" value="{$admin_email}">
-<br />
+<div class="row">
+<span class="label">Admin Email:</span>
+<span class="formw"><input type="text" name="email" value="{$admin_email}"></span>
+</div>
 
-Admin Password: <input type="password" name="password"> If you want change the password, input new password.
-<br />
-<br />
+<div class="row">
+<span class="label">Admin Password:</span>
+<span class="formw"><input type="password" name="password"><br />If you want change the password, input new password.</span>
+</div>
 
-entries per page:
-<input type="text" name="perpage" value="{$blog_entries_per_page}">
-<br />
+<div class="row">
+<span class="label">entries per page:</span>
+<span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}"></span>
+</div>
 
-fancy URL:
+<div class="row">
+<span class="label">fancy URL:</span>
+<span class="formw">
 <input type="checkbox" name="fancyurl"
 {if $blog_fancyurl == true}
 	checked="on">
 {else}
 	>
 {/if}
-<br />
- notify email:
+</span>
+</div>
+
+<div class="row">
+<span class="label">notify email:</span>
+<span class="formw">
 <input type="checkbox" name="notify"
 {if $blog_notify == true}
 	checked="on">
 {else}
 	>
 {/if}
-<br />
+</span>
+</div>
+
 <input type="hidden" name="mode" value="config_update">
-<input type="submit" value="update">
+
+<div class="row">
+<span class="label"><input type="submit" value="update"></span>
+</div>
+
 </form>
 
+</div>
 {include file="footer.tpl"}

@@ -1,10 +1,7 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
-{foreach from=$bookmarks item=bookmark}
-	<a href="{$baseurl}/bookmark.php?mode=delete&amp;url={$bookmark.url}">delete</a> 
-	<a href="{$bookmark.url}">{$bookmark.desc}</a><br />
-{/foreach}
+<div id="bookmark">
 
 <form action="{$baseurl}/bookmark.php" method="post">
 	Url : 
@@ -16,7 +13,12 @@
 	<br />
 
 	<input type="submit" name="mode" value="post">
-{*	<input type="hidden" name="mode *}
 </form>
 
+{foreach from=$bookmarks item=bookmark}
+	<a href="{$baseurl}/bookmark.php?mode=delete&amp;url={$bookmark.url}">delete</a> 
+	<a href="{$bookmark.url}">{$bookmark.desc}</a><br />
+{/foreach}
+
+</div>
 {include file="footer.tpl"}
