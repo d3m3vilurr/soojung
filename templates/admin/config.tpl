@@ -43,7 +43,7 @@
 
 <div class="row">
 <span class="label">Admin Password:</span>
-<span class="formw"><input type="password" name="password"><br />If you want change the password, input new password.</span>
+<span class="formw"><input type="password" name="password"> <i>If you want change the password, input new password.</i></span>
 </div>
 
 <div class="row">

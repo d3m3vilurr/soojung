@@ -1,23 +1,33 @@
-body { 
-       font-family: tahoma, sans-serif;
-       margin:10px 10px 0px 10px;
+body
+{ 
+  font-family: tahoma, sans-serif;
+  margin:10px 10px 0px 10px;
+}
+
+a
+{ 
+  color: #09c;
+  text-decoration:none;
 }
 
 /* tabless css */
-div.row {
-	clear: both;
-	padding-bottom: 10px;
+div.row
+{
+  clear: both;
+  padding-bottom: 10px;
 }
 
-div.row span.label {
-	float: left;
-	width: 150px;
-	text-align: right;
+div.row span.label
+{
+  float: left;
+  width: 150px;
+  text-align: right;
 }
 
-div.row span.formw {
-	text-align: left;
-	padding-left: 15px;
+div.row span.formw
+{
+  text-align: left;
+  padding-left: 15px;
 }
 
 #menu
@@ -30,16 +40,6 @@ div.row span.formw {
   background-color:#eee;
   border:1px dashed #999;
   line-height:17px;
-}
-
-#menu a
-{
-  color: #09c;
-  text-decoration:none;
-}
-
-#menu .menu_item
-{
 }
 
 #menu .menu_item:hover
@@ -65,7 +65,7 @@ h2
   color: #09c;
   margin-top: 0;
   margin-bottom: 0;
-  padding: px;
+  padding: 3px;
 }
 
 .entry_title
@@ -138,7 +138,7 @@ h2
   padding-top: 20px;
 }
 
-.subject, .comment .subject, .trackback .subject
+.subject
 {
   white-space:nowrap;
   overflow:hidden;
@@ -163,16 +163,4 @@ h2
 {
   position:absolute;
   left: 700px;
-}
-
-.entry:hover, .comment:hover, .trackback_ping:hover
-{
-  background-color: #4a5e7d;
-  color: #fff;
-}
-
-a
-{ 
-  color: #09c;
-  text-decoration:none;
 }
