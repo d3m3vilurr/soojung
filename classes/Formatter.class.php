@@ -278,5 +278,472 @@ class BBcodeFormatter extends Formatter {
   }
 }
 
+class MoniwikiFormatter extends Formatter {
+  function toHtml($str) {
+    $str=rtrim($str); # delete last empty line
+    $lines=explode("\n",$str);
+
+    # have no contents
+    if (!$lines) return;
+
+    $text='';
+    $pre_line='';
+    $in_p='';
+    $in_div=0;
+    $in_li=0;
+    $in_pre=0;
+    $in_table=0;
+    $li_open=0;
+    $li_empty=0;
+    $indent_list[0]=0;
+    $indent_type[0]="";
+
+	$punct="<\'}\]\|;\.\!"; # , is omitted for the WikiPedia
+    $url="wiki|http|https|ftp|nntp|news|irc|telnet|mailto|file|attachment";
+    $urlrule="((?:$url):([^\s$punct]|(\.?[^\s$punct]))+)";
+    $baserule=array("/<([^\s<>])/","/`([^`' ]+)'/","/(?<!`)`([^`]*)`/",
+                     "/'''([^']*)'''/","/(?<!')'''(.*)'''(?!')/",
+                     "/''([^']*)''/","/(?<!')''(.*)''(?!')/",
+                     "/\^([^ \^]+)\^(?=\s|$)/","/\^\^([^\^]+)\^\^(?!^)/",
+                     "/(?<!,),,([^ ,]+),,(?!,)/",
+                     "/(?<!_)__([^_]+)__(?!_)/","/^(-{4,})/e",
+                     "/(?<!-)--[^\s]([^-]+)[^\s]--(?!-)/",
+		     "/\[\[BR\]\]/",
+		     "/\[\[HTML\(&lt;(.*)\)\]\]/",
+                     );
+    $baserepl=array("&lt;\\1","&#96;\\1'","<tt class='wiki'>\\1</tt>",
+                     "<b>\\1</b>","<b>\\1</b>",
+                     "<i>\\1</i>","<i>\\1</i>",
+                     "<sup>\\1</sup>","<sup>\\1</sup>",
+                     "<sub>\\1</sub>",
+                     "<u>\\1</u>",
+                     "<div class='separator'><hr class='wiki' /></div>\n",
+                     "<del>\\1</del>",
+		     "<br />",
+		     "<\\1",
+                     );
+
+    # NoSmoke's MultiLineCell hack
+    $extrarule=array("/{{\|/","/\|}}/");
+    #$extrarepl=array("</div><table class='closure'><tr class='closure'><td class='closure'><div>","</div></td></tr></table><div>");
+    $extrarepl=array("<blockquote><p>","</p></blockquote>");
+    $wordrule="({{{([^}]+)}}})|".
+              "\[\[([A-Za-z0-9]+(\(((?<!\]\]).)*\))?)\]\]|"; # macro
+	$wordrule.="\[\*[^\]]*\s[^\]]+\]|";
+    $wordrule.=
+    # single bracketed rule [http://blah.blah.com Blah Blah]
+    "(\[\^?($url):[^\s\]]+(\s[^\]]+)?\])|".
+    # WikiName rule: WikiName ILoveYou (imported from the rule of NoSmoke)
+    # protect WikiName rule !WikiName
+    "(?<![a-z])\!?(?:((\.{1,2})?\/)?[A-Z]([A-Z]+[0-9a-z]|[0-9a-z]+[A-Z])[0-9a-zA-Z]*)+\b|".
+    # single bracketed name [Hello World]
+    "(?<!\[)\!?\[([^\[:,<\s'][^\[:,>]{1,255})\](?!\])|".
+    # bracketed with double quotes ["Hello World"]
+    "(?<!\[)\!?\[\\\"([^\\\"]+)\\\"\](?!\])|".
+    # "(?<!\[)\[\\\"([^\[:,]+)\\\"\](?!\])|".
+    "($urlrule)|".
+    # single linkage rule ?hello ?abacus
+    #"(\?[A-Z]*[a-z0-9]+)";
+    "(\?[A-Za-z0-9]+)";
+
+    foreach ($lines as $line) {
+      # empty line
+      if (strlen($line) == 1) {
+        if ($in_pre) { $pre_line.="\n";continue;}
+        if ($in_li) { $text.="<br />\n";$li_empty=1; continue;}
+        if ($in_table) {
+          $text.="</table>"."<br />\n";$in_table=0; continue;
+        } else {
+          #if ($in_p) { $text.="</div><br />\n"; $in_p='';}
+          if ($in_p) { $text.=$this->_div(0,&$in_div)."<br />\n"; $in_p='';}
+          else if ($in_p=='') { $text.="<br />\n";}
+          continue;
+        }
+      }
+
+      $p_close='';
+      if (preg_match('/^-{4,}/',$line)) {
+        if ($in_p) { $p_close=$this->_div(0,&$in_div); $in_p='';}
+      } else if ($in_p == '') {
+        $p_close=$this->_div(1,&$in_div);
+        $in_p= $line;
+      }
+
+      if ($in_pre) {
+         if (strpos($line,"}}}")===false) {
+           $pre_line.=$line."\n";
+           continue;
+         } else {
+           #$p=strrpos($line,"}}}");
+           $p= strlen($line) - strpos(strrev($line),'}}}') - 1;
+           if ($p>2 and $line[$p-3]=='\\') {
+             $pre_line.=substr($line,0,$p-3).substr($line,$p-2)."\n";
+             continue;
+           }
+           $pre_line.=substr($line,0,$p-2);
+           $line=substr($line,$p+1);
+           $in_pre=-1;
+         }
+      } else if (!(strpos($line,"{{{")===false) and 
+                 preg_match("/{{{[^{}]*$/",$line)) {
+         $p= strlen($line) - strpos(strrev($line),'{{{') - 3;
+
+         $in_pre=1;
+         $np=0;
+
+         if ($line[$p+3] == ":") {
+            # new formatting rule for a quote block (pre block + wikilinks)
+            $line[$p+3]=" ";
+            $np=1;
+            if ($line[$p+4]=='#' or $line[$p+4]=='.') {
+              $pre_style=strtok(substr($line,$p+4),' ');
+              $np++;
+              if ($pre_style) $np+=strlen($pre_style);
+            } else
+              $pre_style='';
+            $in_quote=1;
+         }
+
+         $pre_line=substr($line,$p+$np+3);
+         if (trim($pre_line))
+           $pre_line.="\n";
+         $line=substr($line,0,$p);
+      }
+      $line=preg_replace($baserule,$baserepl,$line);
+      if ($in_pre != -1 && preg_match("/^(\s*)/",$line,$match)) {
+         $open="";
+         $close="";
+         $indtype="dd";
+         $indlen=strlen($match[0]);
+         if ($indlen > 0) {
+           $line=substr($line,$indlen);
+           if ($line[0]=='*') {
+             $limatch[1]='*';
+             $line=preg_replace("/^(\*\s?)/","<li>",$line);
+             if ($indent_list[$in_li] == $indlen && $indent_type[$in_li]!='dd') $line="</li>\n".$line;
+             $numtype="";
+             $indtype="ul";
+           } elseif (preg_match("/^((\d+|[aAiI])\.)(#\d+)?\s/",$line,$limatch)){
+             $line=preg_replace("/^((\d+|[aAiI])\.(#\d+)?)/","<li>",$line);
+             if ($indent_list[$in_li] == $indlen) $line="</li>\n".$line;
+             $numtype=$limatch[2][0];
+             if ($limatch[3])
+               $numtype.=substr($limatch[3],1);
+             $indtype="ol";
+           } elseif (preg_match("/^([^:]+)::\s/",$line,$limatch)) {
+             $line=preg_replace("/^[^:]+::\s/",
+                     "<dt class='wiki'>".$limatch[1]."</dt><dd>",$line);
+             if ($indent_list[$in_li] == $indlen) $line="</dd>\n".$line;
+             $numtype="";
+             $indtype="dl";
+           }
+         }
+         if ($indent_list[$in_li] < $indlen) {
+            $in_li++;
+            $indent_list[$in_li]=$indlen; # add list depth
+            $indent_type[$in_li]=$indtype; # add list type
+            $open.=$this->_list(1,$indtype,$numtype);
+         } else if ($indent_list[$in_li] > $indlen) {
+            while($in_li >= 0 && $indent_list[$in_li] > $indlen) {
+               if ($indent_type[$in_li]!='dd' && $li_open == $in_li)
+                 $close.="</li>\n";
+               $close.=$this->_list(0,$indent_type[$in_li],"",$indent_type[$in_li-1]);
+               unset($indent_list[$in_li]);
+               unset($indent_type[$in_li]);
+               $in_li--;
+            }
+            $li_empty=0;
+         }
+         if ($indent_list[$in_li] <= $indlen || $limatch) $li_open=$in_li;
+         else $li_open=0;
+      }
+
+      if (!$in_pre && $line[0]=='|' && !$in_table && preg_match("/^((\|\|)+)(&lt;[^>]+>)?.*\|\|$/",$line,$match)) {
+		 $open.="<table class='wiki' cellpadding='3' cellspacing='2' substr($match[3],4,-1)>\n";
+         $line=preg_replace('/^((\|\|)+)(&lt;[^>]+>)?/','\\1',$line);
+         $in_table=1;
+      } elseif ($in_table && $line[0]!='|' && !preg_match("/^\|\|.*\|\|$/",$line)){
+         $close="</table>".$close;
+         $in_table=0;
+      }
+      if ($in_table) {
+         $line=preg_replace('/^((?:\|\|)+(&lt;[^>]+>)?)((\s?)(.*))\|\|$/e',"'<tr class=\"wiki\"><td class=\"wiki\" '.\_table_span('\\1','\\4').'>\\3</td></tr>'",$line);
+         $line=preg_replace('/((\|\|)+(&lt;[^>]+>)?)(\s?)/e',"'</td><td class=\"wiki\" '.\_table_span('\\1','\\4').'>\\4'",$line);
+         $line=str_replace('\"','"',$line); # revert \\" to \"
+      }
+
+      # InterWiki, WikiName, {{{ }}}, !WikiName, ?single, ["extended wiki name"]
+      # urls, [single bracket name], [urls text], [[macro]]
+      $line=preg_replace("/(".$wordrule.")/e","\$this->link_repl('\\1')",$line);
+
+      # Headings
+      $line=preg_replace("/(?<!=)(={1,5})\s+(.*)\s+\\1\s?$/e",
+                         "\$this->head_repl('\\1','\\2')",$line);
+      $line=preg_replace($extrarule,$extrarepl,$line);
+      $line=$close.$p_close.$open.$line;
+      $open="";$close="";
+
+      if ($in_pre==-1) {
+         $in_pre=0;
+         if ($in_quote) {
+            # htmlfy '<'
+            $pre=str_replace("<","&lt;",$pre_line);
+            $pre=preg_replace($baserule,$baserepl,$pre);
+            $pre=preg_replace("/(".$wordrule.")/e","\$this->link_repl('\\1')",$pre);
+            $attr='class="quote"';
+            if ($pre_style) {
+              $tag=$pre_style[0];
+              $style=substr($pre_style,1);
+              switch($tag) {
+              case '#':
+                $attr="id='$style'";
+                break;
+              case '.':
+                $attr="class='$style'";
+                break;
+              }
+            }
+            $line="<pre $attr>\n".$pre."</pre>\n".$line;
+            $in_quote=0;
+         } else {
+            # htmlfy '<'
+            $pre=str_replace("<","&lt;",$pre_line);
+            $line="<pre class='wiki'>\n".$pre."</pre>\n".$line;
+         }
+      }
+      $text.=$line."\n";
+    } # end rendering loop
+
+    # close all tags
+    $close="";
+    # close pre,table
+    if ($in_pre) $close.="</pre>\n";
+    if ($in_table) $close.="</table>\n";
+    # close indent
+    while($in_li >= 0 && $indent_list[$in_li] > 0) {
+      if ($indent_type[$in_li]!='dd' && $li_open == $in_li)
+        $close.="</li>\n";
+      $close.=$this->_list(0,$indent_type[$in_li],"",$indent_type[$in_li-1]);
+      unset($indent_list[$in_li]);
+      unset($indent_type[$in_li]);
+      $in_li--;
+    }
+    # close div
+    #if ($in_p) $close.="</div>\n"; # </para>
+    if ($in_p) $close.=$this->_div(0,&$in_div); # </para>
+
+    # activate <del></del> tag
+    #$text=preg_replace("/(&lt;)(\/?del>)/i","<\\2",$text);
+    $text.=$close;
+  
+    return $text;
+  }
+
+  function _list($on,$list_type,$numtype="",$closetype="") {
+    if ($list_type=="dd") {
+      if ($on)
+         #$list_type="dl><dd";
+         $list_type="div class='indent'";
+      else
+         #$list_type="dd></dl";
+         $list_type="div";
+      $numtype='';
+    } else if ($list_type=="dl") {
+      if ($on)
+         $list_type="dl";
+      else
+         $list_type="dd></dl";
+      $numtype='';
+    } if (!$on and $closetype and $closetype !='dd')
+      $list_type=$list_type.'></li';
+
+    if ($on) {
+      if ($numtype) {
+        $start=substr($numtype,1);
+        if ($start)
+          return "<$list_type type='$numtype[0]' start='$start'>";
+        return "<$list_type type='$numtype[0]'>";
+      }
+      return "$close$open<$list_type>\n";
+    } else {
+      return "</$list_type>\n$close$open";
+    }
+  }
+
+  function _table_span($str,$align='') {
+    $tok=strtok($str,'&');
+    $len=strlen($tok)/2;
+    $extra=strtok('');
+    $attr=array();
+    if ($extra) {
+      $para=substr($extra,3,-1);
+      # rowspan
+      if (preg_match("/^\|(\d+)$/",$para,$match))
+        $attr[]="rowspan='$match[1]'";
+      else if ($para[0]=='#')
+        $attr[]="bgcolor='$para'";
+      else
+        $attr[]=$para;
+    }
+    if ($align) $attr[]="align='center'";
+    if ($len > 1)
+      $attr[]="colspan='$len'"; #$attr[]="align='center' colspan='$len'";
+    return implode(' ',$attr);
+  }
+
+  function _div($on,$in_div) {
+    $tag=array("</div>\n","<div>\n");
+    if ($on) $in_div++;
+    else {
+      if (!$in_div) return '';
+      $in_div--;
+    }
+    return $purple.$tag[$on];
+  }
+
+  function head_repl($depth,$head) {
+    $dep=strlen($depth);
+    $head=str_replace('\"','"',$head); # revert \\" to \"
+	$head_num=1;
+	$head_dep=0;
+
+    if (!$depth_top) {
+      $depth_top=$dep; $depth=1;
+    } else {
+      $depth=$dep - $depth_top + 1;
+      if ($depth <= 0) $depth=1;
+    }
+
+    $num="".$head_num;
+    $odepth=$head_dep;
+
+    if ($head[0] == '#') {
+      # reset TOC numberings
+      if ($toc_prefix) $toc_prefix++;
+      else $toc_prefix=1;
+      $head[0]=' ';
+      $dum=explode(".",$num);
+      $i=sizeof($dum);
+      for ($j=0;$j<$i;$j++) $dum[$j]=1;
+      $dum[$i-1]=0;
+      $num=join($dum,".");
+    }
+    $open="";
+    $close="";
+
+    if ($odepth && ($depth > $odepth)) {
+      $num.=".1";
+    } else if ($odepth) {
+      $dum=explode(".",$num);
+      $i=sizeof($dum)-1;
+      while ($depth < $odepth && $i > 0) {
+         unset($dum[$i]);
+         $i--;
+         $odepth--;
+      }
+      $dum[$i]++;
+      $num=join($dum,".");
+    }
+
+    $head_dep=$depth; # save old
+    $head_num=$num;
+
+    $prefix=$toc_prefix;
+
+    return "$close$open<h$dep>$head</h$dep>";
+  }
+
+  function link_repl($url,$attr='') {
+    global $blog_baseurl;
+
+    $url=str_replace('\"','"',$url);
+    if ($url[0]=="[") {
+      $url=substr($url,1,-1);
+      $force=1;
+    }
+    switch ($url[0]) {
+    case '{':
+      $url=substr($url,3,-3);
+      if ($url[0]=='#' and ($p=strpos($url,' '))) {
+	$col=strtok($url,' '); $url=strtok(' ');
+	if (!preg_match('/^#[0-9a-f]{6}$/',$col)) $col=substr($col,1);
+	return "<font color='$col'>$url</font>";
+      }
+      return "<tt class='wiki'>$url</tt>";
+      break;
+    case '#': # Anchor syntax in the MoinMoin 1.1
+      $anchor=strtok($url,' ');
+      //return ($word=strtok('')) ? $this->link_to($anchor,$word):
+      //           "<a name='".($temp=substr($anchor,1))."' id='$temp'></a>";
+	  return ($word=strtok('')) ? $temp=substr($anchor,1):
+                 "<a name='".($temp=substr($anchor,1))."' id='$temp'></a>";
+      break;
+    case '!':
+      $url=substr($url,1);
+      return $url;
+      break;
+    default:
+      break;
+    }
+
+    if (strpos($url,":")) {
+      if ($url[0]=='a') # attachment:
+        //return $this->macro_repl('Attachment',substr($url,11));
+        if (preg_match("/.*\.(png|gif|jpeg|jpg)$/i",$url)) {
+	  $url = preg_replace("/attachment([a-zA-Z0-9:\/]*)\:/", "", $url);
+	  return "<img src='$blog_baseurl"."/contents/upload/"."$url' alt='$url' />";
+	} else {
+	  $url = preg_replace("/attachment([a-zA-Z0-9:\/]*)\:/", "", $url);
+	  return "<a href='$blog_baseurl"."/contents/upload/"."$url' />";
+	}
+
+      if ($url[0] == '^') {
+        $attr.=' target="_blank" ';
+        $url=substr($url,1);
+      }
+
+      if (preg_match("/^mailto:/",$url)) {
+        $url=str_replace("@","_at_",$url);
+        $link=str_replace('&','&amp;',$url);
+        $name=substr($url,7);
+        return "<a href='$link'>$name</a>";
+      }
+
+      if ($force or strpos($url," ")) { # have a space ?
+        list($url,$text)=explode(" ",$url,2);
+        $link=str_replace('&','&amp;',$url);
+        if (!$text) $text=$url;
+        else {
+          if (preg_match("/^(http|ftp).*\.(png|gif|jpeg|jpg)$/i",$text)) {
+            $text=str_replace('&','&amp;',$text);
+            return "<a href='$link' $attr title='$url'><img alt='$url' src='$text' /></a>";
+          }
+        }
+        $icon=strtok($url,':');
+        return "<a class='externalLink' $attr href='$link'>$text</a>";
+      } # have no space
+      $link=str_replace('&','&amp;',$url);
+      if (preg_match("/^(http|https|ftp)/",$url)) {
+        if (preg_match("/(^.*\.(png|gif|jpeg|jpg))(([\?&]([a-z]+=[0-9a-z]+))*)$/i",$url,$match)) {
+          $url=$match[1];
+          $attrs=explode('&',substr($match[3],1));
+          foreach ($attrs as $arg) {
+            $name=strtok($arg,'=');
+            $val=strtok(' ');
+            if ($name and $val) $attr.=$name.'="'.$val.'" ';
+            if ($name == 'align') $attr.='class="img'.ucfirst($val).'" ';
+          }
+          return "<img alt='$link' $attr src='$url' />";
+        }
+      }
+      return "<a class='externalLink' $attr href='$link'>$url</a>";
+    } else {
+      if ($url[0]=="?") $url=substr($url,1);
+      //return $this->word_repl($url,'',$attr);
+	  return $url;
+    }
+  }
+}
+
 # vim: ts=8 sw=2 sts=2 noet
 ?>

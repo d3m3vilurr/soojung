@@ -1,6 +1,14 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
+{if $mode == "preview"}
+<h1>preview</h1>
+<h2>{$title}</h2>
+{$body}
+<br />
+{$category}, {$date}
+<hr />
+{/if}
 
 <div id="post">
 <form action="{$baseurl}/post.php" method="post" name="postForm">
@@ -47,6 +55,7 @@
 <input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')">plain
 <input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')">html
 <input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=bbcode')">bbcode
+<input type="radio" name="format" value="moniwiki" {if $format == "moniwiki"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=moniwiki')">moniwiki
 </span>
 </div>
 
@@ -85,14 +94,5 @@
 </div>
 
 </form>
-
-{if $mode == "preview"}
-<h1>Preview</h1>
-<h2>{$title}</h2>
-{$body}
-<br />
-{$category}, {$date}
-{/if}
-
 </div>
 {include file="footer.tpl"}
