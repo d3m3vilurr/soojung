@@ -93,10 +93,15 @@ class Soojung {
   function createNewEntryId() {
     clearstatcache();
     $fd = fopen("contents/.info", "r");
+    flock($fd, LOCK_SH);
     $i = trim(fread($fd, filesize("contents/.info")));
+    flock($fd, LOCK_UN);
     fclose($fd);
+    
     $fd = fopen("contents/.info", "w");
+    flock($fd, LOCK_EX);
     fwrite($fd, $i + 1);
+    flock($fd, LOCK_UN);
     fclose($fd);
     return $i;
   }
@@ -182,15 +187,19 @@ class Soojung {
       }
 
       if ($fd = @fopen("contents/.referer", "r")) {
-	$data = @fread($fd, filesize("contents/.referer"));
-	fclose($fd);
-	$data = $referer . "\r\n" . $data;
+      	flock($fd, LOCK_SH);
+        $data = @fread($fd, filesize("contents/.referer"));
+        flock($fd, LOCK_UN);
+        fclose($fd);
+        $data = $referer . "\r\n" . $data;
       } else {
-	$data = $referer;
+        $data = $referer;
       }
 
       if ($fd = @fopen("contents/.referer", "w")) {
+      	flock($fd, LOCK_EX);
         fwrite($fd, $data);
+        flock($fd, LOCK_UN);
         fclose($fd);
       }
     }

@@ -76,9 +76,11 @@ function get_count() {
   $modified = false;
 
   if ($fd = @fopen("contents/.count", "r")) {
+  	flock($fd, LOCK_SH);
     $last_date = trim(fgets($fd,256));
     $today_count = trim(fgets($fd,256));
     $total_count = trim(fgets($fd,256));
+    flock($fd, LOCK_UN);
     fclose($fd);
   }
 
@@ -94,12 +96,14 @@ function get_count() {
 
   if ($modified) {
     if ($fd = @fopen("contents/.count", "w")) {
+      flock($fd, LOCK_EX);
       fwrite($fd, $today);
       fwrite($fd, "\n");
       fwrite($fd, $today_count);
       fwrite($fd, "\n");
       fwrite($fd, $total_count);
       fwrite($fd, "\n");
+      flock($fd, LOCK_UN);
       fclose($fd);
     }
   }
