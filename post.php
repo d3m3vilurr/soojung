@@ -41,6 +41,8 @@ if ($_POST["mode"] == "Post") {
   $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
+  if (isset($_POST["id"]))
+    $id = $_POST["id"];
 }
 
 $smarty = new Smarty;
