@@ -72,7 +72,7 @@ class Trackback {
   /**
    * static method
    */
-  function getRecentTrackback($count=10) {
+  function getRecentTrackbacks($count=10) {
     $filenames = array();
     $dirs = Soojung::queryFilenameMatch("^[0-9]+$", "contents/");
     foreach ($dirs as $dir) {

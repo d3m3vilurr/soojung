@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once("soojung.php");
+include("settings.php");
 
 if (!isset($_SESSION["auth"])) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
@@ -18,21 +18,23 @@ if ($_POST["mode"] == "Post") {
     echo "<font color=\"red\">WARNING: Input title, body, date, category</font>";
   } else {
     if (isset($_POST["id"])) {
-      entry_edit($_POST["id"], $title, $body, $date, $category);
+      Entry::editEntry($_POST["id"], $title, $body, $date, $category);
     } else {
-      entry_new($title, $body, $date, $category);
+      Entry::createEntry($title, $body, $date, $category);
     }
-    echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
+    echo "post success<br>";
+    echo "<a href=\"admin.php\">admin</a> ";
+    echo "<a href=\"\">index</a><br>";
     exit;
   }
 } else if ($_GET["blogid"]) { //edit
-  $entry = get_entry($_GET["blogid"]);
+  $entry = Entry::getEntry($_GET["blogid"]);
   $mode = "edit";
-  $title = $entry["title"];
-  $body = $entry["body"];
-  $date = $entry["date"];
-  $category = $entry["category"];
-  $id = $entry["id"];
+  $title = $entry->title;
+  $body = $entry->getBody();
+  $date = $entry->date;
+  $category = $entry->category;
+  $id = $entry->entryId;
 } else if ($_POST["mode"] == "Preview") {
   $mode = "preview";
   $title =  $_POST["title"];
@@ -40,9 +42,6 @@ if ($_POST["mode"] == "Post") {
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
 }
-
-define('SMARTY_DIR', 'libs/smarty/');
-require(SMARTY_DIR . 'Smarty.class.php');
 
 $smarty = new Smarty;
 $smarty->compile_dir = "templates/.admin_compile/";

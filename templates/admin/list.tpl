@@ -1,11 +1,11 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
-{foreach from=$entry_structs item=entry_struct}
-	<a href="{$baseurl}/post.php?blogid={$entry_struct.entry.id}">edit</a>
-	<a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry_struct.entry.id}" onclick="return confirm('Are you sure want to delete?');">delete</a>
-	{$entry_struct.entry.title}
-	<a href="{$baseurl}/sendping.php?blogid={$entry_struct.entry.id}">send trackback ping</a>
+{foreach from=$entries item=entry}
+	<a href="{$baseurl}/post.php?blogid={$entry->entryId}">edit</a>
+	<a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete?');">delete</a>
+	{$entry->title}
+	<a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">send trackback ping</a>
 	<br />
 	
 	{foreach from=$entry_struct.comments item=comment}

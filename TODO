@@ -7,7 +7,6 @@ X번째 방문자 이벤트기능
 MT->soojung 변환 프로그램
 템플릿 추가
 카테고리 대분류(혹은 다중 깊이 트리)
-class기반으로 바꾸기
 plugin 환경 구축
 entry flag 설정. 예) NO_COMMENT, NO_TRACKBACK, etc ...
 설치 할 때 인코딩 설정 할 수 있게 만들기(기본은 utf-8)

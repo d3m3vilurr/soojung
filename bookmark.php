@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-include_once("soojung.php");
-
 if (!isset($_SESSION["auth"])) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
   exit;

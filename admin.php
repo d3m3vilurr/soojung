@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-include_once("soojung.php");
-
-define('SMARTY_DIR', 'libs/smarty/');
-require(SMARTY_DIR . 'Smarty.class.php');
+include("config.php");
+include_once("settings.php");
 
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password) {
@@ -82,15 +80,7 @@ if ($_GET["mode"] == "config") {
   $smarty->display('data.tpl');
 } else {
   $entry_structs = array();
-  $entries = get_entries(get_entry_count(), 1);
-  foreach ($entries as $e) {
-    $entry_struct = array();
-    $entry_struct['entry'] = $e;
-    $entry_struct['comments'] = get_comments($e['id']);
-    $entry_struct['trackbacks'] = get_trackbacks($e['id']);
-    $entry_structs[] = $entry_struct;
-  }
-  $smarty->assign('entry_structs', $entry_structs);
+  $smarty->assign('entries', Entry::getEntries(Entry::getEntryCount(), 1));
   $smarty->display('list.tpl');
 }
 ?>

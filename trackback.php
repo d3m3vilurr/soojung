@@ -1,5 +1,5 @@
 <?php
-include_once("soojung.php");
+
 header("Content-type: text/xml");
 
 if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {

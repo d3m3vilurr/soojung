@@ -2,8 +2,6 @@
 include_once("libs/xmlrpcs.inc");
 include_once("libs/xmlrpc.inc");
 
-include("soojung.php");
-
 function _error($errcode, $errstring) {
   global $xmlrpcerruser;
   return new xmlrpcresp(0, $xmlrpcerruser + $errcode, $errstring);

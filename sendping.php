@@ -1,5 +1,4 @@
 <?php
-include_once("soojung.php");
 include("Template.class.php");
 
 if ($_POST["mode"] == "post") {

@@ -26,7 +26,18 @@ class Entry {
     $this->title = fgets($fd);
     $this->category = fgets($fd);
     fclose($fd);
-    //TODO: entryId, href
+    $this->entryId = Soojung::filenameToEntryId($filename);
+    //TODO: href
+  }
+
+  function getBody() {
+    $fd = fopen($this->filename, "r");
+    fgets($fd);
+    fgets($fd);
+    fgets($fd);
+    $body = fread($fd, filesize($this->filename));
+    fclose($fd);
+    return $body;
   }
 
   function getCommentCount() {
@@ -51,7 +62,7 @@ class Entry {
 
   function getTrackbacks() {
     $trackbacks = array();
-    $filenames = query_filename_match("[.]trackback$", "contents/" . $entryId . "/");
+    $filenames = Soojung::queryFilenameMatch("[.]trackback$", "contents/" . $entryId . "/");
     sort($filenames);
     foreach($filenames as $filename) {
       $trackbacks[] = new Trackback($filename);
@@ -63,7 +74,7 @@ class Entry {
    * static method
    */
   function entryWrite($title, $body, $date, $cateogry, $entryId) {
-    $filename = date('YmdHis', $date) . '_' . $id . '.entry';
+    $filename = date('YmdHis', $date) . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, $date);
     fwrite($fd, "\r\n");
@@ -106,7 +117,7 @@ class Entry {
   /**
    * static method
    */
-  function getEntryCount($entryId) {
+  function getEntryCount() {
     $r = Soojung::queryFilenameMatch("[.]entry$");
     return count($r);
   }

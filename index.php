@@ -1,6 +1,7 @@
 <?php
-include_once("soojung.php");
-include("Template.class.php");
+
+include("config.php");
+include_once("settings.php");
 
 $template = new Template;
 
@@ -9,6 +10,7 @@ if (isset($_GET["page"])) {
 } else {
   $page = 1;
 }
+
 if ($page > 1) {
   if ($blog_fancyurl == true) {
     $template->assign('prev_page_link', $blog_baseurl . "/page/" . ($page - 1));
@@ -16,7 +18,8 @@ if ($page > 1) {
     $template->assign('prev_page_link', "index.php?page=" . ($page - 1));
   }
 }
-if (get_entry_count() > (($page) * $blog_entries_per_page)) {
+
+if (Entry::getEntryCount() > (($page) * $blog_entries_per_page)) {
   if ($blog_fancyurl == true) {
      $template->assign('next_page_link', $blog_baseurl . "/page/" . ($page + 1));
   } else {
@@ -45,8 +48,10 @@ if (isset($_GET["archive"])) {
 } else {
   $template->assign('view', 'index');
   $template->assign('keyword', "all");
-  $template->assign('count', get_entry_count());
-  $template->assign('entries', get_entries($blog_entries_per_page, $page));
+  //$template->assign('count', get_entry_count());
+  $template->assign('count', Entry::getEntryCount());
+  //$template->assign('entries', get_entries($blog_entries_per_page, $page));
+  $template->assign('entries', Entry::getEntries($blog_entries_per_page, $page));
 }
 
 $template->display('index.tpl');

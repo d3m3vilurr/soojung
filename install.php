@@ -1,10 +1,10 @@
 <?php
-include_once("soojung.php");
+include_once("settings.php");
 ?>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="styles.css" />
 <title>install</title>
 </head>
 <body>
@@ -19,9 +19,7 @@ if (!is_writable(".")) {
 if (!is_writable("templates")) {
   echo "<font color=\"red\">WARNING: Templates directory is not writeable</font><br />";
 }
-?>
 
-<?php
 if (isset($_POST["name"])) {
   if (empty($_POST["name"]) || empty($_POST["desc"])
       || empty($_POST["url"]) || empty($_POST["password"])
@@ -47,7 +45,7 @@ if (isset($_POST["name"])) {
 
   $fb = isset($_POST["fancyurl"]) ? $_POST["fancyurl"] : "off";
   $nb = isset($_POST["notify"]) ? $_POST["notify"] : "off";
-  write_config_file($_POST["name"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
+  Soojung::writeConfigFile($_POST["name"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 		    $fb, $nb, $_POST["admin"], $_POST["email"],
 		    md5($_POST["password"]));
 
@@ -63,7 +61,8 @@ if (isset($_POST["name"])) {
   fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
   fclose($f);
 
-  echo "install success. delete install.php file";
+  echo "install success. delete install.php file<br>";
+  echo "<a href=\"index.php\">home</a>";
   exit();
 }
 ?>
