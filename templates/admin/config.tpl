@@ -32,6 +32,21 @@
 </div>
 
 <div class="row">
+<span class="label">Entries License:</span>
+<span class="formw">
+<select name="skin">
+<option value="none" {if $license == "none"}selected{/if}>None (All rights reserved)</option>
+<option value="4" >Attribution License</option>
+<option value="6" >Attribution-NoDerivs License</option>
+<option value="3" >Attribution-NonCommercial-NoDerivs License</option>
+<option value="2" >Attribution-NonCommercial License</option>
+<option value="1" >Attribution-NonCommercial-ShareAlike License</option>
+<option value="5" >Attribution-ShareAlike License</option>
+</select>
+</span>
+</div>
+
+<div class="row">
 <span class="label">Admin Name:</span>
 <span class="formw"><input type="text" name="adminname" value="{$admin_name}"></span>
 </div>

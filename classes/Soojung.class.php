@@ -146,7 +146,7 @@ class Soojung {
    * static method
    */
   function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
-			     $adminname, $adminemail, $adminpassword, $skin = "simple") {
+			     $adminname, $adminemail, $adminpassword, $skin = "simple", $license = "none") {
     $fd = fopen("config.php", "w");
     fwrite($fd, "<?php\n");
     fwrite($fd, '$blog_name="' . $blogname . "\";\n");
@@ -172,6 +172,7 @@ class Soojung {
     } else {
       fwrite($fd, '$admin_password="' . $adminpassword . "\";\n");
     }
+    fwrite($fd, '$entries_license="' . $license . "\";\n");
     fwrite($fd, "?>");
     fclose($fd);
   }
