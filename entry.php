@@ -17,7 +17,11 @@ if (isset($_POST["blogid"])) {
     $url = "";
   }
   $t = time();
-  comment_write($blogid, $name, $email, $url, nl2br($body), $t);
+  $name = trim(strip_tags($name));
+  $email = trim(strip_tags($email));
+  $url = trim(strip_tags($url));
+  $body = nl2br(trim(htmlspecialchars($body)));
+  comment_write($blogid, $name, $email, $url, $body, $t);
 
   // Remembering 30 days
   setcookie('w_id',    $blogid, $t+2592000);

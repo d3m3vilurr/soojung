@@ -27,7 +27,7 @@ if (isset($_POST["name"])) {
       || empty($_POST["url"]) || empty($_POST["password"])
       || empty($_POST["admin"]) || empty($_POST["email"])
       || empty($_POST["perpage"])) {
-    echo "input name, desc, url, email, password";
+    echo "<font color=\"red\">WARNING: Input name, desc, url, email, password</font><br />";
     die;
   }
 
@@ -45,9 +45,10 @@ if (isset($_POST["name"])) {
   fwrite($f, "1");
   fclose($f);
 
-  $b = isset($_POST["fancyurl"]) ? $_POST["fancyurl"] : "off";
+  $fb = isset($_POST["fancyurl"]) ? $_POST["fancyurl"] : "off";
+  $nb = isset($_POST["notify"]) ? $_POST["notify"] : "off";
   write_config_file($_POST["name"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
-		    $b, $_POST["admin"], $_POST["email"],
+		    $fb, $nb, $_POST["admin"], $_POST["email"],
 		    md5($_POST["password"]));
 
   $f = fopen(".htaccess", "w");
@@ -86,16 +87,6 @@ if (isset($_POST["name"])) {
 </tr>
 
 <tr>
-<td>entries per page</td>
-<td><input type="text" name="perpage" size="2" value="<?=isset($_POST['perpage']) ? $_POST['perpage'] : 5?>"></td>
-</tr>
-
-<tr>
-<td>fancy url:</td>
-<td><input type="checkbox" name="fancyurl"></td>
-</tr>
-
-<tr>
 <td>Admin name:</td>
 <td><input type="text" name="admin" value="<?=isset($_POST['admin']) ? $_POST['admin'] : ""?>"></td>
 </tr>
@@ -110,6 +101,20 @@ if (isset($_POST["name"])) {
 <td><input type="password" name="password" value="<?=isset($POST['password']) ? $_POST['password'] : ""?>"></td>
 </tr>
 
+<tr>
+<td>entries per page</td>
+<td><input type="text" name="perpage" size="2" value="<?=isset($_POST['perpage']) ? $_POST['perpage'] : 5?>"></td>
+</tr>
+
+<tr>
+<td>fancy url:</td>
+<td><input type="checkbox" name="fancyurl"> ex) <i>http://site/soojung/category/2004/09/25/3.html</i></td>
+</tr>
+
+<tr>
+<td>notify new comment, trackback by email</td>
+<td><input type="checkbox" name="notify"></td>
+</tr>
 
 </table>
 <input type="submit" value="Install">

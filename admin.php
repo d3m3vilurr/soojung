@@ -35,7 +35,7 @@ if ($_POST["mode"] == "config_update") {
     exit();
   }
   write_config_file($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
-		    $_POST["fancyurl"], $_POST["adminname"], $_POST["email"],
+		    $_POST["fancyurl"], $_POST["notify"], $_POST["adminname"], $_POST["email"],
 		    FALSE, $_POST["skin"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
 }
@@ -70,6 +70,7 @@ if ($_GET["mode"] == "config") {
   $smarty->assign("blog_desc", $blog_desc);
   $smarty->assign("blog_entries_per_page", $blog_entries_per_page);
   $smarty->assign("blog_fancyurl", $blog_fancyurl);
+  $smarty->assign("blog_notify", $notify);
   $smarty->assign("blog_skin", $blog_skin);
   $smarty->assign("admin_name", $admin_name);
   $smarty->assign("admin_email", $admin_email);

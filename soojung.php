@@ -51,7 +51,10 @@ function blogid_to_filename($blogid) {
 }
 
 function notify_to_admin($title, $blogid) {
-  global $admin_email;
+  global $notify, $admin_email;
+  if ($notify != true) {
+    return;
+  }
   $entry = get_entry($blogid);
   $body = "<html><head></head><body><a href=" . $entry['link'] . "\">check out</a></body></html>";
   mail($admin_email, $title, $body);
@@ -459,7 +462,7 @@ function get_category_entries($category) {
   return $entries;
 }
 
-function write_config_file($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl,
+function write_config_file($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
 			   $adminname, $adminemail, $adminpassword, $skin = "default") {
   $fd = fopen("config.php", "w");
   fwrite($fd, "<?php\n");
@@ -471,6 +474,11 @@ function write_config_file($blogname, $blogdesc, $blogurl, $perpage, $blogfancyu
     fwrite($fd, '$blog_fancyurl=true;' . "\n");
   } else {
     fwrite($fd, '$blog_fancyurl=false;' . "\n");
+  }
+  if ($blognotify == "on") {
+    fwrite($fd, '$notify=true;' . "\n");
+  } else {
+    fwrite($fd, '$notify=false;' . "\n");
   }
   fwrite($fd, '$blog_skin="' . $skin . "\";\n");
   fwrite($fd, '$admin_name="' . $adminname . "\";\n");
