@@ -2,9 +2,9 @@
 {include file="menu.tpl"}
 
 <div id="list">
-<span class="subject">Subject</span>
-<span class="trackback_ping">Trackback</span>
-<span class="delete">Delete</span>
+<span class="subject"><b>Subject</b></span>
+<span class="trackback_ping"><b>Trackback</b></span>
+<span class="delete"><b>Delete</b></span>
 
 {foreach from=$entries item=entry}
 <div class="entry">

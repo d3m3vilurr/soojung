@@ -23,6 +23,7 @@ div.row span.formw {
 #menu
 {
   position:absolute;
+  top: 20px;
   left:20px;
   width:120px;
   padding:10px;
@@ -57,53 +58,107 @@ div.row span.formw {
   padding:10px;
 }
 
+h2
+{ 
+  font-size: 14pt;
+  background: #eee;
+  color: #09c;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.entry_title
+{ 
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+.content_entry
+{
+  position:absolute;
+  margin: 0px 50% 10px 0px;
+  border: 1px solid black;
+  background-color:white;
+  z-index: 3;
+
+  max-width: 300px;
+  min-width: 300px;
+}
+
+.content_comment
+{
+  position:absolute;
+  margin-left: 320px;
+  margin-right: 10px;
+  border:1px solid black;
+  background-color:white;
+}
+
+.content_trackback
+{
+  position:absolute;
+  top: 190px;
+  margin: 0px 50% 10px 0px;
+  border: 1px solid black;
+  background-color:white;
+  z-index: 3;
+
+  max-width: 300px;
+  min-width: 300px;
+}
+
+.content_info
+{
+  position:absolute;
+  top: 190px;
+  margin-left: 320px;
+  margin-right: 10px;
+  border:1px solid black;
+  background-color:white;
+}
 
 /* post */
 #post div.row span.label
 {
   width: 70px;
 }
-.content_entry
+
+/* list */
+.entry
 {
-  position:absolute;
-  left:auto;
-  width:auto;
-  height: 200px;
-  border:1px solid black;
-  background-color:white;
-  padding:20px;
+  padding-top: 5px;
+  width: 100px;
 }
 
-.content_comment
-{
-  position:absolute;
-  right:30px;
-  width:auto;
-  height: 200px;
-  border:1px solid black;
-  background-color:white;
-  padding:20px;
+.subject
+{ 
+  white-space:nowrap;
+  overflow:hidden;
 }
 
-.content_trackback
-{
-  position:absolute;
-  top: 290px;
-  left:auto;
-  height: 200px;
-  border:1px solid black;
-  background-color:white;
-  padding:20px;
+.comment .subject, .trackback .subject
+{ 
+  padding-left: 12px;
 }
 
-.content_info
+.trackback_ping
 {
-  position:absolute;
-  top: 290px;
-  right: 30px;
-  width:auto;
-  height: 200px;
-  border:1px solid black;
-  background-color:white;
-  padding:20px;
+  left: 600px;
+  padding-left: 20px;
+}
+
+.delete
+{ 
+  left: 700px;
+  padding-left: 20px;
+}
+
+.entry:hover, .comment:hover, .trackback_ping:hover
+{ 
+  background-color: #4a5e7d;
+}
+
+.entry:hover a, .comment:hover a, .trackback_ping:hover a
+{ 
+  color: #fff;
 }
