@@ -8,7 +8,7 @@ class Category {
   }
 
   function getHashID() {
-    return base64_encode($this->name);
+    return str_replace("/", "-", base64_encode($this->name));
   }
 
   function getHref() {
