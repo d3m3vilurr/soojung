@@ -119,7 +119,6 @@ class Entry {
     }
     $foptions = "";
     if (in_array("STATIC", $options)) {
-      #print $title;
       $foptions .= "S";
     }
     $categoryclass = new Category($category);
@@ -166,8 +165,8 @@ class Entry {
   /**
    * static method
    */
-  function getEntryCount() {
-    return Soojung::queryNumFilenameMatch("^[0-9].+[.]entry$");
+  function getEntryCount($hide=true) {
+    return Soojung::queryNumFilenameMatch(Entry::_getQuery($hide));
   }
 
   /**
@@ -179,12 +178,25 @@ class Entry {
   }
 
   /**
+   * private static method
+   */
+  function _getQuery($hide) {
+    if ($hide == false) {
+      $query = "[.]entry$";
+    } else {
+      $query = "^[0-9].+[.]entry$";
+    }
+    return $query;
+  }
+
+  /**
    * static method
    */
-  function getEntries($count, $page) {
+  function getEntries($count, $page, $hide=true) {
     $entries = array();
-    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
-    rsort($filenames);
+    $query = Entry::_getQuery($hide);
+    $filenames = Soojung::queryFilenameMatch($query);
+    usort($filenames, "cmp_base_filename");
     $index = ($page - 1) * $count;
 
     for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
@@ -200,10 +212,7 @@ class Entry {
    */
   function getAllEntries($hide=true) {
     $entries = array();
-    $query = "^[0-9].+[.]entry$";
-    if ($hide == false) {
-      $query = "[.]entry$";
-    }
+    $query = Entry::_getQuery($hide);
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
     foreach($filenames as $filename) {
@@ -215,8 +224,8 @@ class Entry {
   /**
    * static method
    */
-  function getRecentEntries($count=10) {
-    return Entry::getEntries($count, 1);
+  function getRecentEntries($count=10, $hide=true) {
+    return Entry::getEntries($count, 1, $hide);
   }
 
   /**

@@ -128,13 +128,13 @@ if ($_GET["mode"] == "config") {
   if ($page > 1) {
     $template->assign('prev_page_link', "admin.php?mode=list&page=" . ($page - 1));
   }
-  if (Entry::getEntryCount() > $page * 10) {
+  if (Entry::getEntryCount(false) > $page * 10) {
     $template->assign('next_page_link', "admin.php?mode=list&page=" . ($page + 1));
   }
-  $template->assign('entries', Entry::getEntries(10, $page));
+  $template->assign('entries', Entry::getEntries(10, $page, false));
   $template->display('list.tpl');
 } else {
-  $template->assign('recent_entries', Entry::getRecentEntries(5));
+  $template->assign('recent_entries', Entry::getRecentEntries(5, false));
   $template->assign('recent_comments', Comment::getRecentComments(5));
   $template->assign('recent_trackbacks', Trackback::getRecentTrackbacks(5));
   $template->assign('entry_count', Entry::getEntryCount());

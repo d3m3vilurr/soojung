@@ -44,9 +44,12 @@ $blogid = $_GET["blogid"];
 $template = new UserTemplate('entry.tpl', $blogid);
 if (!$template->is_cached('entry.tpl', $blogid)) {
   $entry = Entry::getEntry($blogid);
+  if ($entry->isSetOption("SECRET")) {
+    exit;
+  }
   $template->assign('entry', $entry);
   $template->assign('trackbacks', $entry->getTrackbacks());
-  $template->assign('comments', $entry->getComments());
+  $template->assign('comments', $entry->getComments());    
 }
 
 foreach (array('w_id','w_name','w_email','w_url') as $key) {

@@ -68,57 +68,28 @@ h2
   padding: 3px;
 }
 
+#overview td
+{
+  vertical-align: top;
+}
+
+tr .row:hover
+{ 
+  background-color: #4a5e7d;
+}
+tr .row:hover
+{ 
+  color: #fff;
+}
+tr .row:hover a
+{ 
+  color: #fff;
+}
+
 .entry_title
 { 
   white-space:nowrap;
   overflow:hidden;
-}
-
-.content_entry
-{
-  position:absolute;
-  margin: 0px 50% 10px 0px;
-  border:1px dashed #999;
-  background-color:white;
-  z-index: 3;
-
-  max-width: 300px;
-  min-width: 300px;
-}
-
-.content_comment
-{
-  position:absolute;
-  margin-left: 320px;
-  margin-right: 10px;
-  border:1px dashed #999;
-  background-color:white;
-}
-
-.content_trackback
-{
-  position:absolute;
-  top: 190px;
-  margin: 0px 50% 10px 0px;
-  border:1px dashed #999;
-  background-color:white;
-  z-index: 3;
-
-  max-width: 300px;
-  min-width: 300px;
-}
-
-.content_info
-{
-  position:absolute;
-  top: 190px;
-  margin-left: 320px;
-  margin-right: 10px;
-  border:1px dashed #999;
-  background-color:white;
-
-  height: 145px;
-  min-width: 300px;
 }
 
 /* post */
@@ -176,13 +147,13 @@ h2
   display:none;
 }
 
-table
+#bookmark table
 {
     margin: 5px 0px 5px 0px;
     padding: 0px;
     background: #7cb4fb;
 }
-table td
+#bookmark table td
 {
     margin: 0px;
     padding: 2px;

@@ -87,14 +87,12 @@
 </form>
 
 {if $mode == "preview"}
-<h1>preview</h1>
+<h1>Preview</h1>
 <h2>{$title}</h2>
 {$body}
 <br />
 {$category}, {$date}
-<hr />
 {/if}
-
 
 </div>
 {include file="footer.tpl"}
