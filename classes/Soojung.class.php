@@ -98,7 +98,7 @@ class Soojung {
    * static method
    */
   function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
-			     $adminname, $adminemail, $adminpassword, $skin = "default") {
+			     $adminname, $adminemail, $adminpassword, $skin = "simple") {
     $fd = fopen("config.php", "w");
     fwrite($fd, "<?php\n");
     fwrite($fd, '$blog_name="' . $blogname . "\";\n");

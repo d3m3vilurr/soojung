@@ -1,0 +1,162 @@
+body
+{
+  margin: 0 auto;
+  padding: 0 16px;
+  font-family: verdana, sans-serif;
+  text-align: left;
+  line-height: 1.5em;
+  color: #000;
+  background: #fff;
+  font-size: small;
+}
+
+#content
+{
+  float: left;
+  padding: 20px 20px;
+  width: 70%;
+}
+
+#content .entry
+{
+  padding-top: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+#content .comments
+{ 
+  padding-top: 12px;
+}
+
+#content .comment
+{
+  padding-bottom: 12px;
+}
+
+#content .trackbacks
+{
+  padding-top: 12px;
+}
+
+#content .trackback_url
+{
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#content .trackback
+{ 
+  padding-bottom: 12px;
+}
+
+h2
+{
+  font-family: "lucida grande", verdana, sans-serif;
+  font-size: 105%;
+  color: #930;
+  padding: 0;
+  margin: 0 0 1em 0;
+}
+
+a
+{
+  color: #930;
+  text-decoration:none;
+}
+
+p.posted
+{
+  color: #999;
+  font-size: 90%;
+  margin: 0;
+  padding: 0 0 12px 0;
+  text-align: right;
+}
+
+a.plink
+{
+  color: #999;
+  text-decoration: none;
+}
+
+a:hover.plink
+{
+  color: #333;
+}
+
+#sidebar
+{
+  float: right;
+  font-size: 90%;
+  line-height: 1.5em;
+  padding: 20px 20px 0px 0px;
+  color: #999;
+  width: 20%;
+}
+
+#sidebar ul
+{
+  margin: 4px 0 20px 0;
+  padding-left: 10px;
+  list-style: none;
+}
+
+#sidebar li
+{
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0 0 .5em 0;
+}
+
+#sidebar a:link
+{
+  color: #999;
+}
+
+#sidebar a:visited
+{
+  color: #999;
+}
+
+#sidebar a:hover
+{
+  color: #333;
+}
+
+#sidebar h3
+{
+  border-bottom: 1px solid #ddd;  
+}
+
+#sidebar h3 a
+{
+  color: #999;
+}
+
+#sidebar h3 a:hover
+{
+  color: #000;
+}
+
+#sidebar .div_hide
+{
+  display: none;
+}
+#footer
+{
+  position: relative;
+  clear: both;
+  margin: 0;
+  padding: 0;
+  font-size: 90%;
+  color: #666;
+}
+
+#footer p 
+{
+  color: #999;
+  margin: 0;
+  padding: 8px 20px;
+  text-align: center;
+}
