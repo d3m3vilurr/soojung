@@ -39,7 +39,7 @@ if ($_POST["mode"] == "upload") {
   }
   $format = $_POST["format"];
 
-  if (empty($title) || empty($body) || empty($date) || empty($format) ) {
+  if (empty($title) || empty($body) || empty($date) || empty($format) || empty($category) ) {
     echo "<font color=\"red\">WARNING: Input title, body, date, category, format</font>";
   } else {
     if (isset($_POST["id"])) {

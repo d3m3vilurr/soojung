@@ -20,9 +20,14 @@
 
 	Category:
 	<input type="text" name="category_input" value="{$category}"> or 
-	<select name="category">
-	{foreach from=$categories item=cate}
-	<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
+
+	{foreach name=categories from=$categories item=cate}
+		{if $smarty.foreach.categories.first}
+			<select name="category">
+		{/if}
+		<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
+	{foreachelse}
+		<select name="category" disabled>
 	{/foreach}
 	</select>
 	<br />
