@@ -61,7 +61,7 @@ class Entry {
     }
   }
 
-  function getBody($toHtml = true) {
+  function getRawBody() {
     $fd = fopen($this->filename, "r");
     fgets($fd, 1024); // date
     fgets($fd, 1024); // title
@@ -71,24 +71,14 @@ class Entry {
     fgets($fd, 1024);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
-
-    // body convert to html
-    if ($toHtml == true) {
-      if ($this->format == "plain") {
-	$body = Formatter::plainToHtml($body);
-      } elseif ($this->format == "html") {
-	//do nothing :)
-      } elseif ($this->format == "bbcode") {
-        $body = Formatter::bbcodeToHtml($body);
-      }
-    } else {
-      if ($this->format == "html") {
-	$body = addslashes($body);
-      } else {
-	$body = htmlspecialchars($body);
-      }
-    }
+    
     return $body;
+  }
+
+  function getBody() {
+    $body = $this->getRawBody();
+    $formatter = Soojung::getFormatter($this->format);
+    return $formatter->toHtml($body);
   }
 
   function getCommentCount() {

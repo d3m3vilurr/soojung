@@ -129,6 +129,22 @@ class Soojung {
   /**
    * static method
    */
+  function getFormatter($format) {
+    switch($format) {
+    case "plain":
+      return new PlainFormatter();
+    case "html":
+      return new HtmlFormatter();
+    case "bbcode":
+      return new BBcodeFormatter();
+    default:
+      return new Formatter();
+    }
+  }
+
+  /**
+   * static method
+   */
   function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
 			     $adminname, $adminemail, $adminpassword, $skin = "simple") {
     $fd = fopen("config.php", "w");

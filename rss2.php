@@ -37,7 +37,9 @@ foreach ($entries as $e) {
     continue;
   }
 
-  $post_text = $e->getBody();
+  $post_text = $e->getRawBody();
+  $formatter = Soojung::getFormatter($e->format);
+  $post_text = $formatter->toRSS($post_text);
 
   echo "<item>\n";
   echo "<title>" . convenc($e->title) . "</title>\n";

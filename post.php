@@ -14,7 +14,9 @@ if ($_POST["mode"] == "upload") {
   die();
 } else if ($_POST["mode"] == "Post") {
   $title =  $_POST["title"];
-  $body = balanceTags($_POST["body"]);
+  $format = $_POST["format"];
+  $formatter = Soojung::getFormatter($format);
+  $body = $formatter->onPost($_POST["body"]);
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);
@@ -37,7 +39,6 @@ if ($_POST["mode"] == "upload") {
   if (isset($_POST["NO_RSS"])) {
     $options[] = "NO_RSS";
   }
-  $format = $_POST["format"];
 
   if (empty($title) || empty($body) || empty($date) || empty($format) || empty($category) ) {
     echo "<font color=\"red\">WARNING: Input title, body, date, category, format</font>";
@@ -59,7 +60,7 @@ if ($_POST["mode"] == "upload") {
   $entry = Entry::getEntry($_GET["blogid"]);
   $mode = "edit";
   $title = $entry->title;
-  $body = $entry->getBody(false);
+  $body = $entry->getRawBody();
   $date = $entry->date;
   $category = $entry->category->name;
   $options = $entry->options;
@@ -67,8 +68,10 @@ if ($_POST["mode"] == "upload") {
   $id = $entry->entryId;
 } else if ($_POST["mode"] == "Preview") {
   $mode = "preview";
-  $title =  $_POST["title"];
-  $body = balanceTags($_POST["body"]);
+  $title = $_POST["title"];
+  $format = $_POST["format"];
+  $formatter = Soojung::getFormatter($format);
+  $body = $formatter->onPost($_POST["body"]);
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);
@@ -91,7 +94,6 @@ if ($_POST["mode"] == "upload") {
   if (isset($_POST["NO_RSS"])) {
     $options[] = "NO_RSS";
   }
-  $format =  $_POST["format"];
   if (isset($_POST["id"]))
     $id = $_POST["id"];
 }
