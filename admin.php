@@ -41,6 +41,7 @@ function delete_mode() {
 }
 
 function export_mode() {
+  global $blog_name;
   $filename = $blog_name . '-' . date("Ymd", time()) . '.dat';
   header("Content-Type: application/octet");
   header("Content-Disposition: filename=" . $filename);
