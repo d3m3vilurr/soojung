@@ -67,6 +67,9 @@ class Trackback {
     }
     $filename = date('YmdHis', $date) . '.trackback';
 
+    $name = getFirstLine($name);
+    $title = getFirstLine($title);
+
     $fd = fopen($dirname . '/' . $filename, "w");
     fwrite($fd, $date);
     fwrite($fd, "\r\n");

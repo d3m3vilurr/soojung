@@ -254,4 +254,9 @@ function cut_utf8($str, $len) {
   }
 }
 
+function getFirstLine($str) {
+  $array = split("\r\n", $str);
+  return trim($array[0]);
+}
+
 ?>
