@@ -15,3 +15,5 @@ entry flag 설정. 예) NO_COMMENT, NO_TRACKBACK, etc ...
 wordpress->soojung 변환 프로그램
 설치 할 때 인코딩 설정 할 수 있게 만들기(기본은 utf-8)
 comment body에는 <a>, <i>, <b>, <pre> tag만 받게함
+달력보여주기 (글 쓴 날짜, 안 쓴 날자, 전달, 월별 archive 별 달력)
+개인 링크 관리기능(blog ring?)
