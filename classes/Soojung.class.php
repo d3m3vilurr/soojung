@@ -164,7 +164,7 @@ class Soojung {
       }
 
       if ($fd = @fopen("contents/.referer", "r")) {
-	$data = fread($fd, filesize("contents/.referer"));
+	$data = @fread($fd, filesize("contents/.referer"));
 	fclose($fd);
 	$data = $referer . "\r\n" . $data;
       } else {
@@ -180,7 +180,7 @@ class Soojung {
 
   function getRecentReferers($n) {
     if ($fd = @fopen("contents/.referer", "r")) {
-      $data = fread($fd, filesize("contents/.referer"));
+      $data = @fread($fd, filesize("contents/.referer"));
       $array = split("\r\n", $data);
       return array_slice($array, 0, $n);
     }
