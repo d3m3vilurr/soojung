@@ -9,28 +9,21 @@ if (!isset($_SESSION["auth"])) {
 }
 
 /* for posting new bookmark */
-
-if ($_POST["mode"] == "post") {
-  $url = $_POST["url"];
-  $desc = $_POST["desc"];
-
-  if (strstr ($url, "://") == FALSE)
-    $url = 'http://' . $url;
-
-  if (empty($url) || $url == 'http://')  {
-    echo "<font color=\"red\">WARNING: Input url correctly</font>";
-  } else {
-    if (Bookmark::addBookmark ($url, $desc) == false) {
-      echo "<font color=\"red\">WARNING: bookmark already exist</font>";    
-    }
+if ($_POST["mode"] == "delete") {
+  $del_list = $_POST["delchk"];
+  foreach($del_list as $number => $chk) {
+    Bookmark::deleteBookmark($number);    
   }
 } else if ($_GET["mode"] == "delete") {
-  $url = $_GET["url"];
-  Bookmark::deleteBookmark($url);
+  $number = $_GET["number"];
+  Bookmark::deleteBookmark($number);
 } else if ($_GET["mode"] == "move") {
-  $url = $_GET["url"];
+  $number = $_GET["number"];
   $offset = intval($_GET["offset"]);
-  Bookmark::moveBookmark($url, $offset);
+  Bookmark::moveBookmark($number, $offset);
+  /* XXX without refresh moving, file doesnt save correctly */
+  echo "<meta http-equiv='refresh' content='0;URL=bookmark.php'>";
+  exit;
 }
 
 $template = new AdminTemplate;
@@ -39,8 +32,8 @@ $bookmarks = Bookmark::getBookmarkList();
 if (empty($bookmarks)) {
   $bookmarks = array();
 }
+
 $template->assign('bookmarks', $bookmarks);
 $template->display('bookmark.tpl');
-
 # vim: ts=8 sw=2 sts=2 noet
 ?>

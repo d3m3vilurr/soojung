@@ -102,7 +102,7 @@ return false;
 <ul id="div_bookmark" class="div_hide">
 	{foreach from=$bookmarks item=bookmark}
 	<li>
-		<a href="{$bookmark.url}">{$bookmark.desc}</a>
+		<a href="{$bookmark->url}">{$bookmark->name}</a>
 	</li>
 	{foreachelse}
 	<li></li>

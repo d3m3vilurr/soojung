@@ -69,7 +69,7 @@
 			<ul>
 				{foreach from=$bookmarks item=bookmark}
 				<li>
-					<a href="{$bookmark.url}" class="rounded"><span>{$bookmark.desc}</span></a>
+					<a href="{$bookmark->url}" class="rounded"><span>{$bookmark->name}</span></a>
 				</li>
 				{foreachelse}
 				<li></li>
