@@ -10,7 +10,7 @@
 	
 	{foreach from=$entry->getComments() item=comment}
 		&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete?');">delete</a>
-		{$comment->getBody()|strip_tags} - {$comment->name}
+		{$comment->getBody()|strip_tags|truncate:100:"...":true} - {$comment->name}
 		<br />
 	{/foreach}
 
