@@ -216,7 +216,12 @@ class Soojung {
     if ($fd = @fopen("contents/.referer", "r")) {
       $data = @fread($fd, filesize("contents/.referer"));
       $array = split("\r\n", $data);
-      return array_slice($array, 0, $n);
+      $array = array_slice($array, 0, $n);
+
+      foreach($array as $key => $val) {
+	$array[$key] = htmlspecialchars($val);
+      }
+      return $array;
     }
   }
 }
