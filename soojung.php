@@ -137,6 +137,11 @@ function get_entry_count() {
   return count(query_filename_match("[.]entry$"));
 }
 
+function get_entry_count_by_category($category) {
+  $filenames = query_filename_match("[^_]+_" . $category . "_[^.]+[.]entry$");
+  return count($filenames);
+}
+
 function get_entry($blogid) {
   return entry_open(blogid_to_filename($blogid));
 }
@@ -453,6 +458,7 @@ function get_category_list() {
     }
     $category["name"] = $file;
     $category["link"] = $link;
+    $category["count"] = get_entry_count_by_category($file);
     $categories[] = $category;
   }
   return $categories;
@@ -532,4 +538,5 @@ function get_count() {
     fclose($fp);
   }
 }
+
 ?>
