@@ -14,7 +14,7 @@ class Template extends Smarty {
     $this->compile_dir = "templates/.compile/";
     $this->config_dir = "templates/" . $blog_skin . "/";
     $this->cache_dir = "templates/.cache/";
-    $this->force_compile = true;
+    $this->force_compile = false;
 
     $this->assign('title', $blog_name);
     $this->assign('baseurl', $blog_baseurl);

@@ -31,7 +31,7 @@ if ($_POST["mode"] == "post") {
 
 $smarty = new Smarty;
 
-$smarty->force_compile = true;
+$smarty->force_compile = false;
 $smarty->compile_dir = "templates/.admin_compile/";
 $smarty->config_dir = "templates/.admin_configs/";
 $smarty->cache_dir = "templates/.admin_cache/";
