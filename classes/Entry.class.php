@@ -32,10 +32,10 @@ class Entry {
     $fd = fopen($filename, "r");
     
     //read header
-    $this->date = trim(strstr(fgets($fd), ' '));
-    $this->title = htmlspecialchars(trim(strstr(fgets($fd), ' ')), ENT_QUOTES, "UTF-8");
-    $this->category = new Category(trim(strstr(fgets($fd), ' ')));
-    $this->options = explode("|", trim(strstr(fgets($fd), ' ')));
+    $this->date = trim(strstr(fgets($fd, 1024), ' '));
+    $this->title = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
+    $this->category = new Category(trim(strstr(fgets($fd, 1024), ' ')));
+    $this->options = explode("|", trim(strstr(fgets($fd, 1024), ' ')));
     fclose($fd);
 
     $this->entryId = Soojung::filenameToEntryId($filename);
@@ -60,11 +60,11 @@ class Entry {
 
   function getBody() {
     $fd = fopen($this->filename, "r");
-    fgets($fd); // date
-    fgets($fd); // title
-    fgets($fd); // category
-    fgets($fd); // options
-    fgets($fd);
+    fgets($fd, 1024); // date
+    fgets($fd, 1024); // title
+    fgets($fd, 1024); // category
+    fgets($fd, 1024); // options
+    fgets($fd, 1024);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
     return $body;

@@ -22,10 +22,10 @@ class Comment {
   function Comment($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = fgets($fd);
-    $this->name = fgets($fd);
-    $this->email = fgets($fd);
-    $this->homepage = fgets($fd);
+    $this->date = fgets($fd, 1024);
+    $this->name = fgets($fd, 1024);
+    $this->email = fgets($fd, 1024);
+    $this->homepage = fgets($fd, 1024);
     fclose($fd);
   }
 
@@ -38,10 +38,10 @@ class Comment {
   function getBody() {
     $fd = fopen($this->filename, "r");
     //ignore date, name, email, homepage
-    fgets($fd);
-    fgets($fd);
-    fgets($fd);
-    fgets($fd);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
     return $body;

@@ -23,10 +23,10 @@ class Trackback {
   function Trackback($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = fgets($fd);
-    $this->url = fgets($fd);
-    $this->name = fgets($fd);
-    $this->title = fgets($fd);
+    $this->date = fgets($fd, 1024);
+    $this->url = fgets($fd, 1024);
+    $this->name = fgets($fd, 1024);
+    $this->title = fgets($fd, 1024);
     fclose($fd);
   }
 
@@ -39,10 +39,10 @@ class Trackback {
   function getExcerpt() {
     $fd = fopen($this->filename, "r");
     //ignore date, url, name, title
-    fgets($fd);
-    fgets($fd);
-    fgets($fd);
-    fgets($fd);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
+    fgets($fd, 1024);
     $excerpt = fread($fd, filesize($this->filename));
     fclose($fd);
     return $excerpt;
