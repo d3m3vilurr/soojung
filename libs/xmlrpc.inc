@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.1 2004/08/30 12:22:54 ddt Exp $
+// $Id: xmlrpc.inc,v 1.2 2004/09/12 15:56:15 mithrandir Exp $
 
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
@@ -1372,12 +1372,12 @@
 	}
 
 	/****************************************************************
-	* xmlrpc_decode takes a message in PHP xmlrpc object format and *
+	* xmlrpc_decode_ex takes a message in PHP xmlrpc object format and *
 	* tranlates it into native PHP types.                           *
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	function xmlrpc_decode($xmlrpc_val)
+	function xmlrpc_decode_ex($xmlrpc_val)
 	{
 		$kind = $xmlrpc_val->kindOf();
 
@@ -1392,7 +1392,7 @@
 
 			for($i = 0; $i < $size; $i++)
 			{
-				$arr[]=xmlrpc_decode($xmlrpc_val->arraymem($i));
+				$arr[]=xmlrpc_decode_ex($xmlrpc_val->arraymem($i));
 			}
 			return $arr; 
 		}
@@ -1403,14 +1403,14 @@
 
 			while(list($key,$value)=$xmlrpc_val->structeach())
 			{
-				$arr[$key] = xmlrpc_decode($value);
+				$arr[$key] = xmlrpc_decode_ex($value);
 			}
 			return $arr;
 		}
 	}
 
 	/****************************************************************
-	* xmlrpc_encode takes native php types and encodes them into    *
+	* xmlrpc_encode_ex takes native php types and encodes them into    *
 	* xmlrpc PHP object format.                                     *
 	* BUG: All sequential arrays are turned into structs.  I don't  *
 	* know of a good way to determine if an array is sequential     *
@@ -1421,7 +1421,7 @@
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	function xmlrpc_encode($php_val)
+	function xmlrpc_encode_ex($php_val)
 	{
 		global $xmlrpcInt;
 		global $xmlrpcDouble;
@@ -1440,7 +1440,7 @@
 				$arr = array();
 				while (list($k,$v) = each($php_val))
 				{
-					$arr[$k] = xmlrpc_encode($v);
+					$arr[$k] = xmlrpc_encode_ex($v);
 				}
 				$xmlrpc_val->addStruct($arr);
 				break;
