@@ -28,13 +28,24 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...',
     if ($length == 0)
         return '';
 
-    if (mb_strwidth($string, $encoding) > $length) {
-        if (!$break_words)
-            $string = preg_replace('/\s+?(\S+)?$/', '', mb_strimwidth($string, 0, $length+1, "", $encoding));
+    if (function_exists("mb_strwidth") && function_exists("mb_strimwidth")) {
+        if (mb_strwidth($string, $encoding) > $length) {
+            if (!$break_words)
+                $string = preg_replace('/\s+?(\S+)?$/', '', mb_strimwidth($string, 0, $length+1, "", $encoding));
       
-        return mb_strimwidth($string, 0, $length, $etc, $encoding);
-    } else
-        return $string;
+            return mb_strimwidth($string, 0, $length, $etc, $encoding);
+        } else
+            return $string;
+    } else {
+        if (strlen($string) > $length) {
+            $length -= strlen($etc);
+            if (!$break_words)
+                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
+      
+            return substr($string, 0, $length).$etc;
+        } else
+            return $string;
+    }
 }
 
 /* vim: set expandtab: */
