@@ -26,15 +26,26 @@ if (get_entry_count() > (($page) * $blog_entries_per_page)) {
 
 if (isset($_GET["archive"])) {
   $template->assign('view', 'archive');
-  $template->assign('entries', get_archive_entries($_GET["archive"]));
+  $template->assign('keyword', $_GET["archive"]);
+  $entries = get_archive_entries($_GET["archive"]);
+  $template->assign('count', count($entries));
+  $template->assign('entries', $entries);
 } else if (isset($_GET["category"])) {
   $template->assign('view', 'category');
-  $template->assign('entries', get_category_entries($_GET["category"]));
+  $template->assign('keyword', $_GET["category"]);
+  $entries = get_category_entries($_GET["category"]);
+  $template->assign('count', count($entries));
+  $template->assign('entries', $entries);
 } else if (isset($_GET["search"])) {
   $template->assign('view', 'search');
-  $template->assign('entries', entry_search($_GET["search"]));
+  $template->assign('keyword', $_GET["search"]);
+  $entries = entry_search($_GET["search"]);
+  $template->assign('count', count($entries));
+  $template->assign('entries', $entries);
 } else {
   $template->assign('view', 'index');
+  $template->assign('keyword', "all");
+  $template->assign('count', get_entry_count());
   $template->assign('entries', get_entries($blog_entries_per_page, $page));
 }
 
