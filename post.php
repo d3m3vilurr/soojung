@@ -40,7 +40,7 @@ $smarty->template_dir = "templates/admin/";
 $smarty->assign('baseurl', $blog_baseurl);
 
 $smarty->assign("title", $title);
-$smarty->assign("body", $body);
+$smarty->assign("body", br2nl($body));
 $smarty->assign("date", $date);
 $smarty->assign("category", $category);
 $smarty->assign("id", $id);
