@@ -5,6 +5,7 @@ class Template extends Smarty {
   function Template()
   {
     global $blog_name;
+    global $blog_desc;
     global $blog_baseurl;
     global $soojung_version;
 
@@ -13,6 +14,7 @@ class Template extends Smarty {
     $this->force_compile = false;
 
     $this->assign('title', $blog_name);
+    $this->assign('description', $blog_desc);
     $this->assign('baseurl', $blog_baseurl);
     $this->assign('soojung_version', $soojung_version);
   }
