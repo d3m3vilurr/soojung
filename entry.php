@@ -17,13 +17,13 @@ if (isset($_POST["blogid"])) {
     $url = "";
   }
   $t = time();
-  comment_write($blogid, $name, $email, $url, $body, $t);
+  comment_write($blogid, $name, $email, $url, nl2br($body), $t);
 
   // Remembering 30 days
-  setcookie('w_id',    $blogid, time()+2592000);
-  setcookie('w_name',  $name,   time()+2592000);
-  setcookie('w_email', $email,  time()+2592000);
-  setcookie('w_url',   $url,    time()+2592000);
+  setcookie('w_id',    $blogid, $t+2592000);
+  setcookie('w_name',  $name,   $t+2592000);
+  setcookie('w_email', $email,  $t+2592000);
+  setcookie('w_url',   $url,    $t+2592000);
 
   $entry = get_entry($blogid);
   header("Location: " . $entry['link'] . "#" . $t);
