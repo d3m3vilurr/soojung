@@ -24,6 +24,10 @@ class Entry {
    * [body]
    */
   function Entry($filename) {
+    if (empty($filename)) {
+      return;
+    }
+
     $this->filename = $filename;
     $fd = fopen($filename, "r");
     
@@ -38,6 +42,9 @@ class Entry {
   }
 
   function isSetOption($option) {
+    if (empty($this->options)) {
+      return false;
+    }
     return in_array($option, $this->options);
   }
 

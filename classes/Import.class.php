@@ -117,7 +117,7 @@ class Import {
       $data = explode("\r\n", Import::trans(Import::getDataFromXml($xml)), 3);
       $title = $data[0];
       $date = $data[1];
-      $body = $data[2];
+      $body = str_replace("\r\n", "<br />", $data[2]);
       $options = array();
       Entry::editEntry($id, $title, $body, $date, $category, $options);
     } else if (strpos($name, ".trackback") != false) { // trackback file
