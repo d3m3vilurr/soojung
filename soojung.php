@@ -344,30 +344,36 @@ function send_trackbackping($blogid, $trackback_url) {
   $http_request .= 'Content-Type: application/x-www-form-urlencoded'."\r\n";
   $http_request .= 'Content-Length: '.strlen($query_string)."\r\n\r\n";
   $http_request .= $query_string;
-  //  $http_request .= 'url=http://www.bar.com/&excerpt=My+Excerpt&blog_name=Foo'."\r\n";
-  //  $http_request .= 
 
-  echo "request : <br>\n";
-  echo $http_request;
+  $response = array();
+
   if (!($fp = fsockopen($tb_url['host'], $tb_port))) {
     // Cannot open trackback url
-    return false;
+    $response['error'] = 1;
+    $response['message'] = "Cannot connect to host \"".$tb_url['host']."\"";
+    echo "merong<br>\n";
+    return $response;
   } 
 
   if (!fputs($fp, $http_request)) {
     echo "cannot send trackback ping<br>\n";
-    // Cannot send trackback ping
+
   }
-  /*
-  while (!feof ($fp))
-    {
-      $line = fgets ($fp, 1024);
-      echo $line;
+  $line = "";
+  while (!feof ($fp)) {
+    $line .= fgets ($fp, 1024);
+  }
+
+  if (ereg("<error>[^<0-9]*([0-9]*)[^<0-9]*</error>", $line, $regs)) {
+    $response['error'] = $regs[1];
+    if ($response == 0 && ereg("<message>([<]*)</message>", $line, $regs)) {
+      $response['message'] = $regs[1];
     }
-  */
-  // receive trackback response. (timeout?)
-  // show error string if error occured.
+      
+  }
+
   fclose ($fp);
+  return $response;
 }
 
 function get_archive_list() {

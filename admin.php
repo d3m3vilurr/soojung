@@ -82,7 +82,7 @@ if ($_GET["mode"] == "config") {
     echo "<a href=\"post.php?file=" . blogid_to_filename($e['id']) . "\">edit</a> ";
     echo "<a href=\"admin.php?mode=delete&file=" . blogid_to_filename($e['id']) . "\">delete</a> ";
     echo $e['title'];
-    echo "&nbsp;<a href=sendping.php?id=". $e['id'] .">send trackback ping</a>";
+    echo "&nbsp;<a href=sendping.php?blogid=". $e['id'] .">send trackback ping</a>";
     echo "<br />\n";
     $comments = get_comments($e['id']);
     foreach($comments as $c) {
