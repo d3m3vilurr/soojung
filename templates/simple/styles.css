@@ -84,6 +84,13 @@ a:hover.plink
   color: #333;
 }
 
+pre
+{
+  padding: 5px;
+  border: 1px solid #EBD4C8;
+  background-color: #FCF7F4;
+}
+
 #sidebar
 {
   float: right;

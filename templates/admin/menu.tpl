@@ -5,5 +5,5 @@
 [ <a href="{$baseurl}/admin.php?mode=config">Config</a> ]
 [ <a href="{$baseurl}/admin.php?mode=data">Import/export</a> ]
 [ <a href="{$baseurl}/bookmark.php">Bookmark</a> ]
-
+[ <a href="{$baseurl}/uninstall.php">Un Install</a> ]
 </div>

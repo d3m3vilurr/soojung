@@ -49,10 +49,28 @@ class Comment {
 
   /**
    * static method
+   * if $text is spam comment return true
+   */ 
+  function isSpam($text) {
+    $words = array("수신거부", "기적의 영문법", "소호 시스템", "섹시무비");
+    foreach ($words as $word) {
+      if (strpos($text, $word) != FALSE) {
+	return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * static method
    */
   function writeComment($entryId, $name, $email, $homepage, $body, $date) {
     $e = Entry::getEntry($entryId);
     if ($e->isSetOption("NO_COMMENT")) {
+      return;
+    }
+    
+    if (Comment::isSpam($body)) {
       return;
     }
 

@@ -20,6 +20,7 @@ class Entry {
    * Title: [title]\r\n
    * Category: [category]\r\n
    * Options: [option]\r\n
+   * Format: [format]\r\n
    * \r\n
    * [body]
    */
@@ -36,6 +37,7 @@ class Entry {
     $this->title = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
     $this->category = new Category(trim(strstr(fgets($fd, 1024), ' ')));
     $this->options = explode("|", trim(strstr(fgets($fd, 1024), ' ')));
+    $this->format = trim(fgets($fd, 1024));
     fclose($fd);
 
     $this->entryId = Soojung::filenameToEntryId($filename);
@@ -64,6 +66,7 @@ class Entry {
     fgets($fd, 1024); // title
     fgets($fd, 1024); // category
     fgets($fd, 1024); // options
+    fgets($fd, 1024); // format
     fgets($fd, 1024);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
@@ -101,8 +104,7 @@ class Entry {
   /**
    * static method
    */
-  function entryWrite($title, $body, $date, $category, $entryId, $options) {
-    $categoryclass = new Category($category);
+  function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
     $filename = "";
     if (in_array("SECRET", $options)) {
       $filename .= ".";
@@ -111,12 +113,14 @@ class Entry {
     if (in_array("STATIC", $options)) {
       $foptions .= "S";
     }
+    $categoryclass = new Category($category);
     $filename .= date('YmdHis', $date) . $foptions . '_' . $categoryclass->getHashID() . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, "Date: " . $date . "\r\n");
     fwrite($fd, "Title: " . $title . "\r\n");
     fwrite($fd, "Category: " . $category . "\r\n");
     fwrite($fd, "Options: " . implode("|", $options) . "\r\n");
+    fwrite($fd, "Format: " . $format);
     fwrite($fd, "\r\n");
     fwrite($fd, $body);
     fclose($fd);
@@ -125,20 +129,20 @@ class Entry {
   /**
    * static method
    */
-  function createEntry($title, $body, $date, $category, $options) {
+  function createEntry($title, $body, $date, $category, $options, $format) {
     $id = Soojung::createNewEntryId();
-    Entry::entryWrite($title, $body, $date, $category, $id, $options);
+    Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
     return $id;
   }
 
   /**
    * static method
    */
-  function editEntry($entryId, $title, $body, $date, $category, $options) {
+  function editEntry($entryId, $title, $body, $date, $category, $options, $format) {
     //if (file_exists(Soojung::entryIdToFilename($entryId)) !== TRUE)
     //return FALSE;
     @unlink(Soojung::entryIdToFilename($entryId));
-    Entry::entryWrite($title, $body, $date, $category, $entryId, $options);
+    Entry::entryWrite($title, $body, $date, $category, $entryId, $options, $format);
     return TRUE;
   }
 
