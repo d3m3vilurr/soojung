@@ -285,6 +285,66 @@ class Import {
   }
 
   /**
+   * static method
+   */
+  function importZeroboard($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding, $boardId) {
+    if (!$boardId)
+      die ("please specify the board id");
+
+    $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
+    mysql_select_db($dbName) or die("could not select database");
+
+    // posts
+    $query = "select no, reg_date, category, use_html, name, subject, memo from " . $prefix . $boardId . " where depth = 0";
+    $result = mysql_query($query) or die("query failed");
+
+    while ($line = mysql_fetch_assoc($result)) {
+      $c_no = $line['category'];
+      $c_query = "select name from " . $prefix . "category_" . $boardId . " where no = " . $c_no;
+      $c_result = mysql_query($c_query);
+      $c_line = mysql_fetch_array($c_result);
+
+      $category = isset($c_line['name']) ? $c_line['name'] : "General";
+
+      if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+        $title = $line['subject'];
+        $body = stripslashes($line['memo']);
+      } else {
+        $title = iconv($encoding, "UTF-8", $line['subject']);
+        $body = iconv($encoding, "UTF-8", stripslashes($line['memo']));
+        $category = iconv($encoding, "UTF-8", $category);
+      }
+      $date = $line['reg_date'];
+      $options = array();
+      $format = "plain";
+      if ($line['use_html'])
+        $format = "html";
+
+      $id = Entry::createEntry($title, $body, $date, $category, $options, $format);
+
+      // comments
+      $comment_query = "select reg_date, name, memo from " . $prefix . "comment_" . $boardId . " where parent = " . $line['no'];
+      $comment_result = mysql_query($comment_query) or die("query failed");
+      while ($line = mysql_fetch_assoc($comment_result)) {
+        if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+          $name = $line['name'];
+          $body = $line['memo'];
+        } else {
+          $name = iconv($encoding, "UTF-8", $line['name']);
+          $body = iconv($encoding, "UTF-8", $line['memo']);
+        }
+        $date = $line['reg_date'];
+
+        Comment::writeComment($id, $name, $email, $homepage, $body, $date);
+      }
+      mysql_free_result($comment_result);
+    }
+
+    mysql_free_result($result);
+    mysql_close($link);
+  }
+
+  /**
    * private, static method
    */
   function createFile($xml) {

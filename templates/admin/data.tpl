@@ -61,5 +61,19 @@ Encoding: <input type="text" name="encoding" value="utf-8" /><br />
 <input type="submit" value="import!" />
 </form>
 
+<h3>import from Zeroboard (or ZOG)</h3>
+<form action="{$baseurl}/admin.php" method="post">
+Input Zeroboard database info<br />
+DB server: <input type="text" name="db_server" /><br />
+DB username: <input type="text" name="db_user" /><br />
+DB password: <input type="password" name="db_pass" /><br />
+DB name: <input type="text" name="db_name" /><br />
+Table prefix: <input type="text" name="prefix" value="zetyx_board_" /><br />
+Encoding: <input type="text" name="encoding" value="cp949" /><br />
+Board ID: <input type="text" name="boardid" /><br />
+<input type="hidden" name="mode" value="import_zb" />
+<input type="submit" value="import!" />
+</form>
+
 </div>
 {include file="footer.tpl"}

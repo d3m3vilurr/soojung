@@ -58,6 +58,8 @@ function import_mode() {
     Import::importTatterTools($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
   } else if ($_POST["mode"] == "import_wp") {
     Import::importWordPress($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
+  } else if ($_POST["mode"] == "import_zb") {
+    Import::importZeroboard($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"], $_POST["boardid"]);
   }
   $temp = new Usertemplate("index.tpl", 1);
   $temp->clearCache();
