@@ -1,5 +1,6 @@
 <?php
 include_once("soojung.php");
+header("Content-type: text/xml");
 
 if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   $blogid = $_GET["blogid"];
@@ -57,7 +58,6 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
     echo "<error>1</error>\n";
     echo "<message>url is required</message>\n";
     echo "</response>\n";
-    fwrite($fd, "merong\n");
   } else {
     trackback_write($id, $url, $name, $title, $excerpt);
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
@@ -65,6 +65,12 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
     echo "<error>0</error>\n";
     echo "</response>\n";
   }
-  fclose($fd);
+} else {
+  echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
+  echo "<response>\n";
+  echo "<error>1</error>\n";
+  echo "<message>blogid is required. trackback.php?blogid=N form.</message>\n";
+  echo "</response>\n";
 }
+
 ?>
