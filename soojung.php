@@ -611,39 +611,6 @@ function export() {
   return $xml;
 }
 
-$tag = FALSE;
-$filename = FALSE;
-$fd = FALSE;
-
-function startElement($parser, $name, $attrs) {
-  global $tag, $fd, $filename;
-  $tag = $name;
-  if ($name == "DATA") {
-    $dir = dirname($filename);
-    if (file_exists($dir) == FALSE) {
-      mkdir($dir, 0777); //TODO: mkdir_p
-    }
-    $fd = fopen($filename, "wb");
-  }
-}
-
-function endElement($parser, $name) {
-  global $tag, $fd;
-  $tag = FALSE;
-  if ($name == "DATA") {
-    fclose($fd);
-  }
-}
-
-function characterData($parser, $data) {
-  global $tag, $filename, $fd;
-  if ($tag == "DATA") {
-    fwrite($fd, trans($data) . "\r");
-  } else if ($tag == "NAME") {
-    $filename = $data;
-  }
-}
-
 function trans($str) {
   $trans = get_html_translation_table(HTML_ENTITIES);
   $trans = array_flip($trans);
@@ -655,11 +622,29 @@ function import($uploadfile) {
   $data = fread($fd, $uploadfile['size']);
   fclose($fd);
 
-  $parser = xml_parser_create();
-  xml_set_element_handler($parser, "startElement", "endElement");
-  xml_set_character_data_handler($parser, "characterData");
-  xml_parse($parser, $data, TRUE);
-  xml_parser_free($parser);
+  while (($pos_s = strpos($data, "<file>", $pos_e)) !== FALSE) {
+    $pos_e = strpos($data, "</file>", $pos_s) + strlen("</file>");
+    create_file(substr($data, $pos_s, $pos_e - $pos_s));
+  }
+}
+
+function create_file($xml) {
+  $name_pos = strpos($xml, "<name>") + strlen("<name>");
+  $name_end = strpos($xml, "</name>");
+  $name = substr($xml, $name_pos, $name_end - $name_pos);
+
+  $dir = dirname($name);
+  if (file_exists($dir) == FALSE) {
+    mkdir($dir, 0777); //TODO: mkdir_p
+  }
+  $fd = fopen($name, "wb");
+
+  $data_pos = strpos($xml, "<data>") + strlen("<data>");
+  $data_end = strpos($xml, "</data>");
+  $data = substr($xml, $data_pos, $data_end - $data_pos);
+
+  fwrite($fd, trans($data));
+  fclose($fd);
 }
 
 ?>
