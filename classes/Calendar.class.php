@@ -39,7 +39,7 @@ class Calendar {
     return date("F Y", mktime(0, 0, 0, $month, 1, $year));
   }
 
-  function get_calendar($t=1) {
+  function getCalendar() {
     global $blog_baseurl;
 
     $year = $this->year;
