@@ -45,66 +45,74 @@ class Formatter {
   function bbcodeToHtml($str) {
     static
       $rule1 = array(
-		'#\[i](.+)\[/i]#iU',
-		'#\[b](.+)\[/b]#iU',
-		'#\[u](.+)\[/u]#iU',
-		'#\[\+\+](.+)\[/\+\+]#iU',
-		'#\[--](.+)\[/--]#iU',
-		'#\[color=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/color]#i',
-		'#\[size=((?:&quot;)?)([\d.]+)\1](.+?)\[/size]#i',
-		'#\[quote](.+)\[/quote]#isU',
-		'#\[quote=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/quote]#is',
-		'#\[list(?:=([Aa1Ii]))?](.+)\[/list]#iseU',
-		'#\[url](.+)\[/url]#ieU',
-		'#\[url=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/url]#ie',
-		'#\[img](.+)\[/img]#ieU',
-		'#\[img=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/img]#ie',
-		'#\[email](.+)\[/email]#ieU'),
+        '#\[i](.+)\[/i]#iU',
+        '#\[b](.+)\[/b]#iU',
+        '#\[u](.+)\[/u]#iU',
+        '#\[\+\+](.+)\[/\+\+]#iU',
+        '#\[--](.+)\[/--]#iU',
+        '#\[color=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/color]#i',
+        '#\[size=((?:&quot;)?)([\d.]+)\1](.+?)\[/size]#i',
+        '#\[quote](.+)\[/quote]#isU',
+        '#\[quote=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/quote]#is',
+        '#\[list(?:=([Aa1Ii]))?](.+)\[/list]#iseU',
+        '#\[url](.+)\[/url]#ieU',
+        '#\[url=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/url]#ie',
+        '#\[img](.+)\[/img]#ieU',
+        '#\[img=((?:&quot;)?)([^\[\]]+)\1](.+?)\[/img]#ie',
+        '#\[email](.+)\[/email]#ieU'),
       $repl1 = array(
-		'<i>\1</i>',
-		'<b>\1</b>',
-		'<span style="text-decoration:underline;">\1</span>',
-		'<ins>\1</ins>',
-		'<del>\1</del>',
-		'<span style="color:\2;">\3</span>',
-		'<span style="font-size:\2pt;">\3</span>',
-		'<blockquote><div>\1</div></blockquote>',
-		'<blockquote><p class="quotetitle">\2</p><div>\3</div></blockquote>',
-		'Formatter::__bbcode_listing("\1","\2")',
-		'Formatter::__bbcode_escape("<a href=\\"\1\\">\1</a>")',
-		'Formatter::__bbcode_escape("<a href=\\"\2\\">\3</a>")',
-		'Formatter::__bbcode_escape("<img src=\\"\1\\" width=\\"\\" height=\\"\\" alt=\\"\1\\\" />")',
-		'Formatter::__bbcode_escape("<img src=\\"\2\\" width=\\"\\" height=\\"\\" alt=\\"\3\\\" />")',
-		'Formatter::__bbcode_escape("<a href=\\"mailto:\1\\">\1</a>")'),
+        '<i>\1</i>',
+        '<b>\1</b>',
+        '<span style="text-decoration:underline;">\1</span>',
+        '<ins>\1</ins>',
+        '<del>\1</del>',
+        '<span style="color:\2;">\3</span>',
+        '<span style="font-size:\2pt;">\3</span>',
+        '<blockquote><div>\1</div></blockquote>',
+        '<blockquote><p class="quotetitle">\2</p><div>\3</div></blockquote>',
+        'Formatter::__bbcode_listing("\1","\2")',
+        'Formatter::__bbcode_escape("<a href=\\"\1\\">\1</a>")',
+        'Formatter::__bbcode_escape("<a href=\\"\2\\">\3</a>")',
+        'Formatter::__bbcode_escape("<img src=\\"\1\\" width=\\"\\" height=\\"\\" alt=\\"\1\\\" />")',
+        'Formatter::__bbcode_escape("<img src=\\"\2\\" width=\\"\\" height=\\"\\" alt=\\"\3\\\" />")',
+        'Formatter::__bbcode_escape("<a href=\\"mailto:\1\\">\1</a>")'),
       $rule2 = array(
-		'#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i',
-		'#[-0-9a-z_.]+@[-0-9a-z_.]+#i'),
+        '#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i',
+        '#[-0-9a-z_.]+@[-0-9a-z_.]+#i'),
       $repl2 = array(
-		'<a href="\0">\0</a>',
-		'<a href="mailto:\0">\0</a>'),
-      $smiley = array(
-		":D" => "icon_biggrin.gif",
-		":)" => "icon_smile.gif",
-		":(" => "icon_sad.gif",
-		":shock:" => "icon_eek.gif",
-		"8)" => "icon_cool.gif",
-		":lol:" => "icon_lol.gif",
-		":x" => "icon_mad.gif",
-		":p" => "icon_razz.gif",
-		":cry:" => "icon_cry.gif",
-		":evil:" => "icon_evil.gif",
-		":twisted:" => "icon_twisted.gif",
-		":roll:" => "icon_rolleyes.gif",
-		";)" => "icon_wink.gif",
-		":!:" => "icon_exclaim.gif",
-		":idea:" => "icon_idea.gif",
-		":arrow:" => "icon_arrow.gif",
-		":|" => "icon_neutral.gif",
-		":mrgreen:" => "icon_mrgreen.gif",
-		":oops:" => "icon_redface.gif",
-		":o" => "icon_surprised.gif",
-		":?:" => "icon_question.gif",
-		":?" => "icon_confused.gif");
+        '<a href="\0">\0</a>',
+        '<a href="mailto:\0">\0</a>'),
+      $_smiley = array(
+        ":D" => "icon_biggrin.gif",
+        ":)" => "icon_smile.gif",
+        ":(" => "icon_sad.gif",
+        ":shock:" => "icon_eek.gif",
+        "8)" => "icon_cool.gif",
+        ":lol:" => "icon_lol.gif",
+        ":x" => "icon_mad.gif",
+        ":p" => "icon_razz.gif",
+        ":cry:" => "icon_cry.gif",
+        ":evil:" => "icon_evil.gif",
+        ":twisted:" => "icon_twisted.gif",
+        ":roll:" => "icon_rolleyes.gif",
+        ";)" => "icon_wink.gif",
+        ":!:" => "icon_exclaim.gif",
+        ":idea:" => "icon_idea.gif",
+        ":arrow:" => "icon_arrow.gif",
+        ":|" => "icon_neutral.gif",
+        ":mrgreen:" => "icon_mrgreen.gif",
+        ":oops:" => "icon_redface.gif",
+        ":o" => "icon_surprised.gif",
+        ":?:" => "icon_question.gif",
+        ":?" => "icon_confused.gif"),
+      $smiley = null;
+
+    if(is_null($smiley)) {
+      $smiley = array();
+      foreach($_smiley as $k => $v) {
+        $smiley[htmlspecialchars($k)] = '<img src="./libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
+      }
+    }
 
     $option = array("smiley" => true);
     if(preg_match("/^#pragma(.*?)(?:(?:\r\n?|\n)+|$)/i", $str, $m)) {
@@ -121,9 +129,7 @@ class Formatter {
       if($i % 2 == 0) {
         $temp = htmlspecialchars($str[$i]);
         if($option["smiley"]) {
-          foreach($smiley as $k => $v) {
-            $temp = str_replace(htmlspecialchars($k), '<img src="./libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />', $temp);
-          }
+          $temp = strtr($temp, $smiley);
         }
         $temp = preg_replace('#\[literal](.*)\[/literal]#ieU', 'Formatter::__bbcode_escape("\1")', $temp);
         $temp = preg_replace($rule2, $repl2, preg_replace($rule1, $repl1, $temp));
