@@ -10,6 +10,7 @@ class Entry {
   var $href;
 
   var $options;
+  var $format;
 
   /**
    * Entry file name:
@@ -37,7 +38,7 @@ class Entry {
     $this->title = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
     $this->category = new Category(trim(strstr(fgets($fd, 1024), ' ')));
     $this->options = explode("|", trim(strstr(fgets($fd, 1024), ' ')));
-    $this->format = trim(fgets($fd, 1024));
+    $this->format = trim(strstr(fgets($fd, 1024), ' '));
     fclose($fd);
 
     $this->entryId = Soojung::filenameToEntryId($filename);
@@ -60,7 +61,7 @@ class Entry {
     }
   }
 
-  function getBody() {
+  function getBody($toHtml = true) {
     $fd = fopen($this->filename, "r");
     fgets($fd, 1024); // date
     fgets($fd, 1024); // title
@@ -70,6 +71,15 @@ class Entry {
     fgets($fd, 1024);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
+
+    // body convert to html
+    if ($toHtml == true) {
+      if ($this->format == "plain") {
+	$body = pre_nl2br($body);
+      } else if ($this->format == "html") {
+	//do nothing :)
+      }
+    }
     return $body;
   }
 
@@ -120,7 +130,7 @@ class Entry {
     fwrite($fd, "Title: " . $title . "\r\n");
     fwrite($fd, "Category: " . $category . "\r\n");
     fwrite($fd, "Options: " . implode("|", $options) . "\r\n");
-    fwrite($fd, "Format: " . $format);
+    fwrite($fd, "Format: " . $format . "\r\n");
     fwrite($fd, "\r\n");
     fwrite($fd, $body);
     fclose($fd);
@@ -129,7 +139,7 @@ class Entry {
   /**
    * static method
    */
-  function createEntry($title, $body, $date, $category, $options, $format) {
+  function createEntry($title, $body, $date, $category, $options, $format = "plain") {
     $id = Soojung::createNewEntryId();
     Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
     return $id;
