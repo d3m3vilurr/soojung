@@ -18,7 +18,7 @@
 </div>
 {/foreach}
 </div>
-<form action="" method="post">
+<form action="entry.php?blogid={$entry->entryId}" method="post">
 Post a comment<br />
 Name:<br />
 <input type="text" name="name" value="{$w_name|escape}"><br />
