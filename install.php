@@ -17,7 +17,7 @@ if (!is_writable(".")) {
   echo "<font color=\"red\">WARNING: This directory is not writeable</font><br />";
 }
 if (!is_writable("templates")) {
-  echo "<font color=\"red\">WARNING: Templates directory is not writeable</font><br />";
+  echo "<font color=\"red\">WARNING: templates directory is not writeable</font><br />";
 }
 
 if (isset($_POST["name"])) {
