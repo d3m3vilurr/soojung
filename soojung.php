@@ -572,31 +572,42 @@ function get_recent_referers($n) {
   }
 }
 
-function read_dir($path, $mbox) {
-  if (is_dir($path)) {
-    if ($dh = opendir($path)) {
-      while (($file = readdir($dh)) !== false) {
-	if ($file == ".." || $file == ".") {
-	  continue;
-	}
-	read_dir($path . '/' . $file, $mbox);
+function file_to_xml($filename) {
+  $fd = fopen($filename, "r");
+  $data = fread($fd, filesize($filename));
+  fclose($fd);
+
+  $xml = "\t<file>\n";
+  $xml .= "\t\t<name>" . $filename . "</name>\n";
+  $xml .= "\t\t<data>\n" . $data . "\t\t</data>\n";
+  $xml .= "\t</file>\n";
+  return $xml;
+}
+
+function to_xml($path) {
+  if ($dh = opendir($path)) {
+    while (($file = readdir($dh)) !== false) {
+      if ($file == ".." || $file == ".") {
+	continue;
       }
-      closedir($dh);
+      $filename = $path . '/' . $file;
+      if (is_dir($filename)) {
+	$xml .= to_xml($filename);
+      } else {
+	$xml .= file_to_xml($filename);
+      }
     }
-  } else {
-    $fd = fopen($path, "r");
-    $data = fread($fd, filesize($path));
-    $m .= "Message-Id: " . $path . "\r\n";
-    $m .= $data;
-    $m .= "\r\n";
-    $mbox .= $m;
+    closedir($dh);
   }
+  return $xml;
 }
 
 function export() {
-  $mbox = "";
-  read_dir("contents", $mbox);
-  return $mbox;
+  $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+  $xml .= "<soojung>\n";
+  $xml .= to_xml("contents");
+  $xml .= "</soojung>";
+  return $xml;
 }
 
 function import($mbox) {

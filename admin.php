@@ -48,7 +48,9 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
   entry_delete($_GET["blogid"]);
 } else if ($_GET["mode"] == "export") {
-  
+  header("Content-Type: text/xml"); //FIXME: 웹브라우저가 보여주지 않고 다운로드 하게 고치기
+  echo export();
+  exit();
 }
 
 if ($_GET["mode"] == "config") {
