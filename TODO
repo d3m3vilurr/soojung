@@ -5,7 +5,6 @@ xmlrpc 지원 (metaWeblog - newMediaObject 빼고 구현, mt)
 그림 묶은 zip파일 올리기 기능
 X번째 방문자 이벤트기능
 MT->soojung 변환 프로그램
-템플릿 추가
 카테고리 대분류(혹은 다중 깊이 트리)
 plugin 환경 구축
 설치 할 때 인코딩 설정 할 수 있게 만들기(기본은 utf-8)
