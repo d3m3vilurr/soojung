@@ -293,9 +293,6 @@ function trackback_open($filename) {
 }
 
 function trackback_write($blogid, $url, $name, $title, $excerpt) {
-# need to check blogid is not null or anything.
-# this is caused by tattertools
-
   $dirname = "contents/" . $blogid;
   @mkdir($dirname, 0777);
   $filename = date('YmdHis', time()) . '.trackback';
@@ -806,7 +803,6 @@ function import_wp($db_server, $db_user, $db_pass, $db_name, $prefix, $encoding)
   mysql_free_result($result);
   mysql_close($link);
 }
-
 
 /** Balances Tags of string using a modified stack.
  * @param text      Text to be balanced
