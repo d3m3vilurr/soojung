@@ -34,6 +34,10 @@ if (isset($_POST["name"])) {
   mkdir("templates/.configs", 0777);
   mkdir("templates/.compile", 0777);
 
+  mkdir("templates/.admin_cache", 0777);
+  mkdir("templates/.admin_configs", 0777);
+  mkdir("templates/.admin_compile", 0777);
+
   $f = fopen("contents/.info","w");
   fwrite($f, "1");
   fclose($f);
