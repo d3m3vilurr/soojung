@@ -73,7 +73,7 @@ function entry_open($filename) {
   $entry["id"] = $id;
 
   if ($blog_fancyurl == true) {
-    $entry["link"] = $entry['category'] . date("/Y/m/d/", $entry['date']) .  $id . ".html";
+    $entry["link"] = $blog_baseurl . "/" . $entry['category'] . date("/Y/m/d/", $entry['date']) .  $id . ".html";
   } else {
     $entry["link"] = $blog_baseurl . "/entry.php?blogid=" . $id;
   }
