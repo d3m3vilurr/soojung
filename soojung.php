@@ -650,8 +650,36 @@ function import_tt($db_server, $db_user, $db_pass, $db_name, $encoding) {
   mysql_close($link);
 }
 
-function import_wp($db_server, $db_user, $db_pass, $db_name, $encoding) {
-  //TODO: impl
+function import_wp($db_server, $db_user, $db_pass, $db_name, $prefix, $encoding) {
+  $link = mysql_connect($db_server, $db_user, $db_pass) or die("could not connect");
+  mysql_select_db($db_name) or die("could not select database");
+
+  $query = "select post_date, post_content, post_title, post_category from " . $prefix . "posts";
+  $result = mysql_query($query) or die("query failed");
+
+  while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    $c_no = $line['post_category'];
+    $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
+    $c_result = mysql_query($c_query);
+    $c_line = mysql_fetch_array($c_result);
+
+    $category = isset($c_line['cat_name']) ? $c_line['cat_name'] : "General"; //'General' is wp default category
+
+    if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+      $title = $line['post_title'];
+      $body = $line['post_content'];
+    } else {
+      $title = iconv($encoding, "UTF-8", $line['post_title']);
+      $body = iconv($encoding, "UTF-8", $line['post_content']);
+      $category = iconv($encoding, "UTF-8", $category);
+    }
+    $date = strtotime($line['post_date']);
+
+    entry_new($title, $body, $date, $category);
+    mysql_free_result($c_result);
+  }
+  mysql_free_result($result);
+  mysql_close($link);
 }
 
 ?>

@@ -16,7 +16,8 @@ DB server: <input type="text" name="db_server"> <br />
 DB username: <input type="text" name="db_user"> <br />
 DB password: <input type="text" name="db_pass"> <br />
 DB name: <input type="text" name="db_name"> <br />
-encoding: <input type="text" name="encoding" value="utf-8"> <br />
+Table prefix: <input type="text" name="prefix"> <br />
+Encoding: <input type="text" name="encoding" value="utf-8"> <br />
 <input type="hidden" name="mode" value="import_wp">
 <input type="submit" value="import!">
 </form>
@@ -28,7 +29,7 @@ DB server: <input type="text" name="db_server"> <br />
 DB username: <input type="text" name="db_user"> <br />
 DB password: <input type="text" name="db_pass"> <br />
 DB name: <input type="text" name="db_name"> <br />
-encoding: <input type="text" name="encoding" value="cp949"> <br />
+Encoding: <input type="text" name="encoding" value="cp949"> <br />
 <input type="hidden" name="mode" value="import_tt">
 <input type="submit" value="import!">
 </form>

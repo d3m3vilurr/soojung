@@ -61,7 +61,7 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   import_tt($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["encoding"]);
   header("Location: admin.php");
 } else if ($_POST["mode"] == "import_wp") {
-  import_wp($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["encoding"]);
+  import_wp($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
   header("Location: admin.php");
 }
 
