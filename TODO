@@ -1,7 +1,7 @@
 보낸 트랙백 보여주는 기능
 트랙백 인코딩 때려맞추기, 보낼때 때려맞추기
 문서화
-xmlrpc 지원 (metaWeblog, mt)
+xmlrpc 지원 (metaWeblog - newMediaObject 빼고 구현, mt)
 그림올리기 기능
 그림 묶은 zip파일 올리기 기능
 X번째 방문자 이벤트기능
