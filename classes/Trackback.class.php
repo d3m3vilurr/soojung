@@ -119,10 +119,13 @@ class Trackback {
       $tb_port = $tb_url['port'];
     else
       $tb_port = 80;
+    $tb_path = $tb_url['path']
+    if($tb_path == '') $tb_path = '/';
+    if($tb_url['query']) $tb_path .= '?'.$tb_url['query'];
 
     //  $permlink = rawurlencode(get_entry_link($blogid, false));
     $entry = Entry::getEntry($entryId);
-    $permlink = $entry->getHref();
+    $permlink = rawurlencode($entry->getHref());
 
     if ($entry->title != null) {
       $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->title));
@@ -147,10 +150,11 @@ class Trackback {
     $query_string = iconv( "UTF-8", $encoding, $query_string);
     echo "query_string : $query_string<br />"; //debug code?
 
-    $http_request  = 'POST '.$trackbackUrl." HTTP/1.0\r\n";
-    $http_request .= 'Content-Type: application/x-www-form-urlencoded'."\r\n";
-    $http_request .= 'Content-Length: '.strlen($query_string)."\r\n\r\n";
-    $http_request .= $query_string;
+    $http_request  = "POST ".$tb_path." HTTP/1.1\r\n";
+    $http_request .= "Host: ".$tb_url['host']."\r\n";
+    $http_request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+    $http_request .= "Content-Length: ".strlen($query_string)."\r\n\r\n";
+    $http_request .= $query_string."\r\n\r\n";
 
     $response = array();
     if (!($fp = fsockopen($tb_url['host'], $tb_port))) {
