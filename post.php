@@ -32,6 +32,9 @@ if ($_POST["mode"] == "post") {
   $id = $entry["id"];
 }
 
+define('SMARTY_DIR', 'libs/smarty/');
+require(SMARTY_DIR . 'Smarty.class.php');
+
 $smarty = new Smarty;
 $smarty->compile_dir = "templates/.admin_compile/";
 $smarty->config_dir = "templates/.admin_configs/";

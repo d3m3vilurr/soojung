@@ -3,6 +3,9 @@ session_start();
 
 include_once("soojung.php");
 
+define('SMARTY_DIR', 'libs/smarty/');
+require(SMARTY_DIR . 'Smarty.class.php');
+
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password) {
     $_SESSION['auth'] = TRUE;
