@@ -547,7 +547,7 @@ function add_referer() {
     if ($fp = @fopen("contents/.referer", "r")) {
       $data = fread($fp, filesize("contents/.referer"));
       fclose($fp);
-      $data = $data . "\r\n" . $referer;
+      $data = $referer . "\r\n" . $data;
     } else {
       $data = $referer;
     }
