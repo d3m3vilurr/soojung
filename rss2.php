@@ -26,6 +26,14 @@ foreach ($entries as $e) {
   if ($e->isSetOption("NO_RSS")) {
     continue;
   }
+
+  $post_text = str_replace("<big>", "",$e->getBody());
+  $post_text = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",str_replace("\n", "\n", $post_text));
+  $post_text = strip_tags($post_text, '<br><img><embed>');
+  if (strlen ($post_text) > 310) {
+    $post_text = substring($post_text,307);
+  }
+
   echo "<item>\n";
   echo "<title>" . $e->title . "</title>\n";
   echo "<link>" . $e->getHref() . "</link>\n";
@@ -34,7 +42,7 @@ foreach ($entries as $e) {
   echo "<category>" . $e->category->name . "</category>\n";
   echo "<guid></guid>\n";
   echo "<description></description>\n";
-  echo "<content:encoded><![CDATA[" . $e->getBody() . "]]></content:encoded>\n";
+  echo "<content:encoded><![CDATA[" . $post_text . "]]></content:encoded>\n";
   echo "</item>\n";
 }
 ?>

@@ -217,4 +217,41 @@ function isutf8($str){
   return 1;
 }
 
+function substring($str, $len){
+  if(strlen($str)>$len) {
+    if(!isutf8($str)) {
+      $str = substr($str,0,$len) . "...";
+    } else {
+      $str = cut_utf8($str,$len) . "...";
+    }
+  }
+  return $str;
+}
+
+function cut_utf8($str, $len) {
+  if(strlen($str) <= $len) {
+    return $str;
+  }
+
+  $str = substr($str, 0, $len);
+  for($i=$len-1;$i>=0;$i--) {
+    if(ord($str{$i}) >= 0xF0) {
+      $next = 4;
+      break;
+    } elseif(ord($str{$i}) >= 0xE0) {
+      $next = 3;
+      break;
+    } elseif(ord($str{$i}) >= 0xC0) {
+      $next = 2;
+      break;
+    }
+  }
+
+  if(strlen($str) < $i+$next) {
+    return substr($str, 0, $i);
+  } else {
+    return $str;
+  }
+}
+
 ?>

@@ -66,6 +66,7 @@ class Trackback {
       $date = time();
     }
     $filename = date('YmdHis', $date) . '.trackback';
+
     $fd = fopen($dirname . '/' . $filename, "w");
     fwrite($fd, $date);
     fwrite($fd, "\r\n");
@@ -121,15 +122,17 @@ class Trackback {
     $permlink = $entry->getHref();
 
     if ($entry->title != null) {
-      $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->title));
+      $tb_title = iconv("UTF-8", $encoding, rawurlencode($entry->title));
     } else {
       $tb_title = rawurlencode('title');
     }
 
-    $tb_excerpt = iconv("UTF-8", $encoding, $entry->getBody());
-    if (strlen ($tb_excerpt) > 255)
-      $tb_excerpt = substr($tb_excerpt,0, 252) . "...";
-    $tb_excerpt = rawurlencode($tb_excerpt);
+    $tb_excerpt = $entry->getBody();
+
+    if (strlen ($tb_excerpt) > 255) {
+      $tb_excerpt = substring($tb_excerpt,252);
+    }
+    $tb_excerpt = rawurlencode(iconv("UTF-8", $encoding, $tb_excerpt));
 
     if (isset($blog_name)) {
       $tb_blogname = rawurlencode(iconv("UTF-8", $encoding, $blog_name));
@@ -141,7 +144,7 @@ class Trackback {
     $query_string = iconv( "UTF-8", $encoding, $query_string);
     echo "query_string : $query_string<br />"; //debug code?
 
-    $http_request  = 'POST '.$trackback_url." HTTP/1.0\r\n";
+    $http_request  = 'POST '.$trackbackUrl." HTTP/1.0\r\n";
     $http_request .= 'Content-Type: application/x-www-form-urlencoded'."\r\n";
     $http_request .= 'Content-Length: '.strlen($query_string)."\r\n\r\n";
     $http_request .= $query_string;

@@ -40,6 +40,7 @@ if ($_POST["mode"] == "Post") {
     if (isset($_POST["id"])) {
       Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options);
     } else {
+      $date = time() + 10;
       Entry::createEntry($title, $body, $date, $category, $options);
     }
     echo "post success<br>";
@@ -91,7 +92,7 @@ $smarty->assign('baseurl', $blog_baseurl);
 
 $smarty->assign("title", $title);
 $smarty->assign("body", $body);
-$smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()));
+$smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()+10));
 $smarty->assign("category", $category);
 
 if (isset($options)) {
