@@ -185,5 +185,48 @@ pre
 }
 
 #sidebar .calendar_days a {
-  color: #930;
+
+}
+
+#calendar
+{
+  margin: 10px;
+}
+
+#calendar p
+{
+  text-align: center;
+  margin: 0px;
+}
+
+#calendar p .current
+{
+  font-weight: bold;
+}
+
+#calendar table
+{
+  margin: 0px auto;
+  width: 95%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+#calendar th, #calendar td
+{
+  text-align: center;
+  width: 14.3%;
+  margin: 0px;
+  padding: 2px;
+}
+
+#calendar td
+{
+  color: #888;
+}
+
+#calendar table a
+{
+  font-weight: bold;
+  border-bottom: dotted 1px #888;
 }
