@@ -84,7 +84,7 @@ function entry_open($filename) {
   fclose($fd);
   $data = split("\r\n", $data, 3);
   $entry = array();
-  $entry["title"] = $data[0];
+  $entry["title"] = htmlspecialchars($data[0], ENT_QUOTES, "UTF-8");
   $entry["date"] = $data[1];
 
   $entry["body"] = pre_nl2br($data[2]);
