@@ -54,3 +54,6 @@ soojung/templates/default
 zip파일을 받은 경우는 덮어 씁니다.
 patch파일을 받은 경우는 파일을 soojung디렉토리로 옮기고 아래 명령어를 실행합니다.
 patch -p1 < soojung-0.4.2.patch
+
+=== 0.4.2 -> 0.4.3 ===
+0.4.1 -> 0.4.2 경우와 같습니다

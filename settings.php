@@ -1,6 +1,6 @@
 <?php
 
-$soojung_version = '0.4.2';
+$soojung_version = '0.4.3';
 setlocale(LC_TIME, "C");
 
 if (file_exists("config.php")) {
