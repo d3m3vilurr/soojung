@@ -567,8 +567,40 @@ function add_referer() {
 function get_recent_referers($n) {
   if ($fp = @fopen("contents/.referer", "r")) {
     $data = fread($fp, filesize("contents/.referer"));
-    return split("\r\n", $data, $n);
+    $array = split("\r\n", $data);
+    return array_slice($array, 0, $n);
   }
+}
+
+function read_dir($path, $mbox) {
+  if (is_dir($path)) {
+    if ($dh = opendir($path)) {
+      while (($file = readdir($dh)) !== false) {
+	if ($file == ".." || $file == ".") {
+	  continue;
+	}
+	read_dir($path . '/' . $file, $mbox);
+      }
+      closedir($dh);
+    }
+  } else {
+    $fd = fopen($path, "r");
+    $data = fread($fd, filesize($path));
+    $m .= "Message-Id: " . $path . "\r\n";
+    $m .= $data;
+    $m .= "\r\n";
+    $mbox .= $m;
+  }
+}
+
+function export() {
+  $mbox = "";
+  read_dir("contents", $mbox);
+  return $mbox;
+}
+
+function import($mbox) {
+  //TODO:
 }
 
 ?>

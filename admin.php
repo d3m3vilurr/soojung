@@ -47,6 +47,8 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   }
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
   entry_delete($_GET["blogid"]);
+} else if ($_GET["mode"] == "export") {
+  
 }
 
 if ($_GET["mode"] == "config") {
@@ -59,6 +61,8 @@ if ($_GET["mode"] == "config") {
   $smarty->assign("admin_email", $admin_email);
   
   $smarty->display('config.tpl');
+} else if ($_GET["mode"] == "data") {
+  $smarty->display('data.tpl');
 } else {
   $entry_structs = array();
   $entries = get_entries(get_entry_count(), 1);
