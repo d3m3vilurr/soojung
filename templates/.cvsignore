@@ -1,1 +1,6 @@
-.*
+.admin_cache
+.admin_compile
+.admin_configs
+.cache
+.compile
+.configs
