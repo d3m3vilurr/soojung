@@ -1,7 +1,7 @@
 			<div id="column">
 
 <!--
-{$calendar->get_calendar()}
+{$calendar->getCalendar()}
 -->
 <div>
 	<strong>Menu:</strong>
