@@ -1,8 +1,9 @@
 <?php
-include("libs/xmlrpcs.inc");
-include("libs/xmlrpc.inc");
+include_once("libs/xmlrpcs.inc");
+include_once("libs/xmlrpc.inc");
 
 include("soojung.php");
+
 
 function _error($errcode, $errstring) {
   global $xmlrpcerruser;
@@ -57,6 +58,7 @@ function blogger_newPost($params) {
   $sp = $params->getParam(3);
   $sc = $params->getParam(4);
 
+  writewrite($params);
   $r = _login($su, $sp);
   if ($r !== TRUE) {
     return $r;
@@ -92,9 +94,32 @@ function blogger_editPost($params) {
   $e = get_entry($blogid);
   $date = $e["date"];
 
-  entry_eidt($blogid, $title, $body, $date, $category);
+  entry_edit($blogid, $title, $body, $date, $category);
 
   return new xmlrpcresp(new xmlrpcval(1, "boolean"));
+}
+
+function blogger_getPost($params) {
+  $sid = $params->getParam(1);
+  $su = $params->getParam(2);
+  $sp = $params->getParam(3);
+
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+
+  $blogid = $sid->scalarval();
+  $entry = get_entry($blogid);
+  
+  $content = _blogger_specialTags($e) . $e['body'];
+  $entrystruct = new xmlrpcval(array("content" => new xmlrpcval($content, "string"),
+				     "userid" => new xmlrpcval($admin_name, "string"),
+				     "postid" => new xmlrpcval($e['id'], "string"),
+				     "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601")
+				     ), "struct");
+
+  return $entrystruct;
 }
 
 function blogger_deletePost($params) {
@@ -128,10 +153,10 @@ function blogger_getRecentPosts($params) {
   $entries = get_recnet_entries($num);
   foreach($entries as $e) {
     $content = _blogger_specialTags($e) . $e['body'];
-    $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601"),
+    $entrystruct = new xmlrpcval(array("content" => new xmlrpcval($content, "string"),
 				       "userid" => new xmlrpcval($admin_name, "string"),
 				       "postid" => new xmlrpcval($e['id'], "string"),
-				       "content" => new xmlrpcval($content, "string")
+				       "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601")
 				       ), "struct");
     $structarray[] = $entrystruct;
   }
@@ -176,12 +201,94 @@ function blogger_getUserInfo($params) {
 			   "firstname" => new xmlrpcval($admin_name, "string"),
 			   ),"struct");
   return new xmlrpcresp($result_struct);
+
 }
 
-$s = new xmlrpc_server(array("blogger.newPost" => array("function" => "blogger_newPost"),
+function metaWeblog_newPost($params) {
+  // $sb = $params->getParam(1);
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
+  $ts = $params->getParam(3);
+  //  $spb = $params->getParam(4);
+
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+  
+  $item = $ts->getval();
+  $title = $item['title'];
+  $content = $item['description'];
+  $category = $item['category'];
+  $body = $content;
+
+  $blogid = entry_new($title, $body, time(), $category);
+
+  return new xmlrpcresp(new xmlrpcval($blogid, "string"));
+}
+
+function metaWeblog_editPost($params) {
+  $sid = $params->getParam(0);
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
+  $ts = $params->getParam(3);
+  //  $spb = $params->getParam(4);
+
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+  
+  $item = $ts->getval();
+  $title = $item['title'];
+  $body = $item['description'];
+  $category = $item['category'];
+
+
+  $blogid = $sid->scalarval();
+
+  $ret = entry_edit($blogid, $title, $body, time(), $category);
+
+  return new xmlrpcresp(new xmlrpcval($ret, "string"));
+}
+
+function metaWeblog_getPost($params) {
+  $sid = $params->getParam(1);
+  $su = $params->getParam(2);
+  $sp = $params->getParam(3);
+
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+
+  $blogid = $sid->scalarval();
+  $e = get_entry($blogid);
+  
+  $content = $e['body'];
+  $categories = array ($e['category']);
+  $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601"),
+				     "userid" => new xmlrpcval($admin_name, "string"),
+				     "postid" => new xmlrpcval($e['id'], "string"),
+				     "title" => new xmlrpcval($e['title'], "string"),
+				     "link" => new xmlrpcval($e['link'], "string"),
+				     "categories" => new xmlrpcval($categories, "array"),
+				     "description" => new xmlrpcval($$content, "string")
+				     ), "struct");
+
+  return $entrystruct;
+}
+
+$s = new xmlrpc_server(array("metaWeblog.newPost" => array("function" => "metaWeblog_newPost"),
+			     "metaWeblog.editPost" => array("function" => "metaWeblog_editPost"),
+			     "metaWeblog.deletePost" => array("function" => "metaWeblog_deletePost"),
+			     "blogger.newPost" => array("function" => "blogger_newPost"),
 			     "blogger.editPost" => array("function" => "blogger_editPost"),
 			     "blogger.deletePost" => array("function" => "blogger_deletePost"),
 			     "blogger.getRecentPosts" => array("function" => "blogger_getRecentPosts"),
 			     "blogger.getUsersBlogs" => array("function" => "blogger_getUsersBlogs"),
 			     "blogger.getUserInfo" => array("function" => "blogger_getUserInfo")));
+
+
 ?>
+
