@@ -39,10 +39,10 @@
 	<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')">plain
 	<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')">html
 	<br />
-
+	
 	Body: <br />
 	{if $format == "plain" || $format == ""}
-		<textarea name="body" rows="20" cols="80">{$body}</textarea>
+		<textarea name="body" rows="15" cols="80">{$body}</textarea>
 	{else}
 		<script type="text/javascript">
 			var oFCKeditor = new FCKeditor( 'body' ) ;
@@ -55,6 +55,9 @@
 
 		</script>
 	{/if}
+	<br />
+
+	Upload:	<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=400,height=200')">Upload Files</a>
 	<br />
 
 	{if $id != null}

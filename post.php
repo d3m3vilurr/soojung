@@ -8,7 +8,11 @@ if (!isset($_SESSION["auth"])) {
   exit;
 }
 
-if ($_POST["mode"] == "Post") {
+if ($_POST["mode"] == "upload") {
+  echo "upload:";
+  print_r($_FILES);
+  die();
+} else if ($_POST["mode"] == "Post") {
   $title =  $_POST["title"];
   $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
@@ -86,36 +90,31 @@ if ($_POST["mode"] == "Post") {
     $id = $_POST["id"];
 }
 
-$smarty = new Smarty;
-$smarty->compile_dir = "templates/.admin_compile/";
-$smarty->config_dir = "templates/.admin_configs/";
-$smarty->cache_dir = "templates/.admin_cache/";
-$smarty->template_dir = "templates/admin/";
-$smarty->assign('baseurl', $blog_baseurl);
+$template = new AdminTemplate;
 
-$smarty->assign("title", $title);
-$smarty->assign("body", $body);
-$smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()+10));
-$smarty->assign("category", $category);
+$template->assign("title", $title);
+$template->assign("body", $body);
+$template->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()+10));
+$template->assign("category", $category);
 
 if (isset($options)) {
   $options = array_flip($options);
-  $smarty->assign("secret", array_key_exists("SECRET", $options));
-  $smarty->assign("no_comment", array_key_exists("NO_COMMENT", $options));
-  $smarty->assign("no_trackback", array_key_exists("NO_TRACKBACK", $options));
-  $smarty->assign("static", array_key_exists("STATIC", $options));
-  $smarty->assign("no_rss", array_key_exists("NO_RSS", $options));
+  $template->assign("secret", array_key_exists("SECRET", $options));
+  $template->assign("no_comment", array_key_exists("NO_COMMENT", $options));
+  $template->assign("no_trackback", array_key_exists("NO_TRACKBACK", $options));
+  $template->assign("static", array_key_exists("STATIC", $options));
+  $template->assign("no_rss", array_key_exists("NO_RSS", $options));
 }
 
-$smarty->assign("id", $id);
-$smarty->assign("mode", $mode);
+$template->assign("id", $id);
+$template->assign("mode", $mode);
 
-$smarty->assign("categories", Category::getCategoryList());
+$template->assign("categories", Category::getCategoryList());
 
 if (isset($_GET["format"])) {
-  $smarty->assign("format", $_GET["format"]);
+  $template->assign("format", $_GET["format"]);
 } else {
-  $smarty->assign("format", $format);
+  $template->assign("format", $format);
 }
-$smarty->display('post.tpl');
+$template->display('post.tpl');
 ?>

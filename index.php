@@ -2,7 +2,7 @@
 
 include_once("settings.php");
 
-$template = new Template;
+$template = new UserTemplate;
 
 if (isset($_GET["page"])) {
   $page = $_GET["page"];

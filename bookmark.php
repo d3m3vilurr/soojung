@@ -29,19 +29,12 @@ if ($_POST["mode"] == "post") {
   Bookmark::deleteBookmark($url);
 }
 
-$smarty = new Smarty;
-
-$smarty->force_compile = false;
-$smarty->compile_dir = "templates/.admin_compile/";
-$smarty->config_dir = "templates/.admin_configs/";
-$smarty->cache_dir = "templates/.admin_cache/";
-$smarty->template_dir = "templates/admin/";
-$smarty->assign('baseurl', $blog_baseurl);
+$template = new AdminTemplate;
 
 $bookmarks = Bookmark::getBookmarkList();
 if (empty($bookmarks)) {
   $bookmarks = array();
 }
-$smarty->assign('bookmarks', $bookmarks);
-$smarty->display('bookmark.tpl');
+$template->assign('bookmarks', $bookmarks);
+$template->display('bookmark.tpl');
 ?>

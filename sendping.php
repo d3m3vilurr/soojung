@@ -45,7 +45,7 @@ $category = $entry->category->name;
 
 
 <?php
-$smarty = new Template;
+$smarty = new UserTemplate;
 
 $smarty->assign('entry', $entry);
 $smarty->assign('trackbacks', $entry->getTrackbacks());

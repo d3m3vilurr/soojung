@@ -23,6 +23,8 @@ define('SMARTY_DIR', 'libs/smarty/');
 require(SMARTY_DIR . 'Smarty.class.php');
 
 include_once("classes/Template.class.php");
+include_once("classes/UserTemplate.class.php");
+include_once("classes/AdminTemplate.class.php");
 
 if (get_magic_quotes_gpc()) {
   function stripslashes_deep($value) {

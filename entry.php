@@ -42,7 +42,7 @@ if (isset($_POST["blogid"])) {
 ?>
 
 <?php
-$template = new Template;
+$template = new UserTemplate;
 
 $template->assign('entry', $entry);
 $template->assign('trackbacks', $entry->getTrackbacks());

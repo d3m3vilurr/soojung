@@ -11,16 +11,10 @@ if ($_POST["mode"] == "login") {
   }
 }
 
-$smarty = new Smarty;
-$smarty->force_compile = false;
-$smarty->compile_dir = "templates/.admin_compile/";
-$smarty->config_dir = "templates/.admin_configs/";
-$smarty->cache_dir = "templates/.admin_cache/";
-$smarty->template_dir = "templates/admin/";
-$smarty->assign('baseurl', $blog_baseurl);
+$template = new AdminTemplate;
 
 if (!isset($_SESSION["auth"])) {
-  $smarty->display('login.tpl');
+  $template->display('login.tpl');
   exit();
 }
 
@@ -66,22 +60,22 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
 }
 
 if ($_GET["mode"] == "config") {
-  $smarty->assign("blog_name", $blog_name);
-  $smarty->assign("blog_desc", $blog_desc);
-  $smarty->assign("blog_entries_per_page", $blog_entries_per_page);
-  $smarty->assign("blog_fancyurl", $blog_fancyurl);
-  $smarty->assign("blog_notify", $notify);
-  $smarty->assign("blog_skin", $blog_skin);
-  $smarty->assign("admin_name", $admin_name);
-  $smarty->assign("admin_email", $admin_email);
-  $smarty->assign("templates", Soojung::getTemplates());
+  $template->assign("blog_name", $blog_name);
+  $template->assign("blog_desc", $blog_desc);
+  $template->assign("blog_entries_per_page", $blog_entries_per_page);
+  $template->assign("blog_fancyurl", $blog_fancyurl);
+  $template->assign("blog_notify", $notify);
+  $template->assign("blog_skin", $blog_skin);
+  $template->assign("admin_name", $admin_name);
+  $template->assign("admin_email", $admin_email);
+  $template->assign("templates", Soojung::getTemplates());
 
-  $smarty->display('config.tpl');
+  $template->display('config.tpl');
 } else if ($_GET["mode"] == "data") {
-  $smarty->display('data.tpl');
+  $template->display('data.tpl');
 } else {
   $entry_structs = array();
-  $smarty->assign('entries', Entry::getAllEntries(false));
-  $smarty->display('list.tpl');
+  $template->assign('entries', Entry::getAllEntries(false));
+  $template->display('list.tpl');
 }
 ?>

@@ -93,8 +93,8 @@
 <h3>Search</h3>
 <form action="index.php" method="get">
 <p>
-<input type="text" name="search" title="input search text"/>
-<input type="submit" value="go" />
+<input type="text" name="search" title="input search text" size="16"/>
+<input type="submit" value="Search" />
 </p>
 </form>
 
