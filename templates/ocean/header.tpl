@@ -9,8 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/ocean-elastic.css" title="elastic" media="screen" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
 	<script type="text/javascript" src="{$baseurl}/templates/{$skin}/ocean.js"></script>
+	<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
-<body>
+<body onload="return correct_bbcode_image();">
 
 <div id="main">
 	<div id="header">

@@ -4,8 +4,9 @@
 <meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <title>{$title}</title>
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/soogle/styles.css"/>
+<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
-<body topmargin=2 marginheight=2>
+<body topmargin=2 marginheight=2 onload="return correct_bbcode_image();">
 <table border=0 cellpadding=0 cellspacing=0>
 	<tr>
 		<td valign=top>

@@ -5,8 +5,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="Stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/styles.css" />
 	<link rel="Alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
+	<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
-<body>
+<body onload="return correct_bbcode_image();">
 	<div id="header">
 		<h1>{$title}</h1>
 	</div>

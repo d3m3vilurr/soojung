@@ -13,6 +13,7 @@ soojung (c) copyleft 2004-2005 soojung devel team, all rights reserved.
 <title>{$title|escape}{if $subtitle != ""} | {$subtitle|escape}{/if}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="soojung {$soojung_version}" />
+<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/css/{#cssFile#}" />
 {if #useCustomCSS# == 1}
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/css/custom.css" />
@@ -24,16 +25,9 @@ soojung (c) copyleft 2004-2005 soojung devel team, all rights reserved.
 <!--[if IE]>
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/css/msie.css" />
 <![endif]-->
-<script type="text/javascript">/*<![CDATA[*/{literal}
-function fold_sidebar(objid) {
-    document.getElementById(objid).className =
-        (document.getElementById(objid).className ? '' : 'hide');
-    return false;
-}
-{/literal}/*]]>*/</script>
 </head>
 
-<body>
+<body onload="return correct_bbcode_image();">
 
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 <!--+ header ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->

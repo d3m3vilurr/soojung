@@ -6,8 +6,9 @@
 
 	<link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/style.css" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
+	<script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
-<body>
+<body onload="return correct_bbcode_image();">
 
 <div id="rap">
 <h1 id="header"><a href="{$baseurl}" title="{$description}">{$title}</a></h1>
