@@ -126,7 +126,12 @@ class PlainFormatter extends Formatter {
     $spos = 0;
     while (($pos = @strpos($str, "<pre", $spos)) !== FALSE) {
       $text .= nl2br(strtr(trim(substr($str, $spos, $pos-$spos)), $trans));
-      $spos = strpos($str, "</pre>", $spos) + 6;
+      $spos = strpos($str, "</pre>", $pos);
+      if ($spos === false) {
+	$str .= "</pre>";
+	$spos = strlen($str);
+      }
+      $spos += 6;
       $text .= substr($str, $pos, $spos-$pos);
     }
     $text .= nl2br(strtr(trim(substr($str, $spos)), $trans));
