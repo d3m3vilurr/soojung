@@ -66,7 +66,7 @@ function blogger_newPost($params) {
   $category = _blogger_extractCategory($content);
   $body = _blogger_removeSpecialTags($content);
 
-  $blogid = entry_new($title, $body, time(), $category);
+  $blogid = Entry::createEntry($title, $body, time(), $category);
 
   return new xmlrpcresp(new xmlrpcval($blogid, "string"));
 }
@@ -91,7 +91,7 @@ function blogger_editPost($params) {
   $e = get_entry($blogid);
   $date = $e["date"];
 
-  entry_edit($blogid, $title, $body, $date, $category);
+  Entry::editEntry($blogid, $title, $body, $date, $category);
 
   return new xmlrpcresp(new xmlrpcval(1, "boolean"));
 }
@@ -107,13 +107,13 @@ function blogger_getPost($params) {
   }
 
   $blogid = $sid->scalarval();
-  $entry = get_entry($blogid);
+  $entry = Entry::getEntry($blogid);
   
-  $content = _blogger_specialTags($e) . $e['body'];
+  $content = _blogger_specialTags($entry) . $e->getBody();
   $entrystruct = new xmlrpcval(array("content" => new xmlrpcval($content, "string"),
 				     "userid" => new xmlrpcval($admin_name, "string"),
-				     "postid" => new xmlrpcval($e['id'], "string"),
-				     "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601")
+				     "postid" => new xmlrpcval($entry->entryId, "string"),
+				     "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($entry->date)), "dateTime.iso8601")
 				     ), "struct");
 
   return $entrystruct;
@@ -130,8 +130,7 @@ function blogger_deletePost($params) {
   }
 
   $blogid = $sid->scalarval();
-  entry_delete($blogid);
-
+  Entry::deleteEntry($blogid);
   return new xmlrpcresp(new xmlrpcval(1, "boolean"));
 }
 
@@ -147,13 +146,13 @@ function blogger_getRecentPosts($params) {
   }
 
   $structarray = array();
-  $entries = get_recnet_entries($num);
+  $entries = Entry::getRecentEntries($num);
   foreach($entries as $e) {
-    $content = _blogger_specialTags($e) . $e['body'];
+    $content = _blogger_specialTags($e) . $e->getBody();
     $entrystruct = new xmlrpcval(array("content" => new xmlrpcval($content, "string"),
 				       "userid" => new xmlrpcval($admin_name, "string"),
-				       "postid" => new xmlrpcval($e['id'], "string"),
-				       "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601")
+				       "postid" => new xmlrpcval($e->entryId, "string"),
+				       "dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e->date)), "dateTime.iso8601")
 				       ), "struct");
     $structarray[] = $entrystruct;
   }
@@ -219,7 +218,7 @@ function metaWeblog_newPost($params) {
   $category = $item['category'];
   $body = $content;
 
-  $blogid = entry_new($title, $body, time(), $category);
+  $blogid = Entry::createEntry($title, $body, time(), $category);
 
   return new xmlrpcresp(new xmlrpcval($blogid, "string"));
 }
@@ -244,7 +243,7 @@ function metaWeblog_editPost($params) {
 
   $blogid = $sid->scalarval();
 
-  $ret = entry_edit($blogid, $title, $body, time(), $category);
+  $ret = Entry::editEntry($blogid, $title, $body, time(), $category);
 
   return new xmlrpcresp(new xmlrpcval($ret, "string"));
 }
@@ -260,15 +259,15 @@ function metaWeblog_getPost($params) {
   }
 
   $blogid = $sid->scalarval();
-  $e = get_entry($blogid);
+  $e = Entry::getEntry($blogid);
   
-  $content = $e['body'];
-  $categories = array ($e['category']);
-  $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601"),
+  $content = $e->getBody();
+  $categories = array ($e->category->name);
+  $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e->date)), "dateTime.iso8601"),
 				     "userid" => new xmlrpcval($admin_name, "string"),
-				     "postid" => new xmlrpcval($e['id'], "string"),
-				     "title" => new xmlrpcval($e['title'], "string"),
-				     "link" => new xmlrpcval($e['link'], "string"),
+				     "postid" => new xmlrpcval($e->entryId, "string"),
+				     "title" => new xmlrpcval($e->title, "string"),
+				     "link" => new xmlrpcval($e->getHref(), "string"),
 				     "categories" => new xmlrpcval($categories, "array"),
 				     "description" => new xmlrpcval($$content, "string")
 				     ), "struct");
@@ -307,11 +306,11 @@ function metaWeblog_getCategories($params) {
     return $r;
   }
   
-  $categories = get_category_list();
+  $categories = Category::getCategoryList();
   foreach($categories as $c) {
-    $categorystruct = new xmlrpcval(array("Description" => $c['name'],
-					  "htmlUrl" => $c['link'],
-					  "rssUrl" => $c['rss']), 
+    $categorystruct = new xmlrpcval(array("Description" => $c->name,
+					  "htmlUrl" => $c->getHref(),
+					  "rssUrl" => $c->getRssHref()), 
 				    "struct");
     $structarray[] = $categorystruct;
   }
@@ -329,17 +328,17 @@ function metawebLog_getRecentPosts($params) {
   }
 
   $structarray = array();
-  $entries = get_recnet_entries($num);
+  $entries = Entry::getRecentEntries($num);
   foreach($entries as $e) {
-    $content = _blogger_specialTags($e) . $e['body'];
-    $categories = array ($e['category']);
-    $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601"),
+    $content = _blogger_specialTags($e) . $e->getBody();
+    $categories = array ($e->category->name);
+    $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e->date)), "dateTime.iso8601"),
 				       "userid" => new xmlrpcval($admin_name, "string"),
-				       "postid" => new xmlrpcval($e['id'], "string"),
-				       "title" => new xmlrpcval($e['title'], "string"),
-				       "link" => new xmlrpcval($e['link'], "string"),
+				       "postid" => new xmlrpcval($e->entryId, "string"),
+				       "title" => new xmlrpcval($e->title, "string"),
+				       "link" => new xmlrpcval($e->getHref(), "string"),
 				       "categories" => new xmlrpcval($categories, "array"),
-				       "description" => new xmlrpcval($$content, "string")
+				       "description" => new xmlrpcval($content, "string")
 				       ), "struct");
 
     $structarray[] = $entrystruct;
@@ -361,4 +360,3 @@ $s = new xmlrpc_server(array("metaWeblog.newPost" => array("function" => "metaWe
 			     "blogger.getUsersBlogs" => array("function" => "blogger_getUsersBlogs"),
 			     "blogger.getUserInfo" => array("function" => "blogger_getUserInfo")));
 ?>
-

@@ -4,9 +4,9 @@ header("Content-type: text/xml");
 
 if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   $blogid = $_GET["blogid"];
-  $entry = get_entry($blogid);
+  $entry = Entry::getEntry($blogid);
 
-  $excerpt = $entry['body'];
+  $excerpt = $entry->getBody();
   if (strlen ($excerpt) > 255)
     $excerpt = substr($excerpt,0, 252) . "...";
   echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
@@ -18,8 +18,8 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   echo "<link>".$blog_baseurl."/trackback.php?blogid=".$_GET["blogid"]."</link>\n";
   echo "<description>".$blog_desc."</description>\n";
   echo "<item>\n";
-  echo "<title>".$entry['title']."</title>\n";
-  echo "<link>".$entry['link']."</link>\n";
+  echo "<title>".$entry->title."</title>\n";
+  echo "<link>".$entry->getHref()."</link>\n";
   echo "<description>".$excerpt."</description>\n";
   echo "</item>\n";
   echo "</channel>\n";
@@ -59,7 +59,7 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
     echo "<message>url is required</message>\n";
     echo "</response>\n";
   } else {
-    trackback_write($id, $url, $name, $title, $excerpt);
+    Trackback::writeTrackback($id, $url, $name, $title, $excerpt);
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
     echo "<response>\n";
     echo "<error>0</error>\n";
