@@ -48,7 +48,7 @@ if (function_exists("iconv") == 0) {
       }
     }
     $return = "";
-    $fp = popen("echo \"$str\" | /usr/local/bin/iconv -c -f $in -t $out","r");
+    $fp = popen("echo ".escapeshellarg($str)." | /usr/local/bin/iconv -c -f $in -t $out","r");
     while(!feof($fp)) {
       $return .= fgets($fp,1024);
     }
