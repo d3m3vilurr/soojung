@@ -9,3 +9,8 @@
 1. admin으로 로그인을 한다
 
 2. 웹브라우저로 uninstall.php를 연다.
+
+=== 업그레이드 ===
+==== 0.1 -> 0.2 ====
+1. 0.2를 다운 받아서 0.1가 깔린 디렉토리에 덮어 쓴다.
+2. templates 디렉토리 아래에 .admin_configs, .admin_cache, .admin_compile을 만들고, 웹서버가 쓸 수 있게 퍼미션을 조정해준다.
