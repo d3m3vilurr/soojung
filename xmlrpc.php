@@ -65,7 +65,7 @@ function blogger_newPost($params) {
   $content = $sc->scalarval();
   $title = _blogger_extractTitle($content);
   $category = _blogger_extractCategory($content);
-  $body = _blogger_removeSpeicalTags($content);
+  $body = _blogger_removeSpecialTags($content);
 
   $blogid = entry_new($title, $body, time(), $category);
 
@@ -86,7 +86,7 @@ function blogger_editPost($params) {
   $content = $sc->scalarval();
   $title = _blogger_extractTitle($content);
   $category = _blogger_extractCategory($content);
-  $body = _blogger_removeSpeicalTags($content);
+  $body = _blogger_removeSpecialTags($content);
 
   $blogid = $sid->scalarval();
   $e = get_entry($blogid);
