@@ -42,8 +42,9 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
   Entry::deleteEntry($_GET["blogid"]);
 } else if ($_GET["mode"] == "export") {
+  $filename = $blog_name . '-' . date("Ymd", time()) . '.dat';
   header("Content-Type: application/octet");
-  header("Content-Disposition: filename=soojung.dat");
+  header("Content-Disposition: filename=" . $filename);
   echo Export::export();
   flush();
   exit();
