@@ -13,7 +13,7 @@ function pre_nl2br($string) {
 
   $text = "";
   while (($pos = @strpos($s, "<pre")) !== FALSE) {
-    $text .= nl2br(substr($s, 0, $pos));
+    $text .= nl2br(trim(substr($s, 0, $pos)));
 
     $s = substr($s, $pos);
     $endpos = strpos($s, "</pre>") + strlen("</pre>");
@@ -21,7 +21,7 @@ function pre_nl2br($string) {
     $text .= substr($s, 0, $endpos);
     $s = substr($s, $endpos);
   }
-  $text .= $s;
+  $text .= nl2br(trim($s));
   return $text;
 }
 
