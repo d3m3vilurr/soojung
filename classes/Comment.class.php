@@ -67,7 +67,7 @@ class Comment {
     fwrite($fd, "\r\n");
     fwrite($fd, $email);
     fwrite($fd, "\r\n");
-    fwrite($fd, $url);
+    fwrite($fd, $homepage);
     fwrite($fd, "\r\n");
     fwrite($fd, $body);
     fclose($fd);
