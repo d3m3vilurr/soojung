@@ -22,10 +22,10 @@ class Comment {
   function Comment($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = fgets($fd, 1024);
-    $this->name = fgets($fd, 1024);
-    $this->email = fgets($fd, 1024);
-    $this->homepage = fgets($fd, 1024);
+    $this->date = trim(fgets($fd, 1024));
+    $this->name = trim(fgets($fd, 1024));
+    $this->email = trim(fgets($fd, 1024));
+    $this->homepage = trim(fgets($fd, 1024));
     fclose($fd);
   }
 

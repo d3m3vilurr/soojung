@@ -23,10 +23,10 @@ class Trackback {
   function Trackback($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = fgets($fd, 1024);
-    $this->url = fgets($fd, 1024);
-    $this->name = fgets($fd, 1024);
-    $this->title = fgets($fd, 1024);
+    $this->date = trim(fgets($fd, 1024));
+    $this->url = trim(fgets($fd, 1024));
+    $this->name = trim(fgets($fd, 1024));
+    $this->title = trim(fgets($fd, 1024));
     fclose($fd);
   }
 
