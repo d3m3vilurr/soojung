@@ -1,7 +1,7 @@
 <?php
 include_once("settings.php");
 
-header("Content-type: text/xml");
+header("Content-type: application/xml");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 ?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
@@ -27,12 +27,7 @@ foreach ($entries as $e) {
     continue;
   }
 
-  $post_text = str_replace("<big>", "",$e->getBody());
-  $post_text = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",str_replace("\n", "\n", $post_text));
-  $post_text = strip_tags($post_text, '<br><img><embed>');
-  if (strlen ($post_text) > 310) {
-    $post_text = substring($post_text,307);
-  }
+  $post_text = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",str_replace("\n", "\n", $e->getBody()));
 
   echo "<item>\n";
   echo "<title>" . $e->title . "</title>\n";
@@ -40,7 +35,7 @@ foreach ($entries as $e) {
   echo "<comments></comments>\n";
   echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
   echo "<category>" . $e->category->name . "</category>\n";
-  echo "<guid></guid>\n";
+  echo "<guid>" . $e->getHref() . "</guid>\n";
   echo "<description></description>\n";
   echo "<content:encoded><![CDATA[" . $post_text . "]]></content:encoded>\n";
   echo "</item>\n";
