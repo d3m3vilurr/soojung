@@ -54,7 +54,7 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   exit();
 } else if ($_POST["mode"] == "import") {
   if (isset($_FILES['file']['name'])) {
-    Import::importSoojung($_FILES['file']);
+    Import::importSoojung($_FILES['file'], $_POST["version"]);
   }
   header("Location: admin.php");
 } else if ($_POST["mode"] == "import_tt") {

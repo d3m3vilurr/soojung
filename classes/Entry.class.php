@@ -10,7 +10,6 @@ class Entry {
   var $href;
 
   var $options;
-  var $format;
 
   /**
    * Entry file name:
@@ -21,7 +20,6 @@ class Entry {
    * Title: [title]\r\n
    * Category: [category]\r\n
    * Options: [option]\r\n
-   * Format: [format]\r\n
    * \r\n
    * [body]
    */
@@ -34,7 +32,6 @@ class Entry {
     $this->title = trim(strstr(fgets($fd), ' '));
     $this->category = new Category(trim(strstr(fgets($fd), ' ')));
     $this->options = explode("|", trim(strstr(fgets($fd), ' ')));
-    $this->format = trim(strstr(fgets($fd), ' '));
     fclose($fd);
 
     $this->entryId = Soojung::filenameToEntryId($filename);
@@ -60,7 +57,6 @@ class Entry {
     fgets($fd); // title
     fgets($fd); // category
     fgets($fd); // options
-    fgets($fd); // format
     fgets($fd);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
@@ -101,7 +97,7 @@ class Entry {
   /**
    * static method
    */
-  function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
+  function entryWrite($title, $body, $date, $category, $entryId, $options) {
     $filename = "";
     if (in_array("SECRET", $options)) {
       $filename .= ".";
@@ -112,7 +108,6 @@ class Entry {
     fwrite($fd, "Title: " . $title . "\r\n");
     fwrite($fd, "Category: " . $category . "\r\n");
     fwrite($fd, "Options: " . implode("|", $options) . "\r\n");
-    fwrite($fd, "Format: " . $format . "\r\n");
     fwrite($fd, "\r\n");
     fwrite($fd, $body);
     fclose($fd);
@@ -121,22 +116,20 @@ class Entry {
   /**
    * static method
    */
-  function createEntry($title, $body, $date, $category, $options, $format) {
+  function createEntry($title, $body, $date, $category, $options) {
     $id = Soojung::createNewEntryId();
-    Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
-    print $category;
-    print "<BR>";
+    Entry::entryWrite($title, $body, $date, $category, $id, $options);
     return $id;
   }
 
   /**
    * static method
    */
-  function editEntry($entryId, $title, $body, $date, $category, $options, $format) {
-    if (file_exists(Soojung::entryIdToFilename($entryId)) !== TRUE)
-      return FALSE;
-    unlink(Soojung::entryIdToFilename($entryId));
-    Entry::entryWrite($title, $body, $date, $category, $entryId, $options, $format);
+  function editEntry($entryId, $title, $body, $date, $category, $options) {
+    //if (file_exists(Soojung::entryIdToFilename($entryId)) !== TRUE)
+    //return FALSE;
+    @unlink(Soojung::entryIdToFilename($entryId));
+    Entry::entryWrite($title, $body, $date, $category, $entryId, $options);
     return TRUE;
   }
 

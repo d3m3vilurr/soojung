@@ -17,7 +17,6 @@ if ($_POST["mode"] == "Post") {
   } else {
     $category = $_POST["category"];
   }
-  $format = trim($_POST["format"]);
   $options = array();
   if (isset($_POST["SECRET"])) {
     $options[] = "SECRET";
@@ -39,9 +38,9 @@ if ($_POST["mode"] == "Post") {
     echo "<font color=\"red\">WARNING: Input title, body, date, category</font>";
   } else {
     if (isset($_POST["id"])) {
-      Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options, $format);
+      Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options);
     } else {
-      Entry::createEntry($title, $body, $date, $category, $options, $format);
+      Entry::createEntry($title, $body, $date, $category, $options);
     }
     echo "post success<br>";
     echo "<a href=\"admin.php\">admin</a> ";
@@ -56,7 +55,6 @@ if ($_POST["mode"] == "Post") {
   $date = $entry->date;
   $category = $entry->category->name;
   $options = $entry->options;
-  $format = $entry->format;
   $id = $entry->entryId;
 } else if ($_POST["mode"] == "Preview") {
   $mode = "preview";
@@ -64,7 +62,6 @@ if ($_POST["mode"] == "Post") {
   $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
-  $format = trim($_POST["format"]);
   $options = array();
   if (isset($_POST["SECRET"])) {
     $options[] = "SECRET";
@@ -93,7 +90,7 @@ $smarty->template_dir = "templates/admin/";
 $smarty->assign('baseurl', $blog_baseurl);
 
 $smarty->assign("title", $title);
-$smarty->assign("body", br2nl($body));
+$smarty->assign("body", $body);
 $smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()));
 $smarty->assign("category", $category);
 
@@ -106,7 +103,6 @@ if (isset($options)) {
   $smarty->assign("no_rss", array_key_exists("NO_RSS", $options));
 }
 
-$smarty->assign("format", $format);
 $smarty->assign("id", $id);
 $smarty->assign("mode", $mode);
 

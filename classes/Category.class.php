@@ -14,7 +14,7 @@ class Category {
     if ($blog_fancyurl) {
       return $blog_baseurl . '/' . $this->name;
     } else {
-      return $blog_baseurl . '/index.php?category=' . $this->name;
+      return $blog_baseurl . '/index.php?category=' . urlencode($this->name);
     }
   }
 

@@ -5,14 +5,18 @@ class Import {
   /**
    * static method
    */
-  function importSoojung($uploadFile) {
+  function importSoojung($uploadFile, $version) {
     $fd = fopen($uploadFile['tmp_name'], "rb");
     $data = fread($fd, $uploadFile['size']);
     fclose($fd);
 
     while (($pos_s = strpos($data, "<file>", $pos_e)) !== FALSE) {
       $pos_e = strpos($data, "</file>", $pos_s) + strlen("</file>");
-      Import::createFile(substr($data, $pos_s, $pos_e - $pos_s));
+      if ($version == "0.2") {
+	Import::createFileFromVer02(substr($data, $pos_s, $pos_e - $pos_s));
+      } else { //0.3+
+	Import::createFile(substr($data, $pos_s, $pos_e - $pos_s));
+      }
     }
   }
 
@@ -90,9 +94,7 @@ class Import {
    * private, static method
    */
   function createFile($xml) {
-    $name_pos = strpos($xml, "<name>") + strlen("<name>");
-    $name_end = strpos($xml, "</name>");
-    $name = substr($xml, $name_pos, $name_end - $name_pos);
+    $name = Import::getNameFromXml($xml);
 
     $dir = dirname($name);
     if (file_exists($dir) == FALSE) {
@@ -100,12 +102,39 @@ class Import {
     }
     $fd = fopen($name, "wb");
 
-    $data_pos = strpos($xml, "<data>") + strlen("<data>");
-    $data_end = strpos($xml, "</data>");
-    $data = substr($xml, $data_pos, $data_end - $data_pos);
-
+    $data = Import::getDataFromXml($xml);
     fwrite($fd, Import::trans($data));
     fclose($fd);
+  }
+
+  function createFileFromVer02($xml) {
+    $name = Import::getNameFromXml($xml);
+    if (strpos($name, ".entry") != false) { // entry file
+      $info = explode("_", $name);
+      $category = $info[1];
+      $dot = strpos($info[2], ".");
+      $id = substr($info[2], 0, $dot);
+      $data = explode("\r\n", Import::getDataFromXml($xml), 3);
+      $title = $data[0];
+      $date = $data[1];
+      $body = $data[2];
+      $options = array();
+      Entry::editEntry($id, $title, $body, $date, $category, $options);
+    } else {
+      Import::createFile($xml);
+    }
+  }
+  
+  function getNameFromXml($xml) {
+    $name_pos = strpos($xml, "<name>") + strlen("<name>");
+    $name_end = strpos($xml, "</name>");
+    return substr($xml, $name_pos, $name_end - $name_pos);
+  }
+
+  function getDataFromXml($xml) {
+    $data_pos = strpos($xml, "<data>") + strlen("<data>");
+    $data_end = strpos($xml, "</data>");
+    return substr($xml, $data_pos, $data_end - $data_pos);
   }
 
   /**

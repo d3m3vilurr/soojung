@@ -8,7 +8,14 @@
 <h2>Import</h2>
 <h3>import from soojung data file</h3>
 <form enctype="multipart/form-data" action="{$baseurl}/admin.php" method="post">
-<input type="file" name="file">
+File: <input type="file" name="file">
+<br />
+Version: 
+<select name="version">
+<option value="0.2">0.2.*
+<option value="0.3">0.3
+</select>
+<br />
 <input type="hidden" name="mode" value="import">
 <input type="submit" value="import!">
 </form>
