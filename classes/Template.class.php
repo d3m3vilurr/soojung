@@ -11,7 +11,7 @@ class Template extends Smarty {
     
     $this->template_dir = "templates/" . $blog_skin . "/";
     $this->compile_dir = "templates/.compile/";
-    $this->config_dir = "templates/.configs/";
+    $this->config_dir = "templates/" . $blog_skin . "/";
     $this->cache_dir = "templates/.cache/";
     $this->force_compile = true;
 
