@@ -100,6 +100,7 @@ if ($_POST["mode"] == "upload") {
   $format = $_POST["format"];
   $formatter = Soojung::getFormatter($format);
   $body = $formatter->onPost($_POST["body"]);
+  $body = nl2br($body);
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);

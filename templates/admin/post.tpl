@@ -1,14 +1,6 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
-{if $mode == "preview"}
-<h1>preview</h1>
-<h2>{$title}</h2>
-{$body}
-<br />
-{$category}, {$date}
-<hr />
-{/if}
 
 <div id="post">
 <form action="{$baseurl}/post.php" method="post" name="postForm">
@@ -93,5 +85,16 @@
 </div>
 
 </form>
+
+{if $mode == "preview"}
+<h1>preview</h1>
+<h2>{$title}</h2>
+{$body}
+<br />
+{$category}, {$date}
+<hr />
+{/if}
+
+
 </div>
 {include file="footer.tpl"}
