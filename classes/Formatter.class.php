@@ -121,22 +121,15 @@ class Formatter {
 class PlainFormatter extends Formatter {
 
   function toHtml($str) {
-    $pos = strpos($str, "<pre");
-    if ($pos === false) {
-      return nl2br($str);
-    }
- 
+    $trans = array("\\\r\n"=>"", "\\\r"=>"", "\\\n"=>"");
     $text = "";
-    while (($pos = @strpos($str, "<pre")) !== FALSE) {
-      $text .= nl2br(trim(substr($str, 0, $pos)));
- 
-      $str = substr($str, $pos);
-      $endpos = strpos($str, "</pre>") + strlen("</pre>");
- 
-      $text .= substr($str, 0, $endpos);
-      $str = substr($str, $endpos);
+    $spos = 0;
+    while (($pos = @strpos($str, "<pre", $spos)) !== FALSE) {
+      $text .= nl2br(strtr(trim(substr($str, $spos, $pos-$spos)), $trans));
+      $spos = strpos($str, "</pre>", $spos) + 6;
+      $text .= substr($str, $pos, $spos-$pos);
     }
-    $text .= nl2br(trim($str));
+    $text .= nl2br(strtr(trim(substr($str, $spos)), $trans));
     return $text;
   }
 
