@@ -15,7 +15,8 @@ if (isset($_POST["blogid"])) {
   if ($url == "http://") {
     $url = "";
   }
-  comment_write($blogid, $name, $email, $url, $body, time());
+  $t = time();
+  comment_write($blogid, $name, $email, $url, $body, $t);
 
   // Remembering 30 days
   setcookie('w_id',    $blogid, time()+2592000);
@@ -24,7 +25,7 @@ if (isset($_POST["blogid"])) {
   setcookie('w_url',   $url,    time()+2592000);
 
   $entry = get_entry($blogid);
-  echo "<meta http-equiv='refresh' content='0;URL=" . $entry['link'] . "'>";
+  header("Location: " . $entry['link'] . "#" . $t);
   exit;
 } else if (isset($_GET["blogid"]) == false) {
   echo "<meta http-equiv='refresh' content='0;URL=index.php'>";
