@@ -11,3 +11,5 @@ MT->soojung 변환 프로그램
 class기반으로 바꾸기
 plugin 환경 구축
 포스팅 미리보기 기능
+entry flag 설정. 예) NO_COMMENT, NO_TRACKBACK, etc ...
+wordpress->soojung 변환 프로그램
