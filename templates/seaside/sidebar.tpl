@@ -3,7 +3,7 @@
 	<li><a href="{$baseurl}/index.php">main</a></li>
 	<li><a href="{$baseurl}/admin.php">admin</a></li>
 	{foreach from=$static_entries item=static}
-	<li><a href="{$static->getHref()}">{$static->title}</a></li>
+	<li><a href="{$static->getHref()|escape}">{$static->title|escape}</a></li>
 	{/foreach}
 	<li><a href="{$baseurl}/rss2.php" class="rss">RSS (2.0)</a></li>
 </ul>
@@ -22,7 +22,7 @@
 <ul>
 	{foreach from=$categories item=category}
 	<li>
-		<a href="{$category->getHref()}">{$category->name}</a> 
+		<a href="{$category->getHref()|escape}">{$category->name|escape}</a> 
 		({$category->getEntryCount()})
 	</li>
 	{foreachelse}
@@ -34,7 +34,7 @@
 <ul>
 	{foreach from=$archvies item=archive}
 	<li>
-		<a href="{$archive->getHref()}">{$archive->getDate()|date_format:"%B %Y"}</a>
+		<a href="{$archive->getHref()|escape}">{$archive->getDate()|date_format:"%B %Y"}</a>
 	</li>
 	{foreachelse}
 	<li></li>
@@ -45,7 +45,7 @@
 <ul>
 	{foreach from=$bookmarks item=bookmark}
 	<li>
-		<a href="{$bookmark->url}">{$bookmark->name}</a>
+		<a href="{$bookmark->url|escape}">{$bookmark->name|escape}</a>
 	</li>
 	{foreachelse}
 	<li></li>

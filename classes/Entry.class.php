@@ -35,7 +35,7 @@ class Entry {
     
     //read header
     $this->date = trim(strstr(fgets($fd, 1024), ' '));
-    $this->title = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
+    $this->title = trim(strstr(fgets($fd, 1024), ' '));
     $this->category = new Category(trim(strstr(fgets($fd, 1024), ' ')));
     $this->options = explode("|", trim(strstr(fgets($fd, 1024), ' ')));
     $this->format = trim(strstr(fgets($fd, 1024), ' '));

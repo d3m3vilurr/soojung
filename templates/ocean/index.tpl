@@ -7,7 +7,7 @@
 
 	<div class="entry">
 		<h3>{$entry->date|date_format:"%B %d, %Y"}</h3>
-		<h4><a href="{$entry->getHref()}">{$entry->title}</a></h4>
+		<h4><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a></h4>
 		<div class="post">
 			{$entry->getBody()}
 		</div>
@@ -16,10 +16,10 @@
 		</div>
 		<div class="links">
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span class="commentslink"><a href="{$entry->getHref()}#comment"><span></span>Comments ({$entry->getCommentCount()})</a></span>
+			<span class="commentslink"><a href="{$entry->getHref()|escape}#comment"><span></span>Comments ({$entry->getCommentCount()})</a></span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span class="trackbackslink"><a href="{$entry->getHref()}#trackback"><span></span>Trackbacks ({$entry->getTrackbackCount()})</a></span>
+			<span class="trackbackslink"><a href="{$entry->getHref()|escape}#trackback"><span></span>Trackbacks ({$entry->getTrackbackCount()})</a></span>
 		{/if}
 		</div>
 	</div>
@@ -28,24 +28,24 @@
 
 	<div>
 	{if $prev_page_link != ""}
-		<a href="{$prev_page_link}">prev</a>
+		<a href="{$prev_page_link|escape}">prev</a>
 	{/if}
 	{if $next_page_link != ""}
-		<a href="{$next_page_link}">next</a>
+		<a href="{$next_page_link|escape}">next</a>
 	{/if}
 	</div>
 
 {elseif $view == "archive"}
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 	{/foreach}
 {elseif $view == "category"}
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 <div class="clear"></div>
@@ -53,7 +53,7 @@
 {elseif $view == "search"}
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 <div class="clear"></div>

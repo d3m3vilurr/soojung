@@ -22,8 +22,8 @@ class Bookmark {
     $fd = fopen($filename, "r");
     $this->number = Soojung::filenameToEntryId($filename);
     $this->name = trim(strstr(fgets($fd, 1024), ' '));
-    $this->url = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
-    $this->image = htmlspecialchars(trim(strstr(fgets($fd, 1024), ' ')), ENT_QUOTES, "UTF-8");
+    $this->url = trim(strstr(fgets($fd, 1024), ' '));
+    $this->image = trim(strstr(fgets($fd, 1024), ' '));
     $this->desc = trim(strstr(fgets($fd, 1024), ' '));
     fclose($fd);
   }

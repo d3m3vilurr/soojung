@@ -9,7 +9,7 @@
 				<li><a href="{$baseurl}/index.php" class="rounded"><span>main</span></a></li>
 				<li><a href="{$baseurl}/admin.php" class="rounded"><span>admin</span></a></li>
 				{foreach from=$static_entries item=static}
-				<li><a href="{$static->getHref()}">{$static->title}</a></li>
+				<li><a href="{$static->getHref()|escape}">{$static->title|escape}</a></li>
 				{/foreach}
 			</ul>
 		</div>
@@ -18,7 +18,7 @@
 			<ul>
 				{foreach from=$categories item=category}
 				<li>
-					<a href="{$category->getHref()}" class="rounded"><span>{$category->name}</span></a> 
+					<a href="{$category->getHref()|escape}" class="rounded"><span>{$category->name|escape}</span></a> 
 					({$category->getEntryCount()})
 				</li>
 				{foreachelse}
@@ -31,7 +31,7 @@
 			<ul>
 				{foreach from=$archvies item=archive}
 				<li>
-					<a href="{$archive->getHref()}" class="rounded"><span>{$archive->getDate()|date_format:"%B %Y"}</span></a>
+					<a href="{$archive->getHref()|escape}" class="rounded"><span>{$archive->getDate()|date_format:"%B %Y"}</span></a>
 				</li>
 				{foreachelse}
 				<li></li>
@@ -43,7 +43,7 @@
 			<ul>
 				{foreach from=$recent_entries item=entry}
 				<li>
-					<a href="{$entry->getHref()}" class="rounded"><span>{$entry->title}</span></a>
+					<a href="{$entry->getHref()|escape}" class="rounded"><span>{$entry->title|escape}</span></a>
 				</li>
 				{foreachelse}
 				<li></li>
@@ -69,7 +69,7 @@
 			<ul>
 				{foreach from=$bookmarks item=bookmark}
 				<li>
-					<a href="{$bookmark->url}" class="rounded"><span>{$bookmark->name}</span></a>
+					<a href="{$bookmark->url|escape}" class="rounded"><span>{$bookmark->name|escape}</span></a>
 				</li>
 				{foreachelse}
 				<li></li>

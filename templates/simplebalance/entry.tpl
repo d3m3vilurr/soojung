@@ -2,7 +2,7 @@
 
 <div class="entry thisentry">
 <h2>
-	<span class="box_title">{$entry->title}</span> <span class="hide">|</span>
+	<span class="box_title">{$entry->title|escape}</span> <span class="hide">|</span>
 	<span class="box_header">{$entry->category->name|escape} | {$entry->date|date_format:"%Y/%m/%d %p %I:%M"}</span>
 </h2>
 

@@ -5,7 +5,7 @@
 {foreach from=$entries item=entry}
 <div class="entry">
 <h2>
-	<a href="{$entry->getHref()|escape}" class="box_title">{$entry->title}</a> <span class="hide">|</span>
+	<a href="{$entry->getHref()|escape}" class="box_title">{$entry->title|escape}</a> <span class="hide">|</span>
 	<span class="box_header">{$entry->date|date_format:"%Y/%m/%d %p %I:%M"}</span>
 </h2>
 <div class="box_body">
@@ -30,8 +30,8 @@
 
 {if $prev_page_link != "" or $next_page_link != ""}
 <p class="navibar"><span>
-	{if $prev_page_link != ""}<a href="{$prev_page_link}">&lt; prev</a>{else}&lt; prev{/if} |
-	{if $next_page_link != ""}<a href="{$next_page_link}">next &gt;</a>{else}next &gt;{/if}
+	{if $prev_page_link != ""}<a href="{$prev_page_link|escape}">&lt; prev</a>{else}&lt; prev{/if} |
+	{if $next_page_link != ""}<a href="{$next_page_link|escape}">next &gt;</a>{else}next &gt;{/if}
 </span></p>
 {/if}
 
@@ -41,7 +41,7 @@
 	<h2>Archive</h2>
 	<div class="box_body">
 {foreach from=$entries item=entry}
-		<a href="{$entry->getHref()|escape}">{$entry->title}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
 {/foreach}
 	</div>
 </div>
@@ -52,7 +52,7 @@
 	<h2>Category</h2>
 	<div class="box_body">
 {foreach from=$entries item=entry}
-		<a href="{$entry->getHref()|escape}">{$entry->title}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
 {/foreach}
 	</div>
 </div>
@@ -63,7 +63,7 @@
 	<h2>Search Results</h2>
 	<div class="box_body">
 {foreach from=$entries item=entry}
-		<a href="{$entry->getHref()|escape}">{$entry->title}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a> {$entry->date|date_format:"%B %d, %Y"}<br />
 {/foreach}
 	</div>
 </div>

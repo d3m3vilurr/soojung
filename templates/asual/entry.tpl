@@ -5,17 +5,17 @@
 			<div id="clear"></div>
 			<div id="entries">
 <div class="entry">
-	<h3>{$entry->title}</h3>
+	<h3>{$entry->title|escape}</h3>
 	<div class="entrybody">
 		{$entry->getBody()}
 	</div>
 	<p>
 		<span class="blue">{$entry->date|date_format:"%B %d, %Y"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span>Comments [<a class="plink" href="{$entry->getHref()}#comment">{$entry->getCommentCount()}</a>]</span>
+			<span>Comments [<a class="plink" href="{$entry->getHref()|escape}#comment">{$entry->getCommentCount()}</a>]</span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span>Trackbacks [<a class="plink" href="{$entry->getHref()}#trackback">{$entry->getTrackbackCount()}</a>]</span>
+			<span>Trackbacks [<a class="plink" href="{$entry->getHref()|escape}#trackback">{$entry->getTrackbackCount()}</a>]</span>
 		{/if}
 	</p>
 </div>
@@ -30,11 +30,11 @@
 	<div class="trackback">
 		<a name="{$trackback->date}"></a>
 		<p class="blue">
-			Trackback from <a href="{$trackback->url}">{$trackback->url}</a>
+			Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a>
 		</p>
-		<p>{$trackback->title}:</p>
+		<p>{$trackback->title|escape}:</p>
 		<p>
-			{$trackback->getExcerpt()|strip_tags}
+			{$trackback->getExcerpt()|strip_tags|escape}
 		</p>
 	</div>
 {/foreach}
@@ -51,11 +51,11 @@
 		<p class="blue">
 			Left on {$comment->date|date_format:"%B %d, %Y %I:%M %p"} by
 			{if $comment->homepage != ""}
-				<a href="{$comment->homepage}">{$comment->name}</a>
+				<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
 			{elseif $comment->email != ""}
-				<a href=mailto:"{$comment->email}">{$comment->name}</a>
+				<a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
 			{else}
-				{$comment->name}
+				{$comment->name|escape}
 			{/if}
 		</p>
 		<p>
@@ -68,11 +68,11 @@
 			<input type="hidden" name="blogid" value="{$entry->entryId}" />
 		</p>
 		<p class="label">Author (<span class="red">*</span>):</p>
-		<p class="input"><input type="text" name="name" value="{$w_name}" /></p>
+		<p class="input"><input type="text" name="name" value="{$w_name|escape}" /></p>
 		<p class="label">E-mail:</p>
-		<p class="input"><input type="text" name="email" value="{$w_email}" /></p>
+		<p class="input"><input type="text" name="email" value="{$w_email|escape}" /></p>
 		<p class="label">URL:</p>
-		<p class="input"><input type="text" name="url" value="{$w_url|default:"http://"}" /></p>
+		<p class="input"><input type="text" name="url" value="{$w_url|default:"http://"|escape}" /></p>
 		<p class="label">Comment (<span class="red">*</span>):</p>
 		<p class="input"><textarea name="body" rows="5" cols="40"></textarea></p>
 		<p class="label">&nbsp;</p>

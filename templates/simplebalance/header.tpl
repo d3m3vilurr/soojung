@@ -34,7 +34,7 @@ soojung (c) copyleft 2004-2005 soojung devel team, all rights reserved.
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
 <div id="header">
-	<h1><a href="{$baseurl|escape}">{$title|escape}</a></h1>
+	<h1><a href="{$baseurl|escape}">{$title}</a></h1>
 	<p class="float">today: {$today_count} | total: {$total_count} | <a href="{$baseurl}/admin.php">admin</a></p>
 </div>
 

@@ -9,34 +9,34 @@
 	{foreach from=$entries item=entry}
 
 <div class="entry">
-	<h3><a href="{$entry->getHref()}">{$entry->title}</a></h3>
+	<h3><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a></h3>
 	<div class="entrybody">
 	{$entry->getBody()}
 	</div>
 	<p>
 		<span class="blue">{$entry->date|date_format:"%B %d, %Y"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span>Comments [<a class="plink" href="{$entry->getHref()}#comment">{$entry->getCommentCount()}</a>]</span>
+			<span>Comments [<a class="plink" href="{$entry->getHref()|escape}#comment">{$entry->getCommentCount()}</a>]</span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span>Trackbacks [<a class="plink" href="{$entry->getHref()}#trackback">{$entry->getTrackbackCount()}</a>]</span>
+			<span>Trackbacks [<a class="plink" href="{$entry->getHref()|escape}#trackback">{$entry->getTrackbackCount()}</a>]</span>
 		{/if}
 	</p>
 </div>
 	{/foreach}
 
 	{if $prev_page_link != ""}
-		<a href="{$prev_page_link}">prev</a>
+		<a href="{$prev_page_link|escape}">prev</a>
 	{/if}
 	{if $next_page_link != ""}
-		<a href="{$next_page_link}">next</a>
+		<a href="{$next_page_link|escape}">next</a>
 	{/if}
 
 {elseif $view == "archive"}
 	{foreach from=$entries item=entry}
 <div class="entry">
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 </div>
@@ -45,7 +45,7 @@
 	{foreach from=$entries item=entry}
 <div class="entry">
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 </div>
@@ -54,7 +54,7 @@
 	{foreach from=$entries item=entry}
 <div class="entry">
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 </div>

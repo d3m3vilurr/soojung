@@ -5,7 +5,7 @@
 
 <h2>{$entry->date|date_format:"%B %d, %Y"}</h2>
 <div class="post">
-	<h3 class="storytitle"><a href="{$entry->getHref()}">{$entry->title}</a></h3>
+	<h3 class="storytitle"><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a></h3>
 	<div class="meta">
 		Posted at {$entry->date|date_format:"%I:%M %p"}
 	</div>
@@ -16,10 +16,10 @@
 	</div>
 	<div class="feedback">
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<a href="{$entry->getHref()}#comment">Comments ({$entry->getCommentCount()})</a>
+			<a href="{$entry->getHref()|escape}#comment">Comments ({$entry->getCommentCount()})</a>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<a href="{$entry->getHref()}#trackback">Trackbacks ({$entry->getTrackbackCount()})</a>
+			<a href="{$entry->getHref()|escape}#trackback">Trackbacks ({$entry->getTrackbackCount()})</a>
 		{/if}
 	</div>
 </div>
@@ -28,10 +28,10 @@
 
 <div id="goto">
 	{if $prev_page_link != ""}
-		<a href="{$prev_page_link}">prev</a>
+		<a href="{$prev_page_link|escape}">prev</a>
 	{/if}
 	{if $next_page_link != ""}
-		<a href="{$next_page_link}">next</a>
+		<a href="{$next_page_link|escape}">next</a>
 	{/if}
 </div>
 
@@ -39,7 +39,7 @@
 <div class="post">
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 	{/foreach}
@@ -48,16 +48,16 @@
 <div class="post">
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 	{/foreach}
 </div>
 {elseif $view == "search"}
-<div class="post>
+<div class="post">
 	{foreach from=$entries item=entry}
 	<p>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		on {$entry->date|date_format:"%B %d, %Y"}
 	</p>
 	{/foreach}

@@ -3,7 +3,7 @@
 	<div class="entry">
 		{$entry->date|date_format:"%p %I:%M"}
 		<h3>{$entry->date|date_format:"%B %d, %Y"}</h3>
-		<h4>{$entry->title}</h4>
+		<h4>{$entry->title|escape}</h4>
 		<div class="post">
 			{$entry->getBody()}
 		</div>
@@ -12,10 +12,10 @@
 		</div>
 		<div class="links">
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span class="commentslink"><a href="{$entry->getHref()}#comment"><span></span>Comments ({$entry->getCommentCount()})</a></span>
+			<span class="commentslink"><a href="{$entry->getHref()|escape}#comment"><span></span>Comments ({$entry->getCommentCount()})</a></span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span class="trackbackslink"><a href="{$entry->getHref()}#trackback"><span></span>Trackbacks ({$entry->getTrackbackCount()})</a></span>
+			<span class="trackbackslink"><a href="{$entry->getHref()|escape}#trackback"><span></span>Trackbacks ({$entry->getTrackbackCount()})</a></span>
 		{/if}
 		</div>
 	</div>
@@ -30,10 +30,10 @@
 	{foreach from=$trackbacks item=trackback}
 		<div class="trackback">
 			<a name="{$trackback->date}"></a>
-			<p>Trackback from <a href="{$trackback->url}">{$trackback->url}</a></p>
-			<p>{$trackback->title}:</p>
+			<p>Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a></p>
+			<p>{$trackback->title|escape}:</p>
 			<p>
-				{$trackback->getExcerpt()|strip_tags}
+				{$trackback->getExcerpt()|strip_tags|escape}
 			</p>
 		</div>
 	{/foreach}
@@ -50,11 +50,11 @@
 			<div class="info">
 				Left by <span class="author">
 				{if $comment->homepage != ""}
-					<a href="{$comment->homepage}">{$comment->name}</a>
+					<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
 				{elseif $comment->email != ""}
-					<a href=mailto:"{$comment->email}">{$comment->name}</a>
+					<a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
 				{else}
-					{$comment->name}
+					{$comment->name|escape}
 				{/if}
 				</span> at {$comment->date|date_format:"%B %d, %Y %I:%M %p"}
 			</div>
@@ -69,11 +69,11 @@
 				<input type="hidden" name="blogid" value="{$entry->entryId}" />
 			</div>
 			<div class="label">Author (<span class="red">*</span>):</div>
-			<div class="input"><input id="author" type="text" name="name" value="{$w_name}" class="fixed" /></div>
+			<div class="input"><input id="author" type="text" name="name" value="{$w_name|escape}" class="fixed" /></div>
 			<div class="label">E-mail:</div>
-			<div class="input"><input id="authorEmail" type="text" name="email" value="{$w_email}" class="fixed" /></div>
+			<div class="input"><input id="authorEmail" type="text" name="email" value="{$w_email|escape}" class="fixed" /></div>
 			<div class="label">URL:</div>
-			<div class="input"><input id="authorURL" type="text" name="url" value="{$w_url|default:"http://"}" class="fixed" /></div>
+			<div class="input"><input id="authorURL" type="text" name="url" value="{$w_url|default:"http://"|escape}" class="fixed" /></div>
 			<div class="label">Comment (<span class="red">*</span>):</div>
 			<div class="input"><textarea id="commentText" name="body" rows="7" cols="55" class="fixed"></textarea></div>
 			<div class="label">&nbsp;</div>

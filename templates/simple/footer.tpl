@@ -6,7 +6,7 @@
 	<li><a href="{$baseurl}/index.php">main</a></li>
 	<li><a href="{$baseurl}/admin.php">admin</a></li>
 	{foreach from=$static_entries item=static}
-	<li><a href="{$static->getHref()}">{$static->title}</a></li>
+	<li><a href="{$static->getHref()|escape}">{$static->title|escape}</a></li>
 	{/foreach}
 </ul>
 
@@ -19,7 +19,7 @@
 <ul id="div_category">
 	{foreach from=$categories item=category}
 	<li>
-		<a href="{$category->getHref()}">{$category->name}</a> 
+		<a href="{$category->getHref()|escape}">{$category->name|escape}</a> 
 		({$category->getEntryCount()})
 	</li>
 	{foreachelse}
@@ -31,7 +31,7 @@
 <ul id="div_archive" class="div_hide">
 	{foreach from=$archvies item=archive}
 	<li>
-		<a href="{$archive->getHref()}">{$archive->getDate()|date_format:"%B %Y"}</a>
+		<a href="{$archive->getHref()|escape}">{$archive->getDate()|date_format:"%B %Y"}</a>
 	</li>
 	{foreachelse}
 	<li></li>
@@ -42,7 +42,7 @@
 <ul id="div_recent_entry" class="div_hide">
 	{foreach from=$recent_entries item=entry}
 	<li>
-		<a href="{$entry->getHref()}">{$entry->title}</a>
+		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 	</li>
 	{foreachelse}
 	<li></li>
@@ -54,7 +54,7 @@
 <ul id="div_recent_comment" class="div_hide">
 	{foreach from=$recent_comments item=comment}
 	<li>
-		<a href="{$comment->getHref()}">{$comment->getBody()|strip_tags:false}</a>
+		<a href="{$comment->getHref()|escape}">{$comment->getBody()|strip_tags:false|escape}</a>
 	</li>
 	{/foreach}
 </ul>
@@ -65,7 +65,7 @@
 <ul id="div_recent_trackback" class="div_hide">
 	{foreach from=$recent_trackbacks item=trackback}
 	<li>
-		<a href="{$trackback->getHref()}">{$trackback->url}</a>
+		<a href="{$trackback->getHref()|escape}">{$trackback->url|escape}</a>
 	</li>
 	{/foreach}
 </ul>
@@ -87,7 +87,7 @@
 <ul id="div_bookmark" class="div_hide">
 	{foreach from=$bookmarks item=bookmark}
 	<li>
-		<a href="{$bookmark->url}">{$bookmark->name}</a>
+		<a href="{$bookmark->url|escape}">{$bookmark->name|escape}</a>
 	</li>
 	{foreachelse}
 	<li></li>

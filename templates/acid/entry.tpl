@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
 <div class="entry">
-<h2>{$entry->title}</h2>
+<h2>{$entry->title|escape}</h2>
 {$entry->getBody()}
 <p class="posted">{$entry->date|date_format:"%B %d, %Y %I:%M %p"}</p>
 </div>
@@ -13,9 +13,9 @@
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
 	<a name="{$trackback->date}"></a>
-	<a href="{$trackback->url}">{$trackback->url}</a><br />
-	{$trackback->title}<br />
-	{$trackback->getExcerpt()|strip_tags}
+	<a href="{$trackback->url|escape}">{$trackback->url|escape}</a><br />
+	{$trackback->title|escape}<br />
+	{$trackback->getExcerpt()|strip_tags|escape}
 	</div>
 {/foreach}
 </div>
@@ -30,11 +30,11 @@
 	<a name="{$comment->date}"></a>
 	On {$comment->date|date_format:"%B %d, %Y %I:%M %p"}, 
 	{if $comment->homepage != ""}
-		<a href="{$comment->homepage}">{$comment->name}</a>
+		<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
 	{elseif $comment->email != ""}
-		<a href=mailto:"{$comment->email}">{$comment->name}</a>
+		<a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
 	{else}
-		{$comment->name}
+		{$comment->name|escape}
 	{/if}
 	said: <br />
 	{$comment->getBody()}
@@ -45,11 +45,11 @@
 <form action="" method="post">
 Post a comment<br />
 Name:<br />
-<input type="text" name="name" value="{$w_name}"><br />
+<input type="text" name="name" value="{$w_name|escape}"><br />
 Email Adress:<br />
-<input type="text" name="email" value="{$w_email}"><br />
+<input type="text" name="email" value="{$w_email|escape}"><br />
 URL:<br />
-<input type="text" name="url" value="{$w_url|default:"http://"}"><br />
+<input type="text" name="url" value="{$w_url|default:"http://"|escape}"><br />
 Comments:<br />
 <textarea name="body" rows="5" cols="40"></textarea><br />
 <input type="hidden" name="blogid" value="{$entry->entryId}">

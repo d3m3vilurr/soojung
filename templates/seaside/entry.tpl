@@ -2,7 +2,7 @@
 
 <div id="contents">
 	<div class="entry">
-		<h2>{$entry->title} <div class="category">{$entry->category->name}</div> <div class="date">{$entry->date|date_format:"%B %d, %Y %I:%M %p"}</div></h2>
+		<h2>{$entry->title|escape} <div class="category">{$entry->category->name|escape}</div> <div class="date">{$entry->date|date_format:"%B %d, %Y %I:%M %p"}</div></h2>
 		<p class="body">{$entry->getBody()}</p>
 	</div>
 
@@ -12,9 +12,9 @@
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
 	<a name="{$trackback->date}"></a>
-	<a href="{$trackback->url}">{$trackback->url}</a><br />
-	{$trackback->title}<br />
-	{$trackback->getExcerpt()|strip_tags}
+	<a href="{$trackback->url|escape}">{$trackback->url|escape}</a><br />
+	{$trackback->title|escape}<br />
+	{$trackback->getExcerpt()|strip_tags|escape}
 	</div>
 {/foreach}
 </div>
@@ -26,11 +26,11 @@
 	<li id="{$comment->date}"> 
 		<p class="cmtinfo">
 		{if $comment->homepage != ""}
-			<a href="{$comment->homepage}">{$comment->name}</a>
+			<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
 		{elseif $comment->email != ""}
-			<a href="mailto:{$comment->email}">{$comment->name}</a>
+			<a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
 		{else}
-			{$comment->name}
+			{$comment->name|escape}
 		{/if}|
 		{$comment->date|date_format:"%B %d, %Y %I:%M %p"}
 		</p>
@@ -45,15 +45,15 @@
 <table id="cmtform">
 <tr>
 	<th>Name:</th>
-	<td><input type="text" name="name" value="{$w_name}" class="text"></td>
+	<td><input type="text" name="name" value="{$w_name|escape}" class="text"></td>
 </tr>
 <tr>
 	<th>Email Address:</th>
-	<td><input type="text" name="email" value="{$w_email}" class="text"></td>
+	<td><input type="text" name="email" value="{$w_email|escape}" class="text"></td>
 </tr>
 <tr>
 	<th>URL:</th>
-	<td><input type="text" name="url" value="{$w_url|default:"http://"}" class="text"></td>
+	<td><input type="text" name="url" value="{$w_url|default:"http://"|escape}" class="text"></td>
 </tr>
 <tr>
 	<th>Comments:</th>

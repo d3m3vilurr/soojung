@@ -58,7 +58,7 @@
 <h3><a href="#none" onclick="return fold_sidebar('div_entry');">Recent Entries</a></h3>
 <ul id="div_entry"{if #showRecentEntries# == 0} class="hide"{/if}>
 {foreach from=$recent_entries item=entry}
-	<li><a href="{$entry->getHref()|escape}">{$entry->title}</a></li>
+	<li><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a></li>
 {foreachelse}
 	<li></li>
 {/foreach}
@@ -69,7 +69,7 @@
 <h3><a href="#none" onclick="return fold_sidebar('div_comment');">Recent Comments</a></h3>
 <ul id="div_comment"{if #showRecentComments# == 0} class="hide"{/if}>
 {foreach from=$recent_comments item=comment}
-	<li><a href="{$comment->getHref()|escape}">{$comment->getBody()|strip_tags:false}</a></li>
+	<li><a href="{$comment->getHref()|escape}">{$comment->getBody()|strip_tags:false|escape}</a></li>
 {/foreach}
 </ul>
 {/if}
@@ -87,7 +87,7 @@
 <h3><a href="#none" onclick="return fold_sidebar('div_referer');">Recent Referers</a></h3>
 <ul id="div_referer"{if #showRecentReferers# == 0} class="hide"{/if}>
 {foreach from=$recent_referers item=referer}
-	<li><a href="{$referer|escape}">{$referer|escape}</a></li>
+	<li><a href="{$referer}">{$referer}</a></li>
 {/foreach}
 </ul>
 {/if}

@@ -42,11 +42,11 @@ foreach ($entries as $e) {
   $post_text = $formatter->toRSS($post_text);
 
   echo "<item>\n";
-  echo "<title>" . convenc($e->title) . "</title>\n";
+  echo "<title>" . htmlspecialchars(convenc($e->title)) . "</title>\n";
   echo "<link>" . $e->getHref() . "</link>\n";
   echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
-  echo "<category>" . convenc($e->category->name) . "</category>\n";
-  echo "<description>" . convenc(htmlspecialchars($post_text)) . "</description>\n";
+  echo "<category>" . htmlspecialchars(convenc($e->category->name)) . "</category>\n";
+  echo "<description>" . htmlspecialchars(convenc($post_text)) . "</description>\n";
   echo "</item>\n";
 }
 ?>
