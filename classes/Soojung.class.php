@@ -27,6 +27,28 @@ class Soojung {
   /**
    * static method
    */
+  function queryNumFilenameMatch($query, $path="contents/") {
+    $number = 0;
+    if (is_dir($path) === false) {
+      return $number;
+    }
+
+    $dh = opendir($path);
+    if ($dh == false) {
+      return $number;
+    }
+
+    while (($file = readdir($dh)) !== false) {
+      if (ereg($query, $file)) {
+	$number++;
+      }
+    }
+    return $number;
+  }
+
+  /**
+   * static method
+   */
   function entryIdToFilename($entryId) {
     $f = Soojung::queryFilenameMatch("_" . $entryId . "[.]entry$");
     return $f[0];

@@ -7,6 +7,12 @@ class Category {
     $this->name = $name;
   }
 
+  function getHashID() {
+    $hash = md5($this->name);
+    return sprintf("%08x",
+      hexdec(substr($hash, 0, 8)) + hexdec(substr($hash, 8, 8)) +
+      hexdec(substr($hash, 16, 8)) + hexdec(substr($hash, 24, 8)));
+  }
 
   function getHref() {
     global $blog_baseurl, $blog_fancyurl;
@@ -26,19 +32,18 @@ class Category {
 
   function getEntries() {
     $entries = array();
-    $all = Entry::getAllEntries();
-    foreach($all as $entry) {
-      if ($entry->category->name == $this->name) {
-	$entries[] = $entry;
-      }
+    $query = "^[0-9].+_" . $this->getHashID() . "_.+[.]entry$";
+    $filenames = Soojung::queryFilenameMatch($query);
+    usort($filenames, "cmp_base_filename");
+    foreach($filenames as $filename) {
+      $entries[] = new Entry($filename);
     }
     return $entries;
   }
 
   function getEntryCount() {
-    $entries = $this->getEntries();
-    //print_r($entries);
-    return count($entries);
+    $query = "^[0-9].+_" . $this->getHashID() . "_.+[.]entry$";
+    return Soojung::queryNumFilenameMatch($query);
   }
 
   /**

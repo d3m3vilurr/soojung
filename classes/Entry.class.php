@@ -78,7 +78,6 @@ class Entry {
   function getComments() {
     $comments = array();
     $filenames = Soojung::queryFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
-    print_r($r);
     sort($filenames);
     foreach($filenames as $filename) {
       $comments[] = new Comment($filename);
@@ -105,11 +104,12 @@ class Entry {
    * static method
    */
   function entryWrite($title, $body, $date, $category, $entryId, $options) {
+    $categoryclass = new Category($category);
     $filename = "";
     if (in_array("SECRET", $options)) {
       $filename .= ".";
     }
-    $filename .= date('YmdHis', $date) . '_' . $entryId . '.entry';
+    $filename .= date('YmdHis', $date) . '_' . $categoryclass->getHashID() . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, "Date: " . $date . "\r\n");
     fwrite($fd, "Title: " . $title . "\r\n");
