@@ -1,0 +1,373 @@
+2004-09-25  ddt  <ddt@kldp.net>
+
+	* TODO, admin.php, entry.php, install.php, soojung.php, templates/admin/config.tpl:
+	comment에 html tag 안 받게 하고, 이메일로 알려주는 기능 옵션으로 뺌
+
+2004-09-23  ddt  <ddt@kldp.net>
+
+	* templates/default/header.tpl: rss link 추가
+
+	* TODO: update
+
+	* libs/util.php:
+	pre_nl2br: <pre>태그 앞, 뒤로 <br>붙어서 줄 간격이 넓어지던 버그 고침
+
+	* README: 0.2 -> 0.2.1 업그레이드
+
+2004-09-19  mithrandir  <mithrandir@kldp.net>
+
+	* soojung.php:
+	fopen, fread 등에서 사용되는 파일 핸들러 변수 이름을
+	$fd로 통일.
+
+	* Doxyfile:
+	Doxygen 설정파일을 추가. 단, 언어를 한국어로 선택시 euc-kr 로 인코딩이 선택되므로 소스 전체를 변환하고 생성해야 한다. 스크립트가 필요하다.
+
+	* TODO: 추가추가
+
+2004-09-18  mithrandir  <mithrandir@kldp.net>
+
+	* post.php:
+	카테고리 이름을 trim해서, 끝에 빈칸을 자른다.
+
+	* soojung.php:
+	.info 파일을 손으로 고치면 \n 이 붙는 경우가 있으므로 trim() 을 건다
+
+	* sendping.php, soojung.php, templates/default/sendping.tpl:
+	트랙백을 보낼때 상대편 블로그의 인코딩을 지정하는 기능
+
+	* TODO: 빼기!
+
+	* xmlrpc.php:
+	metaweblog api �������͵��� �߰�. (newMediaObject�� ���ε� ��� ��ü�� ���� ��� �̰�)
+
+	* soojung.php:
+	get_category_list() ���� ��ȯ�ϴ� ������ rssURL�� �߰� (['rss'])
+
+	* rss2.php: ī�װ��� ���� �����ִ� rss �߰� (����� ���� ������ ����)
+
+	* xmlrpc.php: add basic metaweblog api (newpost, editpost, getpost),
+	and blogger.getPost (maybe meanless)
+
+	* soojung.php:
+	ī�װ��� ������ �������� 'Default' �� �����ǵ��� ��. (gnome-blog ��� �̷���.)
+	edit_entry()���� ������ ������ FALSE�� �����ش�
+
+2004-09-17  mithrandir  <mithrandir@kldp.net>
+
+	* Template.class.php, templates/default/header.tpl:
+	스킨에 따라 style.css 를 찾는 위치를 달리 하도록 함
+
+2004-09-16  ddt  <ddt@kldp.net>
+
+	* TODO, admin.php, soojung.php, templates/admin/data.tpl:
+	wordpress import 구현 완성
+
+	* templates/default/footer.tpl, templates/default/styles.css:
+	recent comments에서 body 여러줄로 나오던 버그 고침
+
+2004-09-16  mithrandir  <mithrandir@kldp.net>
+
+	* TODO: 맨날 추가만 (...)
+
+2004-09-16  ddt  <ddt@kldp.net>
+
+	* templates/default/footer.tpl, templates/default/styles.css:
+	sidebar 글자 짤리는 버그 css 방식으로 수정
+
+	* install.php: E_NOTICE일때 에러나는 부분 수정
+
+	* install.php:
+	error_reporting에 E_NOTICE 설정되어 있을 때 에러나는 부분 고침
+
+	* entry.php: comment body에 nl2br()호출
+
+	* TODO: update
+
+	* install.php: config.php있으면 설치 못하게 하게 고침
+
+	* LICENSE: LICENSE 파일 추가
+
+	* admin.php, soojung.php, templates/admin/data.tpl:
+	wordpress import 뼈대 만듦
+
+	* install.php: url, entries per page 기본 값 설정
+
+	* TODO: update
+
+2004-09-15  ddt  <ddt@kldp.net>
+
+	* entry.php:
+	comment입력 할 때 email, homepage가 비어있는지 검사 안 하게 고침
+
+2004-09-14  ddt  <ddt@kldp.net>
+
+	* soojung.php:
+	fancy_url에서 entry link를 상대경로에서 절대 경로로 바꿈
+
+2004-09-13  ddt  <ddt@kldp.net>
+
+	* soojung.php: 주석 제거
+
+	* index.php, install.php: page 이동 링크도 fancy_url 적용
+
+	* admin.php, soojung.php, templates/admin/data.tpl:
+	tt import 할 때 encoding 입력가능하게 고침
+
+2004-09-12  mithrandir  <mithrandir@kldp.net>
+
+	* libs/xmlrpc.inc:
+	xmlrpc 지원을 php코드에 넣은 경우, xmlrpc_encode|decode 함수가 존재해서 충돌한다. 이것을 피해가는 임시땜빵(...)
+
+	* xmlrpc.php: fix typo error of xmlrpc
+
+2004-09-12  ddt  <ddt@kldp.net>
+
+	* README: upgrade 방법 추가
+
+	* TODO: update
+
+	* admin.php, soojung.php, templates/admin/data.tpl, tt_convert.php:
+	tt_convert.php soojung.php로 옮김
+
+	* libs/util.php, soojung.php: libs/util.php 추가
+
+	* TODO, soojung.php: xml_parse 안 쓰게 고침
+
+2004-09-11  ddt  <ddt@kldp.net>
+
+	* admin.php, soojung.php:
+	import 제대로 저장 안 되던 버그 고침
+
+	* admin.php, soojung.php, templates/admin/data.tpl:
+	import impl, but not work :(
+
+2004-09-11  mithrandir  <mithrandir@kldp.net>
+
+	* TODO: 할일만 추가하기 -_-
+
+2004-09-11  ddt  <ddt@kldp.net>
+
+	* admin.php, soojung.php: export형식을 xml로 바꿈
+
+2004-09-11  mithrandir  <mithrandir@kldp.net>
+
+	* soojung.php:
+	제목에 들어가는 문자들을 html에 맞는 녀석으로
+	적당히 변환.
+
+2004-09-11  ddt  <ddt@kldp.net>
+
+	* templates/admin/styles.css: styles.css init
+
+	* templates/.cvsignore, .cvsignore: update
+
+	* templates/.cvsignore: add
+
+	* .cvsignore: update
+
+	* templates/admin/data.tpl, templates/admin/menu.tpl, admin.php, soojung.php, tt_convert.php:
+	export/import init
+
+2004-09-11  mithrandir  <mithrandir@kldp.net>
+
+	* sendping.php: 변화된 템플릿 사용방식에 맞춤
+
+	* TODO: 추가추가
+
+2004-09-09  mithrandir  <mithrandir@kldp.net>
+
+	* trackback.php: trackback.php?blogid=1&__mode=rss
+	같은 식으로 trackback ping 을 가져가는 기능 추가.
+
+2004-09-08  ddt  <ddt@kldp.net>
+
+	* soojung.php:
+	nl2br에서 <pre>태그 안에 있는 글은 적용 안하게 고침
+
+	* post.php: post할 때 날짜 이상하게 나오는 버그 고침
+
+	* admin.php, post.php: smarty 경로 추가
+
+	* soojung.php: 최근 referer가 위에 오게 바꿈
+
+	* TODO: update
+
+2004-09-07  ddt  <ddt@kldp.net>
+
+	* TODO: update
+
+	* entry.php, index.php, soojung.php, templates/default/footer.tpl, Template.class.php:
+	referer 저장 기능, recent referers 보여주는 기능 추가
+	Template class 새로 만듦
+
+	* xmlrpc.php: 버그 패치
+
+	* post.php:
+	수정할 때 날짜가 현재 날짜로 바뀌는 버그 고침
+
+	* TODO: update
+
+	* templates/default/entry.tpl:
+	브라우저 타이틀바에 entry 제목 나오게 고침
+
+	* soojung.php, templates/default/footer.tpl:
+	category 옆에 entry갯수 나오게 함
+
+2004-09-05  ddt  <ddt@kldp.net>
+
+	* xmlrpc.php: blogger.getUsersBlogs 선언 추가
+
+2004-09-04  ddt  <ddt@kldp.net>
+
+	* post.php: smarty디렉토리 .admin_*으로 바꿈
+
+	* admin.php, install.php:
+	smarty 관련 디렉토리 admin템플릿과 일반 템플릿으로 나눔
+
+	* admin.php, index.php, templates/default/styles.css:
+	smarty force compile
+
+	* admin.php: 버그 수정
+
+	* post.php: date()적용
+
+	* post.php: br태그 지움
+
+	* admin.php, index.php, post.php, templates/admin/config.tpl, templates/admin/footer.tpl, templates/admin/header.tpl, templates/admin/list.tpl, templates/admin/login.tpl, templates/admin/menu.tpl, templates/admin/post.tpl:
+	admin template 추가
+
+2004-09-04  likesylph  <likesylph@kldp.net>
+
+	* libs/smarty/plugins/modifier.truncate.php: add mbstring check
+
+2004-09-04  ddt  <ddt@kldp.net>
+
+	* TODO: update
+
+	* xmlrpc.php: blogger api 추가
+
+	* admin.php, entry.php, index.php, post.php, sendping.php, soojung.php:
+	entry_delete($blogid) 추가, get_recent_entries() 파라미터 추가
+
+2004-09-04  likesylph  <likesylph@kldp.net>
+
+	* libs/smarty/plugins/modifier.truncate.php, templates/default/footer.tpl:
+	fixed smarty truncate bug in utf-8 text
+
+2004-09-03  ddt  <ddt@kldp.net>
+
+	* TODO: update
+
+2004-09-03  mithrandir  <mithrandir@kldp.net>
+
+	* TODO: 추가추가
+
+2004-09-03  ddt  <ddt@kldp.net>
+
+	* TODO: 테터툴즈 내용 지움
+
+	* tt_convert.php: 테터툴즈 변환 프로그램
+
+2004-09-02  ddt  <ddt@kldp.net>
+
+	* TODO: update
+
+	* soojung.php: 최근 코맨트, 트랙백 정렬 고침
+
+2004-09-02  mithrandir  <mithrandir@kldp.net>
+
+	* TODO: 할일 추가
+
+2004-09-01  mithrandir  <mithrandir@kldp.net>
+
+	* soojung.php:
+	구글이 와서 볼때는 방문자로 안치도록 한다
+
+	* admin.php, sendping.php, soojung.php, templates/default/sendping.tpl:
+	sendping.php?id= -> sendping.php?blogid= 로 바꿨음. trackback 보내는 페이지 오류수정.
+	trackback 보내는 페이지에서 내용을 보여줌(커멘트와 트랙백은 제외).
+	trackback 보낸 후 결과 보여주고, 성공하면 3초후에 admin.php 로 보내기.
+	실패하면 admin.php로 돌아가는 링크만 걸어주기.
+
+2004-09-01  ddt  <ddt@kldp.net>
+
+	* templates/default/entry.tpl: 트랙백 링크 추가
+
+	* templates/default/entry.tpl: 날짜 포멧 변경
+
+	* templates/default/index.tpl: fix typo
+
+2004-08-31  ddt  <ddt@kldp.net>
+
+	* templates/default/entry.tpl: 오타 수정
+
+	* entry.php: comment post하고 리프레쉬 안 되는 버그 고침
+
+	* TODO, admin.php, soojung.php: comment 삭제 기능 추가
+
+	* TODO: 'div 태그 보충' 지움
+
+	* index.php, soojung.php, templates/default/entry.tpl, templates/default/index.tpl, templates/default/styles.css:
+	트랙백 관련 버그 고침. recent trackback에서 링크 작동하게 하고, trackback count안 나오던 버그 고치고, trackback 제목과 내용 보이게 수정.
+
+	* TODO: comment 관리 기능 추가
+
+2004-08-31  nainu  <nainu@kldp.net>
+
+	* TODO, entry.php, templates/default/entry.tpl:
+	코멘트 name/email/url 쿠키에 저장함
+
+2004-08-30  ddt  <ddt@kldp.net>
+
+	* TODO: 변환기 추가
+
+2004-08-30  mithrandir  <mithrandir@kldp.net>
+
+	* TODO: 추가하고 싶은 기능 목록 추가
+
+2004-08-30  ddt  <ddt@kldp.net>
+
+	* templates/default/styles.css:
+	한 줄이 길어지면 메뉴가 아래로 내려가는 버그 수정
+
+	* index.php: 오타 수정 [ -> )
+
+	* admin.php, index.php: 템플릿 바꾸면 바로 바뀌게 고침.
+
+	* libs/smarty/core/core.assemble_plugin_filepath.php, libs/smarty/core/core.assign_smarty_interface.php, libs/smarty/core/core.create_dir_structure.php, libs/smarty/core/core.display_debug_console.php, libs/smarty/core/core.get_include_path.php, libs/smarty/core/core.get_microtime.php, libs/smarty/core/core.get_php_resource.php, libs/smarty/core/core.is_secure.php, libs/smarty/core/core.is_trusted.php, libs/smarty/core/core.load_plugins.php, libs/smarty/core/core.load_resource_plugin.php, libs/smarty/core/core.process_cached_inserts.php, libs/smarty/core/core.process_compiled_include.php, libs/smarty/core/core.read_cache_file.php, libs/smarty/core/core.rm_auto.php, libs/smarty/core/core.rmdir.php, libs/smarty/core/core.run_insert_handler.php, libs/smarty/core/core.smarty_include_php.php, libs/smarty/core/core.write_cache_file.php, libs/smarty/core/core.write_compiled_include.php, libs/smarty/core/core.write_compiled_resource.php, libs/smarty/core/core.write_file.php:
+	빠진 파일 추가
+
+	* .cvsignore, README, TODO, admin.php, entry.php, index.php, install.php, libs/smarty/Config_File.class.php, libs/smarty/Smarty.class.php, libs/smarty/Smarty_Compiler.class.php, libs/smarty/debug.tpl, libs/smarty/plugins/block.textformat.php, libs/smarty/plugins/compiler.assign.php, libs/smarty/plugins/function.assign_debug_info.php, libs/smarty/plugins/function.config_load.php, libs/smarty/plugins/function.counter.php, libs/smarty/plugins/function.cycle.php, libs/smarty/plugins/function.debug.php, libs/smarty/plugins/function.eval.php, libs/smarty/plugins/function.fetch.php, libs/smarty/plugins/function.html_checkboxes.php, libs/smarty/plugins/function.html_image.php, libs/smarty/plugins/function.html_options.php, libs/smarty/plugins/function.html_radios.php, libs/smarty/plugins/function.html_select_date.php, libs/smarty/plugins/function.html_select_time.php, libs/smarty/plugins/function.html_table.php, libs/smarty/plugins/function.mailto.php, libs/smarty/plugins/function.math.php, libs/smarty/plugins/function.popup.php, libs/smarty/plugins/function.popup_init.php, libs/smarty/plugins/modifier.capitalize.php, libs/smarty/plugins/modifier.cat.php, libs/smarty/plugins/modifier.count_characters.php, libs/smarty/plugins/modifier.count_paragraphs.php, libs/smarty/plugins/modifier.count_sentences.php, libs/smarty/plugins/modifier.count_words.php, libs/smarty/plugins/modifier.date_format.php, libs/smarty/plugins/modifier.debug_print_var.php, libs/smarty/plugins/modifier.default.php, libs/smarty/plugins/modifier.escape.php, libs/smarty/plugins/modifier.indent.php, libs/smarty/plugins/modifier.lower.php, libs/smarty/plugins/modifier.nl2br.php, libs/smarty/plugins/modifier.regex_replace.php, libs/smarty/plugins/modifier.replace.php, libs/smarty/plugins/modifier.spacify.php, libs/smarty/plugins/modifier.string_format.php, libs/smarty/plugins/modifier.strip.php, libs/smarty/plugins/modifier.strip_tags.php, libs/smarty/plugins/modifier.truncate.php, libs/smarty/plugins/modifier.upper.php, libs/smarty/plugins/modifier.wordwrap.php, libs/smarty/plugins/outputfilter.trimwhitespace.php, libs/smarty/plugins/shared.escape_special_chars.php, libs/smarty/plugins/shared.make_timestamp.php, libs/xmlrpc.inc, libs/xmlrpcs.inc, post.php, rss2.php, sendping.php, soojung.php, templates/default/entry.tpl, templates/default/footer.tpl, templates/default/header.tpl, templates/default/imgs/rss20_logo.gif, templates/default/imgs/wai_a.png, templates/default/imgs/xhtml11.png, templates/default/index.tpl, templates/default/styles.css, trackback.php, uninstall.php, xmlrpc.php:
+	New file.
+
+	* .cvsignore, README, TODO, admin.php, entry.php, index.php, install.php, libs/smarty/Config_File.class.php, libs/smarty/Smarty.class.php, libs/smarty/Smarty_Compiler.class.php, libs/smarty/debug.tpl, libs/smarty/plugins/block.textformat.php, libs/smarty/plugins/compiler.assign.php, libs/smarty/plugins/function.assign_debug_info.php, libs/smarty/plugins/function.config_load.php, libs/smarty/plugins/function.counter.php, libs/smarty/plugins/function.cycle.php, libs/smarty/plugins/function.debug.php, libs/smarty/plugins/function.eval.php, libs/smarty/plugins/function.fetch.php, libs/smarty/plugins/function.html_checkboxes.php, libs/smarty/plugins/function.html_image.php, libs/smarty/plugins/function.html_options.php, libs/smarty/plugins/function.html_radios.php, libs/smarty/plugins/function.html_select_date.php, libs/smarty/plugins/function.html_select_time.php, libs/smarty/plugins/function.html_table.php, libs/smarty/plugins/function.mailto.php, libs/smarty/plugins/function.math.php, libs/smarty/plugins/function.popup.php, libs/smarty/plugins/function.popup_init.php, libs/smarty/plugins/modifier.capitalize.php, libs/smarty/plugins/modifier.cat.php, libs/smarty/plugins/modifier.count_characters.php, libs/smarty/plugins/modifier.count_paragraphs.php, libs/smarty/plugins/modifier.count_sentences.php, libs/smarty/plugins/modifier.count_words.php, libs/smarty/plugins/modifier.date_format.php, libs/smarty/plugins/modifier.debug_print_var.php, libs/smarty/plugins/modifier.default.php, libs/smarty/plugins/modifier.escape.php, libs/smarty/plugins/modifier.indent.php, libs/smarty/plugins/modifier.lower.php, libs/smarty/plugins/modifier.nl2br.php, libs/smarty/plugins/modifier.regex_replace.php, libs/smarty/plugins/modifier.replace.php, libs/smarty/plugins/modifier.spacify.php, libs/smarty/plugins/modifier.string_format.php, libs/smarty/plugins/modifier.strip.php, libs/smarty/plugins/modifier.strip_tags.php, libs/smarty/plugins/modifier.truncate.php, libs/smarty/plugins/modifier.upper.php, libs/smarty/plugins/modifier.wordwrap.php, libs/smarty/plugins/outputfilter.trimwhitespace.php, libs/smarty/plugins/shared.escape_special_chars.php, libs/smarty/plugins/shared.make_timestamp.php, libs/xmlrpc.inc, libs/xmlrpcs.inc, post.php, rss2.php, sendping.php, soojung.php, templates/default/entry.tpl, templates/default/footer.tpl, templates/default/header.tpl, templates/default/imgs/rss20_logo.gif, templates/default/imgs/wai_a.png, templates/default/imgs/xhtml11.png, templates/default/index.tpl, templates/default/styles.css, trackback.php, uninstall.php, xmlrpc.php:
+	start
+
+2004-08-25  mithrandir  <mithrandir@kldp.net>
+
+	* CVSROOT/log_accum.pl: �ʿ���� �κ� ����
+
+	* CVSROOT/log_accum.pl, CVSROOT/verifymsg: change python path,
+	add log accumulator
+
+	* CVSROOT/verifymsg: convert commit-log cp949 to utf8
+
+	* CVSROOT/loginfo: reremove from loginfo
+
+	* CVSROOT/do_something_about_encoding.py, CVSROOT/loginfo:
+	retest log convert script
+
+	* CVSROOT/loginfo:
+	python 위치를 못찾아서 인코딩 변환 스크립트를 잠시 꺼둠
+
+	* CVSROOT/do_something_about_encoding.py: change python location
+
+	* CVSROOT/checkoutlist, CVSROOT/do_something_about_encoding.py, CVSROOT/loginfo:
+	convert cvs log's encoding to utf8
+
+2004-08-16  root  <root@kldp.net>
+
+	* CVSROOT/checkoutlist, CVSROOT/commitinfo, CVSROOT/config, CVSROOT/cvswrappers, CVSROOT/editinfo, CVSROOT/loginfo, CVSROOT/modules, CVSROOT/notify, CVSROOT/rcsinfo, CVSROOT/taginfo, CVSROOT/verifymsg:
+	initial checkin
+
