@@ -11,7 +11,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 <description><?=$blog_desc?></description>
 <copyright></copyright>
 <pubDate></pubDate>
-<generator>soojung</generator>
+<generator>soojung <?=$soojung_version?></generator>
 
 <?
 if (isset($_GET['category'])) {

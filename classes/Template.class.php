@@ -6,6 +6,7 @@ class Template extends Smarty {
   {
     global $blog_skin, $blog_name, $blog_baseurl;
     global $today_count, $total_count;
+    global $soojung_version;
 
     $this->Smarty();
     
@@ -33,6 +34,8 @@ class Template extends Smarty {
 
     $this->assign('today_count', $today_count);
     $this->assign('total_count', $total_count);
+
+    $this->assign('soojung_version', $soojung_version);
   }
 }
 ?>

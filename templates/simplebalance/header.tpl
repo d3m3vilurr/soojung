@@ -4,7 +4,7 @@
 <html>
 
 <!--
-"the simple balance" template (revision 2) for soojung 0.3.x
+"the simple balance" template (revision 2) for soojung {$soojung_version}
 designed by Kang Seonghoon <tokigun@gmail.com>
 soojung (c) copyleft 2004 soojung devel team, all rights reserved.
 -->
@@ -12,7 +12,7 @@ soojung (c) copyleft 2004 soojung devel team, all rights reserved.
 <head>
 <title>{$title|escape}{if $subtitle != ""} | {$subtitle|escape}{/if}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="soojung 0.3.2" />
+<meta name="generator" content="soojung {$soojung_version}" />
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/css/{#cssFile#}" />
 {if #useMozillaExtension# == 1}
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/css/mozilla.css" />
