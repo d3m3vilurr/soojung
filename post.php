@@ -10,7 +10,7 @@ if ($_POST["mode"] == "post") {
   $title =  $_POST["title"];
   $body = $_POST["body"];
   $date = strtotime($_POST["date"]);
-  $category = $_POST["category"];
+  $category = trim($_POST["category"]);
 
   if (empty($title) || empty($body) || empty($date) || empty($category)) {
     echo "input title, body, date, category";
