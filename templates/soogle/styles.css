@@ -1,0 +1,38 @@
+body
+{
+  font-family:arial,sans-serif;
+  background-color: #fff;
+}
+
+a
+{
+  color:#00c;
+}
+a.fl
+{
+  color:#6f6f6f;
+}
+a:visited, a:visited.fl
+{
+  color:#551a8b;
+}
+
+a:active, a:active.fl
+{
+  color:#f00;
+}
+
+.k
+{ 
+  background-color:#36c;
+}
+
+hr.z
+{ 
+       display:none;
+}
+p.g
+{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
