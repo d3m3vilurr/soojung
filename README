@@ -1,0 +1,11 @@
+=== 설치 ===
+1. soojung 디렉토리와 soojung/templates 디렉토리를 웹서버가 쓸 수 있게 퍼미션을 조정해준다. 예) chmod 777 soojung soojung/templates
+
+2. 웹브라우저로 install.php를 연다.
+
+3. install.php를 지운다.
+
+=== 삭제 ===
+1. admin으로 로그인을 한다
+
+2. 웹브라우저로 uninstall.php를 연다.
