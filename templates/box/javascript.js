@@ -1,9 +1,8 @@
-function on_load() {
+function on_load(max_x) {
 	objs = document.getElementsByTagName('IMG');
-	max_x=510;
 	for(i=0; i<objs.length; i++) {
 		obj = objs[i];
-		if(obj.className != 'bbcodeimg') continue;
+		if(obj.className != 'bbcode') continue;
 		img = new Image();
 		img.src = obj.src;
 		if(max_x<img.width){

@@ -172,12 +172,15 @@ img {
 	height: auto;
 }
 
-.div_hide
+.div_hide, .hide
 {
   display: none;
 }
 
-.hide { display: none; }
+.trackbackurl {
+    font-size: 7pt;
+    cursor: pointer;
+}
 
 A:link { color:#777777; text-decoration:none; }
 A:visited { color:#777777; text-decoration:none; }
