@@ -68,7 +68,7 @@ function get_count() {
   $today = date("Y-m-d");
   $modified = false;
 
-  if ($fd = @fopen ("contents/.count", "r")) {
+  if ($fd = @fopen("contents/.count", "r")) {
     $last_date = trim(fgets($fd,256));
     $today_count = trim(fgets($fd,256));
     $total_count = trim(fgets($fd,256));
@@ -86,14 +86,15 @@ function get_count() {
   }
 
   if ($modified) {
-    $fd = fopen ("contents/.count", "w");
-    fwrite($fd, $today);
-    fwrite($fd, "\n");
-    fwrite($fd, $today_count);
-    fwrite($fd, "\n");
-    fwrite($fd, $total_count);
-    fwrite($fd, "\n");
-    fclose($fd);
+    if ($fd = @fopen("contents/.count", "w")) {
+      fwrite($fd, $today);
+      fwrite($fd, "\n");
+      fwrite($fd, $today_count);
+      fwrite($fd, "\n");
+      fwrite($fd, $total_count);
+      fwrite($fd, "\n");
+      fclose($fd);
+    }
   }
 }
 
