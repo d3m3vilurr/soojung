@@ -51,6 +51,11 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   header("Content-Type: text/xml"); //FIXME: 웹브라우저가 보여주지 않고 다운로드 하게 고치기
   echo export();
   exit();
+} else if ($_POST["mode"] == "import") {
+  if (isset($_FILES['file']['name'])) {
+    import($_FILES['file']);
+  }
+  //header("Location: admin.php");
 }
 
 if ($_GET["mode"] == "config") {

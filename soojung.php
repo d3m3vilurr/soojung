@@ -573,13 +573,14 @@ function get_recent_referers($n) {
 }
 
 function file_to_xml($filename) {
-  $fd = fopen($filename, "r");
+  $fd = fopen($filename, "rb");
   $data = fread($fd, filesize($filename));
+  $data = htmlspecialchars($data);
   fclose($fd);
 
   $xml = "\t<file>\n";
   $xml .= "\t\t<name>" . $filename . "</name>\n";
-  $xml .= "\t\t<data>\n" . $data . "\t\t</data>\n";
+  $xml .= "\t\t<data>" . $data . "</data>\n";
   $xml .= "\t</file>\n";
   return $xml;
 }
@@ -610,8 +611,50 @@ function export() {
   return $xml;
 }
 
-function import($mbox) {
-  //TODO:
+$tag = FALSE;
+$filename = FALSE;
+
+function startElement($parser, $name, $attrs) {
+  global $tag;
+  $tag = $name;
+}
+
+function endElement($parser, $name) {
+  global $tag;
+  $tag = FALSE;
+}
+
+function characterData($parser, $data) {
+  global $tag, $filename;
+  if ($tag == "DATA") {
+    $dir = dirname($filename);
+    if (file_exists($dir) == FALSE) {
+      mkdir($dir, 0777); //TODO: mkdir_p
+    }
+    $fd = fopen($filename, "wb");
+    fwrite($fd, trans($data));
+    fclose($fd);
+  } else if ($tag == "NAME") {
+    $filename = $data;
+  }
+}
+
+function trans($str) {
+  $trans = get_html_translation_table(HTML_ENTITIES);
+  $trans = array_flip($trans);
+  return strtr($str, $trans);
+}
+
+function import($uploadfile) {
+  $fd = fopen($uploadfile['tmp_name'], "r");
+  $data = fread($fd, $uploadfile['size']);
+  fclose($fd);
+
+  $parser = xml_parser_create();
+  xml_set_element_handler($parser, "startElement", "endElement");
+  xml_set_character_data_handler($parser, "characterData");
+  xml_parse($parser, $data, TRUE);
+  xml_parser_free($parser);
 }
 
 ?>

@@ -2,8 +2,9 @@
 {include file="menu.tpl"}
 
 <h2>import from soojung data file</h2>
-<form action="" method="post">
-<input type="file">
+<form enctype="multipart/form-data" action="{$baseurl}/admin.php" method="post">
+<input type="file" name="file">
+<input type="hidden" name="mode" value="import">
 <input type="submit" value="import!">
 </form>
 <br />
