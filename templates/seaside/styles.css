@@ -126,10 +126,6 @@ input.text, textarea {
 	font-size: 0.8em;
 	text-align: center;
 }
-img {
-	border: 2px solid #4d4d4d;
-	margin: 1em 0;
-}
 #calendar table {
 	margin: auto;
 }
