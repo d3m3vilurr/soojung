@@ -125,7 +125,7 @@ class Trackback {
     $permlink = $entry->getHref();
 
     if ($entry->title != null) {
-      $tb_title = iconv("UTF-8", $encoding, rawurlencode($entry->title));
+      $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->title));
     } else {
       $tb_title = rawurlencode('title');
     }
