@@ -43,6 +43,8 @@ body {
    -------------------------------------------- */
 
 #menu {
+	white-space: nowrap;
+	overflow: hidden;
 	width: 14em;
 	position: absolute;
 	float: right;
@@ -118,6 +120,20 @@ h3 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-bottom: 0.33em;
+}
+
+blockquote
+{
+  padding: 5px;
+  border: 1px solid #ababab;
+  background-color: #FCF7F4;
+}
+
+pre
+{
+  padding: 5px;
+  border: 1px solid #EBD4C8;
+  background-color: #FCF7F4;
 }
 
 .storytitle {
