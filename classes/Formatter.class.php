@@ -125,7 +125,7 @@ class Formatter {
             $temp = str_replace(htmlspecialchars($k), '<img src="./libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />', $temp);
           }
         }
-        $temp = preg_replace('#\[literal](.*)\[/literal]#iU', 'Formatter::__bbcode_escape("\1")', $temp);
+        $temp = preg_replace('#\[literal](.*)\[/literal]#ieU', 'Formatter::__bbcode_escape("\1")', $temp);
         $temp = preg_replace($rule2, $repl2, preg_replace($rule1, $repl1, $temp));
         $rstr .= nl2br(str_replace("\0", "", $temp));
       } else {
