@@ -14,7 +14,7 @@ class Template extends Smarty {
     $this->force_compile = false;
 
     $this->assign('title', htmlspecialchars($blog_name));
-    $this->assign('description', $blog_desc);
+    $this->assign('description', htmlspecialchars($blog_desc));
     $this->assign('baseurl', $blog_baseurl);
     $this->assign('soojung_version', $soojung_version);
   }
