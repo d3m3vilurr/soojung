@@ -4,21 +4,7 @@ session_start();
 include("config.php");
 include_once("settings.php");
 
-if ($_POST["mode"] == "login") {
-  if (md5($_POST["password"]) == $admin_password) {
-    $_SESSION['auth'] = TRUE;
-    header("Location: admin.php");
-  }
-}
-
-$template = new AdminTemplate;
-
-if (!isset($_SESSION["auth"])) {
-  $template->display('login.tpl');
-  exit();
-}
-
-if ($_POST["mode"] == "config_update") {
+function config_update_mode() {
   if (empty($_POST["blogname"]) || empty($_POST["desc"]) ||
       empty($_POST["url"]) || empty($_POST["adminname"]) ||
       empty($_POST["email"]) || empty($_POST["perpage"]) ||
@@ -38,26 +24,32 @@ if ($_POST["mode"] == "config_update") {
   exit;
 }
 
-if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
-  if (strstr($_GET["file"], "..") != FALSE || strstr($_GET["file"], "contents/") == FALSE) {
-    echo "what the fuck?";
-  } else {
-    unlink($_GET["file"]);
+function delete_mode() {
+  if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
+    if (strstr($_GET["file"], "..") != FALSE || strstr($_GET["file"], "contents/") == FALSE) {
+      echo "what the fuck?";
+    } else {
+      unlink($_GET["file"]);
+      $temp = new Usertemplate("index.tpl", 1);
+      $temp->clearCache();
+    }
+  } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
+    Entry::deleteEntry($_GET["blogid"]);
     $temp = new Usertemplate("index.tpl", 1);
     $temp->clearCache();
   }
-} else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
-  Entry::deleteEntry($_GET["blogid"]);
-  $temp = new Usertemplate("index.tpl", 1);
-  $temp->clearCache();
-} else if ($_GET["mode"] == "export") {
+}
+
+function export_mode() {
   $filename = $blog_name . '-' . date("Ymd", time()) . '.dat';
   header("Content-Type: application/octet");
   header("Content-Disposition: filename=" . $filename);
   echo Export::export();
   flush();
   exit();
-} else if (strpos($_POST["mode"], "import") === 0) { // import
+}
+
+function import_mode() {
   if ($_POST["mode"] == "import") {
     if (isset($_FILES['file']['name'])) {
       Import::importSoojung($_FILES['file'], $_POST["version"]);
@@ -70,6 +62,43 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   $temp = new Usertemplate("index.tpl", 1);
   $temp->clearCache();
   header("Location: admin.php");
+}
+
+function clear_cache_mode() {
+  $temp = new Usertemplate("index.tpl", 1);
+  $temp->clearCache();
+}
+
+function clear_referer_mode() {
+  unlink("contents/.referer");
+}
+
+if ($_POST["mode"] == "login") {
+  if (md5($_POST["password"]) == $admin_password) {
+    $_SESSION['auth'] = TRUE;
+    header("Location: admin.php");
+  }
+}
+
+$template = new AdminTemplate;
+
+if (!isset($_SESSION["auth"])) {
+  $template->display('login.tpl');
+  exit();
+}
+
+if ($_POST["mode"] == "config_update") {
+  config_update_mode();
+} else if (strpos($_GET["mode"], "delete") === 0) {
+  delete_mode();
+} else if ($_GET["mode"] == "export") {
+  export_mode();
+} else if (strpos($_POST["mode"], "import") === 0) {
+  import_mode();
+} else if ($_GET["mode"] == "clear_cache") {
+  clear_cache_mode();
+} else if ($_GET["mode"] == "clear_referer") {
+  clear_referer_mode();
 }
 
 if ($_GET["mode"] == "config") {
@@ -93,6 +122,7 @@ if ($_GET["mode"] == "config") {
   $template->assign('recent_entries', Entry::getRecentEntries(5));
   $template->assign('recent_comments', Comment::getRecentComments(5));
   $template->assign('recent_trackbacks', Trackback::getRecentTrackbacks(5));
+  $template->assign('entry_count', Entry::getEntryCount());
   $template->display('overview.tpl');
 }
 ?>

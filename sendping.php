@@ -45,7 +45,7 @@ $category = $entry->category->name;
 
 
 <?php
-$smarty = new UserTemplate;
+$smarty = new UserTemplate("sendping.tpl", $blogid);
 
 $smarty->assign('entry', $entry);
 $smarty->assign('trackbacks', $entry->getTrackbacks());

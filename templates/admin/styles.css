@@ -65,6 +65,7 @@ h2
   color: #09c;
   margin-top: 0;
   margin-bottom: 0;
+  padding: px;
 }
 
 .entry_title
@@ -77,7 +78,7 @@ h2
 {
   position:absolute;
   margin: 0px 50% 10px 0px;
-  border: 1px solid black;
+  border:1px dashed #999;
   background-color:white;
   z-index: 3;
 
@@ -90,7 +91,7 @@ h2
   position:absolute;
   margin-left: 320px;
   margin-right: 10px;
-  border:1px solid black;
+  border:1px dashed #999;
   background-color:white;
 }
 
@@ -99,7 +100,7 @@ h2
   position:absolute;
   top: 190px;
   margin: 0px 50% 10px 0px;
-  border: 1px solid black;
+  border:1px dashed #999;
   background-color:white;
   z-index: 3;
 
@@ -113,8 +114,11 @@ h2
   top: 190px;
   margin-left: 320px;
   margin-right: 10px;
-  border:1px solid black;
+  border:1px dashed #999;
   background-color:white;
+
+  height: 145px;
+  min-width: 300px;
 }
 
 /* post */
@@ -126,39 +130,49 @@ h2
 /* list */
 .entry
 {
-  padding-top: 5px;
-  width: 100px;
+  padding-top: 25px;
 }
 
-.subject
+.comment, .trackback
 { 
+  padding-top: 20px;
+}
+
+.subject, .comment .subject, .trackback .subject
+{
   white-space:nowrap;
   overflow:hidden;
+  position:absolute;
+  left: 200px;
+  width: 400px;
 }
 
 .comment .subject, .trackback .subject
 { 
-  padding-left: 12px;
+  left: 220px;
+  width: 380px;
 }
 
 .trackback_ping
 {
-  left: 600px;
-  padding-left: 20px;
+  position:absolute;
+  left: 610px;
 }
 
 .delete
-{ 
+{
+  position:absolute;
   left: 700px;
-  padding-left: 20px;
 }
 
 .entry:hover, .comment:hover, .trackback_ping:hover
-{ 
+{
   background-color: #4a5e7d;
+  color: #fff;
 }
 
-.entry:hover a, .comment:hover a, .trackback_ping:hover a
+a
 { 
-  color: #fff;
+  color: #09c;
+  text-decoration:none;
 }

@@ -21,6 +21,7 @@ class Soojung {
 	$list[] = $path . $file;
       }
     }
+    closedir($dh);
     return $list;
   }
 
@@ -43,6 +44,7 @@ class Soojung {
 	$number++;
       }
     }
+    closedir($dh);
     return $number;
   }
 

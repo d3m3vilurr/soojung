@@ -74,8 +74,9 @@
 <table>
 	<tr>
 		<td>Entry Count:</td>
-		<td><b>100</b></td>
+		<td><b>{$entry_count}</b></td>
 	</tr>
+	<!--
 	<tr>
 		<td>Comment Count:</td>
 		<td><b>123</b></td>
@@ -84,8 +85,13 @@
 		<td>Trackback Count:</td>
 		<td><b>10</b></td>
 	</tr>
+	-->
 	<tr>
-		<td>Clear cache</td>
+		<td><a href="{$baseurl}/admin.php?mode=clear_cache">Clear cache</a></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><a href="{$baseurl}/admin.php?mode=clear_referer">Clear referer</a></td>
 		<td></td>
 	</tr>
 </table>
