@@ -61,7 +61,7 @@
 <div class="row">
 <span class="label">Body:</span>
 <span class="formw">
-<textarea id="body" name="body" rows="10" cols="65">{$body}</textarea>
+<textarea id="body" name="body" rows="10" cols="65">{$body|escape}</textarea>
 {if $format == "html"}
 <script type="text/javascript">
 	var oFCKeditor = new FCKeditor('body');
