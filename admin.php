@@ -50,7 +50,9 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   entry_delete($_GET["blogid"]);
 } else if ($_GET["mode"] == "export") {
   header("Content-Type: application/octet");
+  header("Content-Disposition: filename=soojung.dat");
   echo export();
+  flush();
   exit();
 } else if ($_POST["mode"] == "import") {
   if (isset($_FILES['file']['name'])) {
