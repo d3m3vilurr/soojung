@@ -1,5 +1,6 @@
 <?php
-include_once("settings.php");
+include_once("classes/Soojung.class.php");
+include_once("libs/util.php");
 ?>
 
 <html>
