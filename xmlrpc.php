@@ -1,6 +1,7 @@
 <?php
-include("libs/xmlrpc.inc");
 include("libs/xmlrpcs.inc");
+include("libs/xmlrpc.inc");
+
 include("soojung.php");
 
 function _error($errcode, $errstring) {
@@ -181,5 +182,6 @@ $s = new xmlrpc_server(array("blogger.newPost" => array("function" => "blogger_n
 			     "blogger.editPost" => array("function" => "blogger_editPost"),
 			     "blogger.deletePost" => array("function" => "blogger_deletePost"),
 			     "blogger.getRecentPosts" => array("function" => "blogger_getRecentPosts"),
+			     "blogger.getUsersBlogs" => array("function" => "blogger_getUsersBlogs"),
 			     "blogger.getUserInfo" => array("function" => "blogger_getUserInfo")));
 ?>
