@@ -1,7 +1,6 @@
 보낸 트랙백 보여주는 기능
 문서화
 xmlrpc 지원 (metaWeblog - newMediaObject 빼고 구현, mt)
-그림올리기 기능
 그림 묶은 zip파일 올리기 기능
 X번째 방문자 이벤트기능
 MT->soojung 변환 프로그램
