@@ -49,20 +49,25 @@ function blogid_to_filename($blogid) {
 
 }
 
-#FIXME: XXX
 function pre_nl2br($string) {
   $s = $string;
   $pos = strpos($s, "<pre");
   if ($pos === false) {
     return nl2br($s);
   }
-  $a = substr($s, 0, $pos);
-  print $a;
-  $a = nl2br($a);
-  $end = strpos($s, "</pre>");
-  $a = $a . substr($s, $pos, $end);
-  $a = $a . nl2br(substr($s, $end, -1));
-  return $a;
+
+  $text = "";
+  while (($pos = @strpos($s, "<pre")) !== FALSE) {
+    $text .= nl2br(substr($s, 0, $pos));
+
+    $s = substr($s, $pos);
+    $endpos = strpos($s, "</pre>") + strlen("</pre>");
+
+    $text .= substr($s, 0, $endpos);
+    $s = substr($s, $endpos);
+  }
+  $text .= $s;
+  return $text;
 }
 
 function notify_to_admin($title, $blogid) {
