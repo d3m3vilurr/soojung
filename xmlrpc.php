@@ -4,7 +4,6 @@ include_once("libs/xmlrpc.inc");
 
 include("soojung.php");
 
-
 function _error($errcode, $errstring) {
   global $xmlrpcerruser;
   return new xmlrpcresp(0, $xmlrpcerruser + $errcode, $errstring);
@@ -253,9 +252,9 @@ function metaWeblog_editPost($params) {
 }
 
 function metaWeblog_getPost($params) {
-  $sid = $params->getParam(1);
-  $su = $params->getParam(2);
-  $sp = $params->getParam(3);
+  $sid = $params->getParam(0);
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
 
   $r = _login($su, $sp);
   if ($r !== TRUE) {
@@ -279,16 +278,89 @@ function metaWeblog_getPost($params) {
   return $entrystruct;
 }
 
+function metaWeblog_newMediaObject($params) {
+  $sid = $params->getParam(0);
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
+  $ts = $params->getParam(3);
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+  $obj = $ts->getval();
+  if (!isset ($item['name']) || !isset ($item['type'])||!isset ($item['bits']) ) {
+    // not enough parameter
+  }
+      
+  $name = $item['name'];
+  $type = $item['type'];
+  $bits = $item['bits'];
+
+  return new xmlrpcresp(new xmlrpcval("not yet", "string"));
+}
+
+function metaWeblog_getCategories($params) {
+  //  $sid = $params->getParam(0);
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
+
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+  
+  $categories = get_category_list();
+  foreach($categories as $c) {
+    $categorystruct = new xmlrpcval(array("Description" => $c['name'],
+					  "htmlUrl" => $c['link'],
+					  "rssUrl" => $c['rss']), 
+				    "struct");
+    $structarray[] = $categorystruct;
+  }
+  return new xmlrpcresp(new xmlrpcval($structarray, "array"));
+}
+
+function metawebLog_getRecentPosts($params) {
+  $su = $params->getParam(1);
+  $sp = $params->getParam(2);
+  $sn = $params->getParam(3);
+  $num = $sn->scalarval();
+  $r = _login($su, $sp);
+  if ($r !== TRUE) {
+    return $r;
+  }
+
+  $structarray = array();
+  $entries = get_recnet_entries($num);
+  foreach($entries as $e) {
+    $content = _blogger_specialTags($e) . $e['body'];
+    $categories = array ($e['category']);
+    $entrystruct = new xmlrpcval(array("dateCreated" => new xmlrpcval(iso8601_encode(strtotime($e['date'])), "dateTime.iso8601"),
+				       "userid" => new xmlrpcval($admin_name, "string"),
+				       "postid" => new xmlrpcval($e['id'], "string"),
+				       "title" => new xmlrpcval($e['title'], "string"),
+				       "link" => new xmlrpcval($e['link'], "string"),
+				       "categories" => new xmlrpcval($categories, "array"),
+				       "description" => new xmlrpcval($$content, "string")
+				       ), "struct");
+
+    $structarray[] = $entrystruct;
+  }
+  return new xmlrpcresp(new xmlrpcval($structarray, "array"));
+
+}
+
 $s = new xmlrpc_server(array("metaWeblog.newPost" => array("function" => "metaWeblog_newPost"),
 			     "metaWeblog.editPost" => array("function" => "metaWeblog_editPost"),
 			     "metaWeblog.deletePost" => array("function" => "metaWeblog_deletePost"),
+			     "metaWeblog.newMediaObject" => array("function" => "metaWeblog_newMediaObject"),
+			     "metaWeblog.getCategories" => array("function" => "metaWeblog_getCategories"),
+			     "metaWeblog.getRecentPosts" => array("function" => "metaweblog_getRecentPosts"),
 			     "blogger.newPost" => array("function" => "blogger_newPost"),
 			     "blogger.editPost" => array("function" => "blogger_editPost"),
 			     "blogger.deletePost" => array("function" => "blogger_deletePost"),
 			     "blogger.getRecentPosts" => array("function" => "blogger_getRecentPosts"),
 			     "blogger.getUsersBlogs" => array("function" => "blogger_getUsersBlogs"),
 			     "blogger.getUserInfo" => array("function" => "blogger_getUserInfo")));
-
-
 ?>
 
