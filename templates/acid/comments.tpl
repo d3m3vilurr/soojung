@@ -21,7 +21,7 @@
 <p>Post a comment</p>
 <p>Name:<br />
 <input type="text" name="name" value="{$w_name|escape}" /></p>
-<p>Email Adress:<br />
+<p>Email Address:<br />
 <input type="text" name="email" value="{$w_email|escape}" /></p>
 <p>URL:<br />
 <input type="text" name="url" value="{$w_url|default:"http://"|escape}" /></p>

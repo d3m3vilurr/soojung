@@ -46,7 +46,7 @@
 Post a comment<br />
 Name:<br />
 <input type="text" name="name" value="{$w_name|escape}"><br />
-Email Adress:<br />
+Email Address:<br />
 <input type="text" name="email" value="{$w_email|escape}"><br />
 URL:<br />
 <input type="text" name="url" value="{$w_url|default:"http://"|escape}"><br />
