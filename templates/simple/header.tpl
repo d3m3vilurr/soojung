@@ -14,5 +14,5 @@ return false;
 {/literal}/*]]>*/</script>
 </head>
 <body>
-<div id="header"><a href="{$baseurl}">{$description}</a></div>
+<div id="header"><a href="{$baseurl}" title="{$description}">{$title}</a></div>
 <div id="content">
