@@ -21,7 +21,7 @@ if (isset($_POST["blogid"])) {
   $email = trim(strip_tags($email));
   $url = trim(strip_tags($url));
   $body = nl2br(trim(htmlspecialchars($body)));
-  Comment::writeCommenet($blogid, $name, $email, $url, $body, $t);
+  Comment::writeComment($blogid, $name, $email, $url, $body, $t);
 
   // Remembering 30 days
   setcookie('w_id',    $blogid, $t+2592000);
