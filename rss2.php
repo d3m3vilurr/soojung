@@ -37,7 +37,7 @@ foreach ($entries as $e) {
     continue;
   }
 
-  $post_text = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",str_replace("\n", "\n", $e->getBody()));
+  $post_text = $e->getBody();
 
   echo "<item>\n";
   echo "<title>" . convenc($e->title) . "</title>\n";
