@@ -45,8 +45,9 @@ if (isset($_POST["name"])) {
   fwrite($f, "1");
   fclose($f);
 
+  $b = isset($_POST["fancyurl"]) ? $_POST["fancyurl"] : "off";
   write_config_file($_POST["name"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
-		    $_POST["fancyurl"], $_POST["admin"], $_POST["email"],
+		    $b, $_POST["admin"], $_POST["email"],
 		    md5($_POST["password"]));
 
   $f = fopen(".htaccess", "w");
@@ -59,7 +60,6 @@ if (isset($_POST["name"])) {
   fwrite($f, $_POST["url"] . "/index.php?category=$1\n");
   fwrite($f, "RewriteRule ^page/([0-9]+)$ ");
   fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
-  fwrite($f, $data);
   fclose($f);
 
   echo "install success. delete install.php file";
