@@ -1,16 +1,26 @@
 <?php
 include_once("settings.php");
 
-header("Content-type: application/xml");
-echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+$encoding = strtolower(trim($_GET["encoding"]));
+if(!$encoding) $encoding = strtolower(trim($_GET["charset"]));
+if($encoding == "cp949" || $encoding == "euc-kr" || $encoding == "euckr") {
+  $encoding = "euc-kr";
+  function convenc($str) { return iconv("UTF-8", "CP949", $str); }
+} else {
+  $encoding = "utf-8";
+  function convenc($str) { return $str; }
+}
+
+header("Content-type: text/xml");
+echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 ?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0">
 <channel>
-<title><?=$blog_name?></title>
+<title><?=convenc($blog_name)?></title>
 <link><?=$blog_baseurl?></link>
-<description><?=$blog_desc?></description>
+<description><?=convenc($blog_desc)?></description>
 <copyright></copyright>
-<pubDate></pubDate>
+<pubDate><?=date('r')?></pubDate>
 <generator>soojung <?=$soojung_version?></generator>
 
 <?
@@ -23,21 +33,18 @@ if (isset($_GET['category'])) {
 
 
 foreach ($entries as $e) {
-  if ($e->isSetOption("NO_RSS")) {
+  if ($e->isSetOption("NO_RSS") || $e->isSetOption("SECRET")) {
     continue;
   }
 
   $post_text = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",str_replace("\n", "\n", $e->getBody()));
 
   echo "<item>\n";
-  echo "<title>" . $e->title . "</title>\n";
+  echo "<title>" . convenc($e->title) . "</title>\n";
   echo "<link>" . $e->getHref() . "</link>\n";
-  echo "<comments></comments>\n";
   echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
-  echo "<category>" . $e->category->name . "</category>\n";
-  echo "<guid>" . $e->getHref() . "</guid>\n";
-  echo "<description></description>\n";
-  echo "<content:encoded><![CDATA[" . $post_text . "]]></content:encoded>\n";
+  echo "<category>" . convenc($e->category->name) . "</category>\n";
+  echo "<description>" . convenc(htmlspecialchars(nl2br($post_text))) . "</description>\n";
   echo "</item>\n";
 }
 ?>
