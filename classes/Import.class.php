@@ -58,33 +58,97 @@ class Import {
   /**
    * static method
    */
+  /* TODO : seperate comment and trackback of each blog */
   function importWordPress($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
     $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
     mysql_select_db($dbName) or die("could not select database");
 
-    $query = "select post_date, post_content, post_title, post_category from " . $prefix . "posts";
+    $query = "select ID, post_date, post_content, post_title, post_category from " . $prefix . "posts";
     $result = mysql_query($query) or die("query failed");
 
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-      $c_no = $line['post_category'];
-      $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
-      $c_result = mysql_query($c_query);
-      $c_line = mysql_fetch_array($c_result);
+      $pid = $line['ID'];
+      $cid_no = $line['post_category'];
+      $title = $line['post_title'];
+      $body = $line['post_content'];
 
-      $category = isset($c_line['cat_name']) ? $c_line['cat_name'] : "General"; //'General' is wp default category
+      if (!empty($title) &&  !empty($body)) {
 
-      if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
-	$title = $line['post_title'];
-	$body = $line['post_content'];
-      } else {
-	$title = iconv($encoding, "UTF-8", $line['post_title']);
-	$body = iconv($encoding, "UTF-8", $line['post_content']);
-	$category = iconv($encoding, "UTF-8", $category);
+        /* get parents category */
+        $category = "";
+        if ( (int )$cid_no !=  0) {
+          $pcat_query = "select cat_name form " . $prefix . "categories where post_id - " . $cid_no;
+          $pcat_result = mysql_query ($pcat_query);
+          $pcat_row = mysql_fetch_array ($pcat_result);
+          $category .= $pcat_row['cat_name'] . "-";
+        }
+
+        /* get category */
+        $cid_query = "select category_id from " . $prefix . "post2cat where post_id = " . $pid;
+        $cid_result = mysql_query($cid_query) or die("category_id query failed");
+        $c_count = mysql_num_rows($cid_result);
+        $i=0;
+        while ($cid_row = mysql_fetch_array($cid_result, MYSQL_ASSOC)) {
+          $i++;
+          $c_no = $cid_row['category_id'];
+          $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
+          $c_result = mysql_query($c_query) or die ("category query failed");
+
+          $c_row = mysql_fetch_array($c_result, MYSQL_ASSOC);
+          $category .= $c_row['cat_name'];
+          if ( $i < $c_count ) {
+            $category .=",";
+          }
+          mysql_free_result($c_result);
+        }
+
+        /* get body entry */
+        $title = ereg_replace("\\\\\"", "\"", $title);
+        $title = ereg_replace("\\\\'", "'", $title);
+
+        $body = ereg_replace("\\\\\"", "\"", $body);
+        $body = ereg_replace("\\\\'", "'", $body);
+        $body = ereg_replace("\n", "<br />", $body);
+        $date = strtotime($line['post_date']);
+
+        if (strcasecmp($encoding, "UTF-8") != 0 && strcasecmp($encoding, "UTF8") != 0) {
+          $title = iconv($encoding, "UTF-8", $title);
+          $body = iconv($encoding, "UTF-8", $body);
+          $category = iconv($encoding, "UTF-8", $category);
+        }
+        $body_id=Entry::createEntry($title, $body, $date, $category);
+
+
+        /* add comments */
+        $comment_query = "select comment_author, comment_author_email, comment_author_url, "
+                          ."comment_date, comment_content "
+                          ."from " . $prefix . "comments where  comment_post_ID = " . $pid;
+        $comment_result = mysql_query($comment_query) or die ("comment query failed!");
+
+        while ($comment_row = mysql_fetch_array($comment_result)) {
+          $comment_author = $comment_row['comment_author'];        
+          $comment_email = $comment_row['comment_author_email'];        
+          $comment_url = $comment_row['comment_author_url'];        
+          $comment_date = strtotime($comment_row['comment_date']); 
+          $comment_content = $comment_row['comment_content'];        
+
+          $comment_author = ereg_replace("\\\\\"", "\"", $comment_author);
+          $comment_author = ereg_replace("\\\\'", "'", $comment_author);
+          $comment_content = ereg_replace("\\\\\"", "\"", $comment_content);
+          $comment_content = ereg_replace("\\\\'", "'", $comment_content);
+          $comment_content = ereg_replace("\n", "<br />", $comment_content);
+                 
+          if (strcasecmp($encoding, "UTF-8") != 0 && strcasecmp($encoding, "UTF8") != 0) {
+            $comment_author = iconv($encoding, "UTF-8", $comment_author);
+            $comment_content = iconv($encoding, "UTF-8", $comment_content);
+          }
+          
+          Comment::writeComment($body_id, $comment_author, $comment_email, 
+                                $comment_url, $comment_content, $comment_date);
+        }
+        mysql_free_result($comment_result);
+        mysql_free_result($cid_result);
       }
-      $date = strtotime($line['post_date']);
-
-      Entry::createEntry($title, $body, $date, $category);
-      mysql_free_result($c_result);
     }
     mysql_free_result($result);
     mysql_close($link);
@@ -175,7 +239,7 @@ class Import {
       $data = explode("\r\n", Import::trans(Import::getDataFromXml($xml)), 3);
       $title = $data[0];
       $date = $data[1];
-      $body = str_replace("\r\n", "<br />", $data[2]);
+      $body = $data[2];
       $options = array();
       Entry::editEntry($id, $title, $body, $date, $category, $options);
     } else if (strpos($name, ".trackback") != false) { // trackback file

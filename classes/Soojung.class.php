@@ -69,6 +69,7 @@ class Soojung {
    * static method
    */
   function createNewEntryId() {
+    clearstatcache();
     $fd = fopen("contents/.info", "r");
     $i = trim(fread($fd, filesize("contents/.info")));
     fclose($fd);
