@@ -71,8 +71,7 @@ class Entry {
   }
 
   function getCommentCount() {
-    $r = Soojung::queryFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
-    return count($r);
+    return Soojung::queryNumFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
   }
 
   function getComments() {
@@ -86,8 +85,7 @@ class Entry {
   }
 
   function getTrackbackCount() {
-    $r = Soojung::queryFilenameMatch("[.]trackback$", "contents/" . $this->entryId);
-    return count($r);
+    return Soojung::queryNumFilenameMatch("[.]trackback$", "contents/" . $this->entryId);
   }
 
   function getTrackbacks() {
@@ -109,7 +107,11 @@ class Entry {
     if (in_array("SECRET", $options)) {
       $filename .= ".";
     }
-    $filename .= date('YmdHis', $date) . '_' . $categoryclass->getHashID() . '_' . $entryId . '.entry';
+    $foptions = "";
+    if (in_array("STATIC", $options)) {
+      $foptions .= "S";
+    }
+    $filename .= date('YmdHis', $date) . $foptions . '_' . $categoryclass->getHashID() . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, "Date: " . $date . "\r\n");
     fwrite($fd, "Title: " . $title . "\r\n");
@@ -152,8 +154,7 @@ class Entry {
    * static method
    */
   function getEntryCount() {
-    $r = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
-    return count($r);
+    return Soojung::queryNumFilenameMatch("^[0-9].+[.]entry$");
   }
 
   /**
@@ -210,11 +211,11 @@ class Entry {
    */
   function getStaticEntries() {
     $entries = array();
-    $all = Entry::getAllEntries();
-    foreach($all as $e) {
-      if ($e->isSetOption("STATIC")) {
-	$entries[] = $e;
-      }
+    $query = "^[0-9].+S_.+[.]entry$";
+    $filenames = Soojung::queryFilenameMatch($query);
+    usort($filenames, "cmp_base_filename");
+    foreach($filenames as $filename) {
+      $entries[] = new Entry($filename);
     }
     return $entries;
   }
