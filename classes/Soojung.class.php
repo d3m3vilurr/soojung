@@ -109,6 +109,9 @@ class Soojung {
     $filenames = Soojung::queryFilenameMatch(".+", "templates/");
     foreach($filenames as $filename) {
       $filename = basename($filename);
+      if ($filename == "admin") {
+	continue;
+      }
       if ($filename[0] != '.') {
 	$list[] = $filename;
       }
