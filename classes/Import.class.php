@@ -120,6 +120,27 @@ class Import {
       $body = $data[2];
       $options = array();
       Entry::editEntry($id, $title, $body, $date, $category, $options);
+    } else if (strpos($name, ".trackback") != false) { // trackback file
+      $id = Soojung::filenameToEntryId($name);
+      $f = basename($name);
+      $dot = strpos($f, ".");
+
+      //YmdHis to Y-m-d H:i:s
+      $date = substr($f, 0, $dot);
+      $y = substr($date, 0, 4);
+      $m = substr($date, 4, 2);
+      $d = substr($date, 6, 2);
+      $h = substr($date, 8, 2);
+      $i = substr($date, 10, 2);
+      $s = substr($date, 12);
+      $date = strtotime($y . "-" . $m . "-" . $d . " " . $h . ":" . $i . ":" . $s);
+
+      $data = explode("\r\n", Import::getDataFromXml($xml), 4);
+      $url = $data[0];
+      $name = $data[1];
+      $title = $data[2];
+      $excerpt = $data[3];
+      Trackback::writeTrackback($id, $url, $name, $title, $excerpt, $date);
     } else {
       Import::createFile($xml);
     }

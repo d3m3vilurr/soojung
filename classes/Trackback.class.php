@@ -36,7 +36,7 @@ class Trackback {
     return $e->getHref() . "#" . $this->date;
   }
 
-  function getExcerpt($filename) {
+  function getExcerpt() {
     $fd = fopen($this->filename, "r");
     //ignore date, url, name, title
     fgets($fd);
@@ -52,7 +52,7 @@ class Trackback {
    * need to check entryId is not null or anything. this is caused by tattertools.
    * static method
    */
-  function writeTrackback($entryId, $url, $name, $title, $excerpt) {
+  function writeTrackback($entryId, $url, $name, $title, $excerpt, $date = false) {
 
     $e = Entry::getEntry($entryId);
     if ($e->isSetOption("NO_TRACKBACK")) {
@@ -62,7 +62,10 @@ class Trackback {
     $dirname = "contents/" . $entryId;
     @mkdir($dirname, 0777);
 
-    $filename = date('YmdHis', time()) . '.trackback';
+    if ($date == false) {
+      $date = time();
+    }
+    $filename = date('YmdHis', $date) . '.trackback';
     $fd = fopen($dirname . '/' . $filename, "w");
     fwrite($fd, $date);
     fwrite($fd, "\r\n");

@@ -86,7 +86,7 @@ class Entry {
 
   function getTrackbacks() {
     $trackbacks = array();
-    $filenames = Soojung::queryFilenameMatch("[.]trackback$", "contents/" . $entryId . "/");
+    $filenames = Soojung::queryFilenameMatch("[.]trackback$", "contents/" . $this->entryId . "/");
     sort($filenames);
     foreach($filenames as $filename) {
       $trackbacks[] = new Trackback($filename);
