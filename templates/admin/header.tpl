@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/admin/styles.css"/>
 <script type="text/javascript" src="{$baseurl}/templates/admin/javascript.js"></script>
-<script type="text/javascript" src="{$baseurl}/templates/admin/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="{$baseurl}/libs/fckeditor/fckeditor.js"></script>
 <title>admin</title>
 </head>
 <body>
