@@ -220,6 +220,12 @@ function get_comments($blogid) {
   return $comments;
 }
 
+function cmp_filename($a, $b) {
+  $filename1 = basename($a);
+  $filename2 = basename($b);
+  return ($filename1 < $filename2) ? 1 : -1;
+}
+
 function get_recent_comments() {
   $comment_filenames = array();
   $dirs = query_filename_match("^[0-9]+$", "contents/");
@@ -229,7 +235,8 @@ function get_recent_comments() {
       $comment_filenames[] = $file;
     }
   }
-  rsort($comment_filenames);
+  usort($comment_filenames, "cmp_filename");
+
   $comment_filenames = array_slice($comment_filenames, 0, 10);
   $comments = array();
   foreach ($comment_filenames as $f) {
@@ -302,7 +309,7 @@ function get_recent_trackbacks() {
       $filenames[] = $file;
     }
   }
-  rsort($filenames);
+  usort($filenames, "cmp_filename");
   $filenames = array_slice($filenames, 0, 10);
   $trackbacks = array();
   foreach ($filenames as $f) {
