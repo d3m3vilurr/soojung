@@ -1,0 +1,11 @@
+.entry, .trackback_url, .trackback, .comment, .postform, .navibar span, .entrylist {
+	-moz-border-radius: 10px;
+}
+#sidebar {
+	-moz-border-radius-bottomleft: 10px;
+}
+#sidebar h3 {
+	-moz-border-radius-topright: 10px;
+	-moz-border-radius-bottomright: 10px;
+}
+

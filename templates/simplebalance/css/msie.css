@@ -1,0 +1,7 @@
+.entry h2 {
+	padding-top: 2px;
+}
+.trackback h3, .comment h3, .postform h3 {
+	padding-top: 0px;
+}
+
