@@ -9,8 +9,8 @@ if (isset($_POST["blogid"])) {
   $url = $_POST["url"];
   $body = $_POST["body"];
   
-  if (empty($blogid) || empty($name) || empty($email) || empty($url) || empty($body)) {
-    echo "input name, email, url, comment";
+  if (empty($blogid) || empty($name) || empty($body)) {
+    echo "input name and comment";
     exit();
   }
   if ($url == "http://") {
