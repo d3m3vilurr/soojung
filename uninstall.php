@@ -18,3 +18,6 @@ rmdirr("templates/.admin_cache");
 rmdirr("templates/.admin_configs");
 rmdirr("templates/.admin_compile");
 ?>
+<?
+# vim: ts=8 sw=2 sts=2 noet
+?>

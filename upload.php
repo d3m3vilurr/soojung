@@ -34,3 +34,6 @@ $template->assign("files", $list);
 
 $template->display("upload.tpl");
 ?>
+<?
+# vim: ts=8 sw=2 sts=2 noet
+?>

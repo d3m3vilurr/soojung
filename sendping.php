@@ -54,3 +54,7 @@ $smarty->assign('comments', $entry->getComments());
 $smarty->display('sendping.tpl');
 ?>
 
+
+<?
+# vim: ts=8 sw=2 sts=2 noet
+?>
