@@ -119,8 +119,18 @@ if ($_GET["mode"] == "config") {
 } else if ($_GET["mode"] == "data") {
   $template->display('data.tpl');
 } else if ($_GET["mode"] == "list") {
-  $entry_structs = array();
-  $template->assign('entries', Entry::getAllEntries(false));
+  if(isset($_GET["page"])) {
+    $page = $_GET["page"];
+  } else {
+    $page = 1;
+  }
+  if ($page > 1) {
+    $template->assign('prev_page_link', "admin.php?mode=list&page=" . ($page - 1));
+  }
+  if (Entry::getEntryCount() > $page * 10) {
+    $template->assign('next_page_link', "admin.php?mode=list&page=" . ($page + 1));
+  }
+  $template->assign('entries', Entry::getEntries(10, $page));
   $template->display('list.tpl');
 } else {
   $template->assign('recent_entries', Entry::getRecentEntries(5));

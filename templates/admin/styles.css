@@ -165,6 +165,12 @@ h2
   left: 700px;
 }
 
+.navbar
+{
+  margin: 0px;
+  padding: 5px 10px 20px 10px;
+}
+
 .hide
 {
   display:none;

@@ -3,6 +3,18 @@
 
 <div id="list">
 
+<p class="navbar">
+{if $prev_page_link != ""}
+	<a href="{$prev_page_link|escape}">&laquo; prev</a>
+{/if}
+{if $prev_page_link != "" && $next_page_link != ""}
+	&nbsp;&nbsp;
+{/if}
+{if $next_page_link != ""}
+	<a href="{$next_page_link|escape}">next &raquo;</a>
+{/if}
+</p>
+
 <span class="subject"><b>Subject</b></span>
 <span class="trackback_ping"><b>Trackback</b></span>
 <span class="delete"><b>Delete</b></span>
@@ -31,6 +43,7 @@
 	{/foreach}
 
 {/foreach}
+
 </div>
 
 {include file="footer.tpl"}
