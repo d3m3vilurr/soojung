@@ -10,4 +10,5 @@
 <body onload="return correct_bbcode_image();">
 	<div id="header">
 		<h1>{$title}</h1>
+		<p id="desc">{$description}</p>
 	</div>

@@ -13,14 +13,20 @@ a.rss {
 }
 #header {
 	background-color: #48f;
-	height: 50px;
+	height: 70px;
+}
+#desc {
+	color: #fff;
+	font-size: 0.8em;
+	margin: 0;
+	padding: 0em 1em 1em 1em;
 }
 h1 {
 	margin: 0;
 	color: #fff;
 	font-size: 1.5em;
 	font-weight: normal;
-	padding: 0.5em;
+	padding: 0.5em 0.5em 0em 0.5em;
 }
 h1.legend {
 	font-size: 1.4em;
@@ -35,7 +41,7 @@ h1.legend strong {
 	border-left: 1px solid #ccc;
 	width: 180px;
 	position: absolute;
-	top: 50px;
+	top: 70px;
 	right: 0;
 	padding: 0.5em 1em;
 }
