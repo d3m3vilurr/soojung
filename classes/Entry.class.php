@@ -52,7 +52,7 @@ class Entry {
     global $blog_baseurl, $blog_fancyurl;
 
     if ($blog_fancyurl) {
-      return $blog_baseurl . "/" . $this->category->name . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
+      return $blog_baseurl . "/" . urlencode($this->category->name) . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
     } else {
       return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;
     }
