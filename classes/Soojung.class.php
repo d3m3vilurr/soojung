@@ -109,7 +109,7 @@ class Soojung {
     $filenames = Soojung::queryFilenameMatch(".+", "templates/");
     foreach($filenames as $filename) {
       $filename = basename($filename);
-      if ($filename == "admin") {
+      if ($filename == "admin" or $filename == "CVS") {
 	continue;
       }
       if ($filename[0] != '.') {
