@@ -22,61 +22,6 @@ function entry_search($query) {
   return $founds;
 }
 
-function trackback_open($filename) {
-  $fd = fopen($filename, "r");
-  $data = fread($fd, filesize($filename));
-  fclose($fd);
-  $data = split("\r\n", $data, 4);
-  $trackback = array();
-  $trackback["url"] = $data[0];
-  $trackback["name"] = $data[1];
-  $trackback["title"] = $data[2];
-  $trackback["excerpt"] = $data[3];
-
-  $paths = split("/", $filename);
-  $entry = get_entry($paths[1]);
-
-  $t = split("[.]", $paths[2], 2);
-  $trackback["date"] = $t[0];
-
-  $trackback["link"] = $entry['link'] . "#" . $trackback["date"];
-  $trackback["filename"] = $filename;
-  return $trackback;
-}
-
-function get_trackbacks($blogid) {
-  $trackbacks = array();
-  $filenames = query_filename_match("[.]trackback$", "contents/" . $blogid . "/");
-  sort($filenames);
-  foreach($filenames as $filename) {
-    $trackbacks[] = trackback_open($filename);
-  }
-  return $trackbacks;
-}
-
-function get_trackback_count($blogid) {
-  $r = query_filename_match("[.]trackback$", "contents/" . $blogid);
-  return count($r);
-}
-
-function get_recent_trackbacks($n) {
-  $filenames = array();
-  $dirs = query_filename_match("^[0-9]+$", "contents/");
-  foreach ($dirs as $dir) {
-    $files = query_filename_match("[.]trackback$", $dir . "/");
-    foreach ($files as $file) {
-      $filenames[] = $file;
-    }
-  }
-  usort($filenames, "cmp_base_filename");
-  $filenames = array_slice($filenames, 0, $n);
-  $trackbacks = array();
-  foreach ($filenames as $f) {
-    $trackbacks[] = trackback_open($f);
-  }
-  return $trackbacks;
-}
-
 function send_trackbackping($blogid, $trackback_url, $encoding='UTF-8') {
   global $blog_name;
   
@@ -142,76 +87,6 @@ function send_trackbackping($blogid, $trackback_url, $encoding='UTF-8') {
 
   fclose ($fp);
   return $response;
-}
-
-/** add personal bookmark file 
- *
- */
-
-function add_bookmark($url, $desc) {
-  if (empty($desc))
-    $desc = $url;
-
-  $bookmark = array("url" => $url, "desc" => $desc);
-  $bookmarks = get_bookmark_list();
-  foreach ($bookmarks as $b) {
-    if ($b['url'] == $bookmark['url'])
-      return false;
-  }
-
-  $bookmarks[] = $bookmark;
-  write_bookmark($bookmarks);
-  return true;
-}
-
-/** delete personal bookmark, key is url (not description) 
- *
- */
-
-function delete_bookmark($url) {
-  $bookmakrs = get_bookmark_list();
-  $new_bookmakrs = array();
-  foreach($bookmakrs as $b) {
-    if ($b['url'] !== $url)
-      $new_bookmarks[] = $b;
-  }
-  write_bookmark($new_bookmarks);
-}
-
-/** writing $bookmarks to file
- *
- */
-
-function write_bookmark($bookmarks) {
-  $fd = fopen("contents/.bookmark", "w");
-  if (!empty($bookmarks)) {
-    foreach ($bookmarks as $b) {
-      fwrite ($fd, $b['url'] . " " . $b['desc'] . "\r\n");
-      //    fprintf ($fd, "%s %s\r\n", $b['url'], $b['desc']);
-    }
-  }
-  fclose($fd);
-
-}
-
-/** read $bookmarks from file
- *
- */
-
-
-function get_bookmark_list() {
-  $bookmarks = array();
-  if (!file_exists("contents/.bookmark")) {
-    return $bookmarks;
-  }
-  $fd = fopen("contents/.bookmark", "r");
-  while (!feof($fd)) {
-    $line = trim(fgets($fd, 1024));
-    $b = explode(" ", $line, 2);
-    if (!empty($b[0]))
-      $bookmarks[] = array("url"=>$b[0], "desc" => $b[1]);
-  }
-  return $bookmarks;
 }
 
 function get_count() {

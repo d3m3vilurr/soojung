@@ -8,7 +8,6 @@ class Trackback {
   var $title;
   var $excerpt;
   var $filename;
-  var $href;
 
   /**
    * Trackback file name:
@@ -29,7 +28,12 @@ class Trackback {
     $this->name = fgets($fd);
     $this->title = fgets($fd);
     fclose($fd);
-    //TODO: set href
+  }
+
+  function getHref() {
+    $id = Soojung::filenameToEntryId($this->filename);
+    $e = Entry::getEntry($id);
+    return $e->getHref() . "#" . $this->date;
   }
 
   function getExcerpt($filename) {

@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include("settings.php");
+
 if (!isset($_SESSION["auth"])) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
   exit;
@@ -18,17 +20,14 @@ if ($_POST["mode"] == "post") {
   if (empty($url) || $url == 'http://')  {
     echo "<font color=\"red\">WARNING: Input url correctly</font>";
   } else {
-    if (add_bookmark ($url, $desc) == false) {
+    if (Bookmark::addBookmark ($url, $desc) == false) {
       echo "<font color=\"red\">WARNING: bookmark already exist</font>";    
     }
   }
 } else if ($_GET["mode"] == "delete") {
   $url = $_GET["url"];
-  delete_bookmark($url);
+  Bookmark::deleteBookmark($url);
 }
-
-define('SMARTY_DIR', 'libs/smarty/');
-require(SMARTY_DIR . 'Smarty.class.php');
 
 $smarty = new Smarty;
 
@@ -39,7 +38,7 @@ $smarty->cache_dir = "templates/.admin_cache/";
 $smarty->template_dir = "templates/admin/";
 $smarty->assign('baseurl', $blog_baseurl);
 
-$bookmarks = get_bookmark_list();
+$bookmarks = Bookmark::getBookmarkList();
 if (empty($bookmarks)) {
   $bookmarks = array();
 }
