@@ -17,3 +17,7 @@
 ==== 0.2 -> 0.2.1 ====
 fancy_url를 쓴다면, .htaccess파일에 아래 코드를 추가한다.
 RewriteRule ^page/([0-9]+)$ http://*URL*/*SOOJUNG_DIR*/index.php?page=$1
+==== 0.2.1 -> 0.3 ===
+1. 0.2.1의 관리 페이지에서 soojung data를 export해서 저장합니다.
+2. 0.2.1을 uninstall.php를 열어서 지우고, 0.3을 새로 설치합니다.
+3. export 받은 파일을 0.3 관리 페이지에서 import합니다. 이때 version은 0.2로 맞춥니다.
