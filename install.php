@@ -49,21 +49,19 @@ if (isset($_POST["name"])) {
 			     $fb, $nb, $_POST["admin"], $_POST["email"],
 			     md5($_POST["password"]));
 
-    if ($fb == "on") {
-      $f = fopen(".htaccess", "w");
-      fwrite($f, "RewriteEngine On\n");
-      fwrite($f, "RewriteRule ^(.+)/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)[.]html$ ");
-      fwrite($f, $_POST["url"] . "/entry.php?blogid=$5\n");
-      fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+) ");
-      fwrite($f, $_POST["url"] . "/index.php?archive=$1$2\n");
-      fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+)/([0-9]+) ");
-      fwrite($f, $_POST["url"] . "/index.php?archive=$1$2$3\n");
-      fwrite($f, "RewriteRule ^([^/.]+)$ ");
-      fwrite($f, $_POST["url"] . "/index.php?category=$1\n");
-      fwrite($f, "RewriteRule ^page/([0-9]+)$ ");
-      fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
-      fclose($f);
-    }
+    $f = fopen(($fb == 'on' ? '.' : '_') . "htaccess", "w");
+    fwrite($f, "RewriteEngine On\n");
+    fwrite($f, "RewriteRule ^(.+)/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)[.]html$ ");
+    fwrite($f, $_POST["url"] . "/entry.php?blogid=$5\n");
+    fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+) ");
+    fwrite($f, $_POST["url"] . "/index.php?archive=$1$2\n");
+    fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+)/([0-9]+) ");
+    fwrite($f, $_POST["url"] . "/index.php?archive=$1$2$3\n");
+    fwrite($f, "RewriteRule ^([^/.]+)$ ");
+    fwrite($f, $_POST["url"] . "/index.php?category=$1\n");
+    fwrite($f, "RewriteRule ^page/([0-9]+)$ ");
+    fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
+    fclose($f);
 
     echo "install success. delete install.php file and change the soojung directory permission to 755<br />";
     echo "<a href=\"index.php\">home</a>";
