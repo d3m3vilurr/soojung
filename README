@@ -14,3 +14,6 @@
 ==== 0.1 -> 0.2 ====
 1. 0.2를 다운 받아서 0.1가 깔린 디렉토리에 덮어 쓴다.
 2. templates 디렉토리 아래에 .admin_configs, .admin_cache, .admin_compile을 만들고, 웹서버가 쓸 수 있게 퍼미션을 조정해준다.
+==== 0.2 -> 0.2.1 ====
+fancy_url를 쓴다면, .htaccess파일에 아래 코드를 추가한다.
+RewriteRule ^page/([0-9]+)$ http://*URL*/*SOOJUNG_DIR*/index.php?page=$1
