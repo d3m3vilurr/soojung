@@ -31,15 +31,13 @@ class Entry {
     }
 
     $this->filename = $filename;
-    $fd = fopen($filename, "r");
+    $this->db = new Database($filename);
     
-    //read header
-    $this->date = trim(strstr(fgets($fd, 1024), ' '));
-    $this->title = trim(strstr(fgets($fd, 1024), ' '));
-    $this->category = new Category(trim(strstr(fgets($fd, 1024), ' ')));
-    $this->options = explode("|", trim(strstr(fgets($fd, 1024), ' ')));
-    $this->format = trim(strstr(fgets($fd, 1024), ' '));
-    fclose($fd);
+    $this->date = $this->db->field["date"];
+    $this->title = $this->db->field["title"];
+    $this->category = new Category($this->db->field["category"]);
+    $this->options = explode("|", $this->db->field["options"]);
+    $this->format = $this->db->field["format"];
 
     $this->entryId = Soojung::filenameToEntryId($filename);
   }
@@ -63,17 +61,8 @@ class Entry {
   }
 
   function getRawBody() {
-    $fd = fopen($this->filename, "r");
-    fgets($fd, 1024); // date
-    fgets($fd, 1024); // title
-    fgets($fd, 1024); // category
-    fgets($fd, 1024); // options
-    fgets($fd, 1024); // format
-    fgets($fd, 1024);
-    $body = fread($fd, filesize($this->filename));
-    fclose($fd);
-    
-    return $body;
+    $blocks = $this->db->getBlock();
+    return $blocks[0];
   }
 
   function getBody() {
@@ -124,15 +113,12 @@ class Entry {
     }
     $categoryclass = new Category($category);
     $filename .= date('YmdHis', $date) . $foptions . '_' . $categoryclass->getHashID() . '_' . $entryId . '.entry';
-    $fd = fopen('contents/' . $filename, "w");
-    fwrite($fd, "Date: " . $date . "\r\n");
-    fwrite($fd, "Title: " . $title . "\r\n");
-    fwrite($fd, "Category: " . $category . "\r\n");
-    fwrite($fd, "Options: " . implode("|", $options) . "\r\n");
-    fwrite($fd, "Format: " . $format . "\r\n");
-    fwrite($fd, "\r\n");
-    fwrite($fd, $body);
-    fclose($fd);
+    $db = new Database();
+    $db->field = array(
+      "date" => $date, "title" => $title, "category" => $category,
+      "options" => implode("|", $options), "format" => $format);
+    $db->block = array($body);
+    $db->write("contents/".$filename);
   }
 
   /**
@@ -248,9 +234,6 @@ class Entry {
    */
   function search($keyword) {
     $founds = array();
-    if ($keyword == "") {
-      return $founds;
-    }
     $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     rsort($filenames);
     foreach($filenames as $f) {
