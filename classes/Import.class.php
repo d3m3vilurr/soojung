@@ -13,9 +13,9 @@ class Import {
     while (($pos_s = strpos($data, "<file>", $pos_e)) !== FALSE) {
       $pos_e = strpos($data, "</file>", $pos_s) + strlen("</file>");
       if ($version == "0.2") {
-	Import::createFileFromVer02(substr($data, $pos_s, $pos_e - $pos_s));
+        Import::createFileFromVer02(substr($data, $pos_s, $pos_e - $pos_s));
       } else { //0.3+
-	Import::createFile(substr($data, $pos_s, $pos_e - $pos_s));
+        Import::createFile(substr($data, $pos_s, $pos_e - $pos_s));
       }
     }
   }
@@ -23,35 +23,100 @@ class Import {
   /**
    * static method
    */
-  function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $encoding, $tblprefix="t3_") {
+  function importTatterTools($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
+    if (strcasecmp($encoding, 'UTF-8') == 0 || strcasecmp($encoding, 'UTF8') == 0) {
+      $needtoconvert = FALSE;
+    } else {
+      $needtoconvert = TRUE;
+    }
+
     $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
     mysql_select_db($dbName) or die("could not select database");
 
-    $query = "SELECT title, body, regdate, category1 FROM ${tblprefix}tts";
+    # preprocessing: category1
+    $query = "SELECT no, label FROM ${prefix}_ct1";
     $result = mysql_query($query) or die("query failed");
+    $categories = array();
+    while ($category = mysql_fetch_assoc($result)) {
+      $categories[$category['no']] = $category['label'];
+    }
+    mysql_free_result($result);
 
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-      $c_no = $line['category1'];
-      $c_query = "SELECT label FROM ${tblprefix}tts_ct1 WHERE no = " . $c_no;
-      $c_result = mysql_query($c_query);
-      $c_line = mysql_fetch_array($c_result);
+    # preprocessing: category2
+    $query = "SELECT no, pno, label FROM ${prefix}_ct2";
+    $result = mysql_query($query) or die("query failed");
+    $subcategories = array();
+    while ($category = mysql_fetch_assoc($result)) {
+      $subcategories[$category['no']] = $category['label'];
+    }
+    mysql_free_result($result);
 
-      if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
-	$title = $line['title'];
-	$body = $line['body'];
-	$category = $c_line['label'];
+    # processing: post
+    $query = "SELECT no, title, body, regdate, category1, category2, is_public FROM ${prefix}";
+    $result = mysql_query($query) or die("query failed");
+    $entries = array();
+    while ($line = mysql_fetch_assoc($result)) {
+      $category = $categories[$line['category1']];
+      if ($line['category2'] != 0) {
+        $category .= '/'.$subcategories[$line['category2']];
+      }
+      if ($needtoconvert) {
+        $title = iconv($encoding, "UTF-8", $line['title']);
+        $body = iconv($encoding, "UTF-8", $line['body']);
+        $category = iconv($encoding, "UTF-8", $category);
       } else {
-	$title = iconv($encoding, "UTF-8", $line['title']);
-	$body = iconv($encoding, "UTF-8", $line['body']);
-	$category = iconv($encoding, "UTF-8", $c_line['label']);
+        $title = $line['title'];
+        $body = $line['body'];
+      }
+      $options = array();
+      if ($line['is_public'] == 0) {
+        $options[] = "SECRET";
       }
       $date = $line['regdate'];
-
-      Entry::createEntry($title, $body, $date, $category);
-      mysql_free_result($c_result);
+      $entryid = Entry::createEntry($title, $body, $date, $category, $options);
+      $entries[$line['no']] = $entryid;
     }
-
     mysql_free_result($result);
+
+    # processing: comment
+    $query = "SELECT pno, name, homepage, body, regdate FROM ${prefix}_reply";
+    $result = mysql_query($query) or die("query failed");
+    while ($line = mysql_fetch_assoc($result)) {
+      if ($needtoconvert) {
+        $name = iconv($encoding, "UTF-8", $line['name']);
+        $body = iconv($encoding, "UTF-8", $line['body']);
+      } else {
+        $name = $line['name'];
+        $body = $line['body'];
+      }
+      $email = '';
+      $homepage = $line['homepage'];
+      $date = $line['regdate'];
+      $entryid = $entries[$line['pno']];
+      Comment::writeComment($entryid, $name, $email, $homepage, $body, $date);
+    }
+    mysql_free_result($result);
+
+    # processing: trackback
+    $query = "SELECT pno, site, url, title, body, regdate FROM ${prefix}_trackback";
+    $result = mysql_query($query) or die("query failed");
+    while ($line = mysql_fetch_assoc($result)) {
+      if ($needtoconvert) {
+        $name = iconv($encoding, "UTF-8", $line['site']);
+        $title = iconv($encoding, "UTF-8", $line['title']);
+        $excerpt = iconv($encoding, "UTF-8", $line['body']);
+      } else {
+        $name = $line['site'];
+        $title = $line['title'];
+        $excerpt = $line['body'];
+      }
+      $url = $line['url'];
+      $date = $line['regdate'];
+      $entryid = $entries[$line['pno']];
+      Trackback::writeTrackback($entryid, $url, $name, $title, $excerpt, $date);
+    }
+    mysql_free_result($result);
+
     mysql_close($link);
   }
 
@@ -66,7 +131,7 @@ class Import {
     $query = "select ID, post_date, post_content, post_title, post_category from " . $prefix . "posts";
     $result = mysql_query($query) or die("query failed");
 
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    while ($line = mysql_fetch_assoc($result)) {
       $pid = $line['ID'];
       $cid_no = $line['post_category'];
       $title = $line['post_title'];
@@ -88,13 +153,13 @@ class Import {
         $cid_result = mysql_query($cid_query) or die("category_id query failed");
         $c_count = mysql_num_rows($cid_result);
         $i=0;
-        while ($cid_row = mysql_fetch_array($cid_result, MYSQL_ASSOC)) {
+        while ($cid_row = mysql_fetch_assoc($cid_result)) {
           $i++;
           $c_no = $cid_row['category_id'];
           $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
           $c_result = mysql_query($c_query) or die ("category query failed");
 
-          $c_row = mysql_fetch_array($c_result, MYSQL_ASSOC);
+          $c_row = mysql_fetch_assoc($c_result);
           $category .= $c_row['cat_name'];
           if ( $i < $c_count ) {
             $category .=",";
@@ -126,24 +191,24 @@ class Import {
         $comment_result = mysql_query($comment_query) or die ("comment query failed!");
 
         while ($comment_row = mysql_fetch_array($comment_result)) {
-          $comment_author = $comment_row['comment_author'];        
-          $comment_email = $comment_row['comment_author_email'];        
-          $comment_url = $comment_row['comment_author_url'];        
-          $comment_date = strtotime($comment_row['comment_date']); 
-          $comment_content = $comment_row['comment_content'];        
+          $comment_author = $comment_row['comment_author'];
+          $comment_email = $comment_row['comment_author_email'];
+          $comment_url = $comment_row['comment_author_url'];
+          $comment_date = strtotime($comment_row['comment_date']);
+          $comment_content = $comment_row['comment_content'];
 
           $comment_author = ereg_replace("\\\\\"", "\"", $comment_author);
           $comment_author = ereg_replace("\\\\'", "'", $comment_author);
           $comment_content = ereg_replace("\\\\\"", "\"", $comment_content);
           $comment_content = ereg_replace("\\\\'", "'", $comment_content);
           $comment_content = ereg_replace("\n", "<br />", $comment_content);
-                 
+
           if (strcasecmp($encoding, "UTF-8") != 0 && strcasecmp($encoding, "UTF8") != 0) {
             $comment_author = iconv($encoding, "UTF-8", $comment_author);
             $comment_content = iconv($encoding, "UTF-8", $comment_content);
           }
-          
-          Comment::writeComment($body_id, $comment_author, $comment_email, 
+
+          Comment::writeComment($body_id, $comment_author, $comment_email,
                                 $comment_url, $comment_content, $comment_date);
         }
         mysql_free_result($comment_result);
@@ -165,7 +230,7 @@ class Import {
     $query = "select post_date, post_content, post_title, post_category, ID from " . $prefix . "posts";
     $result = mysql_query($query) or die("query failed");
 
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    while ($line = mysql_fetch_assoc($result)) {
       $c_no = $line['post_category'];
       $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
       $c_result = mysql_query($c_query);
@@ -174,12 +239,12 @@ class Import {
       $category = isset($c_line['cat_name']) ? $c_line['cat_name'] : "General"; //'General' is wp default category
 
       if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
-	$title = $line['post_title'];
-	$body = stripslashes($line['post_content']);
+        $title = $line['post_title'];
+        $body = stripslashes($line['post_content']);
       } else {
-	$title = iconv($encoding, "UTF-8", $line['post_title']);
-	$body = iconv($encoding, "UTF-8", stripslashes($line['post_content']));
-	$category = iconv($encoding, "UTF-8", $category);
+        $title = iconv($encoding, "UTF-8", $line['post_title']);
+        $body = iconv($encoding, "UTF-8", stripslashes($line['post_content']));
+        $category = iconv($encoding, "UTF-8", $category);
       }
       $date = strtotime($line['post_date']);
       $options = array();
@@ -189,21 +254,21 @@ class Import {
       // comments
       $comment_query = "select comment_date, comment_author, comment_author_email, comment_author_url, comment_content from " . $prefix . "comments" . " where comment_post_ID = " . $line['ID'];
       $comment_result = mysql_query($comment_query) or die("query failed");
-      while ($line = mysql_fetch_array($comment_result, MYSQL_ASSOC)) {
-	if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
-	  $name = $line['comment_author'];
-	  $email = $line['comment_author_email'];
-	  $homepage = $line['comment_author_url'];
-	  $body = $line['comment_content'];
-	} else {
-	  $name = iconv($encoding, "UTF-8", $line['comment_author']);
-	  $email = iconv($encoding, "UTF-8", $line['comment_author_email']);
-	  $homepage = iconv($encoding, "UTF-8", $line['comment_author_url']);
-	  $body = iconv($encoding, "UTF-8", $line['comment_content']);
-	}
-	$date = strtotime($line['comment_date']);
+      while ($line = mysql_fetch_assoc($comment_result)) {
+        if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+          $name = $line['comment_author'];
+          $email = $line['comment_author_email'];
+          $homepage = $line['comment_author_url'];
+          $body = $line['comment_content'];
+        } else {
+          $name = iconv($encoding, "UTF-8", $line['comment_author']);
+          $email = iconv($encoding, "UTF-8", $line['comment_author_email']);
+          $homepage = iconv($encoding, "UTF-8", $line['comment_author_url']);
+          $body = iconv($encoding, "UTF-8", $line['comment_content']);
+        }
+        $date = strtotime($line['comment_date']);
 
-	Comment::writeComment($id, $name, $email, $homepage, $body, $date);
+        Comment::writeComment($id, $name, $email, $homepage, $body, $date);
       }
       mysql_free_result($comment_result);
     }
@@ -267,7 +332,7 @@ class Import {
       Import::createFile($xml);
     }
   }
-  
+
   function getNameFromXml($xml) {
     $name_pos = strpos($xml, "<name>") + strlen("<name>");
     $name_end = strpos($xml, "</name>");
