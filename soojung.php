@@ -50,14 +50,17 @@ function blogid_to_filename($blogid) {
 
 }
 
-function notify_to_admin($title, $blogid) {
+function notify_to_admin($title, $blogid, $msg) {
   global $notify, $admin_email;
   if ($notify != true) {
     return;
   }
   $entry = get_entry($blogid);
-  $body = "<html><head></head><body><a href=" . $entry['link'] . "\">check out</a></body></html>";
-  mail($admin_email, $title, $body);
+  $message = "<html><head></head><body>";
+  $message .= $msg;
+  $message .= "<br /><a href=" . $entry['link'] . "\">check out</a>";
+  $message .= "</body></html>";
+  mail($admin_email, $title, $message, "Content-Type: text/html; charset=\"utf-8\"");
 }
 
 function entry_open($filename) {
@@ -204,7 +207,9 @@ function comment_write($blogid, $name, $email, $url, $body, $date) {
   fwrite($fd, $body);
   fclose($fd);
 
-  notify_to_admin("new comment", $blogid);
+  $msg = "On " . date($date) . ", " . $name . "said:<br />";
+  $msg .= $body;
+  notify_to_admin("new comment", $blogid, $msg);
 }
 
 function get_comment_count($blogid) {
@@ -278,7 +283,8 @@ function trackback_write($blogid, $url, $name, $title, $excerpt) {
   fwrite($fd, "\r\n");
   fclose($fd);
 
-  notify_to_admin("new trackback", $blogid);
+  $msg = "trackback from " . $url . "<br />";
+  notify_to_admin("new trackback", $blogid, $msg);
 }
 
 function get_trackbacks($blogid) {
