@@ -1,4 +1,4 @@
-{include file="header.tpl" title=$entry.title}
+{include file="header.tpl"}
 
 <div class="entry">
 <h2>{$entry->title}</h2>

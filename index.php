@@ -1,11 +1,4 @@
 <?php
-function microtime_float()
-{
-   list($usec, $sec) = explode(" ", microtime());
-   return ((float)$usec + (float)$sec);
-} 
-$st = microtime_float();
-
 include_once("settings.php");
 
 if (isset($_GET["page"])) {
@@ -58,6 +51,4 @@ if (!$template->is_cached('index.tpl', $page)) {
   }
 }
 $template->display('index.tpl', $page);
-
-echo "time: " . (microtime_float() - $st);
 ?>
