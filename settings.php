@@ -1,12 +1,14 @@
 <?php
 
-$soojung_version = '0.4.4';
+$soojung_version = '0.4.5';
 setlocale(LC_TIME, "C");
 
-if (file_exists("config.php")) {
-  include_once("config.php");
+if (!file_exists("config.php")) {
+  echo "please execute install.php first.";
+  exit;
 }
 
+include_once("config.php");
 include_once("libs/util.php");
 
 include_once("classes/Formatter.class.php");
