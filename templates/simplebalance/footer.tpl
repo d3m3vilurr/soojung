@@ -89,7 +89,7 @@
 <h3><a href="#none" onclick="return fold_sidebar('div_bookmark');">Bookmarks</a></h3>
 <ul id="div_bookmark"{if #showBookmarks# == 0} class="hide"{/if}>
 {foreach from=$bookmarks item=bookmark}
-	<li><a href="{$bookmark.urll|escape}">{$bookmark.desc|escape}</a></li>
+	<li><a href="{$bookmark.url|escape}">{$bookmark.desc|escape}</a></li>
 {/foreach}
 </ul>
 {/if}
