@@ -81,8 +81,8 @@ class Calendar {
       }
       $weekday = ($weekday + 1) % 7;
     }
-    if ($weekday < 6) {
-      $cal .= "</tr>\n";
+    if ($weekday > 0) {
+      $cal .= str_repeat("<td></td>", 7-$weekday)."</tr>\n";
     }
     $cal .= "</table></div>\n";
     return $cal;
