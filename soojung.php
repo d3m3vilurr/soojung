@@ -182,6 +182,7 @@ function comment_open($filename) {
 
   $entry = get_entry($id);
   $comment["link"] = $entry['link'] . "#" . $comment["date"];
+  $comment["filename"] = $filename;
   return $comment;
 }
 
@@ -255,6 +256,7 @@ function trackback_open($filename) {
   $trackback["date"] = $t[0];
 
   $trackback["link"] = $entry['link'] . "#" . $trackback["date"];
+  $trackback["filename"] = $filename;
   return $trackback;
 }
 
