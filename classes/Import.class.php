@@ -25,7 +25,6 @@ class Import {
       }
       */
     }
-    exit;
   }
 
   /**
