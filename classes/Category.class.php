@@ -28,7 +28,7 @@ class Category {
     $entries = array();
     $all = Entry::getAllEntries();
     foreach($all as $entry) {
-      if ($entry->category == $this->name) {
+      if ($entry->category->name == $this->name) {
 	$entries[] = $entry;
       }
     }
@@ -37,6 +37,7 @@ class Category {
 
   function getEntryCount() {
     $entries = $this->getEntries();
+    //print_r($entries);
     return count($entries);
   }
 

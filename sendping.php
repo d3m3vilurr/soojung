@@ -1,5 +1,6 @@
 <?php
-include("Template.class.php");
+
+include_once("settings.php");
 
 if ($_POST["mode"] == "post") {
   $blogid = $_POST['blogid'];
@@ -36,11 +37,11 @@ if (!isset($blogid)) {
   exit;
 }
     
-$entry = get_entry($blogid);
-$title = $entry["title"];
-$body = $entry["body"];
-$date = $entry["date"];
-$category = $entry["category"];
+$entry = Entry::getEntry($blogid);
+$title = $entry->title;
+$body = $entry->getBody();
+$date = $entry->date;
+$category = $entry->category->name;
 ?>
 
 
@@ -48,8 +49,8 @@ $category = $entry["category"];
 $smarty = new Template;
 
 $smarty->assign('entry', $entry);
-$smarty->assign('trackbacks', get_trackbacks($entry['id']));
-$smarty->assign('comments', get_comments($entry['id']));
+$smarty->assign('trackbacks', $entry->getTrackbacks());
+$smarty->assign('comments', $entry->getComments());
 
 $smarty->display('sendping.tpl');
 ?>

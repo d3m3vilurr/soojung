@@ -22,12 +22,21 @@ class Entry {
   function Entry($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = fgets($fd);
-    $this->title = fgets($fd);
-    $this->category = new Category(fgets($fd));
+    $this->date = trim(fgets($fd));
+    $this->title = trim(fgets($fd));
+    $this->category = new Category(trim(fgets($fd)));
     fclose($fd);
     $this->entryId = Soojung::filenameToEntryId($filename);
-    //TODO: href
+  }
+
+  function getHref() {
+    global $blog_baseurl, $blog_fancyurl;
+
+    if ($blog_fancyurl) {
+      //
+    } else {
+      return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;
+    }
   }
 
   function getBody() {
@@ -41,13 +50,14 @@ class Entry {
   }
 
   function getCommentCount() {
-    $r = Soojung::queryFilenameMatch("[.]comments$", "contents/" . $this->entryId);
+    $r = Soojung::queryFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
     return count($r);
   }
 
   function getComments() {
     $comments = array();
     $filenames = Soojung::queryFilenameMatch("[.]comment$", "contents/" . $this->entryId . "/");
+    print_r($r);
     sort($filenames);
     foreach($filenames as $filename) {
       $comments[] = new Comment($filename);

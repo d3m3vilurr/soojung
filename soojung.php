@@ -1,4 +1,7 @@
 <?php
+
+//deprecate source file
+
 @include_once("config.php");
 include("libs/util.php");
 
@@ -44,36 +47,6 @@ function convert_to_utf8 ($string) {
   return FALSE;
 }
 
-function query_filename_match($query, $dir="contents/") {
-  $list = array();
-  if (is_dir($dir)) {
-    if ($dh = opendir($dir)) {
-      while (($file = readdir($dh)) !== false) {
-	if (ereg($query, $file)) {
-	  $list[] = $dir . $file;
-	}
-      }
-    }
-  }
-  return $list;
-}
-
-function create_new_id() {
-  $fd = fopen("contents/.info", "r");
-  $i = trim(fread($fd, filesize("contents/.info")));
-  fclose($fd);
-  $fd = fopen("contents/.info", "w");
-  fwrite($fd, $i + 1);
-  fclose($fd);
-  return $i;
-}
-
-function blogid_to_filename($blogid) {
-  $f = query_filename_match("_" . $blogid . "[.]entry$");
-  return $f[0];
-
-}
-
 function notify_to_admin($title, $blogid, $msg) {
   global $notify, $admin_email;
   if ($notify != true) {
@@ -116,67 +89,6 @@ function entry_open($filename) {
   $entry["trackback_count"] = get_trackback_count($id);
 
   return $entry;
-}
-
-function _entry_write($title, $body, $date, $category, $id) {
-  $filename = date('YmdHis', $date) . '_' . $category . '_' . $id . '.entry';
-  $fd = fopen('contents/' . $filename, "w");
-  fwrite($fd, $title);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $date);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $body);
-  fclose($fd);
-}
-
-function entry_new($title, $body, $date, $category="Default") {
-  $id = create_new_id();
-  if (!isset($category)) {
-    $category = "Default";
-  }
-  _entry_write($title, $body, $date, $category, $id);
-  return $id;
-}
-
-function entry_edit($blogid, $title, $body, $date, $category) {
-  if (file_exists(blogid_to_filename($blogid)) !== TRUE)
-    return FALSE;
-  unlink(blogid_to_filename($blogid));
-  _entry_write($title, $body, $date, $category, $blogid);
-  return TRUE;
-}
-
-function entry_delete($blogid) {
-  unlink(blogid_to_filename($blogid));
-  rmdirr("contents/" . $blogid);
-}
-
-function get_entry_count() {
-  return count(query_filename_match("[.]entry$"));
-}
-
-function get_entry_count_by_category($category) {
-  $filenames = query_filename_match("[^_]+_" . $category . "_[^.]+[.]entry$");
-  return count($filenames);
-}
-
-function get_entry($blogid) {
-  return entry_open(blogid_to_filename($blogid));
-}
-
-function get_entries($count, $page) {
-  $entries = array();
-  $filenames = query_filename_match("[.]entry$");
-  rsort($filenames);
-  $index = ($page - 1) * $count;
-  for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
-    $entries[] = entry_open($filenames[$i]);
-  }
-  return $entries;
-}
-
-function get_recent_entries($n) {
-  return get_entries($n, 1);
 }
 
 function entry_search($query) {
@@ -234,40 +146,6 @@ function comment_write($blogid, $name, $email, $url, $body, $date) {
   $msg =  $name . " said:<br />";
   $msg .= $body;
   notify_to_admin("new comment", $blogid, $msg);
-}
-
-function get_comment_count($blogid) {
-  $r = query_filename_match("[.]comment$", "contents/" . $blogid);
-  return count($r);
-}
-
-function get_comments($blogid) {
-  $comments = array();
-  $filenames = query_filename_match("[.]comment$", "contents/" . $blogid . "/");
-  sort($filenames);
-  foreach($filenames as $filename) {
-    $comments[] = comment_open($filename);
-  }
-  return $comments;
-}
-
-function get_recent_comments($n) {
-  $comment_filenames = array();
-  $dirs = query_filename_match("^[0-9]+$", "contents/");
-  foreach ($dirs as $dir) {
-    $files = query_filename_match("[.]comment$", $dir . "/");
-    foreach ($files as $file) {
-      $comment_filenames[] = $file;
-    }
-  }
-  usort($comment_filenames, "cmp_base_filename");
-
-  $comment_filenames = array_slice($comment_filenames, 0, $n);
-  $comments = array();
-  foreach ($comment_filenames as $f) {
-    $comments[] = comment_open($f);
-  }
-  return $comments;
 }
 
 function trackback_open($filename) {
@@ -480,87 +358,6 @@ function get_bookmark_list() {
       $bookmarks[] = array("url"=>$b[0], "desc" => $b[1]);
   }
   return $bookmarks;
-}
-
-function get_archive_list() {
-  global $blog_baseurl, $blog_fancyurl;
-
-  $archives = array();
-  $files = array();
-  $filenames = query_filename_match("[.]entry$");
-  foreach($filenames as $filename) {
-    $t = substr($filename, 9);
-    $t = substr($t, 0, 6);
-    $files[] = $t;
-  }
-  rsort($files);
-  $files = array_unique($files);
-
-  foreach($files as $file) {
-    $archive = array();
-
-    $year = substr($file, 0, 4);
-    $month = substr($file, 4);
-    if ($blog_fancyurl) {
-      $link = $blog_baseurl . '/' . $year . '/' . $month;
-    } else {
-      $link = $blog_baseurl . '/index.php?archive=' . $file;
-    }
-
-    $archive["name"] = $file;
-    $archive["link"] = $link;
-    $archives[] = $archive;
-  }
-  return $archives;
-}
-
-function get_archive_entries($date) {
-  $filenames = query_filename_match($date . "[^.]+[.]entry$");
-  rsort($filenames);
-  $entries = array();
-  foreach($filenames as $filename) {
-    $entries[]  = entry_open($filename);
-  }
-  return $entries;
-}
-
-function get_category_list() {
-  global $blog_baseurl, $blog_fancyurl;
-
-  $categories = array();
-  $files = array();
-  $filenames = query_filename_match("[.]entry$");
-  foreach($filenames as $filename) {
-    $t = split("_", $filename, 3);
-    $files[] = $t[1];
-  }
-  sort($files);
-  $files = array_unique($files);
-
-  foreach($files as $file) {
-    $category = array();
-    if ($blog_fancyurl) {
-      $link = $blog_baseurl . '/' . $file;
-    } else {
-      $link = $blog_baseurl . '/index.php?category=' . $file;
-    }
-    $category["name"] = $file;
-    $category["link"] = $link;
-    $category["rss"] = $blog_baseurl . "/rss2.php?category=" . $file;
-    $category["count"] = get_entry_count_by_category($file);
-    $categories[] = $category;
-  }
-  return $categories;
-}
-
-function get_category_entries($category) {
-  $filenames = query_filename_match("[^_]+_" . $category . "_[^.]+[.]entry$");
-  rsort($filenames);
-  $entries = array();
-  foreach($filenames as $filename) {
-    $entries[]  = entry_open($filename);
-  }
-  return $entries;
 }
 
 function get_count() {

@@ -42,7 +42,7 @@ class Comment {
     fgets($fd);
     fgets($fd);
     fgets($fd);
-    $body = fread($fd, filesize($filename));
+    $body = fread($fd, filesize($this->filename));
     fclose($fd);
     return $body;
   }

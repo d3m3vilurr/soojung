@@ -1,5 +1,6 @@
 <?php
-include("Template.class.php");
+
+include_once("settings.php");
 
 if (isset($_POST["blogid"])) {
   $blogid = $_POST["blogid"];
@@ -20,7 +21,7 @@ if (isset($_POST["blogid"])) {
   $email = trim(strip_tags($email));
   $url = trim(strip_tags($url));
   $body = nl2br(trim(htmlspecialchars($body)));
-  comment_write($blogid, $name, $email, $url, $body, $t);
+  Comment::writeCommenet($blogid, $name, $email, $url, $body, $t);
 
   // Remembering 30 days
   setcookie('w_id',    $blogid, $t+2592000);
@@ -28,15 +29,15 @@ if (isset($_POST["blogid"])) {
   setcookie('w_email', $email,  $t+2592000);
   setcookie('w_url',   $url,    $t+2592000);
 
-  $entry = get_entry($blogid);
-  header("Location: " . $entry['link'] . "#" . $t);
+  $entry = Entry::getEntry($blogid);
+  header("Location: " . $entry->getHref() . "#" . $t);
   exit;
 } else if (isset($_GET["blogid"]) == false) {
   echo "<meta http-equiv='refresh' content='0;URL=index.php'>";
   exit;
 } else {
   $blogid = $_GET["blogid"];
-  $entry = get_entry($blogid);
+  $entry = Entry::getEntry($blogid);
 }
 ?>
 
@@ -44,8 +45,8 @@ if (isset($_POST["blogid"])) {
 $template = new Template;
 
 $template->assign('entry', $entry);
-$template->assign('trackbacks', get_trackbacks($entry['id']));
-$template->assign('comments', get_comments($entry['id']));
+$template->assign('trackbacks', $entry->getTrackbacks());
+$template->assign('comments', $entry->getComments());
 
 foreach (array('w_id','w_name','w_email','w_url') as $key) {
   if (isset($HTTP_COOKIE_VARS[$key])) {

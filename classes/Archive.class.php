@@ -23,7 +23,7 @@ class Archive {
     }
   }
 
-  function getArchiveEntries() {
+  function getEntries() {
     $filenames = Soojung::queryFilenameMatch($this->year . $this->month . "[^.]+[.]entry$");
     rsort($filenames);
     $entries = array();
@@ -31,6 +31,15 @@ class Archive {
       $entries[] = new Entry($filename);
     }
     return $entries;
+  }
+
+  /**
+   * static method
+   */
+  function getArchive($name) {
+    $year = substr($name, 0, 4);
+    $month = substr($name, 4, 2);
+    return new Archive($year, $month);
   }
 
   /**

@@ -32,7 +32,7 @@ if ($_POST["mode"] == "config_update") {
     echo "input";
     exit();
   }
-  write_config_file($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
+  Soojung::writeConfigFile($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 		    $_POST["fancyurl"], $_POST["notify"], $_POST["adminname"], $_POST["email"],
 		    FALSE, $_POST["skin"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";

@@ -1,6 +1,5 @@
 <?php
 
-include("config.php");
 include_once("settings.php");
 
 $template = new Template;
@@ -30,25 +29,22 @@ if (Entry::getEntryCount() > (($page) * $blog_entries_per_page)) {
 if (isset($_GET["archive"])) {
   $template->assign('view', 'archive');
   $template->assign('keyword', $_GET["archive"]);
-  $entries = get_archive_entries($_GET["archive"]);
-  $template->assign('count', count($entries));
+  $archive = Archive::getArchive($_GET["archive"]);
+  $entries = $archive->getEntries();
   $template->assign('entries', $entries);
 } else if (isset($_GET["category"])) {
   $template->assign('view', 'category');
   $template->assign('keyword', $_GET["category"]);
-  $entries = get_category_entries($_GET["category"]);
-  $template->assign('count', count($entries));
-  $template->assign('entries', $entries);
+  $category = new Category($_GET["category"]);
+  $template->assign('entries', $category->getEntries());
 } else if (isset($_GET["search"])) {
   $template->assign('view', 'search');
   $template->assign('keyword', $_GET["search"]);
   $entries = entry_search($_GET["search"]);
-  $template->assign('count', count($entries));
   $template->assign('entries', $entries);
 } else {
   $template->assign('view', 'index');
   $template->assign('keyword', "all");
-  $template->assign('count', Entry::getEntryCount());
   $template->assign('entries', Entry::getEntries($blog_entries_per_page, $page));
 }
 
