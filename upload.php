@@ -13,6 +13,10 @@ if ($_POST["mode"] == "upload") {
   move_uploaded_file($_FILES['file']['tmp_name'], $dest);
 }
 
+if ($_GET["mode"] == "delete" && !empty($_GET["file"])) {
+  unlink($_GET["file"]);
+}
+
 $template = new AdminTemplate;
 
 $list = array();

@@ -10,7 +10,8 @@ Upload: <input type="file" name="file">
 
 <!-- file list -->
 {foreach from=$files item=file}
-{$file} <a href="{$baseurl}upload.php?mode=delete&file={$file}">X</a><br />
+	{$baseurl}/{$file}
+	<a href="{$baseurl}/upload.php?mode=delete&file={$file}">delete</a><br />
 {/foreach}
 
 </body>
