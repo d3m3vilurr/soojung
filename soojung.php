@@ -619,7 +619,7 @@ function create_file($xml) {
   fclose($fd);
 }
 
-function import_tt($db_server, $db_user, $db_pass, $db_name) {
+function import_tt($db_server, $db_user, $db_pass, $db_name, $encoding) {
   $link = mysql_connect($db_server, $db_user, $db_pass) or die("could not connect");
   mysql_select_db($db_name) or die("could not select database");
 
@@ -632,10 +632,16 @@ function import_tt($db_server, $db_user, $db_pass, $db_name) {
     $c_result = mysql_query($c_query);
     $c_line = mysql_fetch_array($c_result);
 
-    $title = iconv("cp949", "UTF-8", $line['title']);
-    $body = iconv("cp949", "UTF-8", $line['body']);
+    if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+      $title = $line['title'];
+      $body = $line['body'];
+      $category = $c_line['label'];
+    } else {
+      $title = iconv($encoding, "UTF-8", $line['title']);
+      $body = iconv($encoding, "UTF-8", $line['body']);
+      $category = iconv($encoding, "UTF-8", $c_line['label']);
+    }
     $date = $line['regdate'];
-    $category = iconv("cp949", "UTF-8", $c_line['label']);
 
     entry_new($title, $body, $date, $category);
     mysql_free_result($c_result);

@@ -58,7 +58,7 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   }
   header("Location: admin.php");
 } else if ($_POST["mode"] == "import_tt") {
-  import_tt($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"]);
+  import_tt($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["encoding"]);
   header("Location: admin.php");
 }
 
