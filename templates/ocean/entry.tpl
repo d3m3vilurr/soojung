@@ -64,7 +64,7 @@
 		</div>
 	{/foreach}
 		<h3>Your comment:</h3>
-		<form id="commentform" action="." method="post">
+		<form id="commentform" action="" method="post">
 			<div>
 				<input type="hidden" name="blogid" value="{$entry->entryId}" />
 			</div>

@@ -72,7 +72,7 @@
 
 <h2>Leave a Comment</h2>
 
-<form id="commentform" action="." method="post">
+<form id="commentform" action="" method="post">
 	<p>
 		<input type="hidden" name="blogid" value="{$entry->entryId}" />
 		<input id="author" class="text" type="text" name="name" value="{$w_name}" />
