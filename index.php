@@ -7,12 +7,14 @@ if (isset($_GET["page"])) {
   $page = 1;
 }
 
-$template = new UserTemplate('index.tpl', $page);
+$cache_id = implode("_", $_GET) . $page;
+
+$template = new UserTemplate('index.tpl', $cache_id);
 if (isset($_GET["compile"])) {
   $template->force_compile = true;
 }
 
-if (!$template->is_cached('index.tpl', $page)) {
+if (!$template->is_cached('index.tpl', $cache_id)) {
   if ($page > 1) {
     if ($blog_fancyurl == true) {
       $template->assign('prev_page_link', $blog_baseurl . "/page/" . ($page - 1));
@@ -50,5 +52,5 @@ if (!$template->is_cached('index.tpl', $page)) {
     $template->assign('entries', Entry::getEntries($blog_entries_per_page, $page));
   }
 }
-$template->display('index.tpl', $page);
+$template->display('index.tpl', $cache_id);
 ?>
