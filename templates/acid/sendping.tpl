@@ -17,7 +17,11 @@
      Trackback URL to send trackback ping: <br /> 
      <input type="text" name="trackback_url" value="http://"><br /><br />
      
-     Remote Blog's encoding : <input type="text" name="encoding" value="UTF-8"><br />
+     Remote Blog's encoding :
+     <select name="encoding">
+         <option value="UTF-8" selected="selected">UTF-8</option>
+         <option value="CP949">cp949 (euc-kr)</option>
+     </select><br />
      <input type="hidden" name="mode" value="post">
      <input type="hidden" name="blogid" value={$entry->entryId}>
      <input type="submit" value="Send Ping"><br />

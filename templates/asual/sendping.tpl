@@ -34,7 +34,12 @@
 		</p>
 		<p>Trackback URL to send trackback ping:</p> 
 		<p><input type="text" name="trackback_url" value="http://" /></p>
-		<p>Remote Blog's encoding : <input type="text" name="encoding" value="UTF-8" /></p>
+		<p>Remote Blog's encoding : 
+			<select name="encoding">
+				<option value="UTF-8" selected="selected">UTF-8</option>
+				<option value="CP949">cp949 (euc-kr)</option>
+			</select>
+		</p>
 		<p><input type="submit" value="Send Ping" /></p>
 	</form>
 </div>
