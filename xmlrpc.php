@@ -343,7 +343,7 @@ function metawebLog_getRecentPosts($params) {
 				       "description" => new xmlrpcval($content, "string")
 				       ), "struct");
 
-    $structarray[] = $entrystruct;
+    $structarray[] = $entrystruct; !d!,
   }
   return new xmlrpcresp(new xmlrpcval($structarray, "array"));
 
@@ -355,6 +355,7 @@ $s = new xmlrpc_server(array("metaWeblog.newPost" => array("function" => "metaWe
 			     "metaWeblog.newMediaObject" => array("function" => "metaWeblog_newMediaObject"),
 			     "metaWeblog.getCategories" => array("function" => "metaWeblog_getCategories"),
 			     "metaWeblog.getRecentPosts" => array("function" => "metaweblog_getRecentPosts"),
+			     "blogger.getPost" => array("function" => "blogger_getPost"),
 			     "blogger.newPost" => array("function" => "blogger_newPost"),
 			     "blogger.editPost" => array("function" => "blogger_editPost"),
 			     "blogger.deletePost" => array("function" => "blogger_deletePost"),
