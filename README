@@ -34,3 +34,11 @@ RewriteRule ^page/([0-9]+)$ http://*URL*/*SOOJUNG_DIR*/index.php?page=$1
 1. 0.3.2 관리 페이지에서 soojung data를 export합니다.
 2. 0.3.2의 uninstall.php를 열어서 지우고, 0.4를 새로 설치합니다.
 3. export 받은 파일을 0.4 관리 페이지에서 import합니다.
+
+=== 0.4 -> 0.4.1 ===
+덮어 쓰거나, 0.4에서 export받은 파일을 import합니다.
+덮어 쓰는 경우 아래의 디렉토리들을 지워주세요.(뭐 안 지워도 상관은 없습니다)
+soojung/templates/admin/fckeditor
+soojung/templates/admin/bbcode
+soojung/templates/soogle
+soojung/templates/default
