@@ -5,12 +5,13 @@ include("Template.class.php");
 if ($_POST["mode"] == "post") {
   $blogid = $_POST['blogid'];
   $trackback_url = $_POST['trackback_url'];
-
+  $encoding = $_POST['encoding'];
   if (empty($blogid) || empty($trackback_url) ){
     echo "input body, trackback_url";
     exit;
   } 
-  $result = send_trackbackping($blogid, $trackback_url);
+  echo "encoding : $encoding<br>\n";
+  $result = send_trackbackping($blogid, $trackback_url, $encoding);
   
 /* show result of trackback ping */
   if ($result['error'] == 0) {

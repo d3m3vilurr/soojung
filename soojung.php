@@ -311,7 +311,7 @@ function get_recent_trackbacks($n) {
   return $trackbacks;
 }
 
-function send_trackbackping($blogid, $trackback_url) {
+function send_trackbackping($blogid, $trackback_url, $encoding='UTF-8') {
   global $blog_name;
   
   $tb_url = parse_url($trackback_url);
@@ -324,29 +324,31 @@ function send_trackbackping($blogid, $trackback_url) {
   $entry = get_entry($blogid);
   $permlink = $entry['link'];
   if ( isset($entry['title']))
-    $tb_title = rawurlencode($entry['title']);
+    $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry['title']));
   else
     $tb_title = rawurlencode('title');
 
-  $tb_excerpt = $entry['body'];
+  $tb_excerpt = iconv("UTF-8", $encoding, $entry['body']);
   if (strlen ($tb_excerpt) > 255)
     $tb_excerpt = substr($tb_excerpt,0, 252) . "...";
   $tb_excerpt = rawurlencode($tb_excerpt);
 
+
+  
   if (isset($blog_name))
-    $tb_blogname = rawurlencode($blog_name);
+    $tb_blogname = rawurlencode(iconv("UTF-8", $encoding, $blog_name));
   else
     $tb_blogname = rawurlencode('soojung blog');
 
   $query_string = "title=$tb_title&url=$permlink&excerpt=$tb_excerpt&blog_name=$tb_blogname";
-
+  $query_string = iconv( "UTF-8", $encoding, $query_string);
+  echo "query_string : $query_string<br>";
   $http_request  = 'POST '.$trackback_url." HTTP/1.0\r\n";
   $http_request .= 'Content-Type: application/x-www-form-urlencoded'."\r\n";
   $http_request .= 'Content-Length: '.strlen($query_string)."\r\n\r\n";
   $http_request .= $query_string;
 
   $response = array();
-
   if (!($fp = fsockopen($tb_url['host'], $tb_port))) {
     // Cannot open trackback url
     $response['error'] = 1;
