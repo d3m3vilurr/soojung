@@ -32,46 +32,18 @@ if ($_POST["mode"] == "post") {
   $id = $entry["id"];
 }
 
-?>
+$smarty = new Smarty;
+$smarty->compile_dir = "templates/.compile/";
+$smarty->config_dir = "templates/.configs/";
+$smarty->cache_dir = "templates/.cache/";
+$smarty->template_dir = "templates/admin/";
+$smarty->assign('baseurl', $blog_baseurl);
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>post</title>
-<link rel="stylesheet" type="text/css" href="styles.css"/>
-</head>
-<body>
+$smarty->assign("title", $title);
+$smarty->assign("body", $body);
+$smarty->assign("date", $date);
+$smarty->assign("category", $category);
+$smarty->assign("id", $id);
 
-<form action="post.php" method="post">
-	Title: <br>
-	<input type="text" name="title" value="<?=$title?>">
-	<br>
-	Body: <br>
-	<textarea name="body" rows="20" cols="80"><?=br2nl($body)?></textarea>
-	<br>
-	Date: <br>
-<?php
-if ($mode != "edit") {
+$smarty->display('post.tpl');
 ?>
-	<input type="text" name="date" value="<?=date('Y-m-d H:i:s',time())?>">
-<?php
-} else {
-?>
-	<input type="text" name="date" value="<?=date('Y-m-d H:i:s',$date)?>">
-<?php
-	   }
-?>
-	<br>
-	Category: <br>
-	<input type="text" name="category" value="<?=$category?>">
-	<br>
-<?php
-	if(isset($id)) {
-	  echo '<input type="hidden" name="id" value="' . $id . '">';
-	}
-?>	
-	<input type="hidden" name="mode" value="post">
-	<input type="submit" value="Post">
-</form>
-</body>
-</html>
