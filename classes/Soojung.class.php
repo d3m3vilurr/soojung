@@ -154,12 +154,30 @@ class Soojung {
   }
 
 
+  // referer spam check
+  function isSpam($text) {
+    $words = array("search", "blogspot", "naked", "nude", "boobs", "viagra",
+		   "poker", "password");
+    foreach ($words as $word) {
+      if (strpos($text, $word) !== FALSE) {
+	return true;
+      }
+    }
+    return false;
+  }
+
   function addReferer() {
     if (isset($_SERVER['HTTP_REFERER'])) {
       global $blog_baseurl;
       $referer = $_SERVER['HTTP_REFERER'];
 
       if(strstr($referer, $blog_baseurl) != FALSE) { //local
+	return;
+      }
+      if (strpos($referer, "http://") !== 0) {
+	return;
+      }
+      if (Soojung::isSpam($referer)) {
 	return;
       }
 
