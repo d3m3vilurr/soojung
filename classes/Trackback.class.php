@@ -119,7 +119,7 @@ class Trackback {
       $tb_port = $tb_url['port'];
     else
       $tb_port = 80;
-    $tb_path = $tb_url['path']
+    $tb_path = $tb_url['path'];
     if($tb_path == '') $tb_path = '/';
     if($tb_url['query']) $tb_path .= '?'.$tb_url['query'];
 
