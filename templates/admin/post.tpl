@@ -2,20 +2,20 @@
 {include file="menu.tpl"}
 
 <form action="{$baseurl}/post.php" method="post">
-	Title: <br />
+	Title:
 	<input type="text" name="title" value="{$title}">
+	<br />
+
+	Date:
+	<input type="text" name="date" value="{$date}">
+	<br />
+
+	Category:
+	<input type="text" name="category" value="{$category}">
 	<br />
 
 	Body: <br/>
 	<textarea name="body" rows="20" cols="80">{$body}</textarea>
-	<br />
-
-	Date: <br />
-	<input type="text" name="date" value="{$date}">
-	<br />
-
-	Category: <br />
-	<input type="text" name="category" value="{$category}">
 	<br />
 
 	{if $id != null}

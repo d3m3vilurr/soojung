@@ -10,7 +10,7 @@
 	
 	{foreach from=$entry_struct.comments item=comment}
 		&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$baseurl}/admin.php?mode=delete&file={$comment.filename}">delete</a>
-		{$comment.body}
+		{$comment.body|strip_tags} - {$comment.name}
 		<br />
 	{/foreach}
 

@@ -43,7 +43,7 @@ fancy URL:
 {else}
 	>
 {/if}
-
+<br />
 <input type="hidden" name="mode" value="config_update">
 <input type="submit" value="update">
 </form>
