@@ -29,7 +29,7 @@ class Category {
 
   function getEntries() {
     $entries = array();
-    $query = "^[0-9].+_" . $this->getHashID() . "_.+[.]entry$";
+    $query = "^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$";
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
     foreach($filenames as $filename) {
@@ -39,7 +39,7 @@ class Category {
   }
 
   function getEntryCount() {
-    $query = "^[0-9].+_" . $this->getHashID() . "_.+[.]entry$";
+    $query = "^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$";
     return Soojung::queryNumFilenameMatch($query);
   }
 
