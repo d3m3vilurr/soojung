@@ -1,0 +1,19 @@
+body
+{ 
+  font-family: tahoma, sans-serif;
+}
+
+.menu
+{ 
+  margin: 10px;
+}
+
+.menu a
+{
+  color: #000;
+}
+
+a
+{ 
+  color: #930;
+}
