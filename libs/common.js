@@ -1,6 +1,6 @@
 function fold_sidebar(objid) {
 	document.getElementById(objid).className =
-		(document.getElementById(objid).className ? '' : 'hide');
+		(document.getElementById(objid).className ? '' : 'div_hide');
 	return false;
 }
 
