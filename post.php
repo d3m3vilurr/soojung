@@ -107,5 +107,7 @@ $smarty->assign("id", $id);
 $smarty->assign("mode", $mode);
 
 $smarty->assign("categories", Category::getCategoryList());
+
+$smarty->assign("format", $_GET["format"]);
 $smarty->display('post.tpl');
 ?>
