@@ -91,7 +91,7 @@
 	</div>
 
 	<div id="footer">
-		<p id="copyright">Copyleft 2004-2005 soojung devel team, all rights reserved. Design based on Asual <a href="http://blojsom.sourceforge.net">blojsom</a> theme.</p>
+		<p id="copyright">{$license_link} Design based on Asual <a href="http://blojsom.sourceforge.net">blojsom</a> theme.</p>
 		<p id="info">Powered by <a href="http://soojung.kldp.net">soojung {$soojung_version}</a>. Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a></p>
 	</div>
 

@@ -97,7 +97,7 @@
 	<div id="contentFootLeft"><div id="contentFootRight"><div id="contentFootCenter"></div></div></div>
 
 	<div id="footer">
-		<p id="copyright">Copyleft 2004-2005 soojung devel team, all rights reserved. Design based on Ocean <a href="http://blojsom.sourceforge.net">blojsom</a> theme by <a href="http://www.asual.com" title="Click here to visit the website of Asual Interactive Solutions">Asual</a>.</p>
+		<p id="copyright">{$license_link} Design based on Ocean <a href="http://blojsom.sourceforge.net">blojsom</a> theme by <a href="http://www.asual.com" title="Click here to visit the website of Asual Interactive Solutions">Asual</a>.</p>
 		<p id="info">Powered by <a href="http://soojung.kldp.net">soojung {$soojung_version}</a>. Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a></p>
 	</div>
 

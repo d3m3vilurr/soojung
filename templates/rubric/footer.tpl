@@ -85,6 +85,6 @@
 
 </div>
 
-<p class="credit">Powered by <a href="http://soojung.kldp.net">soojung {$soojung_version}</a>. Design based on Rubric <a href="http://www.wordpress.org">WordPress</a> CSS style by Handley Wickham.</p>
+<p class="credit">{$license_link}<br />Powered by <a href="http://soojung.kldp.net">soojung {$soojung_version}</a>. Design based on Rubric <a href="http://www.wordpress.org">WordPress</a> CSS style by Handley Wickham.</p>
 </body>
 </html>

@@ -43,6 +43,7 @@
 <option value="by-nc-sa" {if $license == "by-nc-sa"}selected{/if}>Attribution-NonCommercial-ShareAlike License</option>
 <option value="by-sa" {if $license == "by-sa"}selected{/if}>Attribution-ShareAlike License</option>
 </select>
+<a href="http://creativecommons.org/licenses/">see more licenses information</a>
 </span>
 </div>
 
