@@ -119,12 +119,18 @@ function _entry_write($title, $body, $date, $category, $id) {
 }
 
 function entry_new($title, $body, $date, $category) {
-  _entry_write($title, $body, $date, $category, create_new_id());
+  $id = create_new_id();
+  _entry_write($title, $body, $date, $category, $id);
+  return $id;
 }
 
 function entry_edit($blogid, $title, $body, $date, $category) {
   unlink(blogid_to_filename($blogid));
   _entry_write($title, $body, $date, $category, $blogid);
+}
+
+function entry_delete($blogid) {
+  unlink(blogid_to_filename($blogid));
 }
 
 function get_entry_count() {
@@ -146,8 +152,8 @@ function get_entries($count, $page) {
   return $entries;
 }
 
-function get_recent_entries() {
-  return get_entries(10, 1);
+function get_recent_entries($n) {
+  return get_entries($n, 1);
 }
 
 function entry_search($query) {

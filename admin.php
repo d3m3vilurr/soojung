@@ -49,6 +49,8 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   } else {
     unlink($_GET["file"]);
   }
+} else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
+  entry_delete($_GET["blogid"]);
 }
 ?>
 
@@ -79,8 +81,8 @@ if ($_GET["mode"] == "config") {
   echo "<a href=\"admin.php?mode=config\">config</a><br />";
   $entries = get_entries(get_entry_count(), 1);
   foreach($entries as $e) {
-    echo "<a href=\"post.php?file=" . blogid_to_filename($e['id']) . "\">edit</a> ";
-    echo "<a href=\"admin.php?mode=delete&file=" . blogid_to_filename($e['id']) . "\">delete</a> ";
+    echo "<a href=\"post.php?blogid=" . $e['id'] . "\">edit</a> ";
+    echo "<a href=\"admin.php?mode=delete_entry&blogid=" . $e['id'] . "\">delete</a> ";
     echo $e['title'];
     echo "&nbsp;<a href=sendping.php?blogid=". $e['id'] .">send trackback ping</a>";
     echo "<br />\n";

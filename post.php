@@ -22,8 +22,8 @@ if ($_POST["mode"] == "post") {
     }
     echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
   }
-} else if ($_GET["file"]) {
-  $entry = entry_open($_GET["file"]);
+} else if ($_GET["blogid"]) {
+  $entry = get_entry($_GET["blogid"]);
   $mode = "edit";
   $title = $entry["title"];
   $body = $entry["body"];

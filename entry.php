@@ -52,7 +52,7 @@ $smarty->assign('comments', get_comments($entry['id']));
 
 $smarty->assign('categories', get_category_list());
 $smarty->assign('archvies', get_archive_list());
-$smarty->assign('recent_entries', get_recent_entries());
+$smarty->assign('recent_entries', get_recent_entries(10));
 $smarty->assign('recent_comments', get_recent_comments());
 $smarty->assign('recent_trackbacks', get_recent_trackbacks());
 
