@@ -125,19 +125,19 @@ Total : {$total_count}<br />
 
 <div id="banners">
 <a href="{$baseurl}/rss2.php">
-<img src="{$baseurl}/templates/ditto/imgs/rss20_logo.gif" alt="rss 2.0 feed" style="border:0px;"/>
+<img src="{$baseurl}/templates/acid/imgs/rss20_logo.gif" alt="rss 2.0 feed" style="border:0px;"/>
 </a>
 
 <br />
 
 <a href="http://validator.w3.org/check?uri=referer">
-<img src="{$baseurl}/templates/ditto/imgs/xhtml11.png" alt="Valid XHTML 1.0!" style="border:0px;"/>
+<img src="{$baseurl}/templates/acid/imgs/xhtml11.png" alt="Valid XHTML 1.0!" style="border:0px;"/>
 </a>
 
 <br />
 
 <a class="nodecoration" title="Explanation of Level A Conformance" href="http://www.w3.org/WAI/WCAG1A-Conformance">
-<img src="{$baseurl}/templates/ditto/imgs/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" style="border:0px;"/>
+<img src="{$baseurl}/templates/acid/imgs/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" style="border:0px;"/>
 </a>
 </div>
 </div>
