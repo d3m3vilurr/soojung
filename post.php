@@ -33,9 +33,9 @@ if ($_POST["mode"] == "post") {
 }
 
 $smarty = new Smarty;
-$smarty->compile_dir = "templates/.compile/";
-$smarty->config_dir = "templates/.configs/";
-$smarty->cache_dir = "templates/.cache/";
+$smarty->compile_dir = "templates/.admin_compile/";
+$smarty->config_dir = "templates/.admin_configs/";
+$smarty->cache_dir = "templates/.admin_cache/";
 $smarty->template_dir = "templates/admin/";
 $smarty->assign('baseurl', $blog_baseurl);
 
