@@ -154,7 +154,12 @@ class Trackback {
 
     $http_request  = "POST ".$tb_path." HTTP/1.1\r\n";
     $http_request .= "Host: ".$tb_url['host']."\r\n";
-    $http_request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+    $http_request .= "Content-Type: application/x-www-form-urlencoded";
+    if (strtolower($encoding) == "cp949") {
+      $http_request .= "; charset=euc-kr\r\n";
+    } else {
+      $http_request .= "; charset=".strtolower($encoding)."\r\n";
+    }
     $http_request .= "Content-Length: ".strlen($query_string)."\r\n\r\n";
     $http_request .= $query_string."\r\n\r\n";
 
