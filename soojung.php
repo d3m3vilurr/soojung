@@ -35,12 +35,12 @@ function query_filename_match($query, $dir="contents/") {
 }
 
 function create_new_id() {
-  $f = fopen("contents/.info", "r");
-  $i = trim(fread($f, filesize("contents/.info")));
-  fclose($f);
-  $f = fopen("contents/.info", "w");
-  fwrite($f, $i + 1);
-  fclose($f);
+  $fd = fopen("contents/.info", "r");
+  $i = trim(fread($fd, filesize("contents/.info")));
+  fclose($fd);
+  $fd = fopen("contents/.info", "w");
+  fwrite($fd, $i + 1);
+  fclose($fd);
   return $i;
 }
 
@@ -461,28 +461,28 @@ function get_category_entries($category) {
 
 function write_config_file($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl,
 			   $adminname, $adminemail, $adminpassword, $skin = "default") {
-  $f = fopen("config.php", "w");
-  fwrite($f, "<?php\n");
-  fwrite($f, '$blog_name="' . $blogname . "\";\n");
-  fwrite($f, '$blog_desc="' . $blogdesc . "\";\n");
-  fwrite($f, '$blog_baseurl="' . $blogurl . "\";\n");
-  fwrite($f, '$blog_entries_per_page=' . $perpage . ";\n");
+  $fd = fopen("config.php", "w");
+  fwrite($fd, "<?php\n");
+  fwrite($fd, '$blog_name="' . $blogname . "\";\n");
+  fwrite($fd, '$blog_desc="' . $blogdesc . "\";\n");
+  fwrite($fd, '$blog_baseurl="' . $blogurl . "\";\n");
+  fwrite($fd, '$blog_entries_per_page=' . $perpage . ";\n");
   if ($blogfancyurl == "on") {
-    fwrite($f, '$blog_fancyurl=true;' . "\n");
+    fwrite($fd, '$blog_fancyurl=true;' . "\n");
   } else {
-    fwrite($f, '$blog_fancyurl=false;' . "\n");
+    fwrite($fd, '$blog_fancyurl=false;' . "\n");
   }
-  fwrite($f, '$blog_skin="' . $skin . "\";\n");
-  fwrite($f, '$admin_name="' . $adminname . "\";\n");
-  fwrite($f, '$admin_email="' . $adminemail . "\";\n");
+  fwrite($fd, '$blog_skin="' . $skin . "\";\n");
+  fwrite($fd, '$admin_name="' . $adminname . "\";\n");
+  fwrite($fd, '$admin_email="' . $adminemail . "\";\n");
   if ($adminpassword === FALSE) {
     global $admin_password;
-    fwrite($f, '$admin_password="' . $admin_password . "\";\n");
+    fwrite($fd, '$admin_password="' . $admin_password . "\";\n");
   } else {
-    fwrite($f, '$admin_password="' . $adminpassword . "\";\n");
+    fwrite($fd, '$admin_password="' . $adminpassword . "\";\n");
   }
-  fwrite($f, "?>");
-  fclose($f);
+  fwrite($fd, "?>");
+  fclose($fd);
 }
 
 function get_count() {
@@ -495,11 +495,11 @@ function get_count() {
   $today = date("Y-m-d");
   $modified = false;
 
-  if ($fp = @fopen ("contents/.count", "r")) {
-    $last_date = trim(fgets($fp,256));
-    $today_count = trim(fgets($fp,256));
-    $total_count = trim(fgets($fp,256));
-    fclose($fp);
+  if ($fd = @fopen ("contents/.count", "r")) {
+    $last_date = trim(fgets($fd,256));
+    $today_count = trim(fgets($fd,256));
+    $total_count = trim(fgets($fd,256));
+    fclose($fd);
   }
 
   if ($soojungcountercookie != "on" && !stristr($_SERVER['HTTP_USER_AGENT'], "googlebot")) {
@@ -513,14 +513,14 @@ function get_count() {
   }
 
   if ($modified) {
-    $fp = fopen ("contents/.count", "w");
-    fwrite($fp, $today);
-    fwrite($fp, "\n");
-    fwrite($fp, $today_count);
-    fwrite($fp, "\n");
-    fwrite($fp, $total_count);
-    fwrite($fp, "\n");
-    fclose($fp);
+    $fd = fopen ("contents/.count", "w");
+    fwrite($fd, $today);
+    fwrite($fd, "\n");
+    fwrite($fd, $today_count);
+    fwrite($fd, "\n");
+    fwrite($fd, $total_count);
+    fwrite($fd, "\n");
+    fclose($fd);
   }
 }
 
@@ -533,24 +533,24 @@ function add_referer() {
       return;
     }
 
-    if ($fp = @fopen("contents/.referer", "r")) {
-      $data = fread($fp, filesize("contents/.referer"));
-      fclose($fp);
+    if ($fd = @fopen("contents/.referer", "r")) {
+      $data = fread($fd, filesize("contents/.referer"));
+      fclose($fd);
       $data = $referer . "\r\n" . $data;
     } else {
       $data = $referer;
     }
 
     //TODO: 최근 10개만 저장하기
-    $fp = fopen("contents/.referer", "w");
-    fwrite($fp, $data);
-    fclose($fp);
+    $fd = fopen("contents/.referer", "w");
+    fwrite($fd, $data);
+    fclose($fd);
   }
 }
 
 function get_recent_referers($n) {
-  if ($fp = @fopen("contents/.referer", "r")) {
-    $data = fread($fp, filesize("contents/.referer"));
+  if ($fd = @fopen("contents/.referer", "r")) {
+    $data = fread($fd, filesize("contents/.referer"));
     $array = split("\r\n", $data);
     return array_slice($array, 0, $n);
   }
