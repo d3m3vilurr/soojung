@@ -216,14 +216,14 @@ class Entry {
    * static method
    */
   function search($keyword) {
+    $founds = array();
     $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     rsort($filenames);
-    $founds = array();
     foreach($filenames as $f) {
       $fd = fopen($f, "r");
       $data = fread($fd, filesize($f));
       fclose($fd);
-      if (strpos($data, $query) !== FALSE) {
+      if (strpos($data, $keyword) !== FALSE) {
 	$founds[] = new Entry($f);
       }
     }
