@@ -27,7 +27,7 @@ if ($dh != false) {
     if ($file == "." || $file == "..") {
       continue;
     }
-    $list[] = "contents/upload/" . $file;
+    $list[] = array("path" => "contents/upload/" . $file, "name" => $file);
   }
 }
 $template->assign("files", $list);
