@@ -30,29 +30,30 @@ if (isset($_POST["blogid"])) {
   setcookie('w_url',   $url,    $t+2592000);
 
   $entry = Entry::getEntry($blogid);
+  $temp = new UserTemplate("entry.tpl", $blogid);
+  $temp->clearCache();
   header("Location: " . $entry->getHref() . "#" . $t);
   exit;
 } else if (isset($_GET["blogid"]) == false) {
   echo "<meta http-equiv='refresh' content='0;URL=index.php'>";
   exit;
-} else {
-  $blogid = $_GET["blogid"];
-  $entry = Entry::getEntry($blogid);
 }
-?>
 
-<?php
-$template = new UserTemplate;
+$blogid = $_GET["blogid"];
 
-$template->assign('entry', $entry);
-$template->assign('trackbacks', $entry->getTrackbacks());
-$template->assign('comments', $entry->getComments());
+$template = new UserTemplate('entry.tpl', $blogid);
+if (!$template->is_cached('entry.tpl', $blogid)) {
+  $entry = Entry::getEntry($blogid);
+  $template->assign('entry', $entry);
+  $template->assign('trackbacks', $entry->getTrackbacks());
+  $template->assign('comments', $entry->getComments());
 
-foreach (array('w_id','w_name','w_email','w_url') as $key) {
-  if (isset($HTTP_COOKIE_VARS[$key])) {
-    $template->assign("$key", $HTTP_COOKIE_VARS[$key]);
+  foreach (array('w_id','w_name','w_email','w_url') as $key) {
+    if (isset($HTTP_COOKIE_VARS[$key])) {
+      $template->assign("$key", $HTTP_COOKIE_VARS[$key]);
+    }
   }
 }
 
-$template->display('entry.tpl');
+$template->display('entry.tpl', $blogid);
 ?>

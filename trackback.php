@@ -62,6 +62,8 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
     echo "</response>\n";
   } else {
     Trackback::writeTrackback($id, $url, $name, $title, $excerpt);
+    $temp = new Usertemplate("index.tpl", 1);
+    $temp->clearCache();
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
     echo "<response>\n";
     echo "<error>0</error>\n";

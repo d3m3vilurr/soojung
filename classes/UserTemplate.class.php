@@ -2,7 +2,7 @@
 include_once("settings.php");
 
 class UserTemplate extends Template {
-  function UserTemplate()
+  function UserTemplate($template, $cache_id)
   {
     global $blog_skin;
     global $today_count, $total_count;
@@ -16,20 +16,31 @@ class UserTemplate extends Template {
 
     $this->assign('skin', $blog_skin);
 
-    $this->assign('static_entries', Entry::getStaticEntries());
+    $this->compile_check = false;
+    $this->caching=true;
+    $this->force_compile = false;
 
-    $this->assign('categories', Category::getCategoryList());
-    $this->assign('archvies', Archive::getArchiveList());
+    if (!$this->is_cached($template, $cache_id)) {
+      $this->assign('static_entries', Entry::getStaticEntries());
 
-    $this->assign('recent_entries', Entry::getRecentEntries(10));
-    $this->assign('recent_comments', Comment::getRecentComments(10));
-    $this->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
-    $this->assign('recent_referers', Soojung::getRecentReferers(10));
+      $this->assign('categories', Category::getCategoryList());
+      $this->assign('archvies', Archive::getArchiveList());
 
-    $this->assign('bookmarks', Bookmark::getBookmarkList());
+      $this->assign('recent_entries', Entry::getRecentEntries(10));
+      $this->assign('recent_comments', Comment::getRecentComments(10));
+      $this->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
+      $this->assign('recent_referers', Soojung::getRecentReferers(10));
 
-    $this->assign('today_count', $today_count);
-    $this->assign('total_count', $total_count);
+      $this->assign('bookmarks', Bookmark::getBookmarkList());
+
+      $this->assign('today_count', $today_count);
+      $this->assign('total_count', $total_count);
+    }
+  }
+
+  function clearCache() {
+    $this->clear_compiled_tpl();
+    $this->clear_all_cache();
   }
 }
 ?>

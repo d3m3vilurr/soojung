@@ -43,9 +43,13 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
     echo "what the fuck?";
   } else {
     unlink($_GET["file"]);
+    $temp = new Usertemplate("index.tpl", 1);
+    $temp->clearCache();
   }
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
   Entry::deleteEntry($_GET["blogid"]);
+  $temp = new Usertemplate("index.tpl", 1);
+  $temp->clearCache();
 } else if ($_GET["mode"] == "export") {
   $filename = $blog_name . '-' . date("Ymd", time()) . '.dat';
   header("Content-Type: application/octet");
@@ -53,16 +57,18 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
   echo Export::export();
   flush();
   exit();
-} else if ($_POST["mode"] == "import") {
-  if (isset($_FILES['file']['name'])) {
-    Import::importSoojung($_FILES['file'], $_POST["version"]);
+} else if (strpos($_POST["mode"], "import") == 0) { // import
+  if ($_POST["mode"] == "import") {
+    if (isset($_FILES['file']['name'])) {
+      Import::importSoojung($_FILES['file'], $_POST["version"]);
+    }
+  } else if ($_POST["mode"] == "import_tt") {
+    Import::importTatterTools($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
+  } else if ($_POST["mode"] == "import_wp") {
+    Import::importWordPress($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
   }
-  header("Location: admin.php");
-} else if ($_POST["mode"] == "import_tt") {
-  Import::importTatterTools($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
-  header("Location: admin.php");
-} else if ($_POST["mode"] == "import_wp") {
-  Import::importWordPress($_POST["db_server"], $_POST["db_user"], $_POST["db_pass"], $_POST["db_name"], $_POST["prefix"], $_POST["encoding"]);
+  $temp = new Usertemplate("index.tpl", 1);
+  $temp->clearCache();
   header("Location: admin.php");
 }
 

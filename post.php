@@ -48,6 +48,8 @@ if ($_POST["mode"] == "upload") {
       $date = time() + 10;
       Entry::createEntry($title, $body, $date, $category, $options, $format);
     }
+    $temp = new UserTemplate("index.tpl", 1);
+    $temp->clearCache();
     echo "post success<br>";
     echo "<a href=\"admin.php\">admin</a> ";
     echo "<a href=\"index.php\">index</a><br />";
