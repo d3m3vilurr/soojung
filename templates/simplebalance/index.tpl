@@ -5,7 +5,7 @@
 {foreach from=$entries item=entry}
 <div class="entry">
 <h2>
-	<a href="{$entry->getHref()|escape}" class="box_title">{$entry->title|escape}</a> <span class="hide">|</span>
+	<a href="{$entry->getHref()|escape}" class="box_title">{$entry->title}</a> <span class="hide">|</span>
 	<span class="box_header">{$entry->date|date_format:"%Y/%m/%d %p %I:%M"}</span>
 </h2>
 <div class="box_body">
