@@ -24,7 +24,7 @@ class Archive {
   }
 
   function getArchiveEntries() {
-    $filenames = query_filename_match($this->year . $this->month . "[^.]+[.]entry$");
+    $filenames = Soojung::queryFilenameMatch($this->year . $this->month . "[^.]+[.]entry$");
     rsort($filenames);
     $entries = array();
     foreach($filenames as $filename) {

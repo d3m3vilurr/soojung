@@ -84,10 +84,8 @@ function balanceTags($text, $is_comment = 0) {
   // close &quot; which isn't closed in MARKUP
   $text = ereg_replace("<([^=]*)=\"([^>\"]*)>", "<\\1=\"\\2\">", $text);
   // match MARKUP tag, $regex[1] is tagname.
-  echo "<pre>";
+
   while (preg_match("/<(\/?\w*)\s*([^>]*)>/",$text,$regex)) {
-    print_r ($regex);
-    echo "<br>";
     $newtext = $newtext . $tagqueue;
 
     $i = strpos($text,$regex[0]);
@@ -159,7 +157,6 @@ function balanceTags($text, $is_comment = 0) {
   $newtext = str_replace("< !--","<!--",$newtext);
   $newtext = str_replace("<    !--","< !--",$newtext);
 
-  echo "</pre>";
   return $newtext;
 }
 

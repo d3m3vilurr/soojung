@@ -31,26 +31,6 @@ class Comment {
     //TODO: href
   }
 
-  function getFilename() {
-    return $this->filename;
-  }
-
-  function getDate() {
-    return $this->date;
-  }
-
-  function getName() {
-    return $this->name;
-  }
-
-  function getEmail() {
-    return $this->email;
-  }
-
-  function getHomepage() {
-    return $this->homepage;
-  }
-
   function getHref() {
     //TODO: impl
   }

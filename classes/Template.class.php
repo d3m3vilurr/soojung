@@ -22,7 +22,7 @@ class Template extends Smarty {
     $this->assign('baseurl', $blog_baseurl);
     $this->assign('skin', $blog_skin);
 
-    //$this->assign('categories', get_category_list());
+    $this->assign('categories', Category::getCategoryList());
     $this->assign('archvies', Archive::getArchiveList());
 
     $this->assign('recent_entries', Entry::getRecentEntries(10));

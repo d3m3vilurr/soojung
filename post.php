@@ -33,7 +33,7 @@ if ($_POST["mode"] == "Post") {
   $title = $entry->title;
   $body = $entry->getBody();
   $date = $entry->date;
-  $category = $entry->category;
+  $category = $entry->category->name;
   $id = $entry->entryId;
 } else if ($_POST["mode"] == "Preview") {
   $mode = "preview";

@@ -1,5 +1,6 @@
 <?php
-include_once("soojung.php");
+include_once("settings.php");
+
 header("Content-type: text/xml");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 ?>
@@ -14,22 +15,23 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
 <?
 if (isset($_GET['category'])) {
-  $entries = get_category_entries($_GET['category']);
+  $category = new Category($_GET['category']);
+  $entries = $category->getEntries();
 } else {
-  $entries = get_entries(10, 1);
+  $entries = Entry::getEntries(10, 1);
 }
 
 
 foreach ($entries as $e) {
   echo "<item>\n";
-  echo "<title>" . $e["title"] . "</title>\n";
-  echo "<link>" . $e["link"] . "</link>\n";
+  echo "<title>" . $e->title . "</title>\n";
+  echo "<link>" . $e->href . "</link>\n";
   echo "<comments></comments>\n";
-  echo "<pubDate>" . date('r', $e['date']) . "</pubDate>\n";
-  echo "<category>" . $e['category'] . "</category>\n";
+  echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
+  echo "<category>" . $e->category->name . "</category>\n";
   echo "<guid></guid>\n";
   echo "<description></description>\n";
-  echo "<content:encoded><![CDATA[" . $e['body'] . "]]></content:encoded>\n";
+  echo "<content:encoded><![CDATA[" . $e->getBody() . "]]></content:encoded>\n";
   echo "</item>\n";
 }
 ?>

@@ -45,7 +45,7 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
     unlink($_GET["file"]);
   }
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
-  entry_delete($_GET["blogid"]);
+  Entry::deleteEntry($_GET["blogid"]);
 } else if ($_GET["mode"] == "export") {
   header("Content-Type: application/octet");
   header("Content-Disposition: filename=soojung.dat");
@@ -80,7 +80,7 @@ if ($_GET["mode"] == "config") {
   $smarty->display('data.tpl');
 } else {
   $entry_structs = array();
-  $smarty->assign('entries', Entry::getEntries(Entry::getEntryCount(), 1));
+  $smarty->assign('entries', Entry::getAllEntries());
   $smarty->display('list.tpl');
 }
 ?>

@@ -48,9 +48,7 @@ if (isset($_GET["archive"])) {
 } else {
   $template->assign('view', 'index');
   $template->assign('keyword', "all");
-  //$template->assign('count', get_entry_count());
   $template->assign('count', Entry::getEntryCount());
-  //$template->assign('entries', get_entries($blog_entries_per_page, $page));
   $template->assign('entries', Entry::getEntries($blog_entries_per_page, $page));
 }
 

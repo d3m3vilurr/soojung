@@ -24,7 +24,7 @@ class Entry {
     $fd = fopen($filename, "r");
     $this->date = fgets($fd);
     $this->title = fgets($fd);
-    $this->category = fgets($fd);
+    $this->category = new Category(fgets($fd));
     fclose($fd);
     $this->entryId = Soojung::filenameToEntryId($filename);
     //TODO: href
@@ -73,7 +73,7 @@ class Entry {
   /**
    * static method
    */
-  function entryWrite($title, $body, $date, $cateogry, $entryId) {
+  function entryWrite($title, $body, $date, $category, $entryId) {
     $filename = date('YmdHis', $date) . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, $date);
@@ -89,9 +89,11 @@ class Entry {
   /**
    * static method
    */
-  function createEntry($title, $body, $date, $category="Default") {
+  function createEntry($title, $body, $date, $category) {
     $id = Soojung::createNewEntryId();
     Entry::entryWrite($title, $body, $date, $category, $id);
+    print $category;
+    print "<BR>";
     return $id;
   }
 
@@ -125,13 +127,6 @@ class Entry {
   /**
    * static method
    */
-  function getEntryCountByCategory($category) {
-    //TODO: impl
-  }
-
-  /**
-   * static method
-   */
   function getEntry($entryId) {
     $filename = Soojung::entryIdToFilename($entryId);
     return new Entry($filename);
@@ -147,6 +142,19 @@ class Entry {
     $index = ($page - 1) * $count;
     for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
       $entries[] = new Entry($filenames[$i]);
+    }
+    return $entries;
+  }
+
+  /**
+   * static method
+   */
+  function getAllEntries() {
+    $entries = array();
+    $filenames = Soojung::queryFilenameMatch("[.]entry$");
+    rsort($filenames);
+    foreach($filenames as $filename) {
+      $entries[] = new Entry($filename);
     }
     return $entries;
   }
