@@ -650,4 +650,8 @@ function import_tt($db_server, $db_user, $db_pass, $db_name, $encoding) {
   mysql_close($link);
 }
 
+function import_wp($db_server, $db_user, $db_pass, $db_name, $encoding) {
+  //TODO: impl
+}
+
 ?>
