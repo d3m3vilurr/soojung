@@ -1,3 +1,184 @@
+2004-11-06  author  <author@debian>
+
+	* rss2.php: rss에서 permalink 안 나오던 버그 고침
+
+	* post.php, templates/admin/post.tpl: textarea 다시 추가 -_-;
+
+	* classes/Entry.class.php, classes/Import.class.php:
+	0.2 data import할때 줄바꿈 안 되던 버그 고침
+
+	* classes/Comment.class.php, entry.php: 오타 수정
+
+	* classes/Comment.class.php:
+	$homepage변수를 $url로 쓴 부분 고침.
+
+	* settings.php:
+	날짜 locale을 영어로만 쓰게 고침. system locale이 euc-kr일 경우 한글 깨지는 문제가 있었음.
+
+	* install.php: 퍼미션 없을 때 바로 죽게 고침
+
+	* settings.php:
+	.count 파일 없을 때 에러 메시지 나오던 문제 고침
+
+2004-11-05  author  <author@debian>
+
+	* classes/Soojung.class.php:
+	referer 파일 없을 때 오류 메세지 안 나오게 고침
+
+	* README: 0.3으로 업데이트하는 방법 설명
+
+	* classes/Soojung.class.php, classes/Template.class.php, settings.php, soojung.php:
+	referer, count 작동하게 고침.
+	soojung.php 파일 지움.
+
+	* classes/Entry.class.php, classes/Import.class.php, classes/Trackback.class.php, templates/default/entry.tpl, templates/default/footer.tpl:
+	trackback 관련 버그 고침
+
+	* classes/Import.class.php, templates/admin/menu.tpl, templates/admin/post.tpl:
+	fckeditor 내용이 여러줄일 때 안 보이던 문제 수정.
+	0.2버전 import할 때 html태그 안 바꾸던 버그 수정.
+
+	* classes/Entry.class.php, templates/default/index.tpl:
+	검색 안 되던 버그 고침.
+
+	* bookmark.php, classes/Bookmark.class.php, classes/Entry.class.php, classes/Trackback.class.php, settings.php, soojung.php, templates/default/footer.tpl:
+	트랙백 링크 나오게 고침.
+	북마크 클래스화 시킴.
+
+	* templates/admin/fckeditor/editor/dialog/images/locked.gif, templates/admin/fckeditor/editor/dialog/images/logo_fckeditor.gif, templates/admin/fckeditor/editor/dialog/images/logo_fredck.gif, templates/admin/fckeditor/editor/dialog/images/reset.gif, templates/admin/fckeditor/editor/dialog/images/unlocked.gif, templates/admin/fckeditor/editor/dialog/js/fck_dialog_common.js, templates/admin/fckeditor/editor/dialog/js/fck_image.js, templates/admin/fckeditor/editor/dialog/js/fck_link.js, templates/admin/javascript.js:
+	fckeditor 빠진 파일 추가
+
+	* classes/Comment.class.php, classes/Entry.class.php, classes/Soojung.class.php, soojung.php, templates/default/footer.tpl:
+	comment 링크 나오게 고침.
+	notify mail 링크 깨지던 버그 고침.
+
+	* templates/admin/fckeditor/editor/filemanager/browser/default/Browser.css, templates/admin/fckeditor/editor/filemanager/browser/default/browser.html, templates/admin/fckeditor/editor/filemanager/browser/default/connectors/aspx/connector.aspx, templates/admin/fckeditor/editor/filemanager/browser/default/frmactualfolder.html, templates/admin/fckeditor/editor/filemanager/browser/default/frmcreatefolder.html, templates/admin/fckeditor/editor/filemanager/browser/default/frmfolders.html, templates/admin/fckeditor/editor/filemanager/browser/default/frmresourceslist.html, templates/admin/fckeditor/editor/filemanager/browser/default/frmresourcetype.html, templates/admin/fckeditor/editor/filemanager/browser/default/frmupload.html, templates/admin/fckeditor/editor/filemanager/browser/default/js/common.js, templates/admin/fckeditor/editor/filemanager/browser/default/js/fckxml.js, templates/admin/fckeditor/editor/images/smiley/fun/aiua.gif, templates/admin/fckeditor/editor/images/smiley/fun/ak.gif, templates/admin/fckeditor/editor/images/smiley/fun/alien.gif, templates/admin/fckeditor/editor/images/smiley/fun/alien2.gif, templates/admin/fckeditor/editor/images/smiley/fun/angry.gif, templates/admin/fckeditor/editor/images/smiley/fun/angry1.gif, templates/admin/fckeditor/editor/images/smiley/fun/apophys.gif, templates/admin/fckeditor/editor/images/smiley/fun/assjani.gif, templates/admin/fckeditor/editor/images/smiley/fun/asthanos.gif, templates/admin/fckeditor/editor/images/smiley/fun/bazuzeus.gif, templates/admin/fckeditor/editor/images/smiley/fun/beaute.gif, templates/admin/fckeditor/editor/images/smiley/fun/bigsmile.gif, templates/admin/fckeditor/editor/images/smiley/fun/blush.gif, templates/admin/fckeditor/editor/images/smiley/fun/boid.gif, templates/admin/fckeditor/editor/images/smiley/fun/bonk.gif, templates/admin/fckeditor/editor/images/smiley/fun/bored.gif, templates/admin/fckeditor/editor/images/smiley/fun/borg.gif, templates/admin/fckeditor/editor/images/smiley/fun/capo.gif, templates/admin/fckeditor/editor/images/smiley/fun/confused.gif, templates/admin/fckeditor/editor/images/smiley/fun/cool.gif, templates/admin/fckeditor/editor/images/smiley/fun/crazy.gif, templates/admin/fckeditor/editor/images/smiley/fun/cwm14.gif, templates/admin/fckeditor/editor/images/smiley/fun/demis_roussos.gif, templates/admin/fckeditor/editor/images/smiley/fun/devil.gif, templates/admin/fckeditor/editor/images/smiley/fun/devil2.gif, templates/admin/fckeditor/editor/images/smiley/fun/double0smile.gif, templates/admin/fckeditor/editor/images/smiley/fun/eek3.gif, templates/admin/fckeditor/editor/images/smiley/fun/eltaf.gif, templates/admin/fckeditor/editor/images/smiley/fun/gele.gif, templates/admin/fckeditor/editor/images/smiley/fun/halm.gif, templates/admin/fckeditor/editor/images/smiley/fun/happy.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon12.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon23.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon26.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon_angel.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon_bandit.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon_bravo.gif, templates/admin/fckeditor/editor/images/smiley/fun/icon_clown.gif, templates/admin/fckeditor/editor/images/smiley/fun/jesors.gif, templates/admin/fckeditor/editor/images/smiley/fun/jesors1.gif, templates/admin/fckeditor/editor/images/smiley/fun/lol3.gif, templates/admin/fckeditor/editor/images/smiley/fun/love.gif, templates/admin/fckeditor/editor/images/smiley/fun/mad.gif, templates/admin/fckeditor/editor/images/smiley/fun/megaphone.gif, templates/admin/fckeditor/editor/images/smiley/fun/mmm.gif, templates/admin/fckeditor/editor/images/smiley/fun/music.gif, templates/admin/fckeditor/editor/images/smiley/fun/notify.gif, templates/admin/fckeditor/editor/images/smiley/fun/nuts.gif, templates/admin/fckeditor/editor/images/smiley/fun/obanon.gif, templates/admin/fckeditor/editor/images/smiley/fun/ouaip.gif, templates/admin/fckeditor/editor/images/smiley/fun/pleure.gif, templates/admin/fckeditor/editor/images/smiley/fun/plugin.gif, templates/admin/fckeditor/editor/images/smiley/fun/question.gif, templates/admin/fckeditor/editor/images/smiley/fun/question2.gif, templates/admin/fckeditor/editor/images/smiley/fun/rasta2.gif, templates/admin/fckeditor/editor/images/smiley/fun/rastapop.gif, templates/admin/fckeditor/editor/images/smiley/fun/rosebud.gif, templates/admin/fckeditor/editor/images/smiley/fun/sad.gif, templates/admin/fckeditor/editor/images/smiley/fun/sad2.gif, templates/admin/fckeditor/editor/images/smiley/fun/shocked.gif, templates/admin/fckeditor/editor/images/smiley/fun/sick.gif, templates/admin/fckeditor/editor/images/smiley/fun/sick2.gif, templates/admin/fckeditor/editor/images/smiley/fun/slaap.gif, templates/admin/fckeditor/editor/images/smiley/fun/sleep.gif, templates/admin/fckeditor/editor/images/smiley/fun/smile.gif, templates/admin/fckeditor/editor/images/smiley/fun/smiley_peur.gif, templates/admin/fckeditor/editor/images/smiley/fun/sors.gif, templates/admin/fckeditor/editor/images/smiley/fun/sovxx.gif, templates/admin/fckeditor/editor/images/smiley/fun/spamafote.gif, templates/admin/fckeditor/editor/images/smiley/fun/tap67.gif, templates/admin/fckeditor/editor/images/smiley/fun/thumbdown.gif, templates/admin/fckeditor/editor/images/smiley/fun/thumbup.gif, templates/admin/fckeditor/editor/images/smiley/fun/tigi.gif, templates/admin/fckeditor/editor/images/smiley/fun/toad666.gif, templates/admin/fckeditor/editor/images/smiley/fun/tongue.gif, templates/admin/fckeditor/editor/images/smiley/fun/tuffgong.gif, templates/admin/fckeditor/editor/images/smiley/fun/urgeman.gif, templates/admin/fckeditor/editor/images/smiley/fun/vanadium.gif, templates/admin/fckeditor/editor/images/smiley/fun/wink.gif, templates/admin/fckeditor/editor/images/smiley/fun/worship.gif, templates/admin/fckeditor/editor/images/smiley/fun/wouaf.gif, templates/admin/fckeditor/editor/images/smiley/fun/wow.gif, templates/admin/fckeditor/editor/images/smiley/fun/xp1700.gif, templates/admin/fckeditor/editor/images/smiley/fun/yltype.gif, templates/admin/fckeditor/editor/images/smiley/fun/yopyopyop.gif, templates/admin/fckeditor/editor/images/smiley/fun/youpi.gif, templates/admin/fckeditor/editor/images/smiley/fun/zoor.gif, templates/admin/fckeditor/editor/images/smiley/msn/angel_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/angry_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/broken_heart.gif, templates/admin/fckeditor/editor/images/smiley/msn/cake.gif, templates/admin/fckeditor/editor/images/smiley/msn/confused_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/cry_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/devil_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/embaressed_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/envelope.gif, templates/admin/fckeditor/editor/images/smiley/msn/heart.gif, templates/admin/fckeditor/editor/images/smiley/msn/kiss.gif, templates/admin/fckeditor/editor/images/smiley/msn/lightbulb.gif, templates/admin/fckeditor/editor/images/smiley/msn/omg_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/regular_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/sad_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/shades_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/teeth_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/thumbs_down.gif, templates/admin/fckeditor/editor/images/smiley/msn/thumbs_up.gif, templates/admin/fckeditor/editor/images/smiley/msn/tounge_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/whatchutalkingabout_smile.gif, templates/admin/fckeditor/editor/images/smiley/msn/wink_smile.gif, templates/admin/fckeditor/editor/images/spacer.gif, templates/admin/fckeditor/editor/js/fck_startup.js, templates/admin/fckeditor/editor/js/fckeditorcode_gecko_1.js, templates/admin/fckeditor/editor/js/fckeditorcode_gecko_2.js, templates/admin/fckeditor/editor/js/fckeditorcode_ie_1.js, templates/admin/fckeditor/editor/js/fckeditorcode_ie_2.js:
+	fckeditor 빠진 파일 추가
+
+	* admin.php, classes/Category.class.php, classes/Entry.class.php, classes/Import.class.php, post.php, settings.php, templates/admin/data.tpl, templates/admin/fckeditor/editor/css/fck_editorarea.css, templates/admin/fckeditor/editor/dialog/css/common.css, templates/admin/fckeditor/editor/dialog/fck_about.html, templates/admin/fckeditor/editor/dialog/fck_colorselector.html, templates/admin/fckeditor/editor/dialog/fck_image.html, templates/admin/fckeditor/editor/dialog/fck_link.html, templates/admin/fckeditor/editor/dialog/fck_paste.html, templates/admin/fckeditor/editor/dialog/fck_smiley.html, templates/admin/fckeditor/editor/dialog/fck_specialchar.html, templates/admin/fckeditor/editor/dialog/fck_table.html, templates/admin/fckeditor/editor/dialog/fck_tablecell.html, templates/admin/fckeditor/editor/fckdebug.html, templates/admin/fckeditor/editor/fckdialog.html, templates/admin/fckeditor/editor/fckeditor.html, templates/admin/fckeditor/editor/fckeditor.original.html, templates/admin/fckeditor/editor/fckeditorarea.html, templates/admin/fckeditor/editor/filemanager/browser/default/images/ButtonArrow.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/Folder.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/Folder32.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/FolderOpened.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/FolderOpened32.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/FolderUp.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/ai.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/avi.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/bmp.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/cs.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/default.icon.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/dll.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/doc.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/exe.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/fla.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/gif.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/htm.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/html.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/jpg.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/js.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/mdb.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/mp3.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/pdf.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/ppt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/rdp.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/swf.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/swt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/txt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/vsd.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/xls.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/xml.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/32/zip.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/ai.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/avi.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/bmp.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/cs.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/default.icon.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/dll.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/doc.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/exe.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/fla.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/gif.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/htm.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/html.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/jpg.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/js.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/mdb.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/mp3.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/pdf.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/ppt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/rdp.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/swf.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/swt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/txt.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/vsd.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/xls.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/xml.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/icons/zip.gif, templates/admin/fckeditor/editor/filemanager/browser/default/images/spacer.gif, templates/admin/fckeditor/editor/lang/ar.js, templates/admin/fckeditor/editor/lang/en.js, templates/admin/fckeditor/editor/lang/it.js, templates/admin/fckeditor/editor/lang/pt-br.js, templates/admin/fckeditor/editor/skins/default/fck_contextmenu.css, templates/admin/fckeditor/editor/skins/default/fck_dialog.css, templates/admin/fckeditor/editor/skins/default/fck_editor.css, templates/admin/fckeditor/editor/skins/default/images/toolbar.buttonarrow.gif, templates/admin/fckeditor/editor/skins/default/images/toolbar.collapse.gif, templates/admin/fckeditor/editor/skins/default/images/toolbar.end.gif, templates/admin/fckeditor/editor/skins/default/images/toolbar.expand.gif, templates/admin/fckeditor/editor/skins/default/images/toolbar.separator.gif, templates/admin/fckeditor/editor/skins/default/images/toolbar.start.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.about.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.bgcolor.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.bold.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.cell.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.copy.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.cut.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.find.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.image.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.indent.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.inserthorizontalrule.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.insertorderedlist.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.insertunorderedlist.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.italic.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.justifycenter.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.justifyfull.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.justifyleft.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.justifyright.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.link.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.newpage.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.outdent.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.paste.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.pastetext.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.pasteword.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.preview.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.print.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.redo.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.removeformat.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.save.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.selectall.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.showdetails.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.showtableborders.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.smiley.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.source.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.specialchar.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.spellcheck.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.strikethrough.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.subscript.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.superscript.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.table.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tabledeletecells.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tabledeletecolumns.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tabledeleterows.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tableinsertcell.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tableinsertcolumn.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tableinsertrow.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tablemergecells.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.tablesplitcell.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.textcolor.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.underline.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.undo.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.unlink.gif, templates/admin/fckeditor/editor/skins/default/toolbar/button.unorderedlist.gif, templates/admin/fckeditor/editor/skins/office2003/fck_contextmenu.css, templates/admin/fckeditor/editor/skins/office2003/fck_dialog.css, templates/admin/fckeditor/editor/skins/office2003/fck_editor.css, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.bg.gif, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.collapse.gif, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.end.gif, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.expand.gif, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.separator.gif, templates/admin/fckeditor/editor/skins/office2003/images/toolbar.start.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.about.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.anchor.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.bgcolor.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.bold.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.button.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.checkbox.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.copy.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.cut.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.find.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.flash.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.fontstyleadv.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.form.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.hidden.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.image.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.imagebutton.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.indent.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.input.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.inserthorizontalrule.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.insertorderedlist.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.insertunorderedlist.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.italic.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.justifycenter.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.justifyfull.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.justifyleft.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.justifyright.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.link.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.mail.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.new.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.newpage.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.open.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.outdent.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.paste.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.pastetext.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.pasteword.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.preview.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.print.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.radio.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.redo.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.removeformat.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.replace.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.save.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.select.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.selectall.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.showdetails.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.showtableborders.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.smiley.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.source.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.specialchar.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.spellcheck.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.strikethrough.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.subscript.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.superscript.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.table.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.textarea.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.textcolor.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.underline.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.undo.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.universalkey.gif, templates/admin/fckeditor/editor/skins/office2003/toolbar/button.unlink.gif, templates/admin/fckeditor/editor/skins/silver/fck_contextmenu.css, templates/admin/fckeditor/editor/skins/silver/fck_dialog.css, templates/admin/fckeditor/editor/skins/silver/fck_editor.css, templates/admin/fckeditor/editor/skins/silver/images/toolbar.buttonbg.gif, templates/admin/fckeditor/editor/skins/silver/images/toolbar.collapse.gif, templates/admin/fckeditor/editor/skins/silver/images/toolbar.end.gif, templates/admin/fckeditor/editor/skins/silver/images/toolbar.expand.gif, templates/admin/fckeditor/editor/skins/silver/images/toolbar.separator.gif, templates/admin/fckeditor/editor/skins/silver/images/toolbar.start.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.about.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.bgcolor.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.bold.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.copy.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.cut.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.find.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.image.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.indent.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.inserthorizontalrule.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.insertorderedlist.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.insertunorderedlist.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.italic.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.justifycenter.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.justifyfull.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.justifyleft.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.justifyright.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.link.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.newpage.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.outdent.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.paste.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.pastetext.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.pasteword.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.preview.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.print.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.redo.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.removeformat.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.save.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.selectall.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.showdetails.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.showtableborders.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.smiley.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.source.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.specialchar.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.spellcheck.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.strikethrough.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.subscript.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.superscript.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.table.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.textcolor.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.underline.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.undo.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.unlink.gif, templates/admin/fckeditor/editor/skins/silver/toolbar/button.unorderedlist.gif, templates/admin/fckeditor/fckconfig.js, templates/admin/fckeditor/fckeditor.cfc, templates/admin/fckeditor/fckeditor.cfm, templates/admin/fckeditor/fckeditor.js, templates/admin/fckeditor/license.txt, templates/admin/header.tpl, templates/admin/post.tpl:
+	entry 입력 폼을 fckeditor로 바꿈.
+	0.2.* export파일 import 기능 추가.
+	category 한글일 때 ie에서 안 보이던 버그 수정.
+
+2004-11-03  author  <author@debian>
+
+	* Template.class.php: move to classes dir
+
+	* TODO, admin.php, classes/Archive.class.php, classes/Comment.class.php, classes/Entry.class.php, classes/Soojung.class.php, classes/Template.class.php, classes/Trackback.class.php, index.php, libs/util.php, post.php, rss2.php, sendping.php, settings.php, templates/admin/config.tpl, templates/admin/post.tpl, templates/default/entry.tpl, templates/default/footer.tpl, templates/default/index.tpl:
+	이것저것 고쳤음 -_-;;
+
+	* install.php:
+	실제 디렉토리 이름과 달라 소문자로 수정함
+
+2004-10-23  author  <author@debian>
+
+	* classes/Entry.class.php, post.php, templates/admin/post.tpl:
+	entry 파일 포멧 변경하고, options와 format 기능 뼈대 만듦
+
+2004-10-21  author  <author@debian>
+
+	* templates/default/footer.tpl: 기본으로 메뉴 숨김
+
+	* templates/admin/list.tpl: comment 잘라서 보여줌
+
+	* templates/default/entry.tpl: 코맨트 입력 칸 줄임
+
+2004-10-16  author  <author@debian>
+
+	* admin.php, libs/util.php, sendping.php, settings.php, soojung.php, trackback.php, uninstall.php, xmlrpc.php:
+	class 기반으로 바꿈 #5
+
+	* templates/admin/list.tpl, trackback.php, xmlrpc.php:
+	클래스 기반으로 바꿈 #4.
+
+2004-10-12  author  <author@debian>
+
+	* .cvsignore: add .project file
+
+	* post.php:
+	fix Edit->Preview->Post bug, http://kldp.net/forum/message.php?msg_id=7630
+
+	thanks to wooil.
+
+2004-10-09  author  <author@debian>
+
+	* admin.php, classes/Archive.class.php, classes/Category.class.php, classes/Comment.class.php, classes/Entry.class.php, entry.php, index.php, sendping.php, soojung.php, templates/default/entry.tpl, templates/default/footer.tpl, templates/default/index.tpl, templates/default/sendping.tpl:
+	class 기반으로 바꿈 #3
+
+	* admin.php, classes/Archive.class.php, classes/Category.class.php, classes/Comment.class.php, classes/Entry.class.php, classes/Template.class.php, index.php, libs/util.php, post.php, rss2.php, settings.php, soojung.php, templates/default/footer.tpl:
+	class 기반으로 바꿈 #2
+
+	* TODO, admin.php, bookmark.php, classes/Archive.class.php, classes/Entry.class.php, classes/Soojung.class.php, classes/Template.class.php, classes/Trackback.class.php, entry.php, index.php, install.php, libs/util.php, post.php, sendping.php, settings.php, soojung.php, templates/admin/list.tpl, templates/default/index.tpl, trackback.php, xmlrpc.php:
+	class기반으로 바꿈
+
+2004-10-02  author  <author@debian>
+
+	* classes/Category.class.php, classes/Archive.class.php, classes/Bookmark.class.php, classes/Comment.class.php, classes/Entry.class.php, classes/Export.class.php, classes/Import.class.php, classes/Soojung.class.php, classes/Trackback.class.php, soojung.php:
+	클래스 만듦
+
+2004-10-01  author  <author@debian>
+
+	* admin.php:
+	export할 때 다운로드할 파일 이름을 admin.php에서 soojung.dat로 바꿈
+
+2004-09-30  author  <author@debian>
+
+	* templates/default/footer.tpl: fixed duplicate div id
+
+	* templates/default/footer.tpl, templates/default/header.tpl, templates/default/styles.css:
+	add sidebar folding menu
+
+	* templates/admin/list.tpl: add delete confirm java-script
+
+2004-09-26  author  <author@debian>
+
+	* post.php, soojung.php:
+	WP(WordPress)에서 balanceTag 함수 가져옴. "" 닫아주는 기능을 추가.
+	본문 입력 받을때 태그를 검사함.
+
+2004-09-25  author  <author@debian>
+
+	* TODO: 트랙백 인코딩 맞추기 기능
+
+	* TODO: 개인 링크 기능 추가
+
+	* trackback.php: remove some wrong debugging code
+
+	* soojung.php, trackback.php:
+	1. 태터툴즈 그리고 기타 등등, POST할때 URL뒤쪽의 쿼리 부분을 잘라다가 POST로 넣어버리는
+	만행을 저지르는 것들에 대한 임시 처리를 강행. (크아아악 분노 게이지 상승)
+	2. UTF-8인코딩 실패시 CP949 인코딩에 대한 시도. (excerpt 로 알아내려고 했으니, 본문에 한글이 없고, 제목에만 들어가 있는 경우도 생각해서 각각 시도함. cp949문자열이 UTF-8로 변환 가능하면 낭패)
+
+	* templates/soogle/entry.tpl, templates/soogle/footer.tpl, templates/soogle/header.tpl, templates/soogle/index.tpl, templates/soogle/logo_sm.gif, templates/soogle/sendping.tpl, templates/soogle/styles.css:
+	init
+
+	* Template.class.php: footer를 위한 개인 링크 목록
+
+	* bookmark.php, post.php, soojung.php, templates/admin/bookmark.tpl, templates/admin/menu.tpl, templates/default/footer.tpl:
+	개인 링크 관리 기능 추가
+	기본 관리자 스킨의 Bookmark 메뉴로 추가
+	footer 쪽에서 개인 링크 목록 출력
+	설명이 없는 링크는 링크 자체를 이름으로 보여줌
+
+	* index.php: template 보충
+
+	* soojung.php:
+	알림 메일에서 본문에 시간 안 나오게 바꿈(메일 해더에 있으니까 :)
+
+	* soojung.php: 알림 메일 포멧 수정
+
+	* TODO, post.php, templates/admin/post.tpl: post preview 기능 추가
+
+	* post.php: session 관리 버그 수정
+
+	* templates/admin/config.tpl, templates/admin/data.tpl, templates/admin/list.tpl, templates/admin/menu.tpl, templates/admin/post.tpl, templates/default/styles.css:
+	default, admin template 수정
+
+	* ChangeLog: 자동생성한 변화 목록 추가
+
+	* TODO, admin.php, entry.php, install.php, soojung.php, templates/admin/config.tpl:
+	comment에 html tag 안 받게 하고, 이메일로 알려주는 기능 옵션으로 뺌
+
 2004-09-25  ddt  <ddt@kldp.net>
 
 	* TODO, admin.php, entry.php, install.php, soojung.php, templates/admin/config.tpl:
