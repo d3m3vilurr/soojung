@@ -1,4 +1,4 @@
-"The Simple Balance" Template for Soojung 0.4.x (revision 3)
+"The Simple Balance" Template for Soojung 0.4.x (revision 4)
 by Kang Seonghoon (Tokigun) <tokigun@gmail.com>
 
 
@@ -37,12 +37,17 @@ by Kang Seonghoon (Tokigun) <tokigun@gmail.com>
 
   - cssFile
     사용할 css 파일을 선택합니다. (템플릿 디렉토리의 css 디렉토리에 있는 파일들)
-    현재 revision 3에서는 navy.css, green.css, silver.css를 선택할 수 있습니다.
+    현재 revision 4에서는 navy.css, green.css, silver.css를 선택할 수 있습니다.
 
   - useMozillaExtension
     모질라에서만 지원되는 CSS 속성인 -moz-border-radius를 사용할 지의 여부를 선택합니다.
     이 옵션을 선택하면 모질라 계열의 브라우저에서 둥근 모서리를 볼 수 있습니다.
     (내부적으로는 css/mozilla.css를 사용하게 됩니다.)
+    1이면 사용, 0이면 사용하지 않음을 의미합니다.
+
+  - useCustomCSS
+    사용자 추가 css를 사용할 지의 여부를 선택합니다.
+    (이 파일은 템플릿 디렉토리의 css/custom.css에 있으며, 기본적으로는 빈 파일입니다.)
     1이면 사용, 0이면 사용하지 않음을 의미합니다.
 
   - show로 시작하는 옵션들

@@ -25,6 +25,13 @@
 </ul>
 {/if}
 
+{if #showCalendar# != -1}
+<h3><a href="#none" onclick="return fold_sidebar('div_calendar');">Calendar</a></h3>
+<div id="div_calendar"{if #showCalendar# == 0} class="hide"{/if}>
+	{$calendar->getCalendar()}
+</div>
+{/if}
+
 {if #showCategories# != -1}
 <h3><a href="#none" onclick="return fold_sidebar('div_category');">Categories</a></h3>
 <ul id="div_category"{if #showCategories# == 0} class="hide"{/if}>
