@@ -1,4 +1,6 @@
 <?php
+
+include_once("settings.php");
 include_once("libs/xmlrpcs.inc");
 include_once("libs/xmlrpc.inc");
 
@@ -88,8 +90,8 @@ function blogger_editPost($params) {
   $body = _blogger_removeSpecialTags($content);
 
   $blogid = $sid->scalarval();
-  $e = get_entry($blogid);
-  $date = $e["date"];
+  $e = Entry::getEntry($blogid);
+  $date = $e->date;
 
   Entry::editEntry($blogid, $title, $body, $date, $category);
 

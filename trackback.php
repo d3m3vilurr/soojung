@@ -1,5 +1,7 @@
 <?php
 
+include_once("settings.php");
+
 header("Content-type: text/xml");
 
 if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {

@@ -11,7 +11,7 @@ if ($_POST["mode"] == "post") {
     exit;
   } 
   echo "encoding : $encoding<br>\n";
-  $result = send_trackbackping($blogid, $trackback_url, $encoding);
+  $result = Trackback::sentTrackbackPing($blogid, $trackback_url, $encoding);
   
 /* show result of trackback ping */
   if ($result['error'] == 0) {

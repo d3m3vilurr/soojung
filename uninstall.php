@@ -1,32 +1,20 @@
 <?php
+session_start();
 
-if (isset($_SESSION["auth"])) {
+include("libs/util.php");
+
+if (!isset($_SESSION["auth"])) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
-}
-
-function deldir($dir)
-{
-  $handle = opendir($dir);
-  while (false!==($FolderOrFile = readdir($handle)))
-  {
-     if($FolderOrFile != "." && $FolderOrFile != "..")
-     { 
-       if(is_dir("$dir/$FolderOrFile"))
-       { deldir("$dir/$FolderOrFile"); }  // recursive
-       else
-       { unlink("$dir/$FolderOrFile"); }
-     } 
-  }
-  closedir($handle);
-  if(rmdir($dir))
-  { $success = true; }
-  return $success; 
+  exit;
 }
 
 unlink(".htaccess");
 unlink("config.php");
-deldir("contents");
-deldir("templates/.cache");
-deldir("templates/.configs");
-deldir("templates/.compile");
+rmdirr("contents");
+rmdirr("templates/.cache");
+rmdirr("templates/.configs");
+rmdirr("templates/.compile");
+rmdirr("templates/.admin_cache");
+rmdirr("templates/.admin_configs");
+rmdirr("templates/.admin_compile");
 ?>

@@ -164,4 +164,32 @@ function trim_slash($str) {
   return trim($str, "/");
 }
 
+/** convert any encoding string to utf8 string
+ * @param string input string of unkown encoding
+ * @return utf8 converted string or FALSE on failure.
+ */
+
+function convert_to_utf8 ($string) {
+  $result = "";
+  if (($result = iconv("UTF-8", "UTF-8", $string)) != FALSE) {
+    return $result;
+  } else if (($result = iconv("CP949", "UTF-8", $string)) != FALSE) {
+    return $result;
+  }
+  return FALSE;
+}
+
+/** The function which matchs with regex query. This function using 
+ *  ereg to match query string.
+ */
+
+function detect_encoding ($string) {
+  if (iconv("UTF-8", "UTF-8", $string) != FALSE) {
+    return "UTF-8";
+  } else if (iconv("CP949", "UTF-8", $string) != FALSE) {
+    return "CP949";
+  }
+  return FALSE;
+}
+
 ?>

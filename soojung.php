@@ -7,46 +7,6 @@ include("libs/util.php");
 
 setcookie("soojungcountercookie", "on", 0);
 
-if (get_magic_quotes_gpc()) {
-  function stripslashes_deep($value) {
-    $value = is_array($value) ?
-      array_map('stripslashes_deep', $value) :
-      stripslashes($value);
-    return $value;
-  }
-  $_POST = array_map('stripslashes_deep', $_POST);
-  $_GET = array_map('stripslashes_deep', $_GET);
-  $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-}
-
-/** The function which matchs with regex query. This function using 
- *  ereg to match query string.
- */
-
-function detect_encoding ($string) {
-  if (iconv("UTF-8", "UTF-8", $string) != FALSE) {
-    return "UTF-8";
-  } else if (iconv("CP949", "UTF-8", $string) != FALSE) {
-    return "CP949";
-  }
-  return FALSE;
-}
-
-/** convert any encoding string to utf8 string
- * @param string input string of unkown encoding
- * @return utf8 converted string or FALSE on failure.
- */
-
-function convert_to_utf8 ($string) {
-  $result = "";
-  if (($result = iconv("UTF-8", "UTF-8", $string)) != FALSE) {
-    return $result;
-  } else if (($result = iconv("CP949", "UTF-8", $string)) != FALSE) {
-    return $result;
-  }
-  return FALSE;
-}
-
 function notify_to_admin($title, $blogid, $msg) {
   global $notify, $admin_email;
   if ($notify != true) {
