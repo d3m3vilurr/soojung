@@ -52,7 +52,6 @@ foreach ($entries as $e) {
 </channel>
 </rss>
 
-
-<?
+<?php
 # vim: ts=8 sw=2 sts=2 noet
 ?>

@@ -125,7 +125,6 @@ if ($_GET["mode"] == "config") {
   $template->assign('entry_count', Entry::getEntryCount());
   $template->display('overview.tpl');
 }
-?>
-<?
+
 # vim: ts=8 sw=2 sts=2 noet
 ?>

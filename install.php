@@ -124,6 +124,6 @@ if (isset($_POST["name"])) {
 </body>
 </html>
 
-<?
+<?php
 # vim: ts=8 sw=2 sts=2 noet
 ?>

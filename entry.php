@@ -56,8 +56,6 @@ foreach (array('w_id','w_name','w_email','w_url') as $key) {
 }
 
 $template->display('entry.tpl', $blogid);
-?>
 
-<?
 # vim: ts=8 sw=2 sts=2 noet
 ?>

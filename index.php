@@ -53,8 +53,6 @@ if (!$template->is_cached('index.tpl', $cache_id)) {
   }
 }
 $template->display('index.tpl', $cache_id);
-?>
 
-<?
 # vim: ts=8 sw=2 sts=2 noet
 ?>

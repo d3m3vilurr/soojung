@@ -74,8 +74,5 @@ if (isset($_REQUEST["url"]) || isset($_REQUEST["blogid"])) {
   echo "</response>\n";
 }
 
-?>
-
-<?
 # vim: ts=8 sw=2 sts=2 noet
 ?>

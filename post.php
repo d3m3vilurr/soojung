@@ -123,8 +123,6 @@ if (isset($_GET["format"])) {
   $template->assign("format", $format);
 }
 $template->display('post.tpl');
-?>
 
-<?
 # vim: ts=8 sw=2 sts=2 noet
 ?>

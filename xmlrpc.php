@@ -361,7 +361,6 @@ $s = new xmlrpc_server(array("metaWeblog.newPost" => array("function" => "metaWe
 			     "blogger.getRecentPosts" => array("function" => "blogger_getRecentPosts"),
 			     "blogger.getUsersBlogs" => array("function" => "blogger_getUsersBlogs"),
 			     "blogger.getUserInfo" => array("function" => "blogger_getUserInfo")));
-?>
-<?.
+
 # vim: ts=8 sw=2 sts=2 noet
 ?>
