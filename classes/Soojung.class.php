@@ -145,9 +145,10 @@ class Soojung {
 	$data = $referer;
       }
 
-      $fd = fopen("contents/.referer", "w");
-      fwrite($fd, $data);
-      fclose($fd);
+      if ($fd = @fopen("contents/.referer", "w")) {
+        fwrite($fd, $data);
+        fclose($fd);
+      }
     }
   }
 
