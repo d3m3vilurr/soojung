@@ -27,7 +27,13 @@ function pre_nl2br($string) {
 
 function cmp_base_filename($a, $b) {
   $filename1 = basename($a);
+  if ($filename1[0] == '.') {
+    $filename1 = substr($filename1, 1);
+  }
   $filename2 = basename($b);
+  if ($filename2[0] == '.') {
+    $filename2 = substr($filename2, 1);
+  }
   return ($filename1 < $filename2) ? 1 : -1;
 }
 
@@ -190,6 +196,25 @@ function detect_encoding ($string) {
     return "CP949";
   }
   return FALSE;
+}
+
+function isutf8($str){
+  $i=0;
+  $len = strlen($str);
+  for ($i=0;$i< $len;$i++) {
+    $sbit = ord(substr($str,$i,1));
+    if ($sbit < 128) {
+    } else if($sbit > 191 && $sbit < 224) {
+      $i++;
+    } else if($sbit > 223 && $sbit < 240) {
+      $i+=2;
+    } else if($sbit > 239 && $sbit < 248) {
+      $i+=3;
+    } else {
+      return 0;
+    }
+  }
+  return 1;
 }
 
 ?>

@@ -11,12 +11,12 @@ if ($_POST["mode"] == "post") {
     exit;
   } 
   echo "encoding : $encoding<br>\n";
-  $result = Trackback::sentTrackbackPing($blogid, $trackback_url, $encoding);
+  $result = Trackback::sendTrackbackPing($blogid, $trackback_url, $encoding);
   
 /* show result of trackback ping */
   if ($result['error'] == 0) {
     echo "<html><head>\n";
-    echo "<meta http-equiv='refresh' content='3;URL=admin.php'>";
+    //echo "<meta http-equiv='refresh' content='3;URL=admin.php'>";
     echo "</head><body>\n";
     echo "Trackback sended successfully<br />\n";
     echo "After 3sec, or click <a href='admin.php'>admin page</a> to return admin page <br />\n";
@@ -26,7 +26,6 @@ if ($_POST["mode"] == "post") {
     echo "Error : ".$result['message']."<br>\n";
     echo "click <a href='admin.php'>admin page</a> to return admin page <br />\n";
     echo "</body></html>\n";
-
   }
   exit;
 }
@@ -36,7 +35,7 @@ if (!isset($blogid)) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
   exit;
 }
-    
+
 $entry = Entry::getEntry($blogid);
 $title = $entry->title;
 $body = $entry->getBody();

@@ -74,13 +74,14 @@ if ($_GET["mode"] == "config") {
   $smarty->assign("blog_skin", $blog_skin);
   $smarty->assign("admin_name", $admin_name);
   $smarty->assign("admin_email", $admin_email);
-  
+  $smarty->assign("templates", Soojung::getTemplates());
+
   $smarty->display('config.tpl');
 } else if ($_GET["mode"] == "data") {
   $smarty->display('data.tpl');
 } else {
   $entry_structs = array();
-  $smarty->assign('entries', Entry::getAllEntries());
+  $smarty->assign('entries', Entry::getAllEntries(false));
   $smarty->display('list.tpl');
 }
 ?>

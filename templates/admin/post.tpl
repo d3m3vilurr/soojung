@@ -19,7 +19,12 @@
 	<br />
 
 	Category:
-	<input type="text" name="category" value="{$category}">
+	<input type="text" name="category_input" value="{$category}"> or 
+	<select name="category">
+	{foreach from=$categories item=cate}
+	<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
+	{/foreach}
+	</select>
 	<br />
 
 	Options:
@@ -31,7 +36,7 @@
 	<br />
 
 	Format:
-	<input type="radio" name="format" value="plain" {if $format == "plain"}checked{/if}>plain
+	<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if}>plain
 	<input type="radio" name="format" value="html" {if $format == "html"}checked{/if}>html
 	<input type="radio" name="format" value="wiki" {if $format == "wiki"}checked{/if}>wiki
 	<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if}>bbcode

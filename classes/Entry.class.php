@@ -40,11 +40,15 @@ class Entry {
     $this->entryId = Soojung::filenameToEntryId($filename);
   }
 
+  function isSetOption($option) {
+    return in_array($option, $this->options);
+  }
+
   function getHref() {
     global $blog_baseurl, $blog_fancyurl;
 
     if ($blog_fancyurl) {
-      //
+      //TODO
     } else {
       return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;
     }
@@ -98,7 +102,11 @@ class Entry {
    * static method
    */
   function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
-    $filename = date('YmdHis', $date) . '_' . $entryId . '.entry';
+    $filename = "";
+    if (in_array("SECRET", $options)) {
+      $filename .= ".";
+    }
+    $filename .= date('YmdHis', $date) . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
     fwrite($fd, "Date: " . $date . "\r\n");
     fwrite($fd, "Title: " . $title . "\r\n");
@@ -144,7 +152,7 @@ class Entry {
    * static method
    */
   function getEntryCount() {
-    $r = Soojung::queryFilenameMatch("[.]entry$");
+    $r = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     return count($r);
   }
 
@@ -161,22 +169,29 @@ class Entry {
    */
   function getEntries($count, $page) {
     $entries = array();
-    $filenames = Soojung::queryFilenameMatch("[.]entry$");
+    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     rsort($filenames);
     $index = ($page - 1) * $count;
+
     for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
-      $entries[] = new Entry($filenames[$i]);
+      $entry = new Entry($filenames[$i]);
+      $entries[] = $entry;
     }
+
     return $entries;
   }
 
   /**
    * static method
    */
-  function getAllEntries() {
+  function getAllEntries($hide=true) {
     $entries = array();
-    $filenames = Soojung::queryFilenameMatch("[.]entry$");
-    rsort($filenames);
+    $query = "^[0-9].+[.]entry$";
+    if ($hide == false) {
+      $query = "[.]entry$";
+    }
+    $filenames = Soojung::queryFilenameMatch($query);
+    usort($filenames, "cmp_base_filename");
     foreach($filenames as $filename) {
       $entries[] = new Entry($filename);
     }
@@ -193,8 +208,22 @@ class Entry {
   /**
    * static method
    */
-  function getSearch($keyword) {
-    $filenames = Soojung::queryFilenameMatch("[.]entry$");
+  function getStaticEntries() {
+    $entries = array();
+    $all = Entry::getAllEntries();
+    foreach($all as $e) {
+      if ($e->isSetOption("STATIC")) {
+	$entries[] = $e;
+      }
+    }
+    return $entries;
+  }
+
+  /**
+   * static method
+   */
+  function search($keyword) {
+    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     rsort($filenames);
     $founds = array();
     foreach($filenames as $f) {

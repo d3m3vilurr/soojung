@@ -40,8 +40,7 @@ if (isset($_GET["archive"])) {
 } else if (isset($_GET["search"])) {
   $template->assign('view', 'search');
   $template->assign('keyword', $_GET["search"]);
-  $entries = entry_search($_GET["search"]);
-  $template->assign('entries', $entries);
+  $template->assign('entries', Entry::search($_GET["search"]));
 } else {
   $template->assign('view', 'index');
   $template->assign('keyword', "all");

@@ -30,4 +30,26 @@ if (get_magic_quotes_gpc()) {
   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
 }
 
+if (function_exists("iconv") == 0) {
+  function iconv($in, $out, $str) {
+    if($in == "UTF-8") {
+      if(!isutf8($str)) {
+	return FALSE;
+      }
+    }
+    $return = "";
+    $fp = popen("echo \"$str\" | /usr/local/bin/iconv -c -f $in -t $out","r");
+    while(!feof($fp)) {
+      $return .= fgets($fp,1024);
+    }
+    pclose($fp);
+    if($in == "CP949") {
+      if(!isutf8($return)) {
+	return FALSE;
+      }
+    }
+    return $return;
+  }
+}
+
 ?>

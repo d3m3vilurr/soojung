@@ -73,6 +73,24 @@ class Soojung {
     return $i;
   }
 
+  /**
+   * static method
+   */
+  function getTemplates() {
+    $list = array();
+    $filenames = Soojung::queryFilenameMatch(".+", "templates/");
+    foreach($filenames as $filename) {
+      $filename = basename($filename);
+      if ($filename[0] != '.') {
+	$list[] = $filename;
+      }
+    }
+    return $list;
+  }
+
+  /**
+   * static method
+   */
   function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
 			     $adminname, $adminemail, $adminpassword, $skin = "default") {
     $fd = fopen("config.php", "w");

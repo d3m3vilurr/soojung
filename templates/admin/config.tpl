@@ -15,7 +15,11 @@ Blog URL:
 <br />
 
 Blog Skin:
-<input type="text" name="skin" value="{$blog_skin}">
+<select name="skin">
+{foreach from=$templates item=template}
+<option value="{$template}" {if $blog_skin == $template}selected{/if}>{$template}
+{/foreach}
+</select>
 <br />
 
 Admin Name: <input type="text" name="adminname" value="{$admin_name}">

@@ -49,6 +49,12 @@ class Trackback {
    * static method
    */
   function writeTrackback($entryId, $url, $name, $title, $excerpt) {
+
+    $e = Entry::getEntry($entryId);
+    if ($e->isSetOption("NO_TRACKBACK")) {
+      return;
+    }
+
     $dirname = "contents/" . $entryId;
     @mkdir($dirname, 0777);
 
@@ -106,9 +112,9 @@ class Trackback {
     //  $permlink = rawurlencode(get_entry_link($blogid, false));
     $entry = Entry::getEntry($entryId);
     $permlink = $entry->getHref();
-    //if ( isset($entry['title']))
-    if ($entry->getTitle() != null) {
-      $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->getTitle()));
+
+    if ($entry->title != null) {
+      $tb_title = rawurlencode(iconv("UTF-8", $encoding, $entry->title));
     } else {
       $tb_title = rawurlencode('title');
     }

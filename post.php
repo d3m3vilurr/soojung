@@ -12,7 +12,11 @@ if ($_POST["mode"] == "Post") {
   $title =  $_POST["title"];
   $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
-  $category = trim($_POST["category"]);
+  if (empty($_POST["category_input"]) == false) {
+    $category = trim($_POST["category_input"]);
+  } else {
+    $category = $_POST["category"];
+  }
   $format = trim($_POST["format"]);
   $options = array();
   if (isset($_POST["SECRET"])) {
@@ -31,7 +35,7 @@ if ($_POST["mode"] == "Post") {
     $options[] = "NO_RSS";
   }
 
-  if (empty($title) || empty($body) || empty($date) || empty($category)) {
+  if (empty($title) || empty($body) || empty($date)) {
     echo "<font color=\"red\">WARNING: Input title, body, date, category</font>";
   } else {
     if (isset($_POST["id"])) {
@@ -106,5 +110,6 @@ $smarty->assign("format", $format);
 $smarty->assign("id", $id);
 $smarty->assign("mode", $mode);
 
+$smarty->assign("categories", Category::getCategoryList());
 $smarty->display('post.tpl');
 ?>

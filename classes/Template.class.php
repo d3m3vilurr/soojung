@@ -22,6 +22,8 @@ class Template extends Smarty {
     $this->assign('baseurl', $blog_baseurl);
     $this->assign('skin', $blog_skin);
 
+    $this->assign('static_entries', Entry::getStaticEntries());
+
     $this->assign('categories', Category::getCategoryList());
     $this->assign('archvies', Archive::getArchiveList());
 

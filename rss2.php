@@ -23,6 +23,9 @@ if (isset($_GET['category'])) {
 
 
 foreach ($entries as $e) {
+  if ($e->isSetOption("NO_RSS")) {
+    continue;
+  }
   echo "<item>\n";
   echo "<title>" . $e->title . "</title>\n";
   echo "<link>" . $e->href . "</link>\n";

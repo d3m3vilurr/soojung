@@ -51,6 +51,11 @@ class Comment {
    * static method
    */
   function writeCommenet($entryId, $name, $email, $homepage, $body, $date) {
+    $e = Entry::getEntry($entryId);
+    if ($e->isSetOption("NO_COMMENT")) {
+      return;
+    }
+
     $dirname = "contents/" . $entryId;
     @mkdir($dirname, 0777);
 

@@ -48,7 +48,7 @@ class Archive {
   function getArchiveList() {
     $archives = array();
     $files = array();
-    $filenames = Soojung::queryFilenameMatch("[.]entry$");
+    $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     foreach($filenames as $filename) {
       $t = substr($filename, 9);
       $t = substr($t, 0, 6);
