@@ -343,7 +343,7 @@ function metawebLog_getRecentPosts($params) {
 				       "description" => new xmlrpcval($content, "string")
 				       ), "struct");
 
-    $structarray[] = $entrystruct; !d!,
+    $structarray[] = $entrystruct;
   }
   return new xmlrpcresp(new xmlrpcval($structarray, "array"));
 
