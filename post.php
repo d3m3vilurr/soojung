@@ -73,9 +73,7 @@ if ($_POST["mode"] == "upload") {
       Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options, $format);
     } else {
       $date = time() + 10;
-      echo "hahaha<br />";
       Entry::createEntry($title, $body, $date, $category, $options, $format);
-      echo "hahaha<br />";
     }
     $temp = new UserTemplate("index.tpl", 1);
     $temp->clearCache();
