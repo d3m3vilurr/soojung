@@ -247,6 +247,14 @@ function trackback_open($filename) {
   $trackback["name"] = $data[1];
   $trackback["title"] = $data[2];
   $trackback["excerpt"] = $data[3];
+
+  $paths = split("/", $filename);
+  $entry = get_entry($paths[1]);
+
+  $t = split("[.]", $paths[2], 2);
+  $trackback["date"] = $t[0];
+
+  $trackback["link"] = $entry['link'] . "#" . $trackback["date"];
   return $trackback;
 }
 
