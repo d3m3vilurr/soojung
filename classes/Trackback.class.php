@@ -148,7 +148,9 @@ class Trackback {
 
     $query_string = "title=$tb_title&url=$permlink&excerpt=$tb_excerpt&blog_name=$tb_blogname";
     $query_string = iconv( "UTF-8", $encoding, $query_string);
-    echo "query_string : $query_string<br />"; //debug code?
+
+    # only for debugging
+    #echo "query_string : $query_string<br />"; //debug code?
 
     $http_request  = "POST ".$tb_path." HTTP/1.1\r\n";
     $http_request .= "Host: ".$tb_url['host']."\r\n";

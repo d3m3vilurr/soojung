@@ -20,5 +20,6 @@
 	<a href="{$bookmark.url}">{$bookmark.desc}</a><br />
 {/foreach}
 
+
 </div>
 {include file="footer.tpl"}

@@ -52,7 +52,7 @@ div.row span.formw
   color: #fff;
 }
 
-#list, #post, #config, #data, #bookmark, #overview
+#list, #post, #config, #data, #bookmark, #overview, #sendping
 { 
   margin:0px 0px 10px 170px;
   padding:10px;

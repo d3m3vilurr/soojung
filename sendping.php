@@ -4,8 +4,12 @@ include_once("settings.php");
 
 if ($_POST["mode"] == "post") {
   $blogid = $_POST['blogid'];
-  $trackback_url = $_POST['trackback_url'];
-  $encoding = $_POST['encoding'];
+  $trackback_url = $_POST["trackback_url"];
+  if (empty($_POST['encoding_input']) == false) {
+    $encoding = trim($_POST["encoding_input"]);
+  } else {
+    $encoding = $_POST["encoding"];
+  }
   if (empty($blogid) || empty($trackback_url) ){
     echo "input body, trackback_url";
     exit;
@@ -16,7 +20,7 @@ if ($_POST["mode"] == "post") {
 /* show result of trackback ping */
   if ($result['error'] == 0) {
     echo "<html><head>\n";
-    //echo "<meta http-equiv='refresh' content='3;URL=admin.php'>";
+    echo "<meta http-equiv='refresh' content='3;URL=admin.php'>";
     echo "</head><body>\n";
     echo "Trackback sended successfully<br />\n";
     echo "After 3sec, or click <a href='admin.php'>admin page</a> to return admin page <br />\n";
@@ -45,13 +49,9 @@ $category = $entry->category->name;
 
 
 <?php
-$smarty = new UserTemplate("sendping.tpl", $blogid);
+$template = new AdminTemplate;
 
-$smarty->assign('entry', $entry);
-$smarty->assign('trackbacks', $entry->getTrackbacks());
-$smarty->assign('comments', $entry->getComments());
-
-$smarty->display('sendping.tpl');
-
+$template->assign('entry', $entry);
+$template->display('sendping.tpl');
 # vim: ts=8 sw=2 sts=2 noet
 ?>
