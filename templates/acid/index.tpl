@@ -7,10 +7,13 @@
 		{$entry->getBody()}
 		<p class="posted">
 			<a class="plink" href="{$entry->getHref()|escape}">{$entry->date|date_format:"%B %d, %Y"}</a>
-			{if $entry->isSetOption("NO_COMMENT") == false}| <a class="plink" href="{$entry->getHref()|escape}#comment">Comments ({$entry->getCommentCount()})</a>{/if}
+			{if $entry->isSetOption("NO_COMMENT") == false}| <a class="plink" href="#" onclick="fold_sidebar('cmt{$entry->entryId}')">Comments ({$entry->getCommentCount()})</a>{/if}
 			{if $entry->isSetOption("NO_TRACKBACK") == false}| <a class="plink" href="{$entry->getHref()|escape}#trackback">TrackBacks ({$entry->getTrackbackCount()})</a>{/if}
 
 		</p>
+        <div id="cmt{$entry->entryId}" class="div_hide">
+        {include file="comments.tpl" comments=$entry->getComments()}
+        </div>
 		</div>
 	{/foreach}
 	{if $prev_page_link != ""}
