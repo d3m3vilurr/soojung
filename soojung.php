@@ -108,7 +108,6 @@ function entry_edit($blogid, $title, $body, $date, $category) {
 
 function entry_delete($blogid) {
   unlink(blogid_to_filename($blogid));
-  //TODO: if entry has comments or trackback, also delete
   rmdirr("contents/" . $blogid);
 }
 
