@@ -36,12 +36,12 @@
 <span class="formw">
 <select name="license">
 <option value="none" {if $license == "none"}selected{/if}>None (All rights reserved)</option>
-<option value="by" >Attribution License</option>
-<option value="by-nd" >Attribution-NoDerivs License</option>
-<option value="by-nc-nd" >Attribution-NonCommercial-NoDerivs License</option>
-<option value="by-nc" >Attribution-NonCommercial License</option>
-<option value="by-nc-sa" >Attribution-NonCommercial-ShareAlike License</option>
-<option value="by-sa" >Attribution-ShareAlike License</option>
+<option value="by" {if $license == "by"}selected{/if}>Attribution License</option>
+<option value="by-nd" {if $license == "by-nd"}selected{/if}>Attribution-NoDerivs License</option>
+<option value="by-nc-nd" {if $license == "by-nc-nd"}selected{/if}>Attribution-NonCommercial-NoDerivs License</option>
+<option value="by-nc" {if $license == "by-nc"}selected{/if}>Attribution-NonCommercial License</option>
+<option value="by-nc-sa" {if $license == "by-nc-sa"}selected{/if}>Attribution-NonCommercial-ShareAlike License</option>
+<option value="by-sa" {if $license == "by-sa"}selected{/if}>Attribution-ShareAlike License</option>
 </select>
 </span>
 </div>

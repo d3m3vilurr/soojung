@@ -49,7 +49,7 @@ class UserTemplate extends Template {
       if ($entries_license == "none") {
 	$license_link = "All rights reserved";
       } else {
-	$license_link = "licensed under a Creative Commons License";
+	$license_link = "This site is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/$entries_license/2.0/\">Creative Commons License</a>";
       }
       $this->assign('license_link', $license_link);
     }
