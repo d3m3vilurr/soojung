@@ -1,122 +1,105 @@
 <?php
-
 class Calendar {
   var $year;
   var $month;
   var $day;
 
   function Calendar($year, $month, $day) {
-    if (!$year && !$month)
-      list($year, $month) = $this->get_year_month();
-    $this->year = $year;
-    $this->month = $month;
-    $this->day = $day;
+    $this->year = $year ? $year : date("Y");
+    $this->month = $month ? $month : date("m");
+    $this->day = $day ? $day : date("d");
   }
 
-  function get_year_month() {
-    return list($year, $month) = split(" ", date("Y m"));
-  }
-
-  function get_month_href($year, $month) {
+  function getMonthHref($year, $month) {
     global $blog_baseurl, $blog_fancyurl;
 
-    if ($month<1) {
-      --$year;
-      $month = 12;
-    } elseif ($month>12) {
-      ++$year;
-      $month = "01";
+    if ($month < 1) {
+      $year--;
+      $month += 12;
+    } elseif ($month > 12) {
+      $year++;
+      $month -= 12;
     }
-    if (strlen($month)<=1)
-      $month = "0".$month;
-    if (strlen($year)<=1)
-      $year = "0".$year;
 
-    if ($blog_fancyurl)
-      return "$blog_baseurl/$year/$month";
-    else
-      return "$blog_baseurl/?archive=$year$month";
+    if ($blog_fancyurl) {
+      return sprintf("%s/%04d/%02d", $blog_baseurl, $year, $month);
+    } else {
+      return sprintf("%s/index.php?archive=%04d%02d", $blog_baseurl, $year, $month);
+    }
   }
 
-  function get_month_alt($year, $month) {
-    if ($month<1) {
-      --$year;
-      $month = 12;
-    } elseif ($month>12) {
-      ++$year;
-      $month = 1;
+  function getMonthAnchor($year, $month) {
+    if ($month < 1) {
+      $year--;
+      $month += 12;
+    } elseif ($month > 12) {
+      $year++;
+      $month -= 12;
     }
     return date("F Y", mktime(0, 0, 0, $month, 1, $year));
   }
 
-
-  function get_calendar() {
+  function get_calendar($t=1) {
     global $blog_baseurl;
+
     $year = $this->year;
     $month = $this->month;
+    
+    $ndays = date("t", mktime(0, 0, 0, $month, 1, $year));
+    $_weekday = date("w", mktime(0, 0, 0, $month, 1, $year));
+    $entries = $this->getEntriesForCalendar($year, $month);
+    $cal = "<div id=\"calendar\">\n".
+      "<p><a href=\"".$this->getMonthHref($year, $month-1)."\" title=\"".$this->getMonthAnchor($year, $month-1)."\">&laquo;</a>\n".
+      "<a href=\"".$this->getMonthHref($year, $month)."\" class=\"current\">".$this->getMonthAnchor($year, $month)."</a>\n".
+      "<a href=\"".$this->getMonthHref($year, $month+1)."\" title=\"".$this->getMonthAnchor($year, $month+1)."\">&raquo;</a></p>\n".
+      "<table>\n".
+      "<tr class=\"header\"><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr>\n";
 
-    $num_days = date("t", mktime(0, 0, 0, $month, 1, $year));
-    $fDoWoM = date("w", mktime(0, 0, 0, $month, 1, $year));
-    $cal = "<div id=\"calendar\">
-      <a href=\"".$this->get_month_href($year,$month-1)."\" title=\"".$this->get_month_alt($year, $month-1)."\">«</a>
-      <a href=\"".$this->get_month_href($year,$month)."\">".$this->get_month_alt($year, $month)."</a>
-      <a href=\"".$this->get_month_href($year,$month+1)."\" title=\"".$this->get_month_alt($year, $month+1)."\">»</a>
-      <div class=\"calendar_days\">
-      <table cellpadding=\"0\" cellspacing=\"0\" width=\"95%\">
-      <tr>
-      <td align=\"right\">Sun</td>
-      <td align=\"right\">Mon</td>
-      <td align=\"right\">Tue</td>
-      <td align=\"right\">Wen</td>
-      <td align=\"right\">Thu</td>
-      <td align=\"right\">Fri</td>
-      <td align=\"right\">Sat</td>
-      </tr>";
-    $nweeks = (int) (($num_days+$fDoWoM)/7)+1;
-    if ($num_days+$fDoWoM == 35)
-      --$nweeks;
-
-    $total = 0;
-    $today = 1;
-    $days = $this->get_bloged_days($year, $month);
-    $bloged_days = array_flip($days);
-
-    while ($total++<$nweeks*7) {
-      if ($total%7==1) {
-	$cal .= "<tr>\n";
+    $weekday = 0;
+    for ($day=1-$_weekday; $day<=$ndays; $day++) {
+      if ($weekday == 0) {
+        $cal .= "<tr>";
       }
-      if ($today<$num_days+1 && $total>$fDoWoM) {
-	if (in_array($today, $bloged_days)) {
-	  $e = new Entry($days[$today]);
-	  $cal .= "<td align=\"right\"><a href=\"" . $e->getHref() ."\">$today</a></td>";
-	} else {
-	  $cal .= "<td align=\"right\">$today</td>";
-	}
-	$today++;
+      if ($day < 1) {
+        $cal .= "<td></td>";
+      } elseif($entries[$day]) {
+        $nentries = count($entries[$day]);
+        if($nentries > 1) {
+          $title = "$nentries entries posted on this day";
+        } else {
+          $title = "$nentries entry posted on this day";
+        }
+        $entry = new Entry($entries[$day][0]);
+        $cal .= "<td><a href=\"".$entry->getHref()."\" title=\"$title\">$day</a></td>";
       } else {
-	$cal .= "<td>&nbsp;</td>";
+        $cal .= "<td>$day</td>";
       }
-      if (!($total%7)) {
-	$cal .= "</tr>\n";
+      if ($weekday == 6) {
+        $cal .= "</tr>\n";
       }
+      $weekday = ($weekday + 1) % 7;
     }
-    $cal .= "</table></div></div>\n";
+    if ($weekday < 6) {
+      $cal .= "</tr>\n";
+    }
+    $cal .= "</table></div>\n";
     return $cal;
   }
 
-  function get_bloged_days($year, $month) {
-    $days = array();
-    $filenames = Soojung::queryFilenameMatch($year . $month . "[^.]+[.]entry$");
+  function getEntriesForCalendar($year, $month) {
+    $entries = array();
+    $filenames = Soojung::queryFilenameMatch(sprintf("^%04d%02d[^.]+[.]entry$", $year, $month));
+    sort($filenames);
     foreach($filenames as $filename) {
-      $key = sprintf("%d", substr($filename, 15, 2));
-      $day = $filename;
-      $days[$key] = $day;
+      list($datetime, $category, $entryid) = explode("_", substr($filename, 9, -6));
+      $day = intval(substr($datetime, 6, 2));
+      if($entries[$day]) {
+        $entries[$day][] = $filename;
+      } else {
+        $entries[$day] = array($filename);
+      }
     }
-    $days = array_unique($days);
-
-    return $days;
+    return $entries;
   }
 }
-
-# vim: ts=8 sw=2 sts=2 noet
 ?>
