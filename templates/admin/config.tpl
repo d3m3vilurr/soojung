@@ -7,25 +7,25 @@
 
 <div class="row">
 <span class="label">Blog Name:</span>
-<span class="formw"><input type="text" name="blogname" value="{$blog_name}"></span>
+<span class="formw"><input type="text" name="blogname" value="{$blog_name}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">Blog Description:</span>
-<span class="formw"><input type="text" name="desc" value="{$blog_desc}"></span>
+<span class="formw"><input type="text" name="desc" value="{$blog_desc}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">Blog URL:</span>
-<span class="formw"><input type="text" name="url" value="{$baseurl}"></span>
+<span class="formw"><input type="text" name="url" value="{$baseurl}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">Blog Skin:</span>
 <span class="formw">
-<select name="skin">
+<select name="skin" {if !$config_writable}disabled{/if}>
 {foreach from=$templates item=template}
-<option value="{$template}" {if $blog_skin == $template}selected{/if}>{$template}
+<option value="{$template}" {if $blog_skin == $template}selected{/if} {if !$config_writable}disabled{/if}>{$template}
 {/foreach}
 </select>
 </span>
@@ -34,7 +34,7 @@
 <div class="row">
 <span class="label">Entries License:</span>
 <span class="formw">
-<select name="license">
+<select name="license" {if !$config_writable}disabled{/if}>
 <option value="none" {if $license == "none"}selected{/if}>None (All rights reserved)</option>
 <option value="by" {if $license == "by"}selected{/if}>Attribution License</option>
 <option value="by-nd" {if $license == "by-nd"}selected{/if}>Attribution-NoDerivs License</option>
@@ -49,55 +49,46 @@
 
 <div class="row">
 <span class="label">Admin Name:</span>
-<span class="formw"><input type="text" name="adminname" value="{$admin_name}"></span>
+<span class="formw"><input type="text" name="adminname" value="{$admin_name}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">Admin Email:</span>
-<span class="formw"><input type="text" name="email" value="{$admin_email}"></span>
+<span class="formw"><input type="text" name="email" value="{$admin_email}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">Admin Password:</span>
-<span class="formw"><input type="password" name="password"> <i>If you want change the password, input new password.</i></span>
+<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if}> <i>If you want change the password, input new password.</i></span>
 </div>
 
 <div class="row">
 <span class="label">entries per page:</span>
-<span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}"></span>
+<span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
 <span class="label">fancy URL:</span>
 <span class="formw">
-<input type="checkbox" name="fancyurl"
-{if $blog_fancyurl == true}
-	checked="on">
-{else}
-	>
-{/if}
+<input type="checkbox" name="fancyurl" {if $blog_fancyurl}checked{/if} {if !$config_writable}disabled{/if}>
 </span>
 </div>
 
 <div class="row">
 <span class="label">notify email:</span>
 <span class="formw">
-<input type="checkbox" name="notify"
-{if $blog_notify == true}
-	checked="on">
-{else}
-	>
-{/if}
+<input type="checkbox" name="notify" {if $blog_notify}checked{/if} {if !$config_writable}disabled{/if}>
 </span>
 </div>
 
 <input type="hidden" name="mode" value="config_update">
 
 <div class="row">
-<span class="label"><input type="submit" value="update"></span>
+<span class="label"><input type="submit" value="update" {if !$config_writable}disabled{/if}></span>
 </div>
 
 </form>
 
 </div>
+{if !$config_writable}<font color="red">Soojung doesn't have <b>WRITE</b> permission to <b>config.php</b>.</font>{/if}
 {include file="footer.tpl"}

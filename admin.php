@@ -115,6 +115,7 @@ if ($_GET["mode"] == "config") {
   $template->assign("admin_name", $admin_name);
   $template->assign("admin_email", $admin_email);
   $template->assign("templates", Soojung::getTemplates());
+  $template->assign("config_writable", is_writable("config.php"));
   $template->display('config.tpl');
 } else if ($_GET["mode"] == "data") {
   $template->display('data.tpl');
