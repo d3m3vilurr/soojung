@@ -107,15 +107,11 @@
 <hr />
 
 <p class="addition">
-<a href="{$baseurl}/rss2.php">
-	<img src="{$baseurl}/templates/{$skin}/img/rss20_logo.gif" alt="rss 2.0 feed" />
-</a><br />
-<a href="http://validator.w3.org/check?uri=referer">
-	<img src="{$baseurl}/templates/{$skin}/img/xhtml11.png" alt="Valid XHTML 1.0!" />
-</a><br />
-<a class="nodecoration" title="Explanation of Level A Conformance" href="http://www.w3.org/WAI/WCAG1A-Conformance">
-	<img src="{$baseurl}/templates/{$skin}/img/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" />
-</a>
+<img src="http://sapzil.info/banner.png" width="200" height="40" alt="TokigunStudio3 banner (banner address: http://sapzil.info/banner.png)" style="margin-bottom:5px;" /><br />
+<a href="{$baseurl}/rss2.php"><img src="{$baseurl}/templates/{$skin}/img/rss20_logo.gif" alt="rss 2.0 feed" /></a>
+<a href="{$baseurl}/rss2.php?charset=cp949">(euc-kr)</a><br />
+<a href="http://validator.w3.org/check?uri=referer"><img src="{$baseurl}/templates/{$skin}/img/xhtml11.png" alt="Valid XHTML 1.0!" /></a><br />
+<a href="http://www.w3.org/WAI/WCAG1A-Conformance" title="Explanation of Level A Conformance"><img src="{$baseurl}/templates/{$skin}/img/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" /></a>
 </p>
 
 </div>

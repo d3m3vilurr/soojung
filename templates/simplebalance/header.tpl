@@ -4,7 +4,7 @@
 <html>
 
 <!--
-"the simple balance" template (revision 2) for soojung {$soojung_version}
+"the simple balance" template (revision 3) for soojung {$soojung_version}
 designed by Kang Seonghoon <tokigun@gmail.com>
 soojung (c) copyleft 2004 soojung devel team, all rights reserved.
 -->

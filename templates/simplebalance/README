@@ -1,8 +1,8 @@
-"The Simple Balance" Template for Soojung 0.3.x (revision 2)
+"The Simple Balance" Template for Soojung 0.4.x (revision 3)
 by Kang Seonghoon (Tokigun) <tokigun@gmail.com>
 
 
-이 템플릿은 soojung 0.3.x 용 기본 템플릿입니다.
+이 템플릿은 soojung 0.4.x 용 기본 템플릿입니다.
 디자인은 상당히 간단한 편이며 오른 편에 메뉴가 나옵니다.
 색상은 css를 바꿔서 선택할 수 있습니다.
 
@@ -37,7 +37,7 @@ by Kang Seonghoon (Tokigun) <tokigun@gmail.com>
 
   - cssFile
     사용할 css 파일을 선택합니다. (템플릿 디렉토리의 css 디렉토리에 있는 파일들)
-    현재 revision 2에서는 navy.css와 green.css를 선택할 수 있습니다.
+    현재 revision 3에서는 navy.css, green.css, silver.css를 선택할 수 있습니다.
 
   - useMozillaExtension
     모질라에서만 지원되는 CSS 속성인 -moz-border-radius를 사용할 지의 여부를 선택합니다.

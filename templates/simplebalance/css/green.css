@@ -266,8 +266,12 @@ a:hover {
 #sidebar p {
 	margin: 10px;
 }
+#sidebar p.addition {
+	font-size: 0.7em;
+}
 #sidebar p.addition img {
-	border: 0px;
+	border: 0px !important;
+	vertical-align: middle;
 }
 #sidebar a {
 	color: #254523;
