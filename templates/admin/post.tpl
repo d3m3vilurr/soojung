@@ -1,6 +1,14 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
+{if $mode == "preview"}
+<h1>preview</h1>
+<h2>{$title}</h2>
+{$body}
+<br />
+{$category}, {$date}
+<hr />
+{/if}
 <form action="{$baseurl}/post.php" method="post">
 	Title:
 	<input type="text" name="title" value="{$title}">
@@ -22,8 +30,8 @@
 	  <input type="hidden" name="id" value="{$id}">
 	{/if}
 
-	<input type="hidden" name="mode" value="post">
-	<input type="submit" value="Post">
+	<input type="submit" name="mode" value="Preview">
+	<input type="submit" name="mode" value="Post">
 </form>
 
 {include file="footer.tpl"}

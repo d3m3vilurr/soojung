@@ -7,14 +7,14 @@ if (!isset($_SESSION["auth"])) {
   echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
 }
 
-if ($_POST["mode"] == "post") {
+if ($_POST["mode"] == "Post") {
   $title =  $_POST["title"];
   $body = $_POST["body"];
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
 
   if (empty($title) || empty($body) || empty($date) || empty($category)) {
-    echo "input title, body, date, category";
+    echo "<font color=\"red\">WARNING: Input title, body, date, category</font>";
   } else {
     if (isset($_POST["id"])) {
       entry_edit($_POST["id"], $title, $body, $date, $category);
@@ -23,7 +23,7 @@ if ($_POST["mode"] == "post") {
     }
     echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
   }
-} else if ($_GET["blogid"]) {
+} else if ($_GET["blogid"]) { //edit
   $entry = get_entry($_GET["blogid"]);
   $mode = "edit";
   $title = $entry["title"];
@@ -31,6 +31,12 @@ if ($_POST["mode"] == "post") {
   $date = $entry["date"];
   $category = $entry["category"];
   $id = $entry["id"];
+} else if ($_POST["mode"] == "Preview") {
+  $mode = "preview";
+  $title =  $_POST["title"];
+  $body = $_POST["body"];
+  $date = strtotime($_POST["date"]);
+  $category = trim($_POST["category"]);
 }
 
 define('SMARTY_DIR', 'libs/smarty/');
@@ -48,6 +54,7 @@ $smarty->assign("body", br2nl($body));
 $smarty->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()));
 $smarty->assign("category", $category);
 $smarty->assign("id", $id);
+$smarty->assign("mode", $mode);
 
 $smarty->display('post.tpl');
 ?>
