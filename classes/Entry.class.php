@@ -119,7 +119,7 @@ class Entry {
     }
     $foptions = "";
     if (in_array("STATIC", $options)) {
-      print $title;
+      #print $title;
       $foptions .= "S";
     }
     $categoryclass = new Category($category);

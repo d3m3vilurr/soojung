@@ -2,10 +2,35 @@
 session_cache_limiter('private'); 
 session_start();
 
+include("config.php");
 include("settings.php");
 
+if ($_POST["mode"] == "login") {
+  if (md5($_POST["password"]) == $admin_password)
+    $_SESSION['auth'] = TRUE;
+  $_POST["mode"] = $_POST["original_mode"];
+#  echo "mode = ". $_POST["mode"];
+} 
+
 if (!isset($_SESSION["auth"])) {
-  echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
+  $hidden_attr = array();
+  $param["name"] = "original_mode";
+  $param["value"] = $_POST["mode"];
+  $hidden_attr[] = $param;
+  
+  $list = array("title", "format", "date", "category", "category_input", "body", "SECRET", "NO_COMMENT", "NO_TRACKBACK", "STATIC", "NO_RSS");
+  foreach ($list as $key) {
+    if (array_key_exists($key, $_POST)) {
+      $param["name"] = $key;
+      $param["value"] = htmlspecialchars($_POST[$key]);
+      $hidden_attr[] = $param;
+    }
+  }
+  
+  $template = new AdminTemplate;
+  $template->assign('original_dst', $_SERVER["PHP_SELF"]);
+  $template->assign('hidden_attr', $hidden_attr);
+  $template->display('login.tpl');
   exit;
 }
 
@@ -48,7 +73,9 @@ if ($_POST["mode"] == "upload") {
       Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options, $format);
     } else {
       $date = time() + 10;
+      echo "hahaha<br />";
       Entry::createEntry($title, $body, $date, $category, $options, $format);
+      echo "hahaha<br />";
     }
     $temp = new UserTemplate("index.tpl", 1);
     $temp->clearCache();
