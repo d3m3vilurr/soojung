@@ -126,6 +126,38 @@ class Soojung {
     fwrite($fd, "?>");
     fclose($fd);
   }
+
+
+  function addReferer() {
+    if (isset($_SERVER['HTTP_REFERER'])) {
+      global $blog_baseurl;
+      $referer = $_SERVER['HTTP_REFERER'];
+
+      if(strstr($referer, $blog_baseurl) != FALSE) { //local
+	return;
+      }
+
+      if ($fd = @fopen("contents/.referer", "r")) {
+	$data = fread($fd, filesize("contents/.referer"));
+	fclose($fd);
+	$data = $referer . "\r\n" . $data;
+      } else {
+	$data = $referer;
+      }
+
+      $fd = fopen("contents/.referer", "w");
+      fwrite($fd, $data);
+      fclose($fd);
+    }
+  }
+
+  function getRecentReferers($n) {
+    if ($fd = @fopen("contents/.referer", "r")) {
+      $data = fread($fd, filesize("contents/.referer"));
+      $array = split("\r\n", $data);
+      return array_slice($array, 0, $n);
+    }
+  }
 }
 
 ?>

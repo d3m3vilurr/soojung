@@ -7,9 +7,6 @@ class Template extends Smarty {
     global $blog_skin, $blog_name, $blog_baseurl;
     global $today_count, $total_count;
 
-    //add_referer();
-    //get_count();
-
     $this->Smarty();
     
     $this->template_dir = "templates/" . $blog_skin . "/";
@@ -30,12 +27,12 @@ class Template extends Smarty {
     $this->assign('recent_entries', Entry::getRecentEntries(10));
     $this->assign('recent_comments', Comment::getRecentComments(10));
     $this->assign('recent_trackbacks', Trackback::getRecentTrackbacks(10));
-    //$this->assign('recent_referers', get_recent_referers(10));
+    $this->assign('recent_referers', Soojung::getRecentReferers(10));
 
-    //$this->assign('bookmarks', get_bookmark_list());
+    $this->assign('bookmarks', Bookmark::getBookmarkList());
 
-    //$this->assign('today_count', $today_count);
-    //$this->assign('total_count', $total_count);
+    $this->assign('today_count', $today_count);
+    $this->assign('total_count', $total_count);
   }
 }
 ?>

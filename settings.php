@@ -55,4 +55,48 @@ if (function_exists("iconv") == 0) {
   }
 }
 
+setcookie("soojungcountercookie", "on", 0);
+
+//FIXME: move to Soojung.class.php
+function get_count() {
+  global $soojungcountercookie;
+  global $today_count;
+  global $total_count;
+  $today_count = 0;
+  $total_count = 0;
+  $last_date = date("Y-m-d");
+  $today = date("Y-m-d");
+  $modified = false;
+
+  if ($fd = @fopen ("contents/.count", "r")) {
+    $last_date = trim(fgets($fd,256));
+    $today_count = trim(fgets($fd,256));
+    $total_count = trim(fgets($fd,256));
+    fclose($fd);
+  }
+
+  if ($soojungcountercookie != "on" && !stristr($_SERVER['HTTP_USER_AGENT'], "googlebot")) {
+    $today_count += 1;
+    $total_count += 1;
+    $modified = true;
+  }
+  if ($today != $last_date) {
+    $modified = true;
+    $today_count = 0;
+  }
+
+  if ($modified) {
+    $fd = fopen ("contents/.count", "w");
+    fwrite($fd, $today);
+    fwrite($fd, "\n");
+    fwrite($fd, $today_count);
+    fwrite($fd, "\n");
+    fwrite($fd, $total_count);
+    fwrite($fd, "\n");
+    fclose($fd);
+  }
+}
+
+get_count();
+Soojung::addReferer();
 ?>
