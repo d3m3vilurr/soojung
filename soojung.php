@@ -613,27 +613,32 @@ function export() {
 
 $tag = FALSE;
 $filename = FALSE;
+$fd = FALSE;
 
 function startElement($parser, $name, $attrs) {
-  global $tag;
+  global $tag, $fd, $filename;
   $tag = $name;
-}
-
-function endElement($parser, $name) {
-  global $tag;
-  $tag = FALSE;
-}
-
-function characterData($parser, $data) {
-  global $tag, $filename;
-  if ($tag == "DATA") {
+  if ($name == "DATA") {
     $dir = dirname($filename);
     if (file_exists($dir) == FALSE) {
       mkdir($dir, 0777); //TODO: mkdir_p
     }
     $fd = fopen($filename, "wb");
-    fwrite($fd, trans($data));
+  }
+}
+
+function endElement($parser, $name) {
+  global $tag, $fd;
+  $tag = FALSE;
+  if ($name == "DATA") {
     fclose($fd);
+  }
+}
+
+function characterData($parser, $data) {
+  global $tag, $filename, $fd;
+  if ($tag == "DATA") {
+    fwrite($fd, trans($data) . "\r");
   } else if ($tag == "NAME") {
     $filename = $data;
   }
@@ -646,7 +651,7 @@ function trans($str) {
 }
 
 function import($uploadfile) {
-  $fd = fopen($uploadfile['tmp_name'], "r");
+  $fd = fopen($uploadfile['tmp_name'], "rb");
   $data = fread($fd, $uploadfile['size']);
   fclose($fd);
 
