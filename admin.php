@@ -26,9 +26,14 @@ if ($_POST["mode"] == "config_update") {
     echo "input";
     exit();
   }
+  if (!empty($_POST["password"])) {
+    $password = md5($_POST["password"]);
+  } else {
+    $password = FALSE;
+  }
   Soojung::writeConfigFile($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 		    $_POST["fancyurl"], $_POST["notify"], $_POST["adminname"], $_POST["email"],
-		    FALSE, $_POST["skin"]);
+		    $password, $_POST["skin"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
   exit;
 }

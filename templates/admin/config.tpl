@@ -21,11 +21,16 @@ Blog Skin:
 {/foreach}
 </select>
 <br />
+<br />
 
 Admin Name: <input type="text" name="adminname" value="{$admin_name}">
 <br />
 
 Admin Email: <input type="text" name="email" value="{$admin_email}">
+<br />
+
+Admin Password: <input type="password" name="password"> If you want change the password, input new password.
+<br />
 <br />
 
 entries per page:
