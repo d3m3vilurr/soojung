@@ -16,6 +16,10 @@ if (get_magic_quotes_gpc()) {
   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
 }
 
+/** The function which matchs with regex query. This function using 
+ *  ereg to match query string.
+ */
+
 function query_filename_match($query, $dir="contents/") {
   $list = array();
   if (is_dir($dir)) {
@@ -95,15 +99,21 @@ function _entry_write($title, $body, $date, $category, $id) {
   fclose($fd);
 }
 
-function entry_new($title, $body, $date, $category) {
+function entry_new($title, $body, $date, $category="Default") {
   $id = create_new_id();
+  if (!isset($category)) {
+    $category = "Default";
+  }
   _entry_write($title, $body, $date, $category, $id);
   return $id;
 }
 
 function entry_edit($blogid, $title, $body, $date, $category) {
+  if (file_exists(blogid_to_filename($blogid)) !== TRUE)
+    return FALSE;
   unlink(blogid_to_filename($blogid));
   _entry_write($title, $body, $date, $category, $blogid);
+  return TRUE;
 }
 
 function entry_delete($blogid) {
