@@ -11,7 +11,7 @@ if($encoding == "cp949" || $encoding == "euc-kr" || $encoding == "euckr") {
   function convenc($str) { return $str; }
 }
 
-header("Content-type: text/xml");
+header("Content-type: text/xml; charset=$encoding");
 echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 ?>
 <rss version="2.0">
