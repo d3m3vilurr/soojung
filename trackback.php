@@ -28,17 +28,36 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
 
 if (isset($_POST["url"]) || isset($_GET["blogid"])) {
   $id = $_GET["blogid"];
+  if (!isset($id))
+    $id = $_POST["blogid"];
+
   $url = $_POST["url"];
   $title = $_POST["title"];
   $excerpt = $_POST["excerpt"];
   $name = $_POST["blog_name"];
 
+
+#  $encoding_title = detect_encoding ($title);
+#  $encoding_excerpt = detect_encoding ($excerpt);
+#  $encoding_name = detect_encoding ($name)
+#  fwrite($fd, $encoding . "\n");
+#  if ($encoding != "UTF-8") {
+#    $title = iconv($encoding, "UTF-8", $_POST["title"]);
+#    $excerpt = iconv($encoding, "UTF-8", $_POST["excerpt"]);
+#    $name = iconv($encoding, "UTF-8", $_POST["blog_name"]);
+#  }
+
+  $title = convert_to_utf8($_POST["title"]);
+  $excerpt = convert_to_utf8($_POST["excerpt"]);
+  $name = convert_to_utf8($_POST["blog_name"]);
+  
   if (empty($url)) {
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
     echo "<response>\n";
     echo "<error>1</error>\n";
     echo "<message>url is required</message>\n";
     echo "</response>\n";
+    fwrite($fd, "merong\n");
   } else {
     trackback_write($id, $url, $name, $title, $excerpt);
     echo '<?xml version="1.0" encoding="iso-8859-1"?>' . "\n";
@@ -46,5 +65,6 @@ if (isset($_POST["url"]) || isset($_GET["blogid"])) {
     echo "<error>0</error>\n";
     echo "</response>\n";
   }
+  fclose($fd);
 }
 ?>

@@ -20,6 +20,25 @@ if (get_magic_quotes_gpc()) {
  *  ereg to match query string.
  */
 
+function detect_encoding ($string) {
+  if (iconv("UTF-8", "UTF-8", $string) != FALSE) {
+    return "UTF-8";
+  } else if (iconv("CP949", "UTF-8", $string) != FALSE) {
+    return "CP949";
+  }
+  return FALSE;
+}
+
+function convert_to_utf8 ($string) {
+  $result = "";
+  if (($result = iconv("UTF-8", "UTF-8", $string)) != FALSE) {
+    return $result;
+  } else if (($result = iconv("CP949", "UTF-8", $string)) != FALSE) {
+    return $result;
+  }
+  return FALSE;
+}
+
 function query_filename_match($query, $dir="contents/") {
   $list = array();
   if (is_dir($dir)) {
@@ -269,10 +288,14 @@ function trackback_open($filename) {
 }
 
 function trackback_write($blogid, $url, $name, $title, $excerpt) {
+# need to check blogid is not null or anything.
+# this is caused by tattertools
+
   $dirname = "contents/" . $blogid;
   @mkdir($dirname, 0777);
   $filename = date('YmdHis', time()) . '.trackback';
   $fd = fopen($dirname . '/' . $filename, "w");
+
   fwrite($fd, $url);
   fwrite($fd, "\r\n");
   fwrite($fd, $name);
@@ -427,13 +450,12 @@ function delete_bookmark($url) {
 
 function write_bookmark($bookmarks) {
   $fd = fopen("contents/.bookmark", "w");
-  if (!empty($bookmarks))
-    {
-      foreach ($bookmarks as $b) {
-	fwrite ($fd, $b['url'] . " " . $b['desc'] . "\r\n");
-	//    fprintf ($fd, "%s %s\r\n", $b['url'], $b['desc']);
-      }
+  if (!empty($bookmarks)) {
+    foreach ($bookmarks as $b) {
+      fwrite ($fd, $b['url'] . " " . $b['desc'] . "\r\n");
+      //    fprintf ($fd, "%s %s\r\n", $b['url'], $b['desc']);
     }
+  }
   fclose($fd);
 
 }
