@@ -73,7 +73,7 @@ function clear_cache_mode() {
 }
 
 function clear_referer_mode() {
-  unlink("contents/.referer");
+  @unlink("contents/.referer");
 }
 
 if ($_POST["mode"] == "login") {
