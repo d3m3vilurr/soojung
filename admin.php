@@ -14,6 +14,7 @@ $smarty->compile_dir = "templates/.compile/";
 $smarty->config_dir = "templates/.configs/";
 $smarty->cache_dir = "templates/.cache/";
 $smarty->template_dir = "templates/admin/";
+$smarty->force_compile = true;
 $smarty->assign('baseurl', $blog_baseurl);
 
 if (!isset($_SESSION["auth"])) {

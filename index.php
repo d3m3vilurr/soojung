@@ -6,10 +6,7 @@ $smarty->template_dir = "templates/" . $blog_skin . "/";
 $smarty->compile_dir = "templates/.compile/";
 $smarty->config_dir = "templates/.configs/";
 $smarty->cache_dir = "templates/.cache/";
-
-//if (isset($_GET["compile"])) {
-  $smarty->force_compile = true;
-//}
+$smarty->force_compile = true;
 
 if (isset($_GET["page"])) {
   $page = $_GET["page"];
