@@ -54,6 +54,8 @@ if (isset($_POST["name"])) {
   fwrite($f, $_POST["url"] . "/index.php?archive=$1$2\n");
   fwrite($f, "RewriteRule ^([^/.]+)$ ");
   fwrite($f, $_POST["url"] . "/index.php?category=$1\n");
+  fwrite($f, "RewriteRule ^page/([0-9]+)$ ");
+  fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
   fwrite($f, $data);
   fclose($f);
 

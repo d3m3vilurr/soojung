@@ -10,10 +10,18 @@ if (isset($_GET["page"])) {
   $page = 1;
 }
 if ($page > 1) {
-  $template->assign('prev_page_link', "index.php?page=" . ($page - 1));
+  if ($blog_fancyurl == true) {
+    $template->assign('prev_page_link', $blog_baseurl . "/page/" . ($page - 1));
+  } else {
+    $template->assign('prev_page_link', "index.php?page=" . ($page - 1));
+  }
 }
 if (get_entry_count() > (($page) * $blog_entries_per_page)) {
-  $template->assign('next_page_link', "index.php?page=" . ($page + 1));
+  if ($blog_fancyurl == true) {
+     $template->assign('next_page_link', $blog_baseurl . "/page/" . ($page + 1));
+  } else {
+    $template->assign('next_page_link', "index.php?page=" . ($page + 1));
+  }
 }
 
 if (isset($_GET["archive"])) {
