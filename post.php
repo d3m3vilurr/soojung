@@ -68,8 +68,11 @@ if ($_POST["mode"] == "upload") {
   $title =  $_POST["title"];
   $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
-  $category = trim($_POST["category"]);
-  $format =  $_POST["format"];
+  if (empty($_POST["category_input"]) == false) {
+    $category = trim($_POST["category_input"]);
+  } else {
+    $category = $_POST["category"];
+  }
   $options = array();
   if (isset($_POST["SECRET"])) {
     $options[] = "SECRET";
@@ -86,6 +89,7 @@ if ($_POST["mode"] == "upload") {
   if (isset($_POST["NO_RSS"])) {
     $options[] = "NO_RSS";
   }
+  $format =  $_POST["format"];
   if (isset($_POST["id"]))
     $id = $_POST["id"];
 }
