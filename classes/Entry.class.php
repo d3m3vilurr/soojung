@@ -248,6 +248,9 @@ class Entry {
    */
   function search($keyword) {
     $founds = array();
+    if ($keyword == "") {
+      return $founds;
+    }
     $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
     rsort($filenames);
     foreach($filenames as $f) {
