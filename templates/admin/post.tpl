@@ -11,7 +11,7 @@
 {/if}
 
 <div id="post">
-<form action="{$baseurl}/post.php" method="post">
+<form action="{$baseurl}/post.php" method="post" name="postForm">
 <div class="row">
 <span class="label">Title:</span>
 <span class="formw"><input type="text" name="title" value="{$title}"></span>
