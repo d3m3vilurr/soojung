@@ -181,6 +181,7 @@ class Soojung {
       if(strstr($referer, $blog_baseurl) != FALSE) { //local
 	return;
       }
+
       if (strpos($referer, "http://") !== 0) {
 	return;
       }
@@ -193,14 +194,18 @@ class Soojung {
         $data = @fread($fd, filesize("contents/.referer"));
         flock($fd, LOCK_UN);
         fclose($fd);
-        $data = $referer . "\r\n" . $data;
+	$array = split("\r\n", $data);
+	array_unshift($array, $referer);
+	$array = array_unique($array);
+	$array = array_slice($array, 0, 100);
       } else {
-        $data = $referer;
+	$array = array();
+        $array[] = $referer;
       }
 
       if ($fd = @fopen("contents/.referer", "w")) {
       	flock($fd, LOCK_EX);
-        fwrite($fd, $data);
+	fwrite($fd, implode($array, "\r\n"));
         flock($fd, LOCK_UN);
         fclose($fd);
       }
