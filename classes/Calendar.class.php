@@ -62,17 +62,16 @@ class Calendar {
       <a href=\"".$this->get_month_href($year,$month)."\">".$this->get_month_alt($year, $month)."</a>
       <a href=\"".$this->get_month_href($year,$month+1)."\" title=\"".$this->get_month_alt($year, $month+1)."\">»</a>
       <div class=\"calendar_days\">
-      <table cellpadding=0 cellspacing=0 width=\"95%\">
+      <table cellpadding=\"0\" cellspacing=\"0\" width=\"95%\">
       <tr>
-      <td align=\"right\" width=\"15.0%\">Sun</td>
-      <td align=\"right\" width=\"14.2%\">Mon</td>
-      <td align=\"right\" width=\"14.2%\">Tue</td>
-      <td align=\"right\" width=\"14.2%\">Wen</td>
-      <td align=\"right\" width=\"14.2%\">Thu</td>
-      <td align=\"right\" width=\"14.2%\">Fri</td>
-      <td align=\"right\" width=\"14.2%\">Sat</td>
-      </tr>
-      <tr>";
+      <td align=\"right\">Sun</td>
+      <td align=\"right\">Mon</td>
+      <td align=\"right\">Tue</td>
+      <td align=\"right\">Wen</td>
+      <td align=\"right\">Thu</td>
+      <td align=\"right\">Fri</td>
+      <td align=\"right\">Sat</td>
+      </tr>";
     $nweeks = (int) (($num_days+$fDoWoM)/7)+1;
     if ($num_days+$fDoWoM == 35)
       --$nweeks;
@@ -101,7 +100,7 @@ class Calendar {
 	$cal .= "</tr>\n";
       }
     }
-    $cal .= "</div></table></div>\n";
+    $cal .= "</table></div></div>\n";
     return $cal;
   }
 
