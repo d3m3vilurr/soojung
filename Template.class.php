@@ -33,6 +33,8 @@ class Template extends Smarty {
     $this->assign('recent_trackbacks', get_recent_trackbacks(10));
     $this->assign('recent_referers', get_recent_referers(10));
 
+    $this->assign('bookmarks', get_bookmark_list());
+
     $this->assign('today_count', $today_count);
     $this->assign('total_count', $total_count);
   }
