@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("settings.php");
 
 class Template extends Smarty {

@@ -23,14 +23,13 @@ echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 <pubDate><?=date('r')?></pubDate>
 <generator>soojung <?=$soojung_version?></generator>
 
-<?
+<?php
 if (isset($_GET['category'])) {
   $category = new Category($_GET['category']);
   $entries = $category->getEntries();
 } else {
   $entries = Entry::getEntries(10, 1);
 }
-
 
 foreach ($entries as $e) {
   if ($e->isSetOption("NO_RSS") || $e->isSetOption("SECRET")) {
