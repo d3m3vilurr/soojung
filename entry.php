@@ -16,6 +16,13 @@ if (isset($_POST["blogid"])) {
     $url = "";
   }
   comment_write($blogid, $name, $email, $url, $body, time());
+
+  // Remembering 30 days
+  setcookie('w_id',    $blogid, time()+2592000);
+  setcookie('w_name',  $name,   time()+2592000);
+  setcookie('w_email', $email,  time()+2592000);
+  setcookie('w_url',   $url,    time()+2592000);
+
   $entry = get_entry($blogid);
   echo "<meta http-equiv='refresh' content='0;URL=" . $entry['link'] . "'>";
   exit;
@@ -52,6 +59,12 @@ get_count();
 
 $smarty->assign('today_count', $today_count);
 $smarty->assign('total_count', $total_count);
+
+foreach (array('w_id','w_name','w_email','w_url') as $key) {
+  if (isset($HTTP_COOKIE_VARS[$key])) {
+    $smarty->assign("$key", $HTTP_COOKIE_VARS[$key]);
+  }
+}
 
 $smarty->display('entry.tpl');
 ?>
