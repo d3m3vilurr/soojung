@@ -5,26 +5,26 @@ class Archive {
   var $month;
 
   function Archive($year, $month) {
-    $this->year = $year;
-    $this->month = $month;
+    $this->year = intval($year);
+    $this->month = intval($month);
   }
 
-  function getName() {
-    return $this->year . $this->month;
+  function getDate() {
+    return mktime(0, 0, 0, $this->month, 1, $this->year);
   }
 
   function getHref() {
     global $blog_baseurl, $blog_fancyurl;
 
     if ($blog_fancyurl) {
-      return $blog_baseurl . '/' . $this->year . '/' . $this->month;
+      return sprintf('%s/%04d/%02d', $blog_baseurl, $this->year, $this->month);
     } else {
-      return $blog_baseurl . '/index.php?archive=' . $this->year . $this->month;
+      return sprintf('%s/index.php?archive=%04d%02d', $blog_baseurl, $this->year, $this->month);
     }
   }
 
   function getEntries() {
-    $filenames = Soojung::queryFilenameMatch("^" . $this->year . $this->month . "[^.]+[.]entry$");
+    $filenames = Soojung::queryFilenameMatch(sprintf("^%04d%02d[^.]+[.]entry$", $this->year, $this->month));
     rsort($filenames);
     $entries = array();
     foreach($filenames as $filename) {
