@@ -11,14 +11,14 @@
 <div class="entry">
 	<span class="subject"><a href="{$baseurl}/post.php?blogid={$entry->entryId}">{$entry->title}</a></span>
 	<span class="trackback_ping"><a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">Ping</a></span>
-	<span class="delete"><a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\n\'{$entry->title}\'');">X</a></span>
+	<span class="delete"><a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a></span>
 </div>
 
 	{foreach from=$entry->getComments() item=comment}
 	<div class="comment">
 		<span class="subject">{$comment->getBody()|strip_tags|substring:70}</span>
 		<span class="trackback_ping">&nbsp;</span>
-		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nauthor: {$comment->name}');">X</a></span>
+		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a></span>
 	</div>
 	{/foreach}
 
@@ -26,7 +26,7 @@
 	<div class="trackback">
 		<span class="subject">{$trackback->url|strip_tags|substring:70}</span>
 		<span class="trackback_ping">&nbsp;</span>
-		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nurl: {$trackback->url}');">X</a></span>
+		<span class="delete"><a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a></span>
 	</div>
 	{/foreach}
 

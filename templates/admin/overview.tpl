@@ -15,7 +15,7 @@
 </div>
 </td>
 <td>
-<a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete?');">X</a>
+<a href="{$baseurl}/admin.php?mode=delete_entry&blogid={$entry->entryId}" onclick="return confirm('Are you sure want to delete this entry?\nTitle: {$entry->title}');">X</a>
 </td>
 <td>
 <a href="{$baseurl}/sendping.php?blogid={$entry->entryId}">Ping</a>
@@ -41,7 +41,7 @@
 			</div>
 		</td>
 		<td>
-			<a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete?');">X</a>
+			<a href="{$baseurl}/admin.php?mode=delete&file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a>
 		</td>
 	</div>
 	</tr>
@@ -61,7 +61,7 @@
 			</div>
 		</td>
 		<td>
-			<a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete?');">X</a>
+			<a href="{$baseurl}/admin.php?mode=delete&file={$trackback->filename}" onclick="return confirm('Are you sure want to delete this trackback?\nURL: {$trackback->url}');">X</a>
 		</td>
 	</div>
 	</tr>
