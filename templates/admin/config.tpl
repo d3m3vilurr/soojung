@@ -59,23 +59,23 @@
 
 <div class="row">
 <span class="label">Admin Password:</span>
-<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if}> <i>If you want change the password, input new password.</i></span>
+<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if}> <i>If you want to change the password, input new password.</i></span>
 </div>
 
 <div class="row">
-<span class="label">entries per page:</span>
+<span class="label">Entries per page:</span>
 <span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}" {if !$config_writable}disabled{/if}></span>
 </div>
 
 <div class="row">
-<span class="label">fancy URL:</span>
+<span class="label">Fancy URL:</span>
 <span class="formw">
 <input type="checkbox" name="fancyurl" {if $blog_fancyurl}checked{/if} {if !$config_writable}disabled{/if}>
 </span>
 </div>
 
 <div class="row">
-<span class="label">notify email:</span>
+<span class="label">Notify email:</span>
 <span class="formw">
 <input type="checkbox" name="notify" {if $blog_notify}checked{/if} {if !$config_writable}disabled{/if}>
 </span>
