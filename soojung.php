@@ -387,6 +387,77 @@ function send_trackbackping($blogid, $trackback_url, $encoding='UTF-8') {
   return $response;
 }
 
+/** add personal bookmark file 
+ *
+ */
+
+function add_bookmark($url, $desc) {
+  if (empty($desc))
+    $desc = $url;
+
+  $bookmark = array("url" => $url, "desc" => $desc);
+  $bookmarks = get_bookmark_list();
+  foreach ($bookmarks as $b) {
+    if ($b['url'] == $bookmark['url'])
+      return false;
+  }
+
+  $bookmarks[] = $bookmark;
+  write_bookmark($bookmarks);
+  return true;
+}
+
+/** delete personal bookmark, key is url (not description) 
+ *
+ */
+
+function delete_bookmark($url) {
+  $bookmakrs = get_bookmark_list();
+  $new_bookmakrs = array();
+  foreach($bookmakrs as $b) {
+    if ($b['url'] !== $url)
+      $new_bookmarks[] = $b;
+  }
+  write_bookmark($new_bookmarks);
+}
+
+/** writing $bookmarks to file
+ *
+ */
+
+function write_bookmark($bookmarks) {
+  $fd = fopen("contents/.bookmark", "w");
+  if (!empty($bookmarks))
+    {
+      foreach ($bookmarks as $b) {
+	fwrite ($fd, $b['url'] . " " . $b['desc'] . "\r\n");
+	//    fprintf ($fd, "%s %s\r\n", $b['url'], $b['desc']);
+      }
+    }
+  fclose($fd);
+
+}
+
+/** read $bookmarks from file
+ *
+ */
+
+
+function get_bookmark_list() {
+  $bookmarks = array();
+  if (!file_exists("contents/.bookmark")) {
+    return $bookmarks;
+  }
+  $fd = fopen("contents/.bookmark", "r");
+  while (!feof($fd)) {
+    $line = trim(fgets($fd, 1024));
+    $b = explode(" ", $line, 2);
+    if (!empty($b[0]))
+      $bookmarks[] = array("url"=>$b[0], "desc" => $b[1]);
+  }
+  return $bookmarks;
+}
+
 function get_archive_list() {
   global $blog_baseurl, $blog_fancyurl;
 

@@ -14,4 +14,8 @@
 [
 <a href="{$baseurl}/admin.php?mode=data">Import/export</a>
 ]
+[
+<a href="{$baseurl}/bookmark.php">Bookmark</a>
+]
+
 </div>
