@@ -23,6 +23,7 @@ include_once("classes/Export.class.php");
 include_once("classes/Import.class.php");
 include_once("classes/Bookmark.class.php");
 include_once("classes/Calendar.class.php");
+include_once("classes/Counter.class.php");
 
 define('SMARTY_DIR', 'libs/smarty/');
 require(SMARTY_DIR . 'Smarty.class.php');
@@ -65,54 +66,9 @@ if (function_exists("iconv") == 0) {
   }
 }
 
-setcookie("soojungcountercookie", "on", 0);
 
-//FIXME: move to Soojung.class.php
-function get_count() {
-  global $soojungcountercookie;
-  global $today_count;
-  global $total_count;
-  $today_count = 0;
-  $total_count = 0;
-  $last_date = date("Y-m-d");
-  $today = date("Y-m-d");
-  $modified = false;
-
-  if ($fd = @fopen("contents/.count", "r")) {
-  	flock($fd, LOCK_SH);
-    $last_date = trim(fgets($fd,256));
-    $today_count = trim(fgets($fd,256));
-    $total_count = trim(fgets($fd,256));
-    flock($fd, LOCK_UN);
-    fclose($fd);
-  }
-
-  if ($soojungcountercookie != "on" && !stristr($_SERVER['HTTP_USER_AGENT'], "googlebot")) {
-    $today_count += 1;
-    $total_count += 1;
-    $modified = true;
-  }
-  if ($today != $last_date) {
-    $modified = true;
-    $today_count = 0;
-  }
-
-  if ($modified) {
-    if ($fd = @fopen("contents/.count", "w")) {
-      flock($fd, LOCK_EX);
-      fwrite($fd, $today);
-      fwrite($fd, "\n");
-      fwrite($fd, $today_count);
-      fwrite($fd, "\n");
-      fwrite($fd, $total_count);
-      fwrite($fd, "\n");
-      flock($fd, LOCK_UN);
-      fclose($fd);
-    }
-  }
-}
-
-get_count();
+$counter = new Counter();
+$counter->update();
 Soojung::addReferer();
 
 # vim: ts=8 sw=2 sts=2 noet

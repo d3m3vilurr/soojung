@@ -5,7 +5,7 @@ class UserTemplate extends Template {
   function UserTemplate($template, $cache_id)
   {
     global $blog_skin;
-    global $today_count, $total_count;
+    global $counter;
     global $entries_license;
 
     $this->Template();
@@ -18,7 +18,7 @@ class UserTemplate extends Template {
     $this->assign('skin', $blog_skin);
 
     $this->compile_check = false;
-    $this->caching=true;
+    $this->caching = true;
     $this->force_compile = true; 
 
     if (!$this->is_cached($template, $cache_id)) {
@@ -53,8 +53,9 @@ class UserTemplate extends Template {
       }
       $this->assign('license_link', $license_link);
     }
-    $this->assign('today_count', $today_count);
-    $this->assign('total_count', $total_count);
+    $this->assign('counter', $counter);
+    $this->assign('today_count', $counter->today);
+    $this->assign('total_count', $counter->total);
   }
 
   function clearCache() {
