@@ -16,9 +16,9 @@ echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 ?>
 <rss version="2.0">
 <channel>
-<title><?=convenc($blog_name)?></title>
+<title><?=htmlspecialchars(convenc($blog_name))?></title>
 <link><?=$blog_baseurl?></link>
-<description><?=convenc($blog_desc)?></description>
+<description><?=htmlspecialchars(convenc($blog_desc))?></description>
 <copyright></copyright>
 <pubDate><?=date('r')?></pubDate>
 <generator>soojung <?=$soojung_version?></generator>
