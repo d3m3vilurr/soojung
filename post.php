@@ -10,7 +10,7 @@ if (!isset($_SESSION["auth"])) {
 
 if ($_POST["mode"] == "Post") {
   $title =  $_POST["title"];
-  $body = $_POST["body"];
+  $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
 
@@ -23,6 +23,7 @@ if ($_POST["mode"] == "Post") {
       entry_new($title, $body, $date, $category);
     }
     echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
+    exit;
   }
 } else if ($_GET["blogid"]) { //edit
   $entry = get_entry($_GET["blogid"]);
@@ -35,7 +36,7 @@ if ($_POST["mode"] == "Post") {
 } else if ($_POST["mode"] == "Preview") {
   $mode = "preview";
   $title =  $_POST["title"];
-  $body = $_POST["body"];
+  $body = balanceTags($_POST["body"]);
   $date = strtotime($_POST["date"]);
   $category = trim($_POST["category"]);
 }
