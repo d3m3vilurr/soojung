@@ -36,9 +36,14 @@ class Soojung {
    * static method
    */
   function filenameToEntryId($filename) {
-    $i = strrpos($filename, "_") + 1;
-    $j = strrpos($filename, ".");
-    return substr($filename, $i, $j-$i);
+    if (strpos($filename, ".entry") != false) {
+      $i = strrpos($filename, "_") + 1;
+      $j = strrpos($filename, ".");
+      return substr($filename, $i, $j-$i);
+    } else { //comment, trackback
+      $dirs = explode("/", $filename);
+      return $dirs[1];
+    }
   }
 
   /**
@@ -53,7 +58,7 @@ class Soojung {
     $entry = Entry::getEntry($entryId);
     $message = "<html><head></head><body>";
     $message .= $msg;
-    $message .= "<br /><a href=" . $entry->getHref() . "\">check out</a>";
+    $message .= "<br /><a href=\"" . $entry->getHref() . "\">check out</a>";
     $message .= "</body></html>";
 
     $title = "soojung: " . $title;

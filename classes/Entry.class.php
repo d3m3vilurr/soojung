@@ -29,7 +29,7 @@ class Entry {
     
     //read header
     $this->date = trim(strstr(fgets($fd), ' '));
-    $this->title = trim(strstr(fgets($fd), ' '));
+    $this->title = htmlspecialchars(trim(strstr(fgets($fd), ' ')), ENT_QUOTES, "UTF-8");
     $this->category = new Category(trim(strstr(fgets($fd), ' ')));
     $this->options = explode("|", trim(strstr(fgets($fd), ' ')));
     fclose($fd);
@@ -46,6 +46,7 @@ class Entry {
 
     if ($blog_fancyurl) {
       //TODO
+      return $blog_baseurl . "/" . $this->category->name . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
     } else {
       return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;
     }

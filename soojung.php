@@ -7,50 +7,6 @@ include("libs/util.php");
 
 setcookie("soojungcountercookie", "on", 0);
 
-function notify_to_admin($title, $blogid, $msg) {
-  global $notify, $admin_email;
-  if ($notify != true) {
-    return;
-  }
-  $entry = get_entry($blogid);
-  $message = "<html><head></head><body>";
-  $message .= $msg;
-  $message .= "<br /><a href=" . $entry['link'] . "\">check out</a>";
-  $message .= "</body></html>";
-  mail($admin_email, $title, $message, "Content-Type: text/html; charset=\"utf-8\"");
-}
-
-function entry_open($filename) {
-  global $blog_baseurl, $blog_fancyurl;
-  $fd = fopen($filename, "r");
-  $data = fread($fd, filesize($filename));
-  fclose($fd);
-  $data = split("\r\n", $data, 3);
-  $entry = array();
-  $entry["title"] = htmlspecialchars($data[0], ENT_QUOTES, "UTF-8");
-  $entry["date"] = $data[1];
-
-  $entry["body"] = pre_nl2br($data[2]);
-
-  $t = split("_", $filename, 3);
-  $category = $t[1];
-  $id =  substr($t[2], 0, -6); // remove '.entry'
-
-  $entry["category"] = $category;
-  $entry["id"] = $id;
-
-  if ($blog_fancyurl == true) {
-    $entry["link"] = $blog_baseurl . "/" . $entry['category'] . date("/Y/m/d/", $entry['date']) .  $id . ".html";
-  } else {
-    $entry["link"] = $blog_baseurl . "/entry.php?blogid=" . $id;
-  }
-
-  $entry["comment_count"] = get_comment_count($id);
-  $entry["trackback_count"] = get_trackback_count($id);
-
-  return $entry;
-}
-
 function entry_search($query) {
   $filenames = query_filename_match("[.]entry$");
   rsort($filenames);
@@ -64,48 +20,6 @@ function entry_search($query) {
     }
   }
   return $founds;
-}
-
-function comment_open($filename) {
-  $fd = fopen($filename, "r");
-  $data = fread($fd, filesize($filename));
-  fclose($fd);
-  $data = split("\r\n", $data, 5);
-  $comment = array();
-  $comment["date"] = $data[0];
-  $comment["name"] = $data[1];
-  $comment["email"] = $data[2];
-  $comment["url"] = $data[3];
-  $comment["body"] = $data[4];
-  
-  $paths = split("/", $filename);
-  $id = $paths[1];
-
-  $entry = get_entry($id);
-  $comment["link"] = $entry['link'] . "#" . $comment["date"];
-  $comment["filename"] = $filename;
-  return $comment;
-}
-
-function comment_write($blogid, $name, $email, $url, $body, $date) {
-  $dirname = "contents/" . $blogid;
-  @mkdir($dirname, 0777);
-  $filename = date('YmdHis', $date) . '.comment';
-  $fd = fopen($dirname . '/' . $filename, "w");
-  fwrite($fd, $date);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $name);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $email);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $url);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $body);
-  fclose($fd);
-
-  $msg =  $name . " said:<br />";
-  $msg .= $body;
-  notify_to_admin("new comment", $blogid, $msg);
 }
 
 function trackback_open($filename) {
@@ -128,26 +42,6 @@ function trackback_open($filename) {
   $trackback["link"] = $entry['link'] . "#" . $trackback["date"];
   $trackback["filename"] = $filename;
   return $trackback;
-}
-
-function trackback_write($blogid, $url, $name, $title, $excerpt) {
-  $dirname = "contents/" . $blogid;
-  @mkdir($dirname, 0777);
-  $filename = date('YmdHis', time()) . '.trackback';
-  $fd = fopen($dirname . '/' . $filename, "w");
-
-  fwrite($fd, $url);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $name);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $title);
-  fwrite($fd, "\r\n");
-  fwrite($fd, $excerpt);
-  fwrite($fd, "\r\n");
-  fclose($fd);
-
-  $msg = "trackback from " . $url . "<br />";
-  notify_to_admin("new trackback", $blogid, $msg);
 }
 
 function get_trackbacks($blogid) {

@@ -7,7 +7,6 @@ class Comment {
   var $email;
   var $homepage;
   var $filename;
-  var $href;
 
   /**
    * Comment file name:
@@ -20,7 +19,7 @@ class Comment {
    * [homepage]\r\n
    * [body]
    */
-  function Comment($filename) { //FIXME: parameter change to entry's id
+  function Comment($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
     $this->date = fgets($fd);
@@ -28,11 +27,12 @@ class Comment {
     $this->email = fgets($fd);
     $this->homepage = fgets($fd);
     fclose($fd);
-    //TODO: href
   }
 
   function getHref() {
-    //TODO: impl
+    $id = Soojung::filenameToEntryId($this->filename);
+    $e = Entry::getEntry($id);
+    return $e->getHref() . "#" . $this->date;
   }
 
   function getBody() {
