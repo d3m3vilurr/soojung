@@ -28,7 +28,7 @@ foreach ($entries as $e) {
   }
   echo "<item>\n";
   echo "<title>" . $e->title . "</title>\n";
-  echo "<link>" . $e->href . "</link>\n";
+  echo "<link>" . $e->getHref() . "</link>\n";
   echo "<comments></comments>\n";
   echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
   echo "<category>" . $e->category->name . "</category>\n";
