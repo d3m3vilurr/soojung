@@ -5,6 +5,8 @@
 
 3. install.php를 지운다.
 
+4. soojung 디렉토리 퍼미션을 바꾼다. 예) chmod 755 soojung
+
 ==== fancy url 설명 ====
 fancy url이란 url을 좀 더 예쁘고, 보기 쉽게 바꾸는 기능입니다. fancy url을 쓰려면 apache의 mod_rewrite를 쓸 수 있어야 합니다.
 예) 적용 전: http://site/soojung/entry?blogid=84

@@ -62,7 +62,7 @@ if (isset($_POST["name"])) {
   fwrite($f, $_POST["url"] . "/index.php?page=$1\n");
   fclose($f);
 
-  echo "install success. delete install.php file<br>";
+  echo "install success. delete install.php file and change the soojung directory permission to 755<br />";
   echo "<a href=\"index.php\">home</a>";
   exit();
 }
