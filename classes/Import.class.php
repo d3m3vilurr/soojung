@@ -91,6 +91,64 @@ class Import {
   }
 
   /**
+   * static method
+   */
+  function importB2($dbServer, $dbUser, $dbPass, $dbName, $prefix, $encoding) {
+    $link = mysql_connect($dbServer, $dbUser, $dbPass) or die("could not connect");
+    mysql_select_db($dbName) or die("could not select database");
+
+    // posts
+    $query = "select post_date, post_content, post_title, post_category, ID from " . $prefix . "posts";
+    $result = mysql_query($query) or die("query failed");
+
+    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+      $c_no = $line['post_category'];
+      $c_query = "select cat_name from " . $prefix . "categories where cat_ID = " . $c_no;
+      $c_result = mysql_query($c_query);
+      $c_line = mysql_fetch_array($c_result);
+
+      $category = isset($c_line['cat_name']) ? $c_line['cat_name'] : "General"; //'General' is wp default category
+
+      if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+	$title = $line['post_title'];
+	$body = stripslashes($line['post_content']);
+      } else {
+	$title = iconv($encoding, "UTF-8", $line['post_title']);
+	$body = iconv($encoding, "UTF-8", stripslashes($line['post_content']));
+	$category = iconv($encoding, "UTF-8", $category);
+      }
+      $date = strtotime($line['post_date']);
+      $options = array();
+
+      $id = Entry::createEntry($title, $body, $date, $category, $options);
+
+      // comments
+      $comment_query = "select comment_date, comment_author, comment_author_email, comment_author_url, comment_content from " . $prefix . "comments" . " where comment_post_ID = " . $line['ID'];
+      $comment_result = mysql_query($comment_query) or die("query failed");
+      while ($line = mysql_fetch_array($comment_result, MYSQL_ASSOC)) {
+	if (strcasecmp($encoding, "UTF-8") == 0 || strcasecmp($encoding, "UTF8") == 0) {
+	  $name = $line['comment_author'];
+	  $email = $line['comment_author_email'];
+	  $homepage = $line['comment_author_url'];
+	  $body = $line['comment_content'];
+	} else {
+	  $name = iconv($encoding, "UTF-8", $line['comment_author']);
+	  $email = iconv($encoding, "UTF-8", $line['comment_author_email']);
+	  $homepage = iconv($encoding, "UTF-8", $line['comment_author_url']);
+	  $body = iconv($encoding, "UTF-8", $line['comment_content']);
+	}
+	$date = strtotime($line['comment_date']);
+
+	Comment::writeComment($id, $name, $email, $homepage, $body, $date);
+      }
+      mysql_free_result($comment_result);
+    }
+
+    mysql_free_result($result);
+    mysql_close($link);
+  }
+
+  /**
    * private, static method
    */
   function createFile($xml) {
