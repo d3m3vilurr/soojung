@@ -9,23 +9,34 @@ class Entry {
   var $filename;
   var $href;
 
+  var $options;
+  var $format;
+
   /**
    * Entry file name:
    * contenets/[date]_[entryId].entry
    *
    * Entry file structure:
-   * [date]\r\n
-   * [title]\r\n
-   * [category]\r\n
+   * Date: [date]\r\n
+   * Title: [title]\r\n
+   * Category: [category]\r\n
+   * Options: [option]\r\n
+   * Format: [format]\r\n
+   * \r\n
    * [body]
    */
   function Entry($filename) {
     $this->filename = $filename;
     $fd = fopen($filename, "r");
-    $this->date = trim(fgets($fd));
-    $this->title = trim(fgets($fd));
-    $this->category = new Category(trim(fgets($fd)));
+    
+    //read header
+    $this->date = trim(strstr(fgets($fd), ' '));
+    $this->title = trim(strstr(fgets($fd), ' '));
+    $this->category = new Category(trim(strstr(fgets($fd), ' ')));
+    $this->options = explode("|", trim(strstr(fgets($fd), ' ')));
+    $this->format = trim(strstr(fgets($fd), ' '));
     fclose($fd);
+
     $this->entryId = Soojung::filenameToEntryId($filename);
   }
 
@@ -41,8 +52,11 @@ class Entry {
 
   function getBody() {
     $fd = fopen($this->filename, "r");
-    fgets($fd);
-    fgets($fd);
+    fgets($fd); // date
+    fgets($fd); // title
+    fgets($fd); // category
+    fgets($fd); // options
+    fgets($fd); // format
     fgets($fd);
     $body = fread($fd, filesize($this->filename));
     fclose($fd);
@@ -83,14 +97,14 @@ class Entry {
   /**
    * static method
    */
-  function entryWrite($title, $body, $date, $category, $entryId) {
+  function entryWrite($title, $body, $date, $category, $entryId, $options, $format) {
     $filename = date('YmdHis', $date) . '_' . $entryId . '.entry';
     $fd = fopen('contents/' . $filename, "w");
-    fwrite($fd, $date);
-    fwrite($fd, "\r\n");
-    fwrite($fd, $title);
-    fwrite($fd, "\r\n");
-    fwrite($fd, $category);
+    fwrite($fd, "Date: " . $date . "\r\n");
+    fwrite($fd, "Title: " . $title . "\r\n");
+    fwrite($fd, "Category: " . $category . "\r\n");
+    fwrite($fd, "Options: " . implode("|", $options) . "\r\n");
+    fwrite($fd, "Format: " . $format . "\r\n");
     fwrite($fd, "\r\n");
     fwrite($fd, $body);
     fclose($fd);
@@ -99,9 +113,9 @@ class Entry {
   /**
    * static method
    */
-  function createEntry($title, $body, $date, $category) {
+  function createEntry($title, $body, $date, $category, $options, $format) {
     $id = Soojung::createNewEntryId();
-    Entry::entryWrite($title, $body, $date, $category, $id);
+    Entry::entryWrite($title, $body, $date, $category, $id, $options, $format);
     print $category;
     print "<BR>";
     return $id;
@@ -110,11 +124,11 @@ class Entry {
   /**
    * static method
    */
-  function editEntry($entryId, $title, $body, $date, $category) {
+  function editEntry($entryId, $title, $body, $date, $category, $options, $format) {
     if (file_exists(Soojung::entryIdToFilename($entryId)) !== TRUE)
       return FALSE;
     unlink(Soojung::entryIdToFilename($entryId));
-    Entry::entryWrite($title, $body, $date, $category, $entryId);
+    Entry::entryWrite($title, $body, $date, $category, $entryId, $options, $format);
     return TRUE;
   }
 
