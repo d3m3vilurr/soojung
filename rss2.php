@@ -44,7 +44,7 @@ foreach ($entries as $e) {
   echo "<link>" . $e->getHref() . "</link>\n";
   echo "<pubDate>" . date('r', $e->date) . "</pubDate>\n";
   echo "<category>" . convenc($e->category->name) . "</category>\n";
-  echo "<description>" . convenc(htmlspecialchars(nl2br($post_text))) . "</description>\n";
+  echo "<description>" . convenc(htmlspecialchars($post_text)) . "</description>\n";
   echo "</item>\n";
 }
 ?>
