@@ -128,6 +128,7 @@ Total : {$total_count}<br />
 
 <div id="footer">
 <p>
+{$license_link}<br />
 Copyleft 2004-2005 soojung devel team, all rights reserved.<br />
 Powered by <a href="http://soojung.kldp.net">soojung {$soojung_version}</a>
 </p>

@@ -6,6 +6,7 @@ class UserTemplate extends Template {
   {
     global $blog_skin;
     global $today_count, $total_count;
+    global $entries_license;
 
     $this->Template();
     
@@ -43,6 +44,14 @@ class UserTemplate extends Template {
       }
       $calendar = new Calendar($year, $month, $day);
       $this->assign('calendar', $calendar);
+
+      //license
+      if ($entries_license == "none") {
+	$license_link = "All rights reserved";
+      } else {
+	$license_link = "licensed under a Creative Commons License";
+      }
+      $this->assign('license_link', $license_link);
     }
     $this->assign('today_count', $today_count);
     $this->assign('total_count', $total_count);
