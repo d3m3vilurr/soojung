@@ -1,5 +1,6 @@
 <?php
 @include_once("config.php");
+include("libs/util.php");
 
 setcookie("soojungcountercookie", "on", 0);
 
@@ -13,10 +14,6 @@ if (get_magic_quotes_gpc()) {
   $_POST = array_map('stripslashes_deep', $_POST);
   $_GET = array_map('stripslashes_deep', $_GET);
   $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-}
-
-function br2nl( $data ) {
-   return preg_replace( '!<br.*>!iU', "", $data );
 }
 
 function query_filename_match($query, $dir="contents/") {
@@ -47,27 +44,6 @@ function blogid_to_filename($blogid) {
   $f = query_filename_match("_" . $blogid . "[.]entry$");
   return $f[0];
 
-}
-
-function pre_nl2br($string) {
-  $s = $string;
-  $pos = strpos($s, "<pre");
-  if ($pos === false) {
-    return nl2br($s);
-  }
-
-  $text = "";
-  while (($pos = @strpos($s, "<pre")) !== FALSE) {
-    $text .= nl2br(substr($s, 0, $pos));
-
-    $s = substr($s, $pos);
-    $endpos = strpos($s, "</pre>") + strlen("</pre>");
-
-    $text .= substr($s, 0, $endpos);
-    $s = substr($s, $endpos);
-  }
-  $text .= $s;
-  return $text;
 }
 
 function notify_to_admin($title, $blogid) {
@@ -132,6 +108,8 @@ function entry_edit($blogid, $title, $body, $date, $category) {
 
 function entry_delete($blogid) {
   unlink(blogid_to_filename($blogid));
+  //TODO: if entry has comments or trackback, also delete
+  rmdirr("contents/" . $blogid);
 }
 
 function get_entry_count() {
@@ -232,12 +210,6 @@ function get_comments($blogid) {
   return $comments;
 }
 
-function cmp_filename($a, $b) {
-  $filename1 = basename($a);
-  $filename2 = basename($b);
-  return ($filename1 < $filename2) ? 1 : -1;
-}
-
 function get_recent_comments($n) {
   $comment_filenames = array();
   $dirs = query_filename_match("^[0-9]+$", "contents/");
@@ -247,7 +219,7 @@ function get_recent_comments($n) {
       $comment_filenames[] = $file;
     }
   }
-  usort($comment_filenames, "cmp_filename");
+  usort($comment_filenames, "cmp_base_filename");
 
   $comment_filenames = array_slice($comment_filenames, 0, $n);
   $comments = array();
@@ -321,7 +293,7 @@ function get_recent_trackbacks($n) {
       $filenames[] = $file;
     }
   }
-  usort($filenames, "cmp_filename");
+  usort($filenames, "cmp_base_filename");
   $filenames = array_slice($filenames, 0, $n);
   $trackbacks = array();
   foreach ($filenames as $f) {
@@ -635,7 +607,7 @@ function create_file($xml) {
 
   $dir = dirname($name);
   if (file_exists($dir) == FALSE) {
-    mkdir($dir, 0777); //TODO: mkdir_p
+    mkdir($dir, 0777); //TODO: mkdirr
   }
   $fd = fopen($name, "wb");
 
