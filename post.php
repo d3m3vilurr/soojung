@@ -50,7 +50,7 @@ if ($_POST["mode"] == "upload") {
     }
     echo "post success<br>";
     echo "<a href=\"admin.php\">admin</a> ";
-    echo "<a href=\"\">index</a><br>";
+    echo "<a href=\"index.php\">index</a><br />";
     exit;
   }
 } else if ($_GET["blogid"]) { //edit
