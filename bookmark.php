@@ -28,6 +28,7 @@ if ($_POST["mode"] == "post") {
   $url = $_GET["url"];
   Bookmark::deleteBookmark($url);
 } else if ($_GET["mode"] == "move") {
+  $url = $_GET["url"];
   $offset = intval($_GET["offset"]);
   Bookmark::moveBookmark($url, $offset);
 }
