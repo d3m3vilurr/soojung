@@ -32,10 +32,9 @@ class UserTemplate extends Template {
       $this->assign('recent_referers', Soojung::getRecentReferers(10));
 
       $this->assign('bookmarks', Bookmark::getBookmarkList());
-
-      $this->assign('today_count', $today_count);
-      $this->assign('total_count', $total_count);
     }
+    $this->assign('today_count', $today_count);
+    $this->assign('total_count', $total_count);
     $year = 0;
     $month = 0;
     $day = 0;
