@@ -19,7 +19,7 @@ function smarty_make_timestamp($string)
         $string = "now";
     }
     $time = strtotime($string);
-    if (is_numeric($time) && $time != -1)
+    if (is_numeric($time) && $time != -1 && $time <= 0x7FFFFFFF)
         return $time;
 
     // is mysql timestamp format of YYYYMMDDHHMMSS?
