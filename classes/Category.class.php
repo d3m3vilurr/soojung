@@ -8,10 +8,7 @@ class Category {
   }
 
   function getHashID() {
-    $hash = md5($this->name);
-    return sprintf("%08x",
-      hexdec(substr($hash, 0, 8)) + hexdec(substr($hash, 8, 8)) +
-      hexdec(substr($hash, 16, 8)) + hexdec(substr($hash, 24, 8)));
+    return base64_encode($this->name);
   }
 
   function getHref() {
