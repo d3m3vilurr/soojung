@@ -177,3 +177,7 @@ pre
   width: 70%;
   border-bottom: 3px solid #ddd;  
 }
+
+#sidebar .calendar_days a {
+  color: #930;
+}
