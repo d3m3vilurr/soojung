@@ -9,6 +9,13 @@ if ($_POST["mode"] == "login") {
   }
 }
 
+$smarty = new Smarty;
+$smarty->compile_dir = "templates/.compile/";
+$smarty->config_dir = "templates/.configs/";
+$smarty->cache_dir = "templates/.cache/";
+$smarty->template_dir = "templates/admin/";
+$smarty->assign('baseurl', $blog_baseurl);
+
 if (!isset($_SESSION["auth"])) {
   $smarty->display('login.tpl');
   exit();
@@ -37,13 +44,6 @@ if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
 } else if ($_GET["mode"] == "delete_entry" && isset($_GET["blogid"])) {
   entry_delete($_GET["blogid"]);
 }
-
-$smarty = new Smarty;
-$smarty->compile_dir = "templates/.compile/";
-$smarty->config_dir = "templates/.configs/";
-$smarty->cache_dir = "templates/.cache/";
-$smarty->template_dir = "templates/admin/";
-$smarty->assign('baseurl', $blog_baseurl);
 
 if ($_GET["mode"] == "config") {
   $smarty->assign("blog_name", $blog_name);
