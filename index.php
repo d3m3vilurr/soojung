@@ -3,6 +3,9 @@
 include_once("settings.php");
 
 $template = new UserTemplate;
+if (isset($_GET["compile"])) {
+  $template->force_compile=true;
+}
 
 if (isset($_GET["page"])) {
   $page = $_GET["page"];

@@ -30,6 +30,7 @@ if ($_POST["mode"] == "config_update") {
 		    $_POST["fancyurl"], $_POST["notify"], $_POST["adminname"], $_POST["email"],
 		    FALSE, $_POST["skin"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
+  exit;
 }
 
 if ($_GET["mode"] == "delete" && isset($_GET["file"])) {
