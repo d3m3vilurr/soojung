@@ -52,7 +52,7 @@
 	{else}
 		<script type="text/javascript">
 			var oFCKeditor = new FCKeditor( 'body' ) ;
-			oFCKeditor.BasePath = "templates/admin/fckeditor/";	
+			oFCKeditor.BasePath = "libs/fckeditor/";	
 
 			oFCKeditor.Value = '{$body|replace:"\r\n":"<br />"}';
 			oFCKeditor.Width = "80%";
