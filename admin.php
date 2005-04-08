@@ -76,7 +76,7 @@ function clear_referer_mode() {
   @unlink("contents/.referer");
 }
 
-if ($_POST["mode"] == "login") {
+if (array_key_exists("mode", $_POST) and $_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password) {
     $_SESSION['auth'] = TRUE;
     header("Location: admin.php");
