@@ -125,8 +125,8 @@ class Bookmark {
    * read $bookmarks from file
    */
   function getBookmarkList() {
+    $bookmarks = array();
     if (is_file("contents/.bookmark")) {
-      $bookmarks = array();
       if (!file_exists("contents/.bookmark")) {
 	return $bookmarks;
       }
