@@ -101,8 +101,8 @@ if ($_POST["mode"] == "upload") {
   $title = $_POST["title"];
   $format = $_POST["format"];
   $formatter = Soojung::getFormatter($format);
+  $preview_body = $formatter->toHtml($_POST["body"]);
   $body = $formatter->onPost($_POST["body"]);
-  $body = nl2br($body);
   $date = strtotime($_POST["date"]);
   if (empty($_POST["category_input"]) == false) {
     $category = trim($_POST["category_input"]);
@@ -132,6 +132,9 @@ if ($_POST["mode"] == "upload") {
 $template = new AdminTemplate;
 
 $template->assign("title", $title);
+if (isset($preview_body)) {
+$template->assign("preview", $preview_body);
+}
 $template->assign("body", $body);
 $template->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()+10));
 $template->assign("category", $category);

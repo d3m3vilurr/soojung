@@ -1,16 +1,17 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
 
+<div id="post">
+
 {if $mode == "preview"}
 <h1>preview</h1>
 <h2>{$title}</h2>
-{$body}
+{$preview}
 <br />
 {$category}, {$date}
 <hr />
 {/if}
 
-<div id="post">
 <form action="{$baseurl}/post.php" method="post" name="postForm">
 <div class="row">
 <span class="label">Title:</span>
