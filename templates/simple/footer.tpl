@@ -11,9 +11,9 @@
 </ul>
 
 <h3><a href="#none" onclick="return fold_sidebar('div_calendar');">Calendar</a></h3>
-<div id="div_calendar">
+<ul id="div_calendar">
 	<li>{$calendar->getCalendar()}</li>
-</div>
+</ul>
 
 <h3><a href="#none" onclick="return fold_sidebar('div_category');">Categories</a></h3>
 <ul id="div_category">
