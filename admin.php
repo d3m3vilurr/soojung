@@ -76,6 +76,11 @@ function clear_referer_mode() {
   @unlink("contents/.referer");
 }
 
+function logout_mode() {
+  unset($_SESSION['auth']);
+  header("Location: admin.php");
+}
+
 if (array_key_exists("mode", $_POST) and $_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password) {
     $_SESSION['auth'] = TRUE;
@@ -102,6 +107,8 @@ if ($_POST["mode"] == "config_update") {
   clear_cache_mode();
 } else if ($_GET["mode"] == "clear_referer") {
   clear_referer_mode();
+} else if ($_GET["mode"] == "logout") {
+  logout_mode();
 }
 
 if ($_GET["mode"] == "config") {

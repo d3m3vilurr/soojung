@@ -32,4 +32,7 @@
 <a href="{$baseurl}/uninstall.php" onClick="return confirm('Are you sure want to uninstall soojung?')">UnInstall</a>
 </div>
 
+<div class="menu_item">
+<a href="{$baseurl}/admin.php?mode=logout">Logout</a>
+</div>
 </div>
