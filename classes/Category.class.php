@@ -27,13 +27,21 @@ class Category {
     return $blog_baseurl . "/rss2.php?category=" . $this->name;
   }
 
-  function getEntries() {
+  function getEntries($count = -1, $page = 1) {
     $entries = array();
     $query = "^[0-9].+_" . str_replace("+", "\\+", $this->getHashID()) . "_.+[.]entry$";
     $filenames = Soojung::queryFilenameMatch($query);
     usort($filenames, "cmp_base_filename");
-    foreach($filenames as $filename) {
-      $entries[] = new Entry($filename);
+
+    if ($count == -1) { //all
+      foreach($filenames as $filename) {
+	$entries[] = new Entry($filename);
+      }
+    } else {
+      $index = ($page - 1) * $count;
+      for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
+	$entries[] = new Entry($filenames[$i]);
+      }
     }
     return $entries;
   }

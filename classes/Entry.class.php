@@ -232,19 +232,6 @@ class Entry {
   /**
    * static method
    */
-  /*
-  function getStaticEntries() {
-    $entries = array();
-    $query = "^[0-9].+S_.+[.]entry$";
-    $filenames = Soojung::queryFilenameMatch($query);
-    usort($filenames, "cmp_base_filename");
-    foreach($filenames as $filename) {
-      $entries[] = new Entry($filename);
-    }
-    return $entries;
-  }
-  */
-
   function getStaticEntries($count = -1, $page = 1) {
     $entries = array();
     $query = "^[0-9].+S_.+[.]entry$";

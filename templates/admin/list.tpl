@@ -5,7 +5,14 @@
 
 <div class="submenu">
 <a href="{$baseurl}/admin.php?mode=list">show all</a> -
-<a href="{$baseurl}/admin.php?mode=list&flag=static">show only static</a>
+<a href="{$baseurl}/admin.php?mode=list&flag=static">show only static</a> -
+show only 
+<select name="category" onchange="return changeCategory(this)">
+{foreach name=categories from=$categories item=cate}
+	<option value="{$cate->name}" {if $flag == $cate->name}selected{/if}>{$cate->name}
+{/foreach}
+</select>
+category
 </div>
 
 <p class="navbar">

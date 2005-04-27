@@ -26,3 +26,6 @@ function switchDiv(field) {
 	return false;
 }
 
+function changeCategory($category) {
+	location.href = "admin.php?mode=list&flag=" + $category.value;
+}

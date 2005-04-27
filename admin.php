@@ -4,6 +4,15 @@ session_start();
 include("config.php");
 include_once("settings.php");
 
+function category_in_array($categoryName, $categories) {
+  foreach ($categories as $c) {
+    if ($c->name == $categoryName) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function config_update_mode() {
   if (empty($_POST["blogname"]) || empty($_POST["desc"]) ||
       empty($_POST["url"]) || empty($_POST["adminname"]) ||
@@ -134,8 +143,13 @@ if ($_GET["mode"] == "config") {
   }
 
   $count = 0;
+  $categories = Category::getCategoryList();
+
   if ($_GET["flag"] == "static") {
     $count = Entry::getStaticEntryCount();
+  } else if (category_in_array($_GET["flag"], $categories)) {
+    $cate = new Category($_GET["flag"]);
+    $count = $cate->getEntryCount();
   } else {
     $count = Entry::getEntryCount(false);
   }
@@ -155,11 +169,18 @@ if ($_GET["mode"] == "config") {
     $template->assign('next_page_link', $next_link);
   }
 
+
   if ($_GET["flag"] == "static") {
     $template->assign('entries', Entry::getStaticEntries(10, $page));
+  } else if (category_in_array($_GET["flag"], $categories)) {
+    $cate = new Category($_GET["flag"]);
+    $template->assign('entries', $cate->getEntries(10, $page));
   } else {
     $template->assign('entries', Entry::getEntries(10, $page, false));
   }
+
+  $template->assign("categories", $categories);
+  $template->assign("flag", $_GET["flag"]);
   $template->display('list.tpl');
 } else {
   $template->assign('recent_entries', Entry::getRecentEntries(5, false));
