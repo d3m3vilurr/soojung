@@ -132,13 +132,34 @@ if ($_GET["mode"] == "config") {
   } else {
     $page = 1;
   }
+
+  $count = 0;
+  if ($_GET["flag"] == "static") {
+    $count = Entry::getStaticEntryCount();
+  } else {
+    $count = Entry::getEntryCount(false);
+  }
+
   if ($page > 1) {
-    $template->assign('prev_page_link', "admin.php?mode=list&page=" . ($page - 1));
+    $prev_link = "admin.php?mode=list&page=" . ($page - 1);
+    if (isset($_GET["flag"])) {
+      $prev_link .= "&flag=" . $_GET["flag"];
+    }
+    $template->assign('prev_page_link', $prev_link);
   }
-  if (Entry::getEntryCount(false) > $page * 10) {
-    $template->assign('next_page_link', "admin.php?mode=list&page=" . ($page + 1));
+  if ($count > $page * 10) {
+    $next_link = "admin.php?mode=list&page=" . ($page + 1);
+    if (isset($_GET["flag"])) {
+      $next_link .= "&flag=" . $_GET["flag"];
+    }
+    $template->assign('next_page_link', $next_link);
   }
-  $template->assign('entries', Entry::getEntries(10, $page, false));
+
+  if ($_GET["flag"] == "static") {
+    $template->assign('entries', Entry::getStaticEntries(10, $page));
+  } else {
+    $template->assign('entries', Entry::getEntries(10, $page, false));
+  }
   $template->display('list.tpl');
 } else {
   $template->assign('recent_entries', Entry::getRecentEntries(5, false));

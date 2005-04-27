@@ -3,6 +3,11 @@
 
 <div id="list">
 
+<div class="submenu">
+<a href="{$baseurl}/admin.php?mode=list">show all</a> -
+<a href="{$baseurl}/admin.php?mode=list&flag=static">show only static</a>
+</div>
+
 <p class="navbar">
 {if $prev_page_link != ""}
 	<a href="{$prev_page_link|escape}">&laquo; prev</a>
