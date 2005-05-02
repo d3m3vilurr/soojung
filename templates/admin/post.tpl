@@ -79,7 +79,7 @@
 <div class="row">
 <span class="label">Upload:</span>
 <span class="formw">
-<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=500,height=300')">Upload Files</a>
+<a href="#" onClick="window.open('{$baseurl}/upload.php','blah','width=500,height=300,scrollbars=yes')">Upload Files</a>
 </span>
 </div>
 

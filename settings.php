@@ -1,6 +1,6 @@
 <?php
 
-$soojung_version = '0.4.8';
+$soojung_version = '0.4.9';
 setlocale(LC_TIME, "C");
 
 header("Content-type: text/html; charset=utf-8");

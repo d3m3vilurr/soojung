@@ -87,7 +87,9 @@ function clear_referer_mode() {
 
 function logout_mode() {
   unset($_SESSION['auth']);
-  header("Location: admin.php");
+  setcookie(session_name(), '', 0, '/');
+  header("Location: index.php");
+  exit();
 }
 
 if (array_key_exists("mode", $_POST) and $_POST["mode"] == "login") {
