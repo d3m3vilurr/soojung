@@ -8,7 +8,7 @@
 	</tr>
 	<tr>
 		<td align=center bgcolor=#e5ecf9>&nbsp;<br />
-			<form action="index.php" method="get">
+			<form action="{$baseurl}/index.php" method="get">
 			<table border=0 cellpadding=0 cellspacing=0 align=center>
 				<tr>
 					<td nowrap>

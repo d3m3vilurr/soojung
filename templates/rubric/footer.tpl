@@ -25,7 +25,7 @@
 </li>
 <li id="search">
 	Search:
-	<form id="searchform" action="index.php" method="get">
+	<form id="searchform" action="{$baseurl}/index.php" method="get">
 	<div>
 		<input type="text" name="search" title="input search text" size="15" /><br />
 		<input type="submit" value="search" />

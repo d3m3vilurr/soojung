@@ -103,7 +103,7 @@
 
 {if #showSearchForm# != -1}
 <h3><a href="#none" onclick="return fold_sidebar('div_search');">Search</a></h3>
-<form action="index.php" method="get" id="div_search"{if #showSearchForm# == 0} class="hide"{/if}>
+<form action="{$baseurl}/index.php" method="get" id="div_search"{if #showSearchForm# == 0} class="hide"{/if}>
 	<p>
 	<input type="text" name="search" title="input search text" />
 	<input type="submit" value="go" />

@@ -9,7 +9,7 @@
 </ul>
 
 <h2>Search</h2>
-<form action="index.php" method="get">
+<form action="{$baseurl}/index.php" method="get">
 <p>
 <input type="text" name="search" id="search" title="input search text" size="16" onfocus="this.className='on'; return true" onblur="this.className='off'; return true" /> <input type="submit" value="Go" />
 </p>

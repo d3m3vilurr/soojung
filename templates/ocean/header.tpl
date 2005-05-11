@@ -20,7 +20,7 @@
 			<h2>{$description}</h2>
 		</div>
 		<div id="controls">
-			<form id="searchform" action="index.php" method="get">
+			<form id="searchform" action="{$baseurl}/index.php" method="get">
 				<p>
 					<label id="searchlabel">Search:</label><input id="searchfield" type="text" name="search" title="input search text" />
 					<input id="searchimage" type="image" src="{$baseurl}/templates/{$skin}/images/ocean-search.jpg" value="submit" alt="Search" />

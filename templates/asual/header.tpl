@@ -17,7 +17,7 @@
 			<span>{$description}</span>
 		</h1>
 		<div id="searchbox">
-			<form action="index.php" method="get">
+			<form action="{$baseurl}/index.php" method="get">
 			<p id="searchlabel"><label for="searchfield">Search:</label></p>
 			<p id="searchfield"><input type="text" name="search" title="input search text" /></p>
 			<p id="searchimg"><input type="image" src="{$baseurl}/templates/{$skin}/images/asual-search.jpg" value="submit" alt="Search" /></p>
