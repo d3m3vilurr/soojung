@@ -8,9 +8,9 @@
 <body>
 
 <form enctype="multipart/form-data" action="{$baseurl}/upload.php" method="post">
-Upload: <input type="file" name="file">
-<input type="hidden" name="mode" value="upload">
-<input type="submit" value="Upload">
+Upload: <input type="file" name="file" />
+<input type="hidden" name="mode" value="upload" />
+<input type="submit" value="Upload" />
 </form>
 
 <!-- file list -->

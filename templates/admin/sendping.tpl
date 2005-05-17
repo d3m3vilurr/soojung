@@ -15,7 +15,7 @@
 <div class="trackback_entry">
      <form action="sendping.php" method="post">
      Trackback URL to send trackback ping: <br /> 
-     <input type="text" name="trackback_url" value="http://"><br /><br />
+     <input type="text" name="trackback_url" value="http://" /><br /><br />
 
      Remote Blog's encoding :
      <select name="encoding">
@@ -23,10 +23,10 @@
          <option value="CP949">cp949 (euc-kr)</option>
      </select> 
      or 
-     <input type="text" name="encoding_input" value=""> 
+     <input type="text" name="encoding_input" value="" /> 
      <br />
-     <input type="hidden" name="mode" value="post">
-     <input type="hidden" name="blogid" value={$entry->entryId}>
+     <input type="hidden" name="mode" value="post" />
+     <input type="hidden" name="blogid" value={$entry->entryId} />
      <input type="submit" value="Send Ping"><br />
 </form>
 

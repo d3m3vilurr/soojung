@@ -123,16 +123,11 @@ class PlainFormatter extends Formatter {
   function toHtml($str) {
     $trans = array("\\\r\n"=>"", "\\\r"=>"", "\\\n"=>"");
     $text = "";
-    $spos = 0;
+	$spos = 0;
     while (($pos = @strpos($str, "<pre", $spos)) !== FALSE) {
       $text .= nl2br(strtr(trim(substr($str, $spos, $pos-$spos)), $trans));
-      $spos = strpos($str, "</pre>", $pos);
-      if ($spos === false) {
-	$str .= "</pre>";
-	$spos = strlen($str);
-      }
-      $spos += 6;
-      $text .= substr($str, $pos, $spos-$pos);
+	  $spos = strpos($str, "</pre>", $spos) + 6;
+	  $text .= substr($str, $pos, $spos-$pos);
     }
     $text .= nl2br(strtr(trim(substr($str, $spos)), $trans));
     return $text;
@@ -209,8 +204,8 @@ class BBcodeFormatter extends Formatter {
         'BBcodeFormatter::__listing("\1","\2")',
         'BBcodeFormatter::__escape("<a href=\\"\1\\">\1</a>")',
         'BBcodeFormatter::__escape("<a href=\\"\2\\">\3</a>")',
-        'BBcodeFormatter::__escape("<img src=\\"\1\\" width=\\"\\" height=\\"\\" alt=\\"\1\\\" class=\\"bbcode\\" />")',
-        'BBcodeFormatter::__escape("<img src=\\"\2\\" width=\\"\\" height=\\"\\" alt=\\"\3\\\" class=\\"bbcode\\" />")',
+        'BBcodeFormatter::__escape("<img src=\\"\1\\" alt=\\"\1\\\" />")',
+        'BBcodeFormatter::__escape("<img src=\\"\2\\" alt=\\"\3\\\" />")',
         'BBcodeFormatter::__escape("<a href=\\"mailto:\1\\">\1</a>")'),
       $rule2 = array(
         '#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i',
@@ -246,7 +241,7 @@ class BBcodeFormatter extends Formatter {
     if(is_null($smiley)) {
       $smiley = array();
       foreach($_smiley as $k => $v) {
-        $smiley[htmlspecialchars($k)] = '<img src="./libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
+        $smiley[htmlspecialchars($k)] = '<img src="/blog/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
       }
     }
 
@@ -301,27 +296,31 @@ class MoniwikiFormatter extends Formatter {
 	$punct="<\'}\]\|;\.\!"; # , is omitted for the WikiPedia
     $url="wiki|http|https|ftp|nntp|news|irc|telnet|mailto|file|attachment";
     $urlrule="((?:$url):([^\s$punct]|(\.?[^\s$punct]))+)";
-    $baserule=array("/<([^\s<>])/","/`([^`' ]+)'/","/(?<!`)`([^`]*)`/",
-                     "/'''([^']*)'''/","/(?<!')'''(.*)'''(?!')/",
-                     "/''([^']*)''/","/(?<!')''(.*)''(?!')/",
-                     "/\^([^ \^]+)\^(?=\s|$)/","/\^\^([^\^]+)\^\^(?!^)/",
-                     "/(?<!,),,([^ ,]+),,(?!,)/",
-                     "/(?<!_)__([^_]+)__(?!_)/","/^(-{4,})/e",
-                     "/(?<!-)--[^\s]([^-]+)[^\s]--(?!-)/",
-		     "/\[\[BR\]\]/",
-		     "/\[\[HTML\(&lt;(.*)\)\]\]/",
-                     );
-    $baserepl=array("&lt;\\1","&#96;\\1'","<tt class='wiki'>\\1</tt>",
-                     "<b>\\1</b>","<b>\\1</b>",
-                     "<i>\\1</i>","<i>\\1</i>",
-                     "<sup>\\1</sup>","<sup>\\1</sup>",
-                     "<sub>\\1</sub>",
-                     "<u>\\1</u>",
-                     "<div class='separator'><hr class='wiki' /></div>\n",
-                     "<del>\\1</del>",
-		     "<br />",
-		     "<\\1",
-                     );
+    $baserule=array("/<([^\s<>])/","/`([^`' ]+)'/",
+					"/(?<!`)`([^`]*)`/",
+                    "/'''([^']*)'''/","/(?<!')'''(.*)'''(?!')/",
+                    "/''([^']*)''/","/(?<!')''(.*)''(?!')/",
+                    "/\^([^ \^]+)\^(?=\s|$)/","/\^\^([^\^]+)\^\^(?!^)/",
+                    "/(?<!,),,([^ ,]+),,(?!,)/",
+                    "/(?<!_)__([^_]+)__(?!_)/",
+					//"/^(-{4,})/e",
+                    "/(?<!-)--[^\s]([^-]+)[^\s]--(?!-)/",
+				    "/\[\[BR\]\]/",
+				    "/\[\[HTML\(&lt;(.*)\)\]\]/",
+                    );
+    $baserepl=array("&lt;\\1","&#96;\\1'",
+					"<tt class='wiki'>\\1</tt>",
+                    "<b>\\1</b>","<b>\\1</b>",
+                    "<i>\\1</i>","<i>\\1</i>",
+                    "<sup>\\1</sup>","<sup>\\1</sup>",
+                    "<sub>\\1</sub>",
+                    "<u>\\1</u>",
+                    //"<div class='separator'><hr class='wiki' /></div>",
+					//"<u>\\1</u>",
+                    "<del>\\1</del>",
+				    "<br />",
+				    "<\\1",
+                    );
 
     # NoSmoke's MultiLineCell hack
     $extrarule=array("/{{\|/","/\|}}/");
@@ -348,15 +347,17 @@ class MoniwikiFormatter extends Formatter {
 
     foreach ($lines as $line) {
       # empty line
-      if (strlen($line) == 1) {
+	  $line = trim($line);
+      if (strlen($line) == 0) {
         if ($in_pre) { $pre_line.="\n";continue;}
         if ($in_li) { $text.="<br />\n";$li_empty=1; continue;}
         if ($in_table) {
           $text.="</table>"."<br />\n";$in_table=0; continue;
         } else {
           #if ($in_p) { $text.="</div><br />\n"; $in_p='';}
-          if ($in_p) { $text.=$this->_div(0,&$in_div)."<br />\n"; $in_p='';}
-          else if ($in_p=='') { $text.="<br />\n";}
+          //if ($in_p) { $text.=$this->_div(0,&$in_div)."<br />\n"; $in_p='';}
+          //else if ($in_p=='') { $text.="<br />\n";}
+		  $text.="<br /><br />\n";
           continue;
         }
       }
@@ -426,7 +427,15 @@ class MoniwikiFormatter extends Formatter {
            } elseif (preg_match("/^((\d+|[aAiI])\.)(#\d+)?\s/",$line,$limatch)){
              $line=preg_replace("/^((\d+|[aAiI])\.(#\d+)?)/","<li>",$line);
              if ($indent_list[$in_li] == $indlen) $line="</li>\n".$line;
-             $numtype=$limatch[2][0];
+             //$numtype=$limatch[2][0];
+			 switch($limatch[2][0]) {
+				case "A": $numtype = "class=\"list-ualpha\""; break;
+			    case "a": $numtype = "class=\"list-lalpha\""; break;
+				case "1": $numtype = "class=\"list-decimal\""; break;
+				case "I": $numtype = "class=\"list-uroman\""; break;
+				case "i": $numtype = "class=\"list-lroman\""; break;
+				default: $numtype = "";
+			 }
              if ($limatch[3])
                $numtype.=substr($limatch[3],1);
              $indtype="ol";
@@ -457,18 +466,17 @@ class MoniwikiFormatter extends Formatter {
          if ($indent_list[$in_li] <= $indlen || $limatch) $li_open=$in_li;
          else $li_open=0;
       }
-
       if (!$in_pre && $line[0]=='|' && !$in_table && preg_match("/^((\|\|)+)(&lt;[^>]+>)?.*\|\|$/",$line,$match)) {
-		 $open.="<table class='wiki' cellpadding='3' cellspacing='2' substr($match[3],4,-1)>\n";
+		 $open.=$this->_table(1,$match[3]);
          $line=preg_replace('/^((\|\|)+)(&lt;[^>]+>)?/','\\1',$line);
          $in_table=1;
       } elseif ($in_table && $line[0]!='|' && !preg_match("/^\|\|.*\|\|$/",$line)){
-         $close="</table>".$close;
+         $close=$this->_table(0).$close;
          $in_table=0;
       }
       if ($in_table) {
-         $line=preg_replace('/^((?:\|\|)+(&lt;[^>]+>)?)((\s?)(.*))\|\|$/e',"'<tr class=\"wiki\"><td class=\"wiki\" '.\_table_span('\\1','\\4').'>\\3</td></tr>'",$line);
-         $line=preg_replace('/((\|\|)+(&lt;[^>]+>)?)(\s?)/e',"'</td><td class=\"wiki\" '.\_table_span('\\1','\\4').'>\\4'",$line);
+         $line=preg_replace('/^((?:\|\|)+(&lt;[^>]+>)?)((\s?)(.*))\|\|$/e',"'<tr class=\"wiki\"><td class=\"wiki\" '.\$this->_table_span('\\1','\\4').'>\\3</td></tr>'",$line);
+         $line=preg_replace('/((\|\|)+(&lt;[^>]+>)?)(\s?)/e',"'</td><td class=\"wiki\" '.\$this->_table_span('\\1','\\4').'>\\4'",$line);
          $line=str_replace('\"','"',$line); # revert \\" to \"
       }
 
@@ -559,15 +567,24 @@ class MoniwikiFormatter extends Formatter {
 
     if ($on) {
       if ($numtype) {
-        $start=substr($numtype,1);
+        //$start=substr($numtype,1);
         if ($start)
-          return "<$list_type type='$numtype[0]' start='$start'>";
-        return "<$list_type type='$numtype[0]'>";
+          return "<$list_type $numtype start='$start'>";
+        return "<$list_type $numtype>";
       }
       return "$close$open<$list_type>\n";
     } else {
       return "</$list_type>\n$close$open";
     }
+  }
+
+  function _table($on,$attr='') {
+    if ($attr) {
+      $attr=substr($attr,4,-1);
+    }
+    if ($on)
+      return "<table class='wiki' cellpadding='3' cellspacing='2' $attr>\n";
+    return "</table>\n";
   }
 
   function _table_span($str,$align='') {
@@ -665,7 +682,7 @@ class MoniwikiFormatter extends Formatter {
     case '{':
       $url=substr($url,3,-3);
       if ($url[0]=='#' and ($p=strpos($url,' '))) {
-	$col=strtok($url,' '); $url=strtok(' ');
+	$col=strtok($url,' '); $url=strtok('');
 	if (!preg_match('/^#[0-9a-f]{6}$/',$col)) $col=substr($col,1);
 	return "<font color='$col'>$url</font>";
       }

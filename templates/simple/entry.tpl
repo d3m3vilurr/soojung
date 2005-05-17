@@ -42,18 +42,18 @@
 {/foreach}
 </div>
 
-<form action="" method="post">
+<form action="entry.php" method="post">
 Post a comment<br />
 Name:<br />
-<input type="text" name="name" value="{$w_name|escape}"><br />
+<input type="text" name="name" value="{$w_name|escape}" /><br />
 Email Address:<br />
-<input type="text" name="email" value="{$w_email|escape}"><br />
+<input type="text" name="email" value="{$w_email|escape}" /><br />
 URL:<br />
-<input type="text" name="url" value="{$w_url|default:"http://"|escape}"><br />
+<input type="text" name="url" value="{$w_url|default:"http://"|escape}" /><br />
 Comments:<br />
 <textarea name="body" rows="5" cols="40"></textarea><br />
-<input type="hidden" name="blogid" value="{$entry->entryId}">
-<input type="submit" value="Post">
+<input type="hidden" name="blogid" value="{$entry->entryId}" />
+<input type="submit" value="Post" />
 </form>
 {/if}
 

@@ -7,17 +7,17 @@
 
 <div class="row">
 <span class="label">Blog Name:</span>
-<span class="formw"><input type="text" name="blogname" value="{$blog_name}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="blogname" value="{$blog_name}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
 <span class="label">Blog Description:</span>
-<span class="formw"><input type="text" name="desc" value="{$blog_desc}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="desc" value="{$blog_desc}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
 <span class="label">Blog URL:</span>
-<span class="formw"><input type="text" name="url" value="{$baseurl}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="url" value="{$baseurl}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
@@ -49,42 +49,42 @@
 
 <div class="row">
 <span class="label">Admin Name:</span>
-<span class="formw"><input type="text" name="adminname" value="{$admin_name}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="adminname" value="{$admin_name}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
 <span class="label">Admin Email:</span>
-<span class="formw"><input type="text" name="email" value="{$admin_email}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="email" value="{$admin_email}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
 <span class="label">Admin Password:</span>
-<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if}> <i>If you want to change the password, input new password.</i></span>
+<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if} /> <i>If you want to change the password, input new password.</i></span>
 </div>
 
 <div class="row">
 <span class="label">Entries per page:</span>
-<span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}" {if !$config_writable}disabled{/if}></span>
+<span class="formw"><input type="text" name="perpage" value="{$blog_entries_per_page}" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 <div class="row">
 <span class="label">Fancy URL:</span>
 <span class="formw">
-<input type="checkbox" name="fancyurl" {if $blog_fancyurl}checked{/if} {if !$config_writable}disabled{/if}>
+<input type="checkbox" name="fancyurl" {if $blog_fancyurl}checked{/if} {if !$config_writable}disabled{/if} />
 </span>
 </div>
 
 <div class="row">
 <span class="label">Notify email:</span>
 <span class="formw">
-<input type="checkbox" name="notify" {if $blog_notify}checked{/if} {if !$config_writable}disabled{/if}>
+<input type="checkbox" name="notify" {if $blog_notify}checked{/if} {if !$config_writable}disabled{/if} />
 </span>
 </div>
 
-<input type="hidden" name="mode" value="config_update">
+<input type="hidden" name="mode" value="config_update" />
 
 <div class="row">
-<span class="label"><input type="submit" value="update" {if !$config_writable}disabled{/if}></span>
+<span class="label"><input type="submit" value="update" {if !$config_writable}disabled{/if} /></span>
 </div>
 
 </form>
