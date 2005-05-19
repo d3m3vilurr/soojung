@@ -43,7 +43,7 @@ class Trackback {
     fgets($fd, 1024);
     fgets($fd, 1024);
     fgets($fd, 1024);
-    $excerpt = fread($fd, filesize($this->filename));
+    $excerpt = strip_tags(fread($fd, filesize($this->filename)));
     fclose($fd);
     return $excerpt;
   }
@@ -133,11 +133,9 @@ class Trackback {
       $tb_title = rawurlencode('title');
     }
 
-    $tb_excerpt = $entry->getBody();
+    $tb_excerpt = strip_tags($entry->getBody());
+    $tb_excerpt = substring($tb_excerpt,252);
 
-    if (strlen ($tb_excerpt) > 255) {
-      $tb_excerpt = substring($tb_excerpt,252);
-    }
     $tb_excerpt = rawurlencode(iconv("UTF-8", $encoding, $tb_excerpt));
 
     if (isset($blog_name)) {

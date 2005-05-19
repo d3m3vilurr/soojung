@@ -8,9 +8,9 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   $blogid = $_GET["blogid"];
   $entry = Entry::getEntry($blogid);
 
-  $excerpt = $entry->getBody();
-  if (strlen ($excerpt) > 255)
-    $excerpt = substr($excerpt,0, 252) . "...";
+  $excerpt = strip_tags($entry->getBody());
+  $excerpt = substring($excerpt,252);
+
   echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
   echo "<response>\n";
   echo "<error>0</error>\n";
@@ -32,9 +32,11 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
 if (isset($_REQUEST["url"]) || isset($_REQUEST["blogid"])) {
   $id = $_REQUEST["blogid"];
   $url = $_REQUEST["url"];
-  $title = $_REQUEST["title"];
-  $excerpt = $_REQUEST["excerpt"];
-  $name = $_REQUEST["blog_name"];
+  $title = stripslashes($_REQUEST["title"]);
+  $excerpt = stripslashes(strip_tags($_REQUEST["excerpt"]));
+  $excerpt = substring($excerpt,252);  
+  $name = stripslashes($_REQUEST["blog_name"]);
+
 
 
 #  $encoding_title = detect_encoding ($title);
