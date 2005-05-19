@@ -81,6 +81,11 @@
 </span>
 </div>
 
+<div class="row">
+<span class="label">Spam words:</span>
+<span class="formw"><textarea name="word" rows="10" cols="65" {if !$config_writable}disabled{/if} >{$spam_words}</textarea></span>
+</div>
+
 <input type="hidden" name="mode" value="config_update" />
 
 <div class="row">

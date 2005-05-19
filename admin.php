@@ -28,7 +28,8 @@ function config_update_mode() {
   }
   Soojung::writeConfigFile($_POST["blogname"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 		    $_POST["fancyurl"], $_POST["notify"], $_POST["adminname"], $_POST["email"],
-		    $password, $_POST["skin"], $_POST["license"]);
+		    $password, $_POST["skin"], $_POST["license"],
+		    $_POST["word"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
   exit;
 }
@@ -132,6 +133,7 @@ if ($_GET["mode"] == "config") {
   $template->assign("license", $entries_license);
   $template->assign("admin_name", $admin_name);
   $template->assign("admin_email", $admin_email);
+  $template->assign("spam_words", $spam_words);
   $template->assign("templates", Soojung::getTemplates());
   $template->assign("config_writable", is_writable("config.php"));
   $template->display('config.tpl');

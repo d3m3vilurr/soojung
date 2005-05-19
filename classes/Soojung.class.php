@@ -150,7 +150,8 @@ class Soojung {
    * static method
    */
   function writeConfigFile($blogname, $blogdesc, $blogurl, $perpage, $blogfancyurl, $blognotify,
-			     $adminname, $adminemail, $adminpassword, $skin = "simple", $license = "none") {
+			     $adminname, $adminemail, $adminpassword, $skin = "simple", $license = "none",
+			     $words="수신거부\n기적의 영문법") {
     $fd = fopen("config.php", "w");
     fwrite($fd, "<?php\n");
     fwrite($fd, '$blog_name="' . $blogname . "\";\n");
@@ -177,6 +178,7 @@ class Soojung {
       fwrite($fd, '$admin_password="' . $adminpassword . "\";\n");
     }
     fwrite($fd, '$entries_license="' . $license . "\";\n");
+    fwrite($fd, '$spam_words="' . $words . "\";\n");
     fwrite($fd, "?>");
     fclose($fd);
   }
