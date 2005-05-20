@@ -134,7 +134,9 @@ class Trackback {
     }
 
     $tb_excerpt = strip_tags($entry->getBody());
-    $tb_excerpt = substring($tb_excerpt,252);
+    if (strlen ($tb_excerpt) > 255) {
+      $tb_excerpt = substring($tb_excerpt,252);
+    }
 
     $tb_excerpt = rawurlencode(iconv("UTF-8", $encoding, $tb_excerpt));
 

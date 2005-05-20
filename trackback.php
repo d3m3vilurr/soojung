@@ -9,7 +9,8 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   $entry = Entry::getEntry($blogid);
 
   $excerpt = strip_tags($entry->getBody());
-  $excerpt = substring($excerpt,252);
+  if (strlen ($excerpt) > 255)
+    $excerpt = substring($excerpt,252);
 
   echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
   echo "<response>\n";
@@ -34,7 +35,8 @@ if (isset($_REQUEST["url"]) || isset($_REQUEST["blogid"])) {
   $url = $_REQUEST["url"];
   $title = stripslashes($_REQUEST["title"]);
   $excerpt = stripslashes(strip_tags($_REQUEST["excerpt"]));
-  $excerpt = substring($excerpt,252);  
+  if (strlen ($excerpt) > 255)
+    $excerpt = substring($excerpt,252);  
   $name = stripslashes($_REQUEST["blog_name"]);
 
 
