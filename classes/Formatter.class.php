@@ -208,7 +208,7 @@ class BBcodeFormatter extends Formatter {
         'BBcodeFormatter::__escape("<img src=\\"\2\\" alt=\\"\3\\\" />")',
         'BBcodeFormatter::__escape("<a href=\\"mailto:\1\\">\1</a>")'),
       $rule2 = array(
-        '#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i',
+        '#(?<![\/~"\'])http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+(?!(?:</a>|"|\'>))#i',
         '#[-0-9a-z_.]+@[-0-9a-z_.]+#i'),
       $repl2 = array(
         '<a href="\0">\0</a>',
@@ -237,11 +237,11 @@ class BBcodeFormatter extends Formatter {
         ":?:" => "icon_question.gif",
         ":?" => "icon_confused.gif"),
       $smiley = null;
-
+    global $blog_baseurl;
     if(is_null($smiley)) {
       $smiley = array();
       foreach($_smiley as $k => $v) {
-        $smiley[htmlspecialchars($k)] = '<img src="/blog/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
+        $smiley[htmlspecialchars($k)] = '<img src="'.$blog_baseurl.'/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
       }
     }
 
