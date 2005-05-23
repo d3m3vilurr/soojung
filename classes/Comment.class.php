@@ -56,12 +56,12 @@ class Comment {
     $text = br2nl($text);
 
     $words = split("(\r\n|\n)", $spam_words);
-    $spam_word = array();
     foreach($words as $word) {
       $word = trim($word);
       if($word != '')
 	$spam_word[] = "(?:" . $word. ")";
     }
+    echo $spam_word;
     if($spam_word != '') {
       $p = "@(" . implode("|", $spam_word) . ")@i";
       if(preg_match($p, $text))
