@@ -161,14 +161,14 @@ if ($_GET["mode"] == "config") {
   if ($page > 1) {
     $prev_link = "admin.php?mode=list&page=" . ($page - 1);
     if (isset($_GET["flag"])) {
-      $prev_link .= "&flag=" . $_GET["flag"];
+      $prev_link .= "&flag=" . urlencode($_GET["flag"]);
     }
     $template->assign('prev_page_link', $prev_link);
   }
   if ($count > $page * 10) {
     $next_link = "admin.php?mode=list&page=" . ($page + 1);
     if (isset($_GET["flag"])) {
-      $next_link .= "&flag=" . $_GET["flag"];
+      $next_link .= "&flag=" . urlencode($_GET["flag"]);
     }
     $template->assign('next_page_link', $next_link);
   }
