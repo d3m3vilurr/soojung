@@ -7,6 +7,11 @@
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/styles.css" />
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/skin.css" />
+<style type="text/css">
+.entrybody {literal}{{/literal}
+    font-size: {#BodyFontSize#}
+{literal}}{/literal}
+</style>
 <script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 <script type="text/javascript" src="{$baseurl}/templates/{$skin}/javascript.js"></script>
 
