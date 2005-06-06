@@ -61,7 +61,6 @@ class Comment {
       if($word != '')
 	$spam_word[] = "(?:" . $word. ")";
     }
-    echo $spam_word;
     if($spam_word != '') {
       $p = "@(" . implode("|", $spam_word) . ")@i";
       if(preg_match($p, $text))
