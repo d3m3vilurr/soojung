@@ -26,7 +26,7 @@
 <div class="row">
 <span class="label">Category:</span>
 <span class="formw">
-<input type="text" name="category_input" value="{$category}" /> or 
+<input type="text" name="category_input" value="{$category|escape}" /> or 
 {foreach name=categories from=$categories item=cate}
 {if $smarty.foreach.categories.first}
 <select name="category">
