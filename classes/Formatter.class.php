@@ -711,7 +711,7 @@ class MoniwikiFormatter extends Formatter {
 	  return "<img src='$blog_baseurl"."/contents/upload/"."$url' alt='$url' />";
 	} else {
 	  $url = preg_replace("/attachment([a-zA-Z0-9:\/]*)\:/", "", $url);
-	  return "<a href='$blog_baseurl"."/contents/upload/"."$url' />";
+	  return "<a href='$blog_baseurl"."/contents/upload/"."$url'>$url</a>";
 	}
 
       if ($url[0] == '^') {
