@@ -5,7 +5,7 @@ setlocale(LC_TIME, "C");
 
 header("Content-type: text/html; charset=utf-8");
 if (!file_exists("config.php")) {
-  echo "please execute install.php first.";
+  echo "please execute <a href=\"install.php\">install.php</a> first.";
   exit;
 }
 
