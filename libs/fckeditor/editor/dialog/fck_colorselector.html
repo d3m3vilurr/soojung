@@ -1,6 +1,6 @@
 <!--
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -10,9 +10,6 @@
  * 
  * File Name: fck_colorselector.html
  * 	Color Selection dialog window.
- * 
- * Version:  2.0 Beta 2
- * Modified: 2004-09-01 00:02:08
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -33,20 +30,17 @@
 		</style>
 		<script type="text/javascript">
 		
-var dialogArguments = window.parent.InnerDialogLoaded() ;
-
-// Sets the Skin CSS
-document.write( '<link href="' + dialogArguments.FCKConfig.SkinPath + 'fck_dialog.css" type="text/css" rel="stylesheet">' ) ;
+var oEditor = window.parent.InnerDialogLoaded() ;
 
 function OnLoad()
 {
 	// First of all, translate the dialog box texts
-	dialogArguments.FCKLanguageManager.TranslatePage(document) ;
+	oEditor.FCKLanguageManager.TranslatePage(document) ;
 	
 	CreateColorTable() ;
 	
 	window.parent.SetOkButton( true ) ;	
-	window.parent.SetScrollBar( false ) ;	
+	window.parent.SetAutoSize( true ) ;
 }
 
 function CreateColorTable()
@@ -142,7 +136,7 @@ function Ok()
 }
 		</script>
 	</head>
-	<body onload="OnLoad()" scroll="no">
+	<body onload="OnLoad()" scroll="no" style="OVERFLOW: hidden">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
 			<tr>
 				<td align="center" valign="middle">

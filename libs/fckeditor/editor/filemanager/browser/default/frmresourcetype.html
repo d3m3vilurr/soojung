@@ -1,6 +1,6 @@
 <!--
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -11,9 +11,6 @@
  * File Name: frmresourcetype.html
  * 	This page shows the list of available resource types.
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-06-19 00:57:24
- * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
 -->
@@ -21,8 +18,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-		<link href="Browser.css" type="text/css" rel="stylesheet">
+		<link href="browser.css" type="text/css" rel="stylesheet">
 		<script type="text/javascript" src="js/common.js"></script>
 		<script language="javascript">
 
@@ -40,12 +36,10 @@ var aTypes = [
 
 window.onload = function()
 {
-	var bHasType = ( oConnector.ResourceType.length > 0 ) ;
-	
 	for ( var i = 0 ; i < aTypes.length ; i++ )
 	{
-		if ( !bHasType || aTypes[i][0] == oConnector.ResourceType )
-			AddSelectOption( cmbType, aTypes[i][1], aTypes[i][0] ) ;
+		if ( oConnector.ShowAllTypes || aTypes[i][0] == oConnector.ResourceType )
+			AddSelectOption( document.getElementById('cmbType'), aTypes[i][1], aTypes[i][0] ) ;
 	}
 }
 

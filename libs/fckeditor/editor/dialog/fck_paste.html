@@ -1,6 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> <!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -13,9 +14,6 @@
  * 	the user is not able to paste data from the clipboard to the editor using 
  * 	the toolbar buttons or the context menu.
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-08-31 00:02:26
- * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
 -->
@@ -24,26 +22,23 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="robots" content="noindex, nofollow">
 		<script language="javascript">
-var dialogArguments = window.parent.InnerDialogLoaded() ;
+var oEditor = window.parent.InnerDialogLoaded() ;
 
-// Sets the Skin CSS
-document.write( '<link href="' + dialogArguments.FCKConfig.SkinPath + 'fck_dialog.css" type="text/css" rel="stylesheet">' ) ;
-
-function OnLoad()
+window.onload = function ()
 {
+	// First of all, translate the dialog box texts
+	oEditor.FCKLanguageManager.TranslatePage(document) ;
+	
+	window.parent.SetOkButton( true ) ;	
+
 	if ( window.parent.dialogArguments.CustomValue == 'Word' )
 	{
-		document.getElementById('frmData').style.display = '' ;
-		document.getElementById('frmData').contentDocument.designMode = 'on' ;
+		var oFrame = document.getElementById('frmData')
+		oFrame.style.display = '' ;
+		oFrame.contentDocument.designMode = 'on' ;
 	}
 	else
 		document.getElementById('txtData').style.display = '' ;
-
-	// First of all, translate the dialog box texts
-	dialogArguments.FCKLanguageManager.TranslatePage(document) ;
-	
-	window.parent.SetOkButton( true ) ;	
-	window.parent.SetScrollBar( false ) ;	
 }
 
 function Ok()
@@ -51,34 +46,34 @@ function Ok()
 	if ( window.parent.dialogArguments.CustomValue == 'Word' )
 	{
 		var sHtml = document.getElementById('frmData').contentDocument.body.innerHTML ;
-		dialogArguments.FCK.CleanAndPaste( sHtml ) ;
+		oEditor.FCK.CleanAndPaste( sHtml ) ;
 	}
 	else
 	{
-		var sText = dialogArguments.FCKTools.HTMLEncode( document.getElementById('txtData').value )  ;
+		var sText = oEditor.FCKTools.HTMLEncode( document.getElementById('txtData').value )  ;
 		sText = sText.replace( /\n/g, '<BR>' ) ;
-		dialogArguments.FCK.InsertHtml( sText ) ;
+		oEditor.FCK.InsertHtml( sText ) ;
 	}
 	
 	return true ;
 }
 		</script>
 	</head>
-	<body onload="OnLoad()" scroll="no">
+	<body scroll="no" style="OVERFLOW: hidden">
 		<table height="98%" cellspacing="0" cellpadding="0" width="100%" border="0">
 			<tr>
 				<td>
-					The editor was not able to automaticaly execute pasting because of the <STRONG>secutiry 
-						settings</STRONG> of your browser.
-					<BR>
-					Please paste inside the following box using the keyboard (<STRONG>Ctrl+V</STRONG>) 
-					and hit <STRONG>OK</STRONG>.
+					<span fckLang="DlgPasteMsg">The editor was not able to automaticaly execute pasting 
+						because of the <STRONG>security settings</STRONG> of your browser.
+						<BR>
+						Please paste inside the following box using the keyboard (<STRONG>Ctrl+V</STRONG>) 
+						and hit <STRONG>OK</STRONG>.</span>
 				</td>
 			</tr>
 			<tr>
 				<td valign="top" height="100%" style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid">
 					<textarea id="txtData" style="BORDER-RIGHT: #000000 1px; BORDER-TOP: #000000 1px; DISPLAY: none; BORDER-LEFT: #000000 1px; WIDTH: 99%; BORDER-BOTTOM: #000000 1px; HEIGHT: 98%"></textarea>
-					<iframe id="frmData" height="98%" width="99%" frameborder="no" style="BORDER-RIGHT: #000000 1px; BORDER-TOP: #000000 1px; DISPLAY: none; BORDER-LEFT: #000000 1px; BORDER-BOTTOM: #000000 1px; BACKGROUND-COLOR: #ffffff"></iframe>
+					<iframe id="frmData" src="../fckblank.html" height="98%" width="99%" frameborder="no" style="BORDER-RIGHT: #000000 1px; BORDER-TOP: #000000 1px; DISPLAY: none; BORDER-LEFT: #000000 1px; BORDER-BOTTOM: #000000 1px; BACKGROUND-COLOR: #ffffff"></iframe>
 				</td>
 			</tr>
 		</table>

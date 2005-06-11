@@ -1,6 +1,6 @@
 /*
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -11,15 +11,10 @@
  * File Name: fck_editor.css
  * 	Styles used by the editor IFRAME and Toolbar.
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-05-31 23:07:55
- * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
  * 		gazou[Fr]
  */
-
-@import url( fck_contextmenu.css ) ;
 
 /*
 	### Basic Editor IFRAME Styles.
@@ -31,7 +26,7 @@ body
 	margin: 0px 0px 0px 0px;
 }
 
-#eEditorArea, .Source
+#eWysiwygCell, .Source
 {
 	border: #696969 1px solid;
 }
@@ -151,17 +146,7 @@ body
 	padding-right: 5px;
 }
 
-.TB_ButtonType_Icon .TB_Text
+.TB_Break
 {
-	display: none;
-}
-
-.TB_ButtonType_Text .TB_Icon
-{
-	display: none;
-}
-
-.TB_ButtonType_Text .TB_Text
-{
-	padding-left: 5px;
+	height: 23px;
 }

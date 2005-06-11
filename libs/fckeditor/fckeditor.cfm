@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -25,9 +25,6 @@
  * 		config="..." 
  * 	>
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-05-27 12:24:11
- * 
  * File Authors:
  * 		Hendrik Kramer (hk@lwd.de)
 --->
@@ -46,9 +43,10 @@
 <!--- ::
 	 * check browser compatibility via HTTP_USER_AGENT, if checkBrowser is true
 	:: --->
-<cfif attributes.checkBrowser>
-
-	<cfscript>
+	
+<cfscript>
+if( attributes.checkBrowser )
+{
 	sAgent = lCase( cgi.HTTP_USER_AGENT );
 	isCompatibleBrowser = false;
 
@@ -66,7 +64,7 @@
 		}
 	}
 	// check for Gecko ( >= 20030210+ )
-	else if( find( "gecko", sAgent ) )
+	else if( find( "gecko/", sAgent ) )
 	{
 		// try to extract Gecko version date
 		stResult = reFind( "gecko/(200[3-9][0-1][0-9][0-3][0-9])", sAgent, 1, true );
@@ -78,13 +76,13 @@
 				isCompatibleBrowser = true;
 		}
 	}
-	</cfscript>
-
-<cfelse>
-	<!--- :: If we should not check browser compatibility, assume true :: --->
-	<cfset isCompatibleBrowser = true>
-</cfif>
-
+}
+else
+{
+	// If we should not check browser compatibility, assume true
+	isCompatibleBrowser = true;
+}
+</cfscript>
 
 <cfif isCompatibleBrowser>
 
@@ -102,16 +100,39 @@
 
 		// append toolbarset name to the url
 		if( len( attributes.toolbarSet ) )
-			sURL = sURL & "&Toolbar=" & attributes.toolbarSet;
+			sURL = sURL & "&amp;Toolbar=" & attributes.toolbarSet;
 
 		// create configuration string: Key1=Value1&Key2=Value2&... (Key/Value:HTML encoded)
-		sConfig = "";
 
+		/**
+		 * CFML doesn't store casesensitive names for structure keys, but the configuration names must be casesensitive for js. 
+		 * So we need to find out the correct case for the configuration keys.
+		 * We "fix" this by comparing the caseless configuration keys to a list of all available configuration options in the correct case.
+		 * changed 20041206 hk@lwd.de (improvements are welcome!)
+		 */
+		lConfigKeys = "";
+		lConfigKeys = lConfigKeys & "CustomConfigurationsPath,EditorAreaCSS,DocType,BaseHref,FullPage,Debug,SkinPath,PluginsPath,AutoDetectLanguage,DefaultLanguage,ContentLangDirection,EnableXHTML,EnableSourceXHTML,ProcessHTMLEntities,IncludeLatinEntities,IncludeGreekEntities";
+		lConfigKeys = lConfigKeys & ",FillEmptyBlocks,FormatSource,FormatOutput,FormatIndentator,GeckoUseSPAN,StartupFocus,ForcePasteAsPlainText,ForceSimpleAmpersand,TabSpaces,ShowBorders,UseBROnCarriageReturn";
+		lConfigKeys = lConfigKeys & ",ToolbarStartExpanded,ToolbarCanCollapse,ToolbarSets,ContextMenu,FontColors,FontNames,FontSizes,FontFormats,StylesXmlPath,SpellChecker,IeSpellDownloadUrl,MaxUndoLevels";
+		lConfigKeys = lConfigKeys & ",LinkBrowser,LinkBrowserURL,LinkBrowserWindowWidth,LinkBrowserWindowHeight";
+		lConfigKeys = lConfigKeys & ",LinkUpload,LinkUploadURL,LinkUploadWindowWidth,LinkUploadWindowHeight,LinkUploadAllowedExtensions,LinkUploadDeniedExtensions";
+		lConfigKeys = lConfigKeys & ",ImageBrowser,ImageBrowserURL,ImageBrowserWindowWidth,ImageBrowserWindowHeight,SmileyPath,SmileyImages,SmileyColumns,SmileyWindowWidth,SmileyWindowHeight";
+		
+		sConfig = "";
+		
 		for( key in attributes.config )
 		{
-			if( len( sConfig ) )
-				sConfig = sConfig & '&';
-			sConfig = sConfig & HTMLEditFormat( key ) & '=' & HTMLEditFormat( attributes.config[key] );
+			iPos = listFindNoCase( lConfigKeys, key );
+			if( iPos GT 0 )
+			{
+				if( len( sConfig ) )
+					sConfig = sConfig & "&amp;";
+	
+				fieldValue = attributes.config[key];
+				fieldName = listGetAt( lConfigKeys, iPos );
+				
+				sConfig = sConfig & HTMLEditFormat( fieldName ) & '=' & HTMLEditFormat( fieldValue );
+			}
 		}
 	</cfscript>
 
@@ -137,12 +158,13 @@
 			attributes.height = attributes.height & "px";
 	</cfscript>
 
+	<!--- Fixed Bug ##1075166. hk@lwd.de 20041206 --->
 	<cfoutput>
 	<div>
-	<textarea name="#attributes.instanceName#" rows="4" cols="40" style="WIDTH: #width#; HEIGHT: #height#" wrap="virtual">#HTMLEditFormat(attributes.value)#</textarea>
+	<textarea name="#attributes.instanceName#" rows="4" cols="40" style="WIDTH: #attributes.width#; HEIGHT: #attributes.height#" wrap="virtual">#HTMLEditFormat(attributes.value)#</textarea>
 	</div>
 	</cfoutput>	
 
 </cfif>
 
-<cfsetting enablecfoutputonly="No">
+<cfsetting enablecfoutputonly="No"><cfexit method="exittag">

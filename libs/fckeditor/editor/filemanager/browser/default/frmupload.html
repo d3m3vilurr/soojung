@@ -1,6 +1,6 @@
 <!--
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -11,22 +11,19 @@
  * File Name: frmupload.html
  * 	Page used to upload new files in the current folder.
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-05-31 23:07:53
- * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
-		<link href="Browser.css" type="text/css" rel="stylesheet" />
+		<link href="browser.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/common.js"></script>
 		<script language="javascript">
-		
+
 function SetCurrentFolder( resourceType, folderPath )
 {
-	var sUrl = oConnector.ConnectorUrl +'?Command=FileUpload' ;
+	var sUrl = oConnector.ConnectorUrl +'Command=FileUpload' ;
 	sUrl += '&Type=' + resourceType ;
 	sUrl += '&CurrentFolder=' + folderPath ;
 	
@@ -51,10 +48,13 @@ function OnSubmit()
 function OnUploadCompleted( errorNumber, fileName )
 {
 	// Reset the Upload Worker Frame.
-	window.parent.frames['frmUploadWorker'].location = '' ;
+	window.parent.frames['frmUploadWorker'].location = 'about:blank' ;
 	
-	// Reset the upload form.
-	document.getElementById('frmUpload').reset() ;
+	// Reset the upload form (On IE we must do a little trick to avout problems).
+	if ( document.all )
+		document.getElementById('NewFile').outerHTML = '<input id="NewFile" name="NewFile" style="WIDTH: 100%" type="file">' ;
+	else
+		document.getElementById('frmUpload').reset() ;
 	
 	// Reset the interface elements.
 	document.getElementById('eUploadMessage').innerHTML = 'Upload a new file in this folder' ;

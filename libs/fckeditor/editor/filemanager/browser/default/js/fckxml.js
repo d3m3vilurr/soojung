@@ -1,6 +1,6 @@
-/*
+﻿/*
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -13,9 +13,6 @@
  * 	and XML processing.
  * 	This script is shared by almost all pages that compose the 
  * 	File Browser frameset.
- * 
- * Version:  2.0 Beta 2
- * Modified: 2004-05-31 23:07:53
  * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
@@ -49,7 +46,10 @@ FCKXml.prototype.LoadUrl = function( urlToCall, asyncFunctionPointer )
 			if ( oXmlHttp.readyState == 4 )
 			{
 				oFCKXml.DOMDocument = oXmlHttp.responseXML ;
-				asyncFunctionPointer( oFCKXml ) ;
+				if ( oXmlHttp.status == 200 )
+					asyncFunctionPointer( oFCKXml ) ;
+				else
+					alert( 'XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')' ) ;
 			}
 		}
 	}
@@ -57,7 +57,14 @@ FCKXml.prototype.LoadUrl = function( urlToCall, asyncFunctionPointer )
 	oXmlHttp.send( null ) ;
 	
 	if ( ! bAsync )
-		this.DOMDocument = oXmlHttp.responseXML ;
+	{
+		if ( oXmlHttp.status == 200 )
+			this.DOMDocument = oXmlHttp.responseXML ;
+		else
+		{
+			alert( 'XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')' ) ;
+		}
+	}
 }
 
 FCKXml.prototype.SelectNodes = function( xpath )

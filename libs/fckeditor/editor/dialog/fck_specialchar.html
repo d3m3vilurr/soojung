@@ -1,6 +1,6 @@
 <!--
  * FCKeditor - The text editor for internet
- * Copyright (C) 2003-2004 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2005 Frederico Caldeira Knabben
  * 
  * Licensed under the terms of the GNU Lesser General Public License:
  * 		http://www.opensource.org/licenses/lgpl-license.php
@@ -11,16 +11,12 @@
  * File Name: fck_specialchar.html
  * 	Special Chars Selector dialog window.
  * 
- * Version:  2.0 Beta 2
- * Modified: 2004-05-31 23:07:51
- * 
  * File Authors:
  * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html>
 	<head>
-		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
 		<style type="text/css">
 				.HandIE { cursor: hand ; }
 				.HandMozilla { cursor: pointer ; }
@@ -28,16 +24,13 @@
 		</style>
 		<script type="text/javascript">
 
-var dialogArguments = window.parent.InnerDialogLoaded() ;
-
-// Sets the Skin CSS
-document.write( '<link href="' + dialogArguments.FCKConfig.SkinPath + 'fck_dialog.css" type="text/css" rel="stylesheet">' ) ;
+var oEditor = window.parent.InnerDialogLoaded() ;
 
 var oSample ;
 
 function insertChar(charValue)
 {
-	dialogArguments.FCK.InsertHtml( charValue || "" ) ;
+	oEditor.FCK.InsertHtml( charValue || "" ) ;
 	window.parent.Cancel() ;
 }
 
@@ -59,7 +52,7 @@ function setDefaults()
 	oSample = document.getElementById("SampleTD") ;
 
 	// First of all, translates the dialog box texts.
-	dialogArguments.FCKLanguageManager.TranslatePage(document) ;
+	oEditor.FCKLanguageManager.TranslatePage(document) ;
 }
 
 		</script>
