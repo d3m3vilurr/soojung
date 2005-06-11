@@ -15,7 +15,7 @@
 <form action="{$baseurl}/post.php" method="post" name="postForm">
 <div class="row">
 <span class="label">Title:</span>
-<span class="formw"><input type="text" name="title" value="{$title}" /></span>
+<span class="formw"><input type="text" name="title" value="{$title|escape}" /></span>
 </div>
 
 <div class="row">
