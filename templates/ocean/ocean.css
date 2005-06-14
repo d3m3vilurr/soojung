@@ -195,6 +195,7 @@ a:hover {
 	font-size: 90%;
 	width: 18em; 
 	float: right;
+    overflow: hidden;
 }
 #column a.rounded {
 	color: #285090;

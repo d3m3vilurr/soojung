@@ -141,6 +141,7 @@ a:hover {
 #column {
 	width: 18em; 
 	float: right;
+    overflow: hidden;
 }
 #column div {
 	display: block;

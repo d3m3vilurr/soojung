@@ -2,15 +2,14 @@
 
 </td>
 </tr>
-<div id="footer">
-<tr>
+<tr id="footer">
 	<td colspan="2">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
 			<td align="left">
-				<a href="/blog/post.php"><img src="{$baseurl}/templates/bruise/imgs/ico_edit.gif"></a>
-				<a href="/blog/admin.php"><img src="{$baseurl}/templates/bruise/imgs/ico_admin.gif"></a>
-				<a href="#none" onclick="return fold_sidebar('sidebar');"><img src="{$baseurl}/templates/bruise/imgs/ico_menu.gif"></a>
+				<a href="/blog/post.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_edit.gif" alt='edit' /></a>
+				<a href="/blog/admin.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_admin.gif" alt='admin' /></a>
+				<a href="#none" onclick="return fold_sidebar('sidebar');"><img src="{$baseurl}/templates/{$skin}/imgs/ico_menu.gif" alt='menu' /></a>
 			</td>
 			<td align="right">
 				<a href="http://soojung.kldp.net">수정</a>을 씁니다.
@@ -19,13 +18,12 @@
 		</table>
 	</td>
 </tr>
-</div>
 </table>
-</td><td valign="top" width="250">
+</td><td valign="top" style='width:250px;'>
 <div id="sidebar">
 <h3><a href="#none" onclick="return fold_sidebar('div_calendar');">Calendar</a></h3>
 <div id="div_calendar">
-	<li>{$calendar->getCalendar()}</li>
+	{$calendar->getCalendar()}
 </div>
 
 <h3><a href="#none" onclick="return fold_sidebar('div_category');">Categories</a></h3>

@@ -6,19 +6,18 @@
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/styles.css" />
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
 <script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
+</head>
 <body onload="return correct_bbcode_image();">
-<table border="0" align="center" cellpadding="0" cellspacing="0">
+<table border="0" cellpadding="0" cellspacing="0" style='margin:0 auto;'>
 <tr><td valign="top">
-<table border="0" align="center" cellpadding="0" cellspacing="0" width="640">
-<div id="header">
-<tr>
-	<td width="320" align="left">■ <a href="{$baseurl}" title="{$description}"><span class="blogTitle"><b>{$title}</b></span></a></td>
-	<td width="320" align="right">
+<table border="0" cellpadding="0" cellspacing="0" width='640px' style='margin:0 auto;'>
+<tr id="header">
+	<td style='text-align:left; width:320px;'>■ <a href="{$baseurl}" title="{$description}"><span class="blogTitle"><b>{$title}</b></span></a></td>
+	<td style='text-align:right; width:320px;'>
 	| <a href="{$baseurl}">main</a> |
 	<a href="{$baseurl}/admin.php">admin</a> |
 	</td>
 </tr>
-</div>
 <tr>
 	<td colspan="2">
 <div id="content">
