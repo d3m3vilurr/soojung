@@ -5,6 +5,13 @@ session_start();
 include("config.php");
 include("settings.php");
 
+if(isset($date) || !empty($date)) {
+  $title = stripslashes($title);
+  $date = strtotime($date);
+  $format = stripslashes($format);
+  $category = stripslashes($category);
+}
+
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password)
     $_SESSION['auth'] = TRUE;
@@ -12,7 +19,6 @@ if ($_POST["mode"] == "login") {
   $_POST["body"] = base64_decode($_POST["body"]);
 #  echo "mode = ". $_POST["mode"];
 } 
-
 if (!isset($_SESSION["auth"])) {
   $hidden_attr = array();
   $param["name"] = "original_mode";
@@ -89,7 +95,7 @@ if ($_POST["mode"] == "upload") {
 } else if ($_GET["blogid"]) { //edit
   $entry = Entry::getEntry($_GET["blogid"]);
   $mode = "edit";
-  $title = $entry->title;
+  $title = stripslashes($entry->title);
   $body = $entry->getRawBody();
   $date = $entry->date;
   $category = $entry->category->name;
@@ -167,7 +173,7 @@ if (isset($preview_body)) {
 $template->assign("preview", $preview_body);
 }
 $template->assign("body", $body);
-$template->assign("date", isset($date) ? $date : date('Y-m-d H:i:s', time()+10));
+$template->assign("date", date('Y-m-d H:i:s',(isset($date) ? $date : time()+10)));
 $template->assign("category", $category);
 
 if (isset($options)) {
