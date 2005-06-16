@@ -79,7 +79,7 @@
                     	    {else}
             	    	    {$comment->name|escape}
                 	        {/if}
-                             at {$entry->date|date_format:"%y/%m/%d %H:%M"} 
+                             at {$comment->date|date_format:"%y/%m/%d %H:%M"} 
                         </div>
                     </div>
                     <div class="comment_body">
