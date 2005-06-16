@@ -167,7 +167,7 @@ if (isset($preview_body)) {
 $template->assign("preview", $preview_body);
 }
 $template->assign("body", $body);
-$template->assign("date", date('Y-m-d H:i:s', isset($date) ? $date : time()+10));
+$template->assign("date", isset($date) ? $date : date('Y-m-d H:i:s', time()+10));
 $template->assign("category", $category);
 
 if (isset($options)) {

@@ -39,7 +39,7 @@ function changeFormat(format) {
 
 <div class="row">
 <span class="label">Date:</span>
-<span class="formw"><input type="text" name="date" value="{$date}" />
+<span class="formw"><input type="text" name="date" value="{$date}" /></span>
 </div>
 
 <div class="row">
