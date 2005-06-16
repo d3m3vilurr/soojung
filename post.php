@@ -14,6 +14,9 @@ if (isset($date)) {
 if (isset($body)) {
   unset($body);
 }
+if (isset($id)) {
+  unset($id);
+}
 
 
 if ($_POST["mode"] == "login") {
@@ -170,6 +173,9 @@ if (isset($_POST["STATIC"]) && $_POST["STATIC"] == "true") {
 }
 if (isset($_POST["NO_RSS"]) && $_POST["NO_RSS"] == "true") {
   $template->assign("no_rss", true);
+}
+if (isset($id) == false) {
+  $id = $_POST["id"];  
 }
 
 $template->assign("title", $title);

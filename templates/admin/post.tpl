@@ -15,6 +15,8 @@ function changeFormat(format) {
     tempForm.STATIC.value = document.postForm.STATIC.checked;
     tempForm.NO_RSS.value = document.postForm.NO_RSS.checked;
     tempForm.body.value = document.postForm.body.value;
+    tempForm.id.value = (document.postForm.id.value == undefined || document.postForm.id.value == "")
+        ? null : document.postForm.id.value;
     tempForm.submit();
 }
 {/literal}
@@ -122,6 +124,7 @@ function changeFormat(format) {
 <input type="hidden" name="format"/>
 <input type="hidden" name="category"/>
 <input type="hidden" name="body"/>
+<input type="hidden" name="id"/>
 <input type="hidden" name="SECRET"/>
 <input type="hidden" name="NO_COMMENT"/>
 <input type="hidden" name="NO_TRACKBACK"/>
