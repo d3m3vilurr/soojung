@@ -13,7 +13,7 @@
 <!-- banner -->
     <div class="logo">
         <a href="{$baseurl}">
-            <img width="150" height="55" alt="Go to Blog Home" src="{$baseurl}/templates/newsoogle/imgs/logo_sm.gif" />
+            <img width="150" height="55" alt="Go to Blog Home" src="{$baseurl}/templates/{$skin}/imgs/logo_sm.gif" />
         </a>
     </div>
     <div class="topmenu">
