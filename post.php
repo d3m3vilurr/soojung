@@ -5,12 +5,16 @@ session_start();
 include("config.php");
 include("settings.php");
 
-if(isset($date) || !empty($date)) {
-  $title = stripslashes($title);
-  $date = strtotime($date);
-  $format = stripslashes($format);
-  $category = stripslashes($category);
+if (isset($title)) {
+  unset($title);
 }
+if (isset($date)) {
+  unset($date);
+}
+if (isset($body)) {
+  unset($body);
+}
+
 
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password)
@@ -138,7 +142,7 @@ if ($_POST["mode"] == "upload") {
 $template = new AdminTemplate;
 
 if (isset($title) == false) {
-  $title = $_POST["title"];
+  $title = stripslashes($_POST["title"]);
 }
 if (isset($date) == false && isset($_POST["date"])) {
   $date = strtotime($_POST["date"]);
@@ -150,7 +154,7 @@ if (isset($category) == false) {
   $category = $_POST["category"];
 }
 if (isset($body) == false) {
-  $body = $_POST["body"];
+  $body = stripslashes($_POST["body"]);
 }
 if (isset($_POST["SECRET"]) && $_POST["SECRET"] == "true") {
   $template->assign("secret", true);
