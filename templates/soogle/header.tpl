@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
 <head>
-<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$title}</title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
-<link rel="stylesheet" type="text/css" href="{$baseurl}/templates/newsoogle/styles.css"/>
+<link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/styles.css"/>
 <script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
 
