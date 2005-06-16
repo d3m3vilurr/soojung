@@ -1,62 +1,109 @@
-<center>
-<br clear=all />
-<br />
+<div id="menu">
+    <div class="category">
+	    <ul id="div_category" class="hide">
+    	    {foreach from=$categories item=category}
+	    	<li>
+    			<a href="{$category->getHref()|escape}">{$category->name|substring:25|escape} ({$category->getEntryCount()})</a>
+    		</li>
+	    	{foreachelse}
+    		<li></li>
+		    {/foreach}
+	    </ul>
+    </div>
+    
+    <div class="archive">
+        <ul id="div_archive" class="hide">
+            {foreach from=$archvies item=archive}
+            <li>
+                <a href="{$archive->getHref()|escape}">{$archive->getDate()|date_format:"%B %Y"|substring:25} ({$archive->getEntryCount()})</a>
+            </li>
+            {foreachelse}
+            <li></li>
+            {/foreach}
+        </ul>
+    </div>
+    
+    <div class="calendar">
+        <div id="div_calendar" class="hide">
+            {$calendar->getCalendar()}    
+        </div>
+    </div>
+    
+    <div class="static">
+        <ul id="div_static" class="hide">
+            {foreach from=$static_entries item=static}
+            <li>
+                <a href="{$static->getHref()|escape}">{$static->title|escape}</a>
+            </li>
+            {foreachelse}
+            <li></li>
+            {/foreach}
+        </ul>
+    </div>
+    
+    <div class="recent_entry">
+        <ul id="div_entry" class="hide">
+            {foreach from=$recent_entries item=entry}
+            <li>
+                <a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
+            </li>
+            {foreachelse}
+            <li></li>
+            {/foreach}
+        </ul>
+    </div>
+    
+    <div class="recent_comment">
+        <ul id="div_recent_comment" class="hide">
+            {foreach from=$recent_comments item=comment}
+            <li>
+                <a href="{$comment->getHref()|escape}">{$comment->getBody()|strip_tags:false|substring:35|escape}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
 
-<table cellspacing=0 cellpadding=0 border=0 width="100%">
-	<tr>
-		<td class=k><img height=1 width=1 alt=""></td>
-	</tr>
-	<tr>
-		<td align=center bgcolor=#e5ecf9>&nbsp;<br />
-			<form action="{$baseurl}/index.php" method="get">
-			<table border=0 cellpadding=0 cellspacing=0 align=center>
-				<tr>
-					<td nowrap>
-						<font size=-1>
-						<input type=text name=search size=31 maxlength=2048 value="{$keyword}">
-						<input type=submit value="Search">
-						</font>
-					</td>
-				</tr>
-			</table>
-			</form>
-			<font size=-1>
-				<a href="">Search within results</a> | 
-				<a href="http://soojung.kldp.net">Language Tools</a> |
-				<a href="http://soojung.kldp.net">Search Tips</a> |
-				<a href="http://kldp.net/forum/forum.php?forum_id=1821">Dissatisfied? Help us improve</a>
-			</font>
-			<br /><br />
-		</td>
-	</tr>
-	<tr>
-		<td class=k><img height=1 alt="" width=1></td>
-	</tr>
-</table>
-</center>
+    <div class="recent_trackback">
+        <ul id="div_recent_trackback" class="hide">
+            {foreach from=$recent_trackbacks item=trackback}
+            <li>
+                <a href="{$trackback->getHref()|escape}">{$trackback->getExcerpt()|strip_tags|substring:27|escape}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
 
+    <div class="bookmark">
+        <ul id="div_bookmark" class="hide">
+            {foreach from=$bookmarks item=bookmark}
+            <li>
+                <a href="{$bookmark->url|escape}" {if #targetBlank# == 1}onclick="seturltarget(this,'_blank');"{/if}>{$bookmark->desc|substring:35|escape}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div> 
 
-<center>
-<p>
-<hr class=z>
-
-<table width=100% cellpadding=2 cellspacing=0 border=0>
-	<tr>
-		<td align=center>
-			<font size=-1>
-				<a href="http://soojung.kldp.net">Soojung Home</a> - 
-				<a href="http://soojung.kldp.net">Advertising Programs</a> - 
-				<a href="http://soojung.kldp.net">Business Solutions</a> - 
-				<a href="http://soojung.kldp.net">About Soojung</a>
-			</font>
-		</td>
-	</tr>
-</table>
-
-</p>
-<br />
-<font size=-1 class=p>Copyleft 2004 soojung</font>
-</center>
+<div class="footer">
+    <div class="footerbox">
+        <div>
+            <form action="{$baseurl}/index.php" method="get">
+                <input type=text name=search size=31 value="{$keyword}" />
+                <input type=submit value="Search" />
+            </form>
+        </div>
+        <div>
+        	<a href="#none">Search within results</a> | 
+			<a href="http://soojung.kldp.net">Language Tools</a> |
+			<a href="http://soojung.kldp.net">Search Tips</a> |
+			<a href="http://kldp.net/forum/forum.php?forum_id=1821">Dissatisfied? Help us improve</a>
+        </div>
+    </div>
+    <p>
+        {$license_link}<br />
+        Powered by <a href="http://soojung.kldp.net" {if #targetBlank# == 1}onclick="seturltarget(this,'_blank');"{/if}>soojung {$soojung_version}</a>
+    </p>
+</div>
 
 </body>
 </html>

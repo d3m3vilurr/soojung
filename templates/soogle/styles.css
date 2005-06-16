@@ -4,35 +4,229 @@ body
   background-color: #fff;
 }
 
-a
-{
-  color:#00c;
-}
-a.fl
-{
-  color:#6f6f6f;
-}
-a:visited, a:visited.fl
-{
-  color:#551a8b;
+.fl:link{color:#7777CC}
+a    { color:#00c; text-decoration:none;}
+a.fl { color:#6f6f6f; text-decoration: underline;}
+a.w  {color:#00c; text-decoration: underline;}
+
+a:visited    { color:#00c; }
+a:visited.fl { color:#7777CC; }
+a:active, a:active.fl   { color:#f00; }
+.i,.i:link{color:#a90a08}
+
+img {
+    border: 0;
 }
 
-a:active, a:active.fl
-{
-  color:#f00;
+
+.div_hide, .hide {
+  display: none;
 }
 
-.k
-{ 
-  background-color:#36c;
+pre {
+  padding: 5px;
+  border: 1px solid #EBD4C8;
+  background-color: #FCF7F4;
 }
 
-hr.z
-{ 
-       display:none;
+/* Header */
+#header {
+    position: relative;
+    height: 60px;
 }
-p.g
-{
-  margin-top: 1em;
-  margin-bottom: 1em;
+.logo {
+    clear: both;
+    position: absolute;
+    float: left;
 }
+.topmenu {
+    clear: both;
+    position: absolute;
+    left: 170px;
+    width: -160px;
+    height: 20pt;
+    overflow: hidden;
+    font-size: 8pt;
+    line-height: 95%;
+}
+.blogtitle {
+    line-height: 100%;
+    font-size: 11pt;
+    font-weight: bold;
+}
+.menu {
+    font-size: 9pt;
+}
+.search {
+    position: absolute;
+    top: 20pt;
+    left: 160px;
+    width: -160px;          
+}
+.setting {
+    position: absolute;
+    left: 540px;
+    top: 21pt;
+    font-size: 8pt;
+}
+
+/* First Bar */
+.bar {
+    background-color: #e5ecf9;
+    color: #000000;
+    height: 20px;
+    border-top: 1px solid #00c;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.classes {
+    position: absolute;
+}
+.result {
+    float: right;
+}
+
+/* Entry */
+.entry {
+    margin-top: 20px;
+    width: 70%;
+}
+.entrytitle {
+    font-size: 12pt;
+}
+.entrybody {
+    margin: 10px;
+    font-size: 10pt;
+}
+.entryinfo {
+    font-size: 9pt;
+    color: #008000;
+}
+.posted {
+    background-color: #f8f8ff;
+    color: #000000;
+    height: 20px;
+    border-top: 1px solid #d3d3d3;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.nav {
+    margin-top: 20px;
+    line-height:80%;
+}
+.nav a{font-size:10pt; color:#000}
+.nav .i{font-size:10pt; font-weight:bold}
+.nav .b {
+    font-size: 12pt;
+    color:#00c;
+    font-weight:bold;
+}
+.nav table {
+    border-spacing: 0;
+    padding:0;
+}
+.nav tr {
+    vertical-align: top;
+}
+.nav td {
+    vertical-align: bottom;
+    text-align: center;
+}
+/* comment */
+.trackbacks, .comments {
+    margin: 10px;
+    font-size: 10pt;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.trackback, .trackback_url, .comment, .comment_post {
+    background-color: #f8f8ff;
+    color: #000000;
+    border: 1px solid #d3d3d3;
+    padding: 5px 10px 5px 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.trackback a.fl, .comment a.fl {text-decoration:none;}
+
+.comment_body, .trackback_body {
+    padding-left: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #d3d3d3;
+}
+.comment_post {
+    padding-right: 20px;
+    padding-top: 20px;
+    text-align: right;
+}
+.comment_post .comment_text {
+    width: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.comment_post .submit {
+    color:#999999;
+    background-color:#F7F7F7;
+    border: 1px #CCCCCC solid;
+    width: 50px;
+    height: 17px;
+    overflow: auto;
+    font-size: 8pt;
+}
+/* menu */
+#menu {
+    width: 150px;
+    font-size: 8pt;
+    overflow: hidden;
+}
+#menu ul {
+	margin: 0px 5px 0px 5px;
+	padding: 0px 4px;
+	list-style: none;
+}
+
+#menu li {
+	width: 100%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+	white-space: nowrap;
+	overflow: hidden;
+    border: 0px;
+}
+#menu .category, #menu .archive, #menu .calendar,
+#menu .static, #menu .recent_entry, #menu .recent_comment,
+#menu .recent_trackback, #menu .bookmark {
+    position: absolute;
+    color:#999999;
+    background-color: #fffafa;
+    border: 1px #CCCCCC solid;
+    left: 80%;
+    top: 15%;
+}
+#menu .calendar {
+    text-align: center;
+}
+#menu .calendar p {
+    text-align: center;
+    width: 130px;
+}
+#menu .calendar table {
+    width: 130px;
+}
+/* footer */
+.footer {
+    font-size: 9pt;
+    text-align: center;
+    margin-top: 10px;
+}
+.footerbox {
+    padding: 20px;
+    background-color: #e5ecf9;
+    color: #000000;
+    border-top: 1px solid #00c;
+    border-bottom: 1px solid #00c;
+    margin-bottom: 50px;    
+}
+
