@@ -7,7 +7,8 @@ function changeFormat(format) {
     tempForm.format.value = format;
     tempForm.title.value = document.postForm.title.value;
     tempForm.date.value = document.postForm.date.value;
-    tempForm.category.value = document.postForm.category_input.value;
+    tempForm.category.value = document.postForm.category_input.value != ""
+        ? document.postForm.category_input.value : document.postForm.category.value;
     tempForm.SECRET.value = document.postForm.SECRET.checked;
     tempForm.NO_COMMENT.value = document.postForm.NO_COMMENT.checked;
     tempForm.NO_TRACKBACK.value = document.postForm.NO_TRACKBACK.checked;
