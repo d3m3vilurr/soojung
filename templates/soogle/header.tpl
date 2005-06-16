@@ -32,8 +32,10 @@
     </div>
     <div class="search">
         <form action="{$baseurl}/index.php" method="get">
+            <div>
             <input type="text" name="search" title="input search text" size="41" />
             <input type="submit" value="Search" />
+            </div>
         </form>
     </div>
     <div class="setting">

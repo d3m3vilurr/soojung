@@ -69,7 +69,7 @@
     {/foreach}
     {if $view == "index"}
     <div class='nav'>
-    <table align='center'>
+    <table style="margin:0 auto; text-align=center;">
         <tr>
             <td>
                 Result Page:             

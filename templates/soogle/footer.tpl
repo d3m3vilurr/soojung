@@ -88,8 +88,10 @@
     <div class="footerbox">
         <div>
             <form action="{$baseurl}/index.php" method="get">
-                <input type=text name=search size=31 value="{$keyword}" />
-                <input type=submit value="Search" />
+                <div>
+                    <input type="text" name="search" size="31" value="{$keyword}" />
+                    <input type="submit" value="Search" />
+                </div>
             </form>
         </div>
         <div>
