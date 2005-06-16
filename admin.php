@@ -102,6 +102,10 @@ if (array_key_exists("mode", $_POST) and $_POST["mode"] == "login") {
 
 $template = new AdminTemplate;
 
+sajax_init();
+sajax_handle_client_request();
+$template->assign("sajax_functions", sajax_get_javascript());
+
 if (!isset($_SESSION["auth"])) {
   $template->display('login.tpl');
   exit();

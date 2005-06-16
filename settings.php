@@ -32,6 +32,8 @@ include_once("classes/Template.class.php");
 include_once("classes/UserTemplate.class.php");
 include_once("classes/AdminTemplate.class.php");
 
+include_once("libs/sajax-0.10/Sajax.php");
+
 if (get_magic_quotes_gpc()) {
   function stripslashes_deep($value) {
     $value = is_array($value) ?
@@ -66,9 +68,6 @@ if (function_exists("iconv") == 0) {
   }
 }
 
-
-$counter = new Counter();
-$counter->update();
 Soojung::addReferer();
 
 # vim: ts=8 sw=2 sts=2 noet

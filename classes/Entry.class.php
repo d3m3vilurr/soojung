@@ -51,11 +51,16 @@ class Entry {
     return in_array($option, $this->options);
   }
 
-  function getHref() {
+  function getHref($toShow=false) {
     global $blog_baseurl, $blog_fancyurl;
 
     if ($blog_fancyurl) {
-      $_category = preg_replace('/%2F/i','/',urlencode($this->category->name));
+      $_category ="";
+      if ($toShow) {
+	$_category = $this->category->name;
+      } else {
+	$_category = preg_replace('/%2F/i','/',urlencode($this->category->name));
+      }
       return $blog_baseurl . "/" . $_category . date("/Y/m/d/", $this->date) . $this->entryId . ".html";
     } else {
       return $blog_baseurl . '/entry.php?blogid=' . $this->entryId;

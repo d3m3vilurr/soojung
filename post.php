@@ -131,6 +131,37 @@ if ($_POST["mode"] == "upload") {
 
 $template = new AdminTemplate;
 
+if (isset($title) == false) {
+  $title = $_POST["title"];
+}
+if (isset($date) == false && isset($_POST["date"])) {
+  $date = strtotime($_POST["date"]);
+}
+if (isset($format) == false) {
+  $format = $_POST["format"];
+}
+if (isset($category) == false) {
+  $category = $_POST["category"];
+}
+if (isset($body) == false) {
+  $body = $_POST["body"];
+}
+if (isset($_POST["SECRET"]) && $_POST["SECRET"] == "true") {
+  $template->assign("secret", true);
+}
+if (isset($_POST["NO_COMMENT"]) && $_POST["NO_COMMENT"] == "true") {
+  $template->assign("no_comment", true);
+}
+if (isset($_POST["NO_TRACKBACK"]) && $_POST["NO_TRACKBACK"] == "true") {
+  $template->assign("no_trackback", true);
+}
+if (isset($_POST["STATIC"]) && $_POST["STATIC"] == "true") {
+  $template->assign("static", true);
+}
+if (isset($_POST["NO_RSS"]) && $_POST["NO_RSS"] == "true") {
+  $template->assign("no_rss", true);
+}
+
 $template->assign("title", $title);
 if (isset($preview_body)) {
 $template->assign("preview", $preview_body);

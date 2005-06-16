@@ -56,7 +56,7 @@ class Counter {
   }
 
   function isbot() {
-    return stristr($_SERVER['HTTP_USER_AGENT'], "googlebot");
+    return strstr($_SERVER['HTTP_USER_AGENT'], "bot");
   }
 
   function update() {

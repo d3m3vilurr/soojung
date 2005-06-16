@@ -43,8 +43,10 @@
 <option value="by-nc-sa" {if $license == "by-nc-sa"}selected{/if}>Attribution-NonCommercial-ShareAlike License</option>
 <option value="by-sa" {if $license == "by-sa"}selected{/if}>Attribution-ShareAlike License</option>
 </select>
-<a href="http://creativecommons.org/licenses/">see more licenses information</a>
 </span>
+<div class="help">
+<a href="http://creativecommons.org/licenses/">* see more licenses information</a>
+</div>
 </div>
 
 <div class="row">
@@ -59,7 +61,9 @@
 
 <div class="row">
 <span class="label">Admin Password:</span>
-<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if} /> <i>If you want to change the password, input new password.</i></span>
+<span class="formw"><input type="password" name="password" {if !$config_writable}disabled{/if} /></span>
+<div class="help">* If you want to change the password, input new password.</div>
+
 </div>
 
 <div class="row">
@@ -82,8 +86,10 @@
 </div>
 
 <div class="row">
-<span class="label">Spam words:</span>
+<span class="label">Spam Filter:</span>
 <span class="formw"><textarea name="word" rows="5" cols="40" {if !$config_writable}disabled{/if} >{$spam_words}</textarea></span>
+<div class="help">Input spam word in each line. It's regular expression supported.<br />
+example:<br />viagra<br />nude</div>
 </div>
 
 <input type="hidden" name="mode" value="config_update" />

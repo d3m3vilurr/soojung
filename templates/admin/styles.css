@@ -30,6 +30,12 @@ div.row span.formw
   padding-left: 15px;
 }
 
+div.help
+{ 
+  padding-left: 165px;
+  font-style: italic;
+}
+
 #menu
 {
   position:absolute;

@@ -1,6 +1,8 @@
 <?php
-
 include_once("settings.php");
+
+$counter = new Counter();
+$counter->update();
 
 if (isset($_POST["blogid"])) {
   $blogid = $_POST["blogid"];

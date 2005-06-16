@@ -1,5 +1,23 @@
 {include file="header.tpl"}
 {include file="menu.tpl"}
+<script type="text/javascript">
+{literal}
+function changeFormat(format) {
+    tempForm = document.postTempForm;
+    tempForm.format.value = format;
+    tempForm.title.value = document.postForm.title.value;
+    tempForm.date.value = document.postForm.date.value;
+    tempForm.category.value = document.postForm.category_input.value;
+    tempForm.SECRET.value = document.postForm.SECRET.checked;
+    tempForm.NO_COMMENT.value = document.postForm.NO_COMMENT.checked;
+    tempForm.NO_TRACKBACK.value = document.postForm.NO_TRACKBACK.checked;
+    tempForm.STATIC.value = document.postForm.STATIC.checked;
+    tempForm.NO_RSS.value = document.postForm.NO_RSS.checked;
+    tempForm.body.value = document.postForm.body.value;
+    tempForm.submit();
+}
+{/literal}
+</script>
 
 <div id="post">
 
@@ -49,14 +67,14 @@
 <input type="checkbox" name="NO_RSS" {if $no_rss}checked{/if} />NO_RSS
 </span>
 </div>
-
+  
 <div class="row">
 <span class="label">Format:</span>
 <span class="formw">
-<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=plain')" />plain
-<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=html')" />html
-<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=bbcode')" />bbcode
-<input type="radio" name="format" value="moniwiki" {if $format == "moniwiki"}checked{/if} onClick="go('{$baseurl}/post.php?blogid={$id}&format=moniwiki')" />moniwiki
+<input type="radio" name="format" value="plain" {if $format == "plain" || $format == ""}checked{/if} onClick="changeFormat('plain');" />plain
+<input type="radio" name="format" value="html" {if $format == "html"}checked{/if} onClick="changeFormat('html')" />html
+<input type="radio" name="format" value="bbcode" {if $format == "bbcode"}checked{/if} onClick="changeFormat('bbcode');" />bbcode
+<input type="radio" name="format" value="moniwiki" {if $format == "moniwiki"}checked{/if} onClick="changeFormat('moniwiki');" />moniwiki
 </span>
 </div>
 
@@ -96,4 +114,17 @@
 
 </form>
 </div>
+
+<form action="{$baseurl}/post.php" method="post" name="postTempForm">
+<input type="hidden" name="title"/>
+<input type="hidden" name="date"/>
+<input type="hidden" name="format"/>
+<input type="hidden" name="category"/>
+<input type="hidden" name="body"/>
+<input type="hidden" name="SECRET"/>
+<input type="hidden" name="NO_COMMENT"/>
+<input type="hidden" name="NO_TRACKBACK"/>
+<input type="hidden" name="STATIC"/>
+<input type="hidden" name="NO_RSS"/>
+</form>
 {include file="footer.tpl"}
