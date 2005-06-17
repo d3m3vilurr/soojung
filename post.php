@@ -5,20 +5,6 @@ session_start();
 include("config.php");
 include("settings.php");
 
-if (isset($title)) {
-  unset($title);
-}
-if (isset($date)) {
-  unset($date);
-}
-if (isset($body)) {
-  unset($body);
-}
-if (isset($id)) {
-  unset($id);
-}
-
-
 if ($_POST["mode"] == "login") {
   if (md5($_POST["password"]) == $admin_password)
     $_SESSION['auth'] = TRUE;

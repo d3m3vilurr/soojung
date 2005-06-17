@@ -68,6 +68,16 @@ if (function_exists("iconv") == 0) {
   }
 }
 
+/* clear global variables */
+if (ini_get("register_globals")) {
+  if(count($_GET))
+    foreach($_GET as $key => $value)
+      unset(${$key});
+  if(count($_POST))
+    foreach($_POST as $key => $value)
+      unset(${$key});
+}
+
 Soojung::addReferer();
 
 # vim: ts=8 sw=2 sts=2 noet
