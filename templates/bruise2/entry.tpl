@@ -9,7 +9,7 @@
 {if $entry->isSetOption("NO_TRACKBACK") == false}
 <div class="trackbacks">
 <div class="trackback_url">TrackBack URL: {$baseurl}/trackback.php?blogid={$entry->entryId}</div>
-<a name="trackback"></a>
+<div id="trackback">
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
 	<a name="TB{$trackback->date}"></a>
@@ -19,15 +19,16 @@
 	</div>
 {/foreach}
 </div>
+</div>
 {/if}
 
 {if $entry->isSetOption("NO_COMMENT") == false}
 <div class="comments">
 {$entry->comment_count} Comments<br />
-<a name="comment"></a>
+<div id="comment">
 {foreach from=$comments item=comment}
 	<div class="comment">
-	<a name="CO{$comment->date}"></a>
+	<div id="CO{$comment->date}">
 	On {$comment->date|date_format:"%B %d, %Y %I:%M %p"}, 
 	{if $comment->homepage != ""}
 		<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
@@ -38,22 +39,26 @@
 	{/if}
 	said: <br />
 	{$comment->getBody()}
+    </div>
 	</div>
 {/foreach}
 </div>
+</div>
 
 <form action="" method="post">
+<div>
 Post a comment<br />
 Name:<br />
-<input type="text" name="name" value="{$w_name|escape}"><br />
+<input type="text" name="name" value="{$w_name|escape}" /><br />
 Email Address:<br />
-<input type="text" name="email" value="{$w_email|escape}"><br />
+<input type="text" name="email" value="{$w_email|escape}" /><br />
 URL:<br />
-<input type="text" name="url" value="{$w_url|default:"http://"|escape}"><br />
+<input type="text" name="url" value="{$w_url|default:"http://"|escape}" /><br />
 Comments:<br />
 <textarea name="body" rows="5" cols="40"></textarea><br />
-<input type="hidden" name="blogid" value="{$entry->entryId}">
-<input type="submit" value="Post">
+<input type="hidden" name="blogid" value="{$entry->entryId}" />
+<input type="submit" value="Post" />
+</div>
 </form>
 {/if}
 

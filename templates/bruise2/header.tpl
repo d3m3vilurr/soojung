@@ -10,7 +10,7 @@
 <body onload="return correct_bbcode_image();">
 <table border="0" cellpadding="0" cellspacing="0" style='margin:0 auto;'>
 <tr><td valign="top">
-<table border="0" cellpadding="0" cellspacing="0" width='640px' style='margin:0 auto;'>
+<table border="0" cellpadding="0" cellspacing="0" style='margin:0 auto; width=640px;'>
 <tr id="header">
 	<td style='text-align:left; width:320px;'>■ <a href="{$baseurl}" title="{$description}"><span class="blogTitle"><b>{$title}</b></span></a></td>
 	<td style='text-align:right; width:320px;'>
