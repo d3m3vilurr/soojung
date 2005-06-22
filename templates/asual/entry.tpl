@@ -10,7 +10,7 @@
 		{$entry->getBody()}
 	</div>
 	<p>
-		<span class="blue">{$entry->date|date_format:"%B %d, %Y"}</span>
+		<span class="blue">Posted on {$entry->date|date_format:"%B %d, %Y %I:%M"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
 			<span>Comments [<a class="plink" href="{$entry->getHref()|escape}#comment">{$entry->getCommentCount()}</a>]</span>
 		{/if}

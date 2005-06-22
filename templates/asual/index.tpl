@@ -14,7 +14,7 @@
 	{$entry->getBody()}
 	</div>
 	<p>
-		<span class="blue">{$entry->date|date_format:"%B %d, %Y"}</span>
+		<span class="blue">Posted on {$entry->date|date_format:"%B %d, %Y %I:%M"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
 			<span>Comments [<a class="plink" href="{$entry->getHref()|escape}#comment">{$entry->getCommentCount()}</a>]</span>
 		{/if}
@@ -34,30 +34,24 @@
 
 {elseif $view == "archive"}
 	{foreach from=$entries item=entry}
-<div class="entry">
-	<p>
-		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
-		on {$entry->date|date_format:"%B %d, %Y"}
-	</p>
-</div>
+<p>
+	<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
+	on {$entry->date|date_format:"%B %d, %Y"}
+</p>
 	{/foreach}
 {elseif $view == "category"}
 	{foreach from=$entries item=entry}
-<div class="entry">
-	<p>
-		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
-		on {$entry->date|date_format:"%B %d, %Y"}
-	</p>
-</div>
+<p>
+	<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
+	on {$entry->date|date_format:"%B %d, %Y"}
+</p>
 	{/foreach}
 {elseif $view == "search"}
 	{foreach from=$entries item=entry}
-<div class="entry">
-	<p>
-		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
-		on {$entry->date|date_format:"%B %d, %Y"}
-	</p>
-</div>
+<p>
+	<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
+	on {$entry->date|date_format:"%B %d, %Y"}
+</p>
 	{/foreach}
 {/if}
 			</div>
