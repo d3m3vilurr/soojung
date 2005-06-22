@@ -7,8 +7,8 @@
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
 			<td align="left">
-				<a href="/blog/post.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_edit.gif" alt='edit' /></a>
-				<a href="/blog/admin.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_admin.gif" alt='admin' /></a>
+				<a href="{$baseurl}/post.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_edit.gif" alt='edit' /></a>
+				<a href="{$baseurl}/admin.php"><img src="{$baseurl}/templates/{$skin}/imgs/ico_admin.gif" alt='admin' /></a>
 				<a href="#none" onclick="return fold_sidebar('sidebar');"><img src="{$baseurl}/templates/{$skin}/imgs/ico_menu.gif" alt='menu' /></a>
 			</td>
 			<td align="right">
@@ -120,19 +120,19 @@ Total : {$total_count}<br />
 </p>
 
 <a href="{$baseurl}/rss2.php">
-<img src="{$baseurl}/templates/simple/imgs/rss20_logo.gif" alt="rss 2.0 feed" style="border:0px;"/>
+<img src="{$baseurl}/templates/{$skin}/imgs/rss20_logo.gif" alt="rss 2.0 feed" style="border:0px;"/>
 </a>
 
 <br />
 
 <a href="http://validator.w3.org/check?uri=referer">
-<img src="{$baseurl}/templates/simple/imgs/xhtml11.png" alt="Valid XHTML 1.0!" style="border:0px;"/>
+<img src="{$baseurl}/templates/{$skin}/imgs/xhtml11.png" alt="Valid XHTML 1.0!" style="border:0px;"/>
 </a>
 
 <br />
 
 <a class="nodecoration" title="Explanation of Level A Conformance" href="http://www.w3.org/WAI/WCAG1A-Conformance">
-<img src="{$baseurl}/templates/simple/imgs/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" style="border:0px;"/>
+<img src="{$baseurl}/templates/{$skin}/imgs/wai_a.png" alt="Level A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0" style="border:0px;"/>
 </a>
 <br />
 
