@@ -3,7 +3,7 @@
 <p>{$entry->getCommentCount()} Comments</p>
 {foreach from=$comments item=comment}
 <div class="comment">
-	<a name="CO{$comment->date}"></a>
+	<div id="CO{$comment->date}">
     On {$comment->date|date_format:"%B %d, %Y %I:%M %p"},
     {if $comment->homepage != ""}
     <a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
@@ -14,6 +14,7 @@
     {/if}
     said: <br />
     {$comment->getBody()}
+    </div>
 </div>
 {/foreach}
 </div>
