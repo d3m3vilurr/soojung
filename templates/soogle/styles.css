@@ -1,232 +1,208 @@
-body
-{
-  font-family:arial,sans-serif;
-  background-color: #fff;
+body {
+	font-family: arial, sans-serif;
+	font-size: small;
 }
-
-.fl:link{color:#7777CC}
-a    { color:#00c; text-decoration:none;}
-a.fl { color:#6f6f6f; text-decoration: underline;}
-a.w  {color:#00c; text-decoration: underline;}
-
-a:visited    { color:#00c; }
-a:visited.fl { color:#7777CC; }
-a:active, a:active.fl   { color:#f00; }
-.i,.i:link{color:#a90a08}
 
 img {
-    border: 0;
+	border: 0;
 }
 
+form {
+	margin: 0;
+	padding: 0;
+}
 
 .div_hide, .hide {
-  display: none;
+	display: none;
 }
 
 pre {
-  padding: 5px;
-  border: 1px solid #EBD4C8;
-  background-color: #FCF7F4;
+	padding: 5px;
+	border: 1px solid #EBD4C8;
+	background-color: #FCF7F4;
 }
 
 /* Header */
 #header {
-    position: relative;
-    height: 60px;
+	font-size: small;
 }
-.logo {
-    clear: both;
-    position: absolute;
-    float: left;
+
+#header-logo {
+	float: left;
+	padding-top: 5px;
+	padding-right: 10px;
 }
-.topmenu {
-    clear: both;
-    position: absolute;
-    left: 170px;
-    width: -160px;
-    height: 20pt;
-    overflow: hidden;
-    font-size: 8pt;
-    line-height: 95%;
+
+#header .tiny {
+	font-size: 8pt;
 }
-.blogtitle {
-    line-height: 100%;
-    font-size: 11pt;
-    font-weight: bold;
+
+#header-menu {
 }
-.menu {
-    font-size: 9pt;
-}
-.search {
-    position: absolute;
-    top: 20pt;
-    left: 160px;
-    width: -160px;          
-}
-.setting {
-    position: absolute;
-    left: 540px;
-    top: 21pt;
-    font-size: 8pt;
+
+#header-search {
+	margin-top: 5px;
 }
 
 /* First Bar */
-.bar {
-    background-color: #e5ecf9;
-    color: #000000;
-    height: 20px;
-    border-top: 1px solid #00c;
-    padding-left: 10px;
-    padding-right: 10px;
+#bar {
+	clear: both;
+	margin-bottom: 20px;
+	padding: 0 10px;
+	border-top: 1px solid #00C;
+	background-color: #E5ECF9;
 }
-.classes {
-    position: absolute;
+
+#bar h3 {
+	font-size: 140%;
+	margin: 0;
 }
+
 .result {
-    float: right;
+	float: right;
 }
 
 /* Entry */
 .entry {
-    margin-top: 20px;
-    width: 70%;
+	margin-top: 20px;
+	width: 70%;
 }
 .entrytitle {
-    font-size: 12pt;
+	font-size: 12pt;
+	line-height: 140%;
 }
 .entrybody {
-    margin: 10px;
-    font-size: 10pt;
+	font-size: 10pt;
+	line-height: 140%;
 }
 .entryinfo {
-    font-size: 9pt;
-    color: #008000;
+	font-size: 9pt;
+	color: #008000;
 }
 .posted {
-    background-color: #f8f8ff;
-    color: #000000;
-    height: 20px;
-    border-top: 1px solid #d3d3d3;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: right;
+	background-color: #f8f8ff;
+	color: #000000;
+	height: 20px;
+	border-top: 1px solid #d3d3d3;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: right;
 }
 
-.nav {
-    margin-top: 20px;
-    line-height:80%;
+#nav {
+	margin-top: 40px;
 }
-.nav a{font-size:10pt; color:#000}
-.nav .i{font-size:10pt; font-weight:bold}
-.nav .b {
-    font-size: 12pt;
-    color:#00c;
-    font-weight:bold;
+#nav table {
+	margin: 0 auto;
+	padding: 0;
+	border-spacing: 0;
 }
-.nav table {
-    border-spacing: 0;
-    padding:0;
+#nav td {
+	padding: 0;
+	vertical-align: top;
+	text-align: center;
 }
-.nav tr {
-    vertical-align: top;
+#nav td.nav-prev {
+	text-align: right;
 }
-.nav td {
-    vertical-align: bottom;
-    text-align: center;
+#nav td.nav-next {
+	text-align: center;
 }
+#nav strong {
+	font-size: 110%;
+}
+
+#nav .nav-current {
+	font-weight: bold;
+	color: #A90A08;
+}
+
 /* comment */
 .trackbacks, .comments {
-    margin: 10px;
-    font-size: 10pt;
-    padding-left: 20px;
-    padding-right: 10px;
+	margin: 10px;
+	font-size: 10pt;
+	padding-left: 20px;
+	padding-right: 10px;
 }
 .trackback, .trackback_url, .comment, .comment_post {
-    background-color: #f8f8ff;
-    color: #000000;
-    border: 1px solid #d3d3d3;
-    padding: 5px 10px 5px 10px;
-    margin-top: 10px;
-    margin-left: 10px;
+	background-color: #f8f8ff;
+	color: #000000;
+	border: 1px solid #d3d3d3;
+	padding: 5px 10px 5px 10px;
+	margin-top: 10px;
+	margin-left: 10px;
 }
-.trackback a.fl, .comment a.fl {text-decoration:none;}
+.trackback a.fl, .comment a.fl {
+	text-decoration:none;
+}
 
 .comment_body, .trackback_body {
-    padding-left: 5px;
-    padding-top: 5px;
-    border-top: 1px solid #d3d3d3;
+	padding-left: 5px;
+	padding-top: 5px;
+	border-top: 1px solid #d3d3d3;
 }
 .comment_post {
-    padding-right: 20px;
-    padding-top: 20px;
-    text-align: right;
+	padding-right: 20px;
+	padding-top: 20px;
+	text-align: right;
 }
 .comment_post .comment_text {
-    width: 90%;
-    overflow-y: auto;
-    overflow-x: hidden;
+	width: 90%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 .comment_post .submit {
-    color:#999999;
-    background-color:#F7F7F7;
-    border: 1px #CCCCCC solid;
-    width: 50px;
-    height: 17px;
-    overflow: auto;
-    font-size: 8pt;
+	color:#999999;
+	background-color:#F7F7F7;
+	border: 1px #CCCCCC solid;
+	width: 50px;
+	height: 17px;
+	overflow: auto;
+	font-size: 8pt;
 }
+
 /* menu */
 #menu {
-    width: 150px;
-    font-size: 8pt;
-    overflow: hidden;
+	width: 150px;
+	overflow: hidden;
 }
+
 #menu ul {
-	margin: 0px 5px 0px 5px;
-	padding: 0px 4px;
+	margin: 0;
+	padding: 20px 0;
+	padding-left: 15px;
+	border-left: 1px #C9D7F1 solid;
 	list-style: none;
 }
 
 #menu li {
 	width: 100%;
-    margin-top: 2px;
-    margin-bottom: 2px;
 	white-space: nowrap;
 	overflow: hidden;
-    border: 0px;
-}
-#menu .category, #menu .archive, #menu .calendar,
-#menu .static, #menu .recent_entry, #menu .recent_comment,
-#menu .recent_trackback, #menu .bookmark {
-    position: absolute;
-    color:#999999;
-    background-color: #fffafa;
-    border: 1px #CCCCCC solid;
-    left: 80%;
-    top: 15%;
-}
-#menu .calendar {
-    text-align: center;
-}
-#menu .calendar p {
-    text-align: center;
-    width: 130px;
-}
-#menu .calendar table {
-    width: 130px;
-}
-/* footer */
-.footer {
-    font-size: 9pt;
-    text-align: center;
-    margin-top: 10px;
-}
-.footerbox {
-    padding: 20px;
-    background-color: #e5ecf9;
-    color: #000000;
-    border-top: 1px solid #00c;
-    border-bottom: 1px solid #00c;
-    margin-bottom: 50px;    
 }
 
+#menu .category, #menu .archive,
+#menu .recent_entry, #menu .bookmark {
+	position: absolute;
+	left: 80%;
+	top: 15%;
+	font-size: small;
+}
+
+/* footer */
+#footer {
+	text-align: center;
+	margin-top: 10px;
+}
+#footerbox {
+	margin-top: 40px;
+	margin-bottom: 40px;    
+	padding: 20px;
+	background-color: #e5ecf9;
+	color: #000000;
+	border-top: 1px solid #00c;
+	border-bottom: 1px solid #00c;
+}
+#footer-search {
+	margin-bottom: 20px;
+}

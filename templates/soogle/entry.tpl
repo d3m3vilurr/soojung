@@ -1,26 +1,22 @@
 {include file="header.tpl"}
-<div class="bar">
-    <span class="classes">
-        <b>{$entry->title|escape}</b>
-    </span>
+<div id="bar">
     <span class="result">
-        Results <b>
-        1</b> - <b>1
-        </b> of about<b>
+        Results <strong>1</strong> - <strong>1</strong> of about<strong>
         {php}
             $entry = Entry::getEntry($_GET['blogid']);
             $category = new Category($entry->category->name);
             echo $category->getEntryCount();
         {/php}
-        </b>for<b>
+        </strong>for<strong>
         {$entry->category->name|escape}
-        </b> .(<b>
+        </strong>.(<strong>
         {php}
             printf("%.2f",rand(1,10000)/10000);
             $i = 1;
         {/php}
-        </b> seconds)
+        </strong>seconds)
     </span>
+    <h3>{$entry->title|escape}</h3>
 </div>
 <div class="entry">
     <div class="entrybody">
