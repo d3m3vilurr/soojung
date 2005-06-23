@@ -80,8 +80,8 @@ input#search.on {
 	font-size: 1em;
 	margin: 0em 0em 0.5em 0em;
 }
-.entry p.body, .format_bbcode {
-	font-size: 0.8em;
+.entry div.body, .entry p.body .format_bbcode {
+	font-size: 0.9em;
 	line-height: 1.5em;
 	margin: 0;
 }

@@ -16,10 +16,10 @@
 		</div>
 		<div class="links">
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span class="commentslink"><a href="{$entry->getHref()|escape}#comment"><span></span>Comments ({$entry->getCommentCount()})</a></span>
+			<span class="commentslink"><a href="{$entry->getHref()|escape}#comment">Comments ({$entry->getCommentCount()})</a></span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span class="trackbackslink"><a href="{$entry->getHref()|escape}#trackback"><span></span>Trackbacks ({$entry->getTrackbackCount()})</a></span>
+			<span class="trackbackslink"><a href="{$entry->getHref()|escape}#trackback">Trackbacks ({$entry->getTrackbackCount()})</a></span>
 		{/if}
 		</div>
 	</div>

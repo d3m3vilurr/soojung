@@ -13,10 +13,10 @@
 		<p>
 			<span class="blue">Posted on {$entry->date|date_format:"%B %d, %Y %p %I:%M"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span><a href="{$entry->getHref()|escape}#comment"><span></span>Comments [{$entry->getCommentCount()}]</a></span>
+			<span><a href="{$entry->getHref()|escape}#comment">Comments [{$entry->getCommentCount()}]</a></span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span><a href="{$entry->getHref()|escape}#trackback"><span></span>Trackbacks [{$entry->getTrackbackCount()}]</a></span>
+			<span><a href="{$entry->getHref()|escape}#trackback">Trackbacks [{$entry->getTrackbackCount()}]</a></span>
 		{/if}
 		</p>
 	</div>

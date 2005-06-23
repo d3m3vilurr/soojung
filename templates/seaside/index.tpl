@@ -10,10 +10,11 @@
 {/if}
 {foreach from=$entries item=entry}
 	<div class="entry">
-		<h2><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a> <div class="category">{$entry->category->name|escape}</div> <div class="date">{$entry->date|date_format:"%B %d, %Y"}</div></h2>
-		<p class="body">{$entry->getBody()}</p>
+		<h2><a href="{$entry->getHref()|escape}">{$entry->title|escape}</a> <span class="category">{$entry->category->name|escape}</span> <span class="date">{$entry->date|date_format:"%B %d, %Y"}</span></h2>
+		<div class="body">{$entry->getBody()}</div>
 		<p class="info">{if $entry->isSetOption("NO_COMMENT") == false}<a class="plink" href="{$entry->getHref()|escape}#comment">Comments ({$entry->getCommentCount()})</a>{/if}
-		{if $entry->isSetOption("NO_TRACKBACK") == false}| <a class="plink" href="{$entry->getHref()|escape}#trackback">TrackBacks ({$entry->getTrackbackCount()})</a>{/if}</p>
+        {if $entry->isSetOption("NO_TRACKBACK") == false and $entry->isSetOption("NO_COMMENT") == false}|{/if}
+        {if $entry->isSetOption("NO_TRACKBACK") == false}<a class="plink" href="{$entry->getHref()|escape}#trackback">TrackBacks ({$entry->getTrackbackCount()})</a>{/if}</p>
 	</div>
 {/foreach}
 	<div id="page">

@@ -8,10 +8,10 @@
 		<p>
 			<span class="blue">Posted on {$entry->date|date_format:"%B %d, %Y %p %I:%M"}</span>
 		{if $entry->isSetOption("NO_COMMENT") == false}
-			<span><a href="{$entry->getHref()|escape}#comment"><span></span>Comments [{$entry->getCommentCount()}]</a></span>
+			<span><a href="{$entry->getHref()|escape}#comment">Comments [{$entry->getCommentCount()}]</a></span>
 		{/if}
 		{if $entry->isSetOption("NO_TRACKBACK") == false}
-			<span><a href="{$entry->getHref()|escape}#trackback"><span></span>Trackbacks [{$entry->getTrackbackCount()}]</a></span>
+			<span><a href="{$entry->getHref()|escape}#trackback">Trackbacks [{$entry->getTrackbackCount()}]</a></span>
 		{/if}
 		</p>
 	</div>
@@ -19,31 +19,33 @@
 
 	{if $entry->isSetOption("NO_TRACKBACK") == false}
 	<div id="trackbacks">
-		<a name="trackback"></a>
+		<div id="trackback">
 		<h3>Trackbacks on this entry:</h3>
 		<p>
 			TrackBack URL: {$baseurl}/trackback.php?blogid={$entry->entryId}
 		</p>
 	{foreach from=$trackbacks item=trackback}
 		<div class="trackback">
-			<a name="TB{$trackback->date}"></a>
+			<div id="TB{$trackback->date}">
 			<p>Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a></p>
 			<p>{$trackback->title|escape}:</p>
 			<p>
 				{$trackback->getExcerpt()|strip_tags|escape}
 			</p>
+            </div>
 		</div>
 	{/foreach}
+        </div>
 	</div>
 	{/if}
 	
 	{if $entry->isSetOption("NO_COMMENT") == false}
 	<div id="comments">
-		<a name="comment"></a>
+		<div id="comment">
 		<h3>Comments on this entry:</h3>
 	{foreach from=$comments item=comment}
 		<div class="comment">
-			<a name="CO{$comment->date}"></a>
+			<div id="CO{$comment->date}">
 			<div class="info">
 				Left by <span class="author">
 				{if $comment->homepage != ""}
@@ -58,6 +60,7 @@
 			<p class="post">
 				{$comment->getBody()}
 			</p>
+            </div>
 		</div>
 	{/foreach}
 		<h3>Your comment:</h3>
@@ -76,6 +79,7 @@
 			<div class="label">&nbsp;</div>
 			<div class="input"><input type="submit" value="Post" class="button" /></div>
 		</form>
+        </div>
 	</div>
 	{/if}
 

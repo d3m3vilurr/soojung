@@ -21,14 +21,14 @@
 </div>
 {if $entry->isSetOption("NO_TRACKBACK") == false}
 <div id="trackbacks">
-	<a name="trackback"></a>
+	<div id="trackback">
 	<h3>Trackbacks on this entry:</h3>
 	<p>
 		TrackBack URL: {$baseurl}/trackback.php?blogid={$entry->entryId}
 	</p>
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
-		<a name="TB{$trackback->date}"></a>
+		<div id="TB{$trackback->date}">
 		<p class="blue">
 			Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a>
 		</p>
@@ -36,18 +36,20 @@
 		<p>
 			{$trackback->getExcerpt()|strip_tags|escape}
 		</p>
+        </div>
 	</div>
 {/foreach}
+</div>
 </div>
 {/if}
 
 {if $entry->isSetOption("NO_COMMENT") == false}
 <div id="comments">
-	<a name="comment"></a>
+	<div id="comment">
 	<h3>Comments on this entry:</h3>
 {foreach from=$comments item=comment}
 	<div class="comment">
-		<a name="CO{$comment->date}"></a>
+		<div id="CO{$comment->date}">
 		<p class="blue">
 			Left on {$comment->date|date_format:"%B %d, %Y %I:%M %p"} by
 			{if $comment->homepage != ""}
@@ -61,6 +63,7 @@
 		<p>
 			{$comment->getBody()}
 		</p>
+        </div>
 	</div>
 {/foreach}
 	<form id="commentform" action="" method="post">
@@ -78,6 +81,7 @@
 		<p class="label">&nbsp;</p>
 		<p class="input"><input type="submit" value="Post" /></p>
 	</form>
+    </div>
 </div>
 {/if}
 			</div>

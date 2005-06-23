@@ -7,9 +7,7 @@
 		Posted at {$entry->date|date_format:"%I:%M %p"}
 	</div>
 	<div class="storycontent">
-		<p>
 			{$entry->getBody()}
-		</p>
 	</div>
 	<div class="feedback">
 		{if $entry->isSetOption("NO_COMMENT") == false}
@@ -22,14 +20,14 @@
 
 {if $entry->isSetOption("NO_TRACKBACK") == false}
 <h2 id="trackbacks">trackbacks</h2>
-<a name="trackback"></a>
+<div id="trackback">
 <p>
 	The URI to TrackBack this entry is: {$baseurl}/trackback.php?blogid={$entry->entryId}
 </p>
 <ol id="trackbacklist">
 {foreach from=$trackbacks item=trackback}
 	<li>
-		<a name="TB{$trackback->date}"></a>
+		<div id="TB{$trackback->date}">
 		<p>
 			Trackback from <a href="{$trackback->url|escape}">{$trackback->url|escape}</a>
 		</p>
@@ -37,19 +35,23 @@
 		<p>
 			{$trackback->getExcerpt()|strip_tags|escape}
 		</p>
+        </div>
 	</li>
+{foreachelse}
+    <li style="display:none;">&nbsp;</li>
 {/foreach}
 </ol>
+</div>
 {/if}
 
 {if $entry->isSetOption("NO_COMMENT") == false}
 <h2 id="comments">Comments</h2>
-<a name="comment"></a>
+<div id="comment">
 
 <ol id="commentlist">
 {foreach from=$comments item=comment}
 	<li>
-		<a name="CO{$comment->date}"></a>
+		<div id="CO{$comment->date}">
 			
 		<p>
 			{$comment->getBody()}
@@ -66,7 +68,10 @@
 			&#8212; {$comment->date|date_format:"%m/%d/%Y @ %I:%M %p"}
 			</cite>
 		</p>
+        </div>
 	</li>
+{foreachelse}
+    <li style="display:none;">&nbsp;</li>
 {/foreach}
 </ol>
 
@@ -89,12 +94,13 @@
 	<p>
 		<label>Your Comment</label>
 		<br />
-		<textarea id="comment" name="body" rows="5" cols="40"></textarea>
+		<textarea name="body" rows="5" cols="40"></textarea>
 	</p>
 	<p>
 		<input type="submit" value="Say it!" />
 	</p>
 </form>
+</div>
 {/if}
 
 </div>

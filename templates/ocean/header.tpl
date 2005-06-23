@@ -31,7 +31,7 @@
 					writeSwitcher();
 				</script>
 				<noscript>
-					<p></p>
+					<p>&nbsp;</p>
 				</noscript>
 			</div>
 		</div>

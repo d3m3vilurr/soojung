@@ -10,9 +10,7 @@
 		Posted at {$entry->date|date_format:"%I:%M %p"}
 	</div>
 	<div class="storycontent">
-		<p>
 			{$entry->getBody()}
-		</p>
 	</div>
 	<div class="feedback">
 		{if $entry->isSetOption("NO_COMMENT") == false}

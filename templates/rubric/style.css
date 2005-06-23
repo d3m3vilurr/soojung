@@ -141,6 +141,9 @@ pre
 	color: #B54141;
 }
 
+.storycontent {
+    padding-top: 10px;
+}
 .post-categories {
 	display: inline;
 	margin: 0;
