@@ -10,6 +10,11 @@ a
   text-decoration:none;
 }
 
+a img
+{ 
+  border: 0;
+}
+
 /* tabless css */
 div.row
 {
@@ -102,6 +107,20 @@ tr .row:hover a
 #post div.row span.label
 {
   width: 70px;
+}
+
+#post div.row span.formw
+{
+  display: block;
+  padding-left: 80px;
+}
+
+#post #bbcode {
+  margin-top: 5px;
+}
+
+#post #smiles {
+  margin-top: 10px;
 }
 
 /* list */
