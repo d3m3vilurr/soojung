@@ -60,7 +60,12 @@ if (isset($_POST["name"])) {
     Soojung::writeConfigFile($_POST["name"], $_POST["desc"], $_POST["url"], $_POST["perpage"],
 			     $fb, $nb, $_POST["admin"], $_POST["email"],
 			     md5($_POST["password"]));
-    Soojung::writeHtaccess();
+
+    if(isset($_POST["fancyurl"]) && $_POST["fancyurl"] == "on") {
+      Soojung::writeHtaccess();
+    } else {
+      Soojung::deleteHtaccess();
+    }
 
     echo "install success. delete install.php file and change the soojung directory permission to 755<br />";
     echo "<a href=\"index.php\">home</a>";

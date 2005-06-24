@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include("config.php");
 include_once("settings.php");
 
@@ -31,6 +30,13 @@ function config_update_mode() {
 		    $password, $_POST["skin"], $_POST["license"],
 		    $_POST["word"]);
   echo "<meta http-equiv='refresh' content='0;URL=index.php?compile=t'>";
+  
+  if(isset($_POST["fancyurl"]) && $_POST["fancyurl"] == "on") {
+    Soojung::writeHtaccess();
+  } else {
+    Soojung::deleteHtaccess();
+  }
+  
   exit;
 }
 
