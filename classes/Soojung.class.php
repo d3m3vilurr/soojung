@@ -202,8 +202,10 @@ class Soojung {
   }
 
   function deleteHtaccess($filename = ".htaccess") {
-    if(file_exists($filename))
-      unlink($filename);
+    // FIXME: file permission error. unlink disable.
+    $f = fopen($filename, "w");
+    fwrite($f, "");
+    fclose($f);
   }
 
   // referer spam check
