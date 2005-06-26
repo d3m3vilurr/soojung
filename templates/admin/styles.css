@@ -117,12 +117,23 @@ tr .row:hover a
 
 #post #bbcode {
   margin-top: 5px;
+  margin-left: 80px;
 }
 
 #post #smiles {
   margin-top: 10px;
+  margin-left: 80px;
 }
 
+#post #bbcode span, #post #smiles span {
+  cursor: pointer;
+  color: #09c;
+  text-decoration:none;
+}
+
+#post #addbbcode option {
+  background-color: #fafafa
+}
 /* list */
 #list table
 {
