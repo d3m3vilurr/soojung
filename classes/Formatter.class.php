@@ -160,11 +160,11 @@ class BBcodeFormatter extends Formatter {
       $rstr .= "<li>".trim($item[$i])."</li>";
     }
     switch($mode) {
-    case "A": return "<ol class=\"list-ualpha\">$rstr</ol>";
-    case "a": return "<ol class=\"list-lalpha\">$rstr</ol>";
-    case "1": return "<ol class=\"list-decimal\">$rstr</ol>";
-    case "I": return "<ol class=\"list-uroman\">$rstr</ol>";
-    case "i": return "<ol class=\"list-lroman\">$rstr</ol>";
+    case "A": return "<ol style=\"list-style-type:upper-alpha\">$rstr</ol>";
+    case "a": return "<ol style=\"list-style-type:lower-alpha\">$rstr</ol>";
+    case "1": return "<ol style=\"list-style-type:decimal\">$rstr</ol>";
+    case "I": return "<ol style=\"list-style-type:upper-roman\">$rstr</ol>";
+    case "i": return "<ol style=\"list-style-type:lower-roman\">$rstr</ol>";
     default: return "<ul>$rstr</ul>";
     }
   }
@@ -224,7 +224,6 @@ class BBcodeFormatter extends Formatter {
         ":lol:" => "icon_lol.gif",
         ":x" => "icon_mad.gif",
         ":p" => "icon_razz.gif",
-        ":P" => "icon_razz.gif",
         ":cry:" => "icon_cry.gif",
         ":evil:" => "icon_evil.gif",
         ":twisted:" => "icon_twisted.gif",
@@ -243,9 +242,9 @@ class BBcodeFormatter extends Formatter {
       $smiley = null;
     global $blog_baseurl;
     if(is_null($smiley)) {
-      $smiley = array();
       foreach($_smiley as $k => $v) {
-        $smiley[htmlspecialchars($k)] = '<img src="'.$blog_baseurl.'/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
+        $smiley_rule[] = "#" . preg_quote(htmlspecialchars($k)) . "#i";
+        $smiley_repl[] = '<img src="'.$blog_baseurl.'/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
       }
     }
 
@@ -264,7 +263,7 @@ class BBcodeFormatter extends Formatter {
       if($i % 2 == 0) {
         $temp = htmlspecialchars($str[$i]);
         if($option["smiley"]) {
-          $temp = strtr($temp, $smiley);
+          $temp = preg_replace($smiley_rule, $smiley_repl, $temp);
         }
         $temp = preg_replace('#\[literal](.*)\[/literal]#ieU', 'BBcodeFormatter::__escape("\1")', $temp);
         $temp = preg_replace($rule2, $repl2, preg_replace($rule1, $repl1, $temp));

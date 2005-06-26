@@ -38,27 +38,27 @@
 	</select>
 </div>
 <div id="smiles">
-	<span onclick="emoticon(':D');"><img src="{$baseurl}/libs/bbcode/smiles/icon_biggrin.gif" alt="Very Happy" title="Very Happy" /></span>
-	<span onclick="emoticon(':)');"><img src="{$baseurl}/libs/bbcode/smiles/icon_smile.gif" alt="Smile" title="Smile" /></span>
-	<span onclick="emoticon(':(');"><img src="{$baseurl}/libs/bbcode/smiles/icon_sad.gif" alt="Sad" title="Sad" /></span>
-	<span onclick="emoticon(':o');"><img src="{$baseurl}/libs/bbcode/smiles/icon_surprised.gif" alt="Surprised" title="Surprised" /></span>
-	<span onclick="emoticon(':shock:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_eek.gif" alt="Shocked" title="Shocked" /></span>
-	<span onclick="emoticon(':?');"><img src="{$baseurl}/libs/bbcode/smiles/icon_confused.gif" alt="Confused" title="Confused" /></span>
-	<span onclick="emoticon('8)');"><img src="{$baseurl}/libs/bbcode/smiles/icon_cool.gif" alt="Cool" title="Cool" /></span>
-	<span onclick="emoticon(':lol:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_lol.gif" alt="Laughing" title="Laughing" /></span>
-	<span onclick="emoticon(':x');"><img src="{$baseurl}/libs/bbcode/smiles/icon_mad.gif" alt="Mad" title="Mad" /></span>
-	<span onclick="emoticon(':P');"><img src="{$baseurl}/libs/bbcode/smiles/icon_razz.gif" alt="Razz" title="Razz" /></span>
-	<span onclick="emoticon(':oops:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_redface.gif" alt="Embarassed" title="Embarassed" /></span>
-	<span onclick="emoticon(':cry:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_cry.gif" alt="Crying or Very sad" title="Crying or Very sad" /></span>
-	<span onclick="emoticon(':evil:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_evil.gif" alt="Evil or Very Mad" title="Evil or Very Mad" /></span>
-	<span onclick="emoticon(':twisted:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_twisted.gif" alt="Twisted Evil" title="Twisted Evil" /></span>
-	<span onclick="emoticon(':roll:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_rolleyes.gif" alt="Rolling Eyes" title="Rolling Eyes" /></span>
-	<span onclick="emoticon(':wink:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_wink.gif" alt="Wink" title="Wink" /></span>
-    <span onclick="emoticon(':|');"><img src="{$baseurl}/libs/bbcode/smiles/icon_neutral.gif" alt="Neutral" title="Neutral" /></span>
-    <span onclick="emoticon(':mrgreen:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_mrgreen.gif" alt="Mr. Green" title="Mr. Green" /></span>
-	<span onclick="emoticon(':!:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_exclaim.gif" alt="Exclamation" title="Exclamation" /></span>
-	<span onclick="emoticon(':?:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_question.gif" alt="Question" title="Question" /></span>
-	<span onclick="emoticon(':idea:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_idea.gif" alt="Idea" title="Idea" /></span>
-	<span onclick="emoticon(':arrow:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_arrow.gif" alt="Arrow" title="Arrow" /></span>
+	<span onclick="emoticon(':D');"><img src="{$baseurl}/libs/bbcode/smiles/icon_biggrin.gif" alt="Very Happy" title=":D" /></span>
+	<span onclick="emoticon(':)');"><img src="{$baseurl}/libs/bbcode/smiles/icon_smile.gif" alt="Smile" title=":)" /></span>
+	<span onclick="emoticon(':(');"><img src="{$baseurl}/libs/bbcode/smiles/icon_sad.gif" alt="Sad" title=":(" /></span>
+	<span onclick="emoticon(':o');"><img src="{$baseurl}/libs/bbcode/smiles/icon_surprised.gif" alt="Surprised" title=":o" /></span>
+	<span onclick="emoticon(':shock:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_eek.gif" alt="Shocked" title=":shock:" /></span>
+	<span onclick="emoticon(':?');"><img src="{$baseurl}/libs/bbcode/smiles/icon_confused.gif" alt="Confused" title=":?" /></span>
+	<span onclick="emoticon('8)');"><img src="{$baseurl}/libs/bbcode/smiles/icon_cool.gif" alt="Cool" title="8)" /></span>
+	<span onclick="emoticon(':lol:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_lol.gif" alt="Laughing" title=":lol:" /></span>
+	<span onclick="emoticon(':x');"><img src="{$baseurl}/libs/bbcode/smiles/icon_mad.gif" alt="Mad" title=":x" /></span>
+	<span onclick="emoticon(':p');"><img src="{$baseurl}/libs/bbcode/smiles/icon_razz.gif" alt="Razz" title=":p" /></span>
+	<span onclick="emoticon(':oops:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_redface.gif" alt="Embarassed" title=":oops:" /></span>
+	<span onclick="emoticon(':cry:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_cry.gif" alt="Crying or Very sad" title=":cry:" /></span>
+	<span onclick="emoticon(':evil:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_evil.gif" alt="Evil or Very Mad" title=":evil:" /></span>
+	<span onclick="emoticon(':twisted:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_twisted.gif" alt="Twisted Evil" title=":twisted:" /></span>
+	<span onclick="emoticon(':roll:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_rolleyes.gif" alt="Rolling Eyes" title=":roll:" /></span>
+	<span onclick="emoticon(':wink:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_wink.gif" alt="Wink" title=":wink:" /></span>
+    <span onclick="emoticon(':|');"><img src="{$baseurl}/libs/bbcode/smiles/icon_neutral.gif" alt="Neutral" title=":|" /></span>
+    <span onclick="emoticon(':mrgreen:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_mrgreen.gif" alt="Mr. Green" title=":mrgreen:" /></span>
+	<span onclick="emoticon(':!:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_exclaim.gif" alt="Exclamation" title=":!:" /></span>
+	<span onclick="emoticon(':?:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_question.gif" alt="Question" title=":?:" /></span>
+	<span onclick="emoticon(':idea:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_idea.gif" alt="Idea" title=":idia:" /></span>
+	<span onclick="emoticon(':arrow:');"><img src="{$baseurl}/libs/bbcode/smiles/icon_arrow.gif" alt="Arrow" title=":arrow:" /></span>
 </div>
 </div>
