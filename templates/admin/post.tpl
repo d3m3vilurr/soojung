@@ -24,7 +24,6 @@ function changePostCategory(category) {
         if(!document.postForm.format[i].checked) continue;
         tempForm.format.value = document.postForm.format[i].value;
     }
-//    tempForm.format.value = document.postForm.format[document.postForm.format.Value].value;
     tempForm.category.value = category.value;
     tempForm.submit();
 }
