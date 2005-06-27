@@ -4,13 +4,10 @@
 <script type="text/javascript" src="{$baseurl}/libs/bbcode.js"></script>
 <script type="text/javascript">
 {literal}
-function changeFormat(format) {
+function savePostValue() {
     tempForm = document.postTempForm;
-    tempForm.format.value = format;
     tempForm.title.value = document.postForm.title.value;
     tempForm.date.value = document.postForm.date.value;
-    tempForm.category.value = document.postForm.category_input.value != ""
-        ? document.postForm.category_input.value : document.postForm.category.value;
     tempForm.SECRET.value = document.postForm.SECRET.checked;
     tempForm.NO_COMMENT.value = document.postForm.NO_COMMENT.checked;
     tempForm.NO_TRACKBACK.value = document.postForm.NO_TRACKBACK.checked;
@@ -19,6 +16,24 @@ function changeFormat(format) {
     tempForm.body.value = document.postForm.body.value;
     tempForm.id.value = (document.postForm.id.value == undefined || document.postForm.id.value == "")
         ? null : document.postForm.id.value;
+}
+function changePostCategory(category) {
+    savePostValue();
+    tempForm = document.postTempForm;
+    for(i=0; i<document.postForm.format.length; i++) {
+        if(!document.postForm.format[i].checked) continue;
+        tempForm.format.value = document.postForm.format[i].value;
+    }
+//    tempForm.format.value = document.postForm.format[document.postForm.format.Value].value;
+    tempForm.category.value = category.value;
+    tempForm.submit();
+}
+function changeFormat(format) {
+    savePostValue();
+    tempForm = document.postTempForm;
+    tempForm.format.value = format;
+    tempForm.category.value = document.postForm.category_input.value != ""
+        ? document.postForm.category_input.value : document.postForm.category.value;
     tempForm.submit();
 }
 {/literal}
@@ -52,7 +67,7 @@ function changeFormat(format) {
 <input type="text" name="category_input" value="{$category|escape}" /> or 
 {foreach name=categories from=$categories item=cate}
 {if $smarty.foreach.categories.first}
-<select name="category">
+<select name="category" onchange="changePostCategory(this);">
 {/if}
 	<option value="{$cate->name}" {if $category == $cate->name}selected{/if}>{$cate->name}
 {foreachelse}
