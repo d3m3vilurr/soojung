@@ -188,10 +188,10 @@ class Soojung {
     fwrite($f, "RewriteEngine On\n");
     fwrite($f, "RewriteRule ^(.+)/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)[.]html$ ");
     fwrite($f, "entry.php?blogid=$5\n");
-    fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+) ");
-    fwrite($f, "index.php?archive=$1$2\n");
     fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+)/([0-9]+) ");
     fwrite($f, "index.php?archive=$1$2$3\n");
+    fwrite($f, "RewriteRule ^([0-9]+)/([0-9]+) ");
+    fwrite($f, "index.php?archive=$1$2\n");
     fwrite($f, "RewriteRule ^page/([0-9]+)$ ");
     fwrite($f, "index.php?page=$1\n");
     fwrite($f, "RewriteRule ^([^/.]+)$ ");    
