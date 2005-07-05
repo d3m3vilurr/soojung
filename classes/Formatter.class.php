@@ -206,8 +206,8 @@ class BBcodeFormatter extends Formatter {
         'BBcodeFormatter::__listing("\1","\2")',
         'BBcodeFormatter::__escape("<a href=\\"\1\\">\1</a>")',
         'BBcodeFormatter::__escape("<a href=\\"\2\\">\3</a>")',
-        'BBcodeFormatter::__escape("<img src=\\"\1\\" alt=\\"\1\\\" />")',
-        'BBcodeFormatter::__escape("<img src=\\"\2\\" alt=\\"\3\\\" />")',
+        'BBcodeFormatter::__escape("<img src=\\"\1\\" alt=\\"\1\\\" class=\\"bbcode\\" />")',
+        'BBcodeFormatter::__escape("<img src=\\"\2\\" alt=\\"\3\\\" class=\\"bbcodd\\" />")',
         'BBcodeFormatter::__escape("<a href=\\"mailto:\1\\">\1</a>")'),
       $rule2 = array(
         '#(?<![\/~"\'])http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+(?!(?:</a>|"|\'>))#i',
@@ -243,7 +243,7 @@ class BBcodeFormatter extends Formatter {
     global $blog_baseurl;
     if(is_null($smiley)) {
       foreach($_smiley as $k => $v) {
-        $smiley_rule[] = "#" . preg_quote(htmlspecialchars($k)) . "#i";
+        $smiley_rule[] = "#(?<!alt=\")" . preg_quote(htmlspecialchars($k)) . "#i";
         $smiley_repl[] = '<img src="'.$blog_baseurl.'/libs/bbcode/smiles/'.$v.'" width="15" height="15" alt="'.htmlspecialchars($k).'" />';
       }
     }
