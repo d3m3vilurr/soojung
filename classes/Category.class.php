@@ -4,6 +4,9 @@ class Category {
   var $name;
 
   function Category($name) {
+    if(!isutf8($name)) {
+      $name = iconv('UHC//IGNORE', 'UTF-8', $name);
+    }
     $this->name = $name;
   }
 
