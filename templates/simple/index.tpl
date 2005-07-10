@@ -22,7 +22,11 @@
 {elseif $view == "archive"}
 	{foreach from=$entries item=entry}
 		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
+		{if $keyword|strlen != 8}
 		{$entry->date|date_format:"%B %d, %Y"}
+		{else}
+		{$entry->date|date_format:"%H:%M"}
+		{/if}
 		<br />
 	{/foreach}
 {elseif $view == "category"}
