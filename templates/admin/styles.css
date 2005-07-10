@@ -156,20 +156,21 @@ tr .row:hover a
 {
   white-space:nowrap;
   overflow:hidden;
-  width: 400px;
-  text-align: left;         
+  width: 300px;
+  text-align: left;
 }
 
-.comments,  .trackbacks
+.date
+{
+  font-size: 12px;
+  width: 110px;
+  overflow: hidden;
+}
+
+.comments, .trackbacks
 {
   font-size: 12px;
   width: 65px;
-}
-
-.comment .subject, .trackback .subject
-{ 
-  margin-left: 20px;
-  width: 380px;
 }
 
 .trackback_ping
@@ -180,6 +181,15 @@ tr .row:hover a
 .delete
 {
   width: 52px;
+}
+
+.comment .subject, .trackback .subject
+{ 
+  margin-left: 10px;
+  width: 290px;
+  overflow: hidden
+  white-space:nowrap;
+  text-align: left;
 }
 
 .navbar

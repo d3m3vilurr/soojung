@@ -29,16 +29,18 @@ category
 
 <table class="entries">
     <tr>
-        <td class="subject"><b>Subject</b></td>
-        <td class="comments"><b>Comment</b></td>
-        <td class="trackbacks"><b>Trackback</b></td>
-        <td class="trackback_ping"><b>Ping</b></td>
-        <td class="delete"><b>Delete</b></td>
+        <th class="subject">Subject</th>
+        <th class="date">Date</td>	
+        <th class="comments">Comment</th>
+        <th class="trackbacks">Trackback</th>
+        <th class="trackback_ping">Ping</th>
+        <th class="delete">Delete</th>
     </tr>
     
     {foreach from=$entries item=entry}
     <tr class="entry">
         <td><div class="subject"><a href="{$baseurl}/post.php?blogid={$entry->entryId}">{$entry->title}</a></div></td>
+        <td class="date">{$entry->date|date_format:"%y/%m/%d %H:%M"}</td>
         <td class="comments">
             {if $entry->isSetOption("NO_COMMENT") == false && $entry->getCommentCount() != 0}
             <a href="#none" onclick="return fold_sidebar('CO_{$entry->entryId}');">({$entry->getCommentCount()})</a>
@@ -58,24 +60,26 @@ category
     </tr>
     
     {if $entry->isSetOption("NO_COMMENT") == false && $entry->getCommentCount() != 0}
-    <tr><td colspan="5" id="CO_{$entry->entryId}" class="div_hide">
+    <tr><td colspan="6" id="CO_{$entry->entryId}" class="div_hide">
         {foreach from=$entry->getComments() item=comment}
         <table class="comment"><tr>
-            <td><div class="subject">{$comment->getBody()|strip_tags|substring:70}</div></td>
+            <td><div class="subject">{$comment->getBody()|strip_tags|substring:50}</div></td>
+            <td class="date">{$comment->date|date_format:"%y/%m/%d %H:%M"}</td>
             <td class="comments">&nbsp;</td>
             <td class="trackbacks">&nbsp;</td>
-    	    <td class="trackback_ping">&nbsp;</td>
-        	<td class="delete"><a href="{$baseurl}/admin.php?mode=delete&amp;file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a></td>
+            <td class="trackback_ping">&nbsp;</td>
+            <td class="delete"><a href="{$baseurl}/admin.php?mode=delete&amp;file={$comment->filename}" onclick="return confirm('Are you sure want to delete this comment?\nAuthor: {$comment->name}');">X</a></td>
         </tr></table>
         {/foreach}
     </td></tr>
     {/if}
 
     {if $entry->isSetOption("NO_TRACKBACK") == false && $entry->getTrackbackCount() != 0}
-    <tr><td colspan="5" id="TB_{$entry->entryId}" class="div_hide">
+    <tr><td colspan="6" id="TB_{$entry->entryId}" class="div_hide">
         {foreach from=$entry->getTrackbacks() item=trackback}
         <table class="trackback"><tr>
-            <td><div class="subject">{$trackback->getExcerpt()|strip_tags|substring:70}</div></td>
+            <td><div class="subject">{$trackback->getExcerpt()|strip_tags|substring:50}</div></td>
+            <td class="date">{$trackback->date|date_format:"%y/%m/%d %H:%M"}</td>
             <td class="comments">&nbsp;</td>
             <td class="trackbacks">&nbsp;</td>
     	    <td class="trackback_ping">&nbsp;</td>
