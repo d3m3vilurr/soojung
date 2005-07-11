@@ -26,7 +26,7 @@ echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 <?php
 if (isset($_GET['category'])) {
   $category = new Category($_GET['category']);
-  $entries = $category->getEntries();
+  $entries = $category->getEntries(10, 1);
 } else {
   $entries = Entry::getEntries(10, 1);
 }
