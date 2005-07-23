@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$title}</title>
 <link rel="stylesheet" type="text/css" href="{$baseurl}/templates/{$skin}/styles.css" />
+<link rel="stylesheet" type="text/css" href="{$baseurl}/UserDefine.css" />
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{$baseurl}/rss2.php" />
 <script type="text/javascript" src="{$baseurl}/libs/common.js"></script>
 </head>
