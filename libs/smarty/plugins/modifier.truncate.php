@@ -13,38 +13,34 @@
  * Name:     truncate<br>
  * Purpose:  Truncate a string to a certain length if necessary,
  *           optionally splitting in the middle of a word, and
- *           appending the $etc string.
+ *           appending the $etc string or inserting $etc into the middle.
  * @link http://smarty.php.net/manual/en/language.modifier.truncate.php
  *          truncate (Smarty online manual)
  * @param string
  * @param integer
  * @param string
  * @param boolean
+ * @param boolean
  * @return string
  */
 function smarty_modifier_truncate($string, $length = 80, $etc = '...',
-                                  $break_words = false, $encoding = "UTF-8")
+                                  $break_words = false, $middle = false)
 {
     if ($length == 0)
         return '';
 
-    if (function_exists("mb_strwidth") && function_exists("mb_strimwidth")) {
-        if (mb_strwidth($string, $encoding) > $length) {
-            if (!$break_words)
-                $string = preg_replace('/\s+?(\S+)?$/', '', mb_strimwidth($string, 0, $length+1, "", $encoding));
-      
-            return mb_strimwidth($string, 0, $length, $etc, $encoding);
-        } else
-            return $string;
-    } else {
-        if (strlen($string) > $length) {
-            $length -= strlen($etc);
-            if (!$break_words)
-                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
-      
+    if (strlen($string) > $length) {
+        $length -= strlen($etc);
+        if (!$break_words && !$middle) {
+            $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length+1));
+        }
+        if(!$middle) {
             return substr($string, 0, $length).$etc;
-        } else
-            return $string;
+        } else {
+            return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
+        }
+    } else {
+        return $string;
     }
 }
 
