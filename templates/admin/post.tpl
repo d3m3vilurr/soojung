@@ -52,7 +52,7 @@ function changeFormat(format) {
 <form action="{$baseurl}/post.php" method="post" name="postForm">
 <div class="row">
 <span class="label">Title:</span>
-<span class="formw"><input type="text" name="title" value="{$title|escape}" /></span>
+<span class="formw"><input type="text" name="title" value="{$title|escape}" style="width:70%;"/></span>
 </div>
 
 <div class="row">
