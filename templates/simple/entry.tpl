@@ -8,7 +8,7 @@
 
 {if $entry->isSetOption("NO_TRACKBACK") == false}
 <div class="trackbacks">
-<div class="trackback_url">TrackBack URL: {$baseurl}/trackback.php?blogid={$entry->entryId}</div>
+<div class="trackback_url">TrackBack URL: <a href="{$baseurl}/trackback.php?blogid={$entry->entryId}">{$baseurl}/trackback.php?blogid={$entry->entryId}</a></div>
 <div id="trackback">
 {foreach from=$trackbacks item=trackback}
 	<div class="trackback">
