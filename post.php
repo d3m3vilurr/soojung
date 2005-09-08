@@ -1,5 +1,5 @@
 <?php
-session_cache_limiter('private'); 
+#session_cache_limiter('private'); 
 session_start();
 
 include("config.php");
