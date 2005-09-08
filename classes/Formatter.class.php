@@ -349,7 +349,7 @@ class MoniwikiFormatter extends Formatter {
 
     foreach ($lines as $line) {
       # empty line
-	  $line = trim($line);
+	  $line = rtrim($line);
       if (strlen($line) == 0) {
         if ($in_pre) { $pre_line.="\n";continue;}
         if ($in_li) { $text.="<br />\n";$li_empty=1; continue;}
