@@ -2,7 +2,28 @@ function go(loc) {
 	window.location.href = loc;
 }
 
-function appendLink(link) {
+function appendLink(baseurl, path, name) {
+
+	if (window.opener.document.postForm.format[0].checked ) {
+		/* plain */
+		link = '<a href="' + path + '">' + name + '</a>'
+	}
+	else if (window.opener.document.postForm.format[1].checked ) {
+		/* html */
+		link = baseurl + '/' + path;
+	}
+	else if ( window.opener.document.postForm.format[2].checked ) {
+		/* bbcode */
+		link = '[url]' + path + '[/url]';
+	}
+	else if (window.opener.document.postForm.format[3].checked) {
+		/* moniwiki */
+		link = "attachment:" + escape(name);
+	}
+	else {
+		link = escape(path);
+	}
+
 	if(window.opener) {
 		var target = window.opener.document.postForm.body;
 		target.value += link;

@@ -23,7 +23,7 @@ Upload: <input type="file" name="file" />
 </td>
 <td>
 <strong>
-<a href="#" onclick="return appendLink('{$baseurl}/{$file.path|escape:'quotes'|escape}');">append</a>
+<a href="#" onclick="return appendLink('{$baseurl}', '{$file.path|escape:'quotes'|escape}', '{$file.name|escape}');">append</a>
 <a href="{$baseurl}/upload.php?mode=delete&file={$file.path|escape:'url'|escape}">delete</a>
 </strong>
 </td>

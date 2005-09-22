@@ -187,7 +187,7 @@ tr .row:hover a
 { 
   margin-left: 10px;
   width: 290px;
-  overflow: hidden
+  overflow: hidden;
   white-space:nowrap;
   text-align: left;
 }
