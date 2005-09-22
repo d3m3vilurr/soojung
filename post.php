@@ -72,7 +72,7 @@ if ($_POST["mode"] == "upload") {
   if (empty($title) || empty($body) || empty($date) || empty($format) || empty($category) ) {
     echo "<font color=\"red\">WARNING: Input title, body, date, category, format</font>";
   } else {
-    if (isset($_POST["id"]) and is_numeric($_POST["id"]) {
+    if (isset($_POST["id"]) and is_numeric($_POST["id"])) {
       Entry::editEntry($_POST["id"], $title, $body, $date, $category, $options, $format);
     } else {
       $date = time() + 10;
