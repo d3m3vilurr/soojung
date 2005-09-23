@@ -275,7 +275,7 @@ class Entry {
       $fd = fopen($f, "r");
       $data = fread($fd, filesize($f));
       fclose($fd);
-      if (stripos($data, $keyword) !== FALSE) {
+      if (strpos($data, $keyword) !== FALSE) {
 	$founds[] = new Entry($f);
       }
     }
