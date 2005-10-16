@@ -48,7 +48,11 @@ if (!$template->is_cached('index.tpl', $cache_id)) {
   } else if (isset($_GET["search"])) {
     $template->assign('view', 'search');
     $template->assign('keyword', $_GET["search"]);
-    $template->assign('entries', Entry::search($_GET["search"]));
+    $search_mode = "all";
+    if (isset($_GET["mode"])) {
+      $search_mode = $_GET["mode"];
+    }
+    $template->assign('entries', Entry::search($_GET["search"], $search_mode));
   } else {
     $template->assign('view', 'index');
     $template->assign('keyword', "all");

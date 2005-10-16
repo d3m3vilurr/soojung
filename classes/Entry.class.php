@@ -264,7 +264,29 @@ class Entry {
   /**
    * static method
    */
-  function search($keyword) {
+  function search($keyword, $mode = "all") {
+    $founds = array();
+    if ($keyword == "") {
+      return $founds;
+    }
+    if ($mode == "all") {
+      $filenames = Soojung::queryFilenameMatch("^[0-9].+[.]entry$");
+      rsort($filenames);
+      foreach($filenames as $f) {
+	$fd = fopen($f, "r");
+	$data = fread($fd, filesize($f));
+	fclose($fd);
+	if (strpos($data, $keyword) !== FALSE) {
+	  $founds[] = new Entry($f);
+	}
+      }
+    } else { // search title
+      $founds = Entry::searchByTitle($keyword);
+    }
+    return $founds;
+  }
+
+  function searchByTitle($keyword) {
     $founds = array();
     if ($keyword == "") {
       return $founds;
@@ -273,11 +295,15 @@ class Entry {
     rsort($filenames);
     foreach($filenames as $f) {
       $fd = fopen($f, "r");
-      $data = fread($fd, filesize($f));
-      fclose($fd);
-      if (strpos($data, $keyword) !== FALSE) {
-	$founds[] = new Entry($f);
+      while (($line = fgets($fd, 1024)) !== FALSE) {
+	if (strpos($line, "Title:") === 0) {
+	  if (strpos($line, $keyword) !== FALSE) {
+	    $founds[] = new Entry($f);
+	    break;
+	  }
+	}
       }
+      fclose($fd);
     }
     return $founds;
   }

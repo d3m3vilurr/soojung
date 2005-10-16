@@ -36,11 +36,15 @@
 		<br />
 	{/foreach}
 {elseif $view == "search"}
+	{if count($entries) == 1}
+		<script>location.href="{$entries[0]->getHref()|escape}"</script>
+	{else}
 	{foreach from=$entries item=entry}
 		<a href="{$entry->getHref()|escape}">{$entry->title|escape}</a>
 		{$entry->date|date_format:"%B %d, %Y"}
 		<br />
 	{/foreach}
+	{/if}
 {/if}
 
 {include file="footer.tpl"}
