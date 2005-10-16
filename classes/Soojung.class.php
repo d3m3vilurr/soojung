@@ -102,11 +102,7 @@ class Soojung {
     flock($fd, LOCK_UN);
     fclose($fd);
     
-    $fd = fopen("contents/.info", "w");
-    flock($fd, LOCK_EX);
-    fwrite($fd, $i + 1);
-    flock($fd, LOCK_UN);
-    fclose($fd);
+    locked_filewrite("contents/.info", ((int)$i)  + 1);
     return $i;
   }
 
@@ -250,12 +246,7 @@ class Soojung {
         $array[] = $referer;
       }
 
-      if ($fd = @fopen("contents/.referer", "w")) {
-      	flock($fd, LOCK_EX);
-	fwrite($fd, implode($array, "\r\n"));
-        flock($fd, LOCK_UN);
-        fclose($fd);
-      }
+      locked_filewrite("contents/.referer", implode($array, "\r\n"));
     }
   }
 

@@ -39,15 +39,11 @@ class Counter {
       $lastdate = date("Y-m-d");
     }
 
-    if ($fd = @fopen("contents/.count", "w")) {
-      flock($fd, LOCK_EX);
-      fwrite($fd, "$lastdate\n$today\n$total\n");
-      foreach ($recent as $recentitem) {
-	fwrite($fd, "$recentitem\n");
-      }
-      flock($fd, LOCK_UN);
-      fclose($fd);
+    $data = "$lastdate\n$today\n$total\n";
+    foreach ($recent as $recentitem) {
+	$data .= "$recentitem\n";
     }
+    locked_filewrite("contents/.count", $data);
 
     $this->today = $today;
     $this->total = $total;

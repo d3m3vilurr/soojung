@@ -157,4 +157,35 @@ function getFirstLine($str) {
   return trim($array[0]);
 }
 
+function locked_filewrite($filename, $data) {
+   ignore_user_abort(1);
+   $lockfile = $filename . '.lock';
+
+   // if a lockfile already exists, but it is more than 5 seconds old,
+   // we assume the last process failed to delete it
+   // this would be very rare, but possible and must be accounted for
+   if (file_exists($lockfile)) {
+       if (time() - filemtime($lockfile) > 5) unlink($lockfile);
+   }
+
+   $lock_ex = @fopen($lockfile, 'x');
+   for ($i=0; ($lock_ex === false) && ($i < 20); $i++) {
+       clearstatcache();
+       usleep(rand(9, 999));
+       $lock_ex = @fopen($lockfile, 'x');
+   }
+
+   $success = false;
+   if ($lock_ex !== false) {
+       $fp = @fopen($filename, 'w');
+       if (@fwrite($fp, $data)) $success = true;
+       @fclose($fp);
+       fclose($lock_ex);
+       unlink($lockfile);
+   }
+
+   ignore_user_abort(0);
+   return $success;
+}
+
 ?>
