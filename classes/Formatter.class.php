@@ -335,6 +335,7 @@ class MoniwikiFormatter extends Formatter {
     # single bracketed rule [http://blah.blah.com Blah Blah]
     "(\[\^?($url):[^\s\]]+(\s[^\]]+)?\])|".
     # WikiName rule: WikiName ILoveYou (imported from the rule of NoSmoke)
+    "(\b|\^?)([A-Z][a-zA-Z]+):([^\(\)<>\s\']*[^\(\)<>\s\'\",\.:\?\!]*(\s(?![\x33-\x7e]))?)|".
     # protect WikiName rule !WikiName
     "(?<![a-z])\!?(?:((\.{1,2})?\/)?[A-Z]([A-Z]+[0-9a-z]|[0-9a-z]+[A-Z])[0-9a-zA-Z]*)+\b|".
     # single bracketed name [Hello World]
@@ -728,6 +729,13 @@ class MoniwikiFormatter extends Formatter {
         return "<a href='$link'>$name</a>";
       }
 
+      if (preg_match("/^(w|[A-Z])/",$url)) { # InterWiki or wiki:
+        if (strpos($url," ")) { # have a space ?
+          $dum=explode(" ",$url,2);
+          return $this->interwiki_repl($dum[0],$dum[1]);
+	}
+	return $this->interwiki_repl($url,'');
+      }
       if ($force or strpos($url," ")) { # have a space ?
         list($url,$text)=explode(" ",$url,2);
         $link=str_replace('&','&amp;',$url);
@@ -758,9 +766,39 @@ class MoniwikiFormatter extends Formatter {
       return "<a class='externalLink' $attr href='$link'>$url</a>";
     } else {
       if ($url[0]=="?") $url=substr($url,1);
+      return $this->interwiki_repl($url);
       //return $this->word_repl($url,'',$attr);
-	  return $url;
+      //return $url;
     }
+  }
+
+  function interwiki_repl($url, $text='') {
+    $interwiki = array ("wiki" => "http://hellocity.net/~iolo/wiki/\$PAGE",
+			"GnomeKorea" => "http://gnome.or.kr/wiki/\$PAGE");
+    if ($url[0]=="w")
+      $url=substr($url,5);
+    $dum=explode(":",$url,2);
+    $wiki=$dum[0]; $page=$dum[1];
+    if (sizeof($dum) == 1) {
+      $wiki="wiki";
+      $page=$dum[0];
+    }
+    if ($text == '') $text=$page;
+    $page = $this->normalize($page);
+
+    $url = $interwiki[$wiki];
+    if (!$url) {
+      return $wiki.":".$page;
+    }
+    $url=str_replace('$PAGE',$page,$url);
+    return "<a href='$url'>$text</a>";
+  }
+
+  function normalize($title) {
+    if (strpos($title," "))
+      #return preg_replace("/[\?!$%\.\^;&\*()_\+\|\[\] ]/","",ucwords($title));
+      return str_replace(" ","",ucwords($title));
+    return $title;
   }
 }
 

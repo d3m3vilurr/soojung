@@ -443,8 +443,6 @@ class Import {
     return strtr($string, $trans);
   }
 
-}
-
 function importMoniWiki($wikiPath, $encoding) {
   if (strcasecmp($encoding, 'UTF-8') == 0 || strcasecmp($encoding, 'UTF8') == 0) {
     $needtoconvert = FALSE;
@@ -493,6 +491,7 @@ function importMoniWiki($wikiPath, $encoding) {
 	$state = 0;
 	list($content,$comments) = explode("----\n", $summary, 2);
 	$entry[] = $content;
+	$entry[] = $comments;
 	$entries[] = $entry;
 	$summary='';
 	continue;
@@ -505,7 +504,8 @@ function importMoniWiki($wikiPath, $encoding) {
     $date = $entry[2];
     $title = $entry[3];
     $body = $entry[4];
-    $body = preg_replace("\\}}}", "}}}", $body);
+    $body = str_replace("\\}}}", "}}}", $body);
+    //$body=preg_replace("/(?<!\\\\)}}}/","\}}}",$body);
     $date = strtotime(str_replace("T", " ", $date));
     $category = "moniwiki";
 
@@ -518,8 +518,32 @@ function importMoniWiki($wikiPath, $encoding) {
     $title = trim($title);
     $body = trim($body);
     $date = trim($date);
-    Entry::createEntry($title, $body, $date, $category, $options, "moniwiki");
+    $options = array();
+    $id = Entry::createEntry($title, $body, $date, $category, $options, "moniwiki");
+
+    $comments = $entry[5];
+    $body = "";
+    $lines = explode("\n", $comments);
+    foreach ($lines as $line) {
+      if ($line == "----") {
+      } else if (preg_match("/ -- \[?([^ \]]+)\]? \[\[DateTime\(([^\)]+)\)\]\]/", $line, $match)) {
+	$body.= substr($line, 0, strpos($line, " -- "));
+	$name = $match[1];
+        $date = strtotime(str_replace("T", " ", $match[2]));
+	$homepage = "0:".$match[0]."1:".$match[1]."2:".$match[2]."3:".$match[3]."4:".$match[4]."5:".$match[5]."6:".$match[6]."7:".$match[7];
+	if ($needtoconvert) {
+	  $body = iconv($encoding, "UTF-8", $body);
+	  $name = iconv($encoding, "UTF-8", $name);
+	}
+	Comment::writeComment($id, $name, "", $homepage, $body, $date);
+	$body = "";
+      } else {
+	$body.=$line."\n";
+      }
+    }
   }
+}
+
 }
 
 # vim: ts=8 sw=2 sts=2 noet
