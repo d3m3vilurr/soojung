@@ -81,7 +81,7 @@ class Comment {
       return;
     }
     
-    if (Comment::isSpam($body) || Comment:isSpam($name} || Comment:isSpam($homepage)) {
+    if (Comment::isSpam($body) || Comment:isSpam($name) || Comment:isSpam($homepage)) {
       return;
     }
 
