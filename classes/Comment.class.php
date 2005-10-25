@@ -52,6 +52,9 @@ class Comment {
    * if $text is spam comment return true
    */ 
   function isSpam($text) {
+    if ($text == "") {
+      return false;
+    }
     global $spam_words;
     $text = br2nl($text);
 
@@ -78,7 +81,7 @@ class Comment {
       return;
     }
     
-    if (Comment::isSpam($body)) {
+    if (Comment::isSpam($body) || Comment:isSpam($name} || Comment:isSpam($homepage)) {
       return;
     }
 

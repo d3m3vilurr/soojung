@@ -6,10 +6,16 @@ $counter->update();
 
 if (isset($_POST["blogid"])) {
   $blogid = $_POST["blogid"];
-  $name = $_POST["name"];
-  $email = $_POST["email"];
-  $url = $_POST["url"];
-  $body = $_POST["body"];
+
+  $name_name = $_POST["name_name"];
+  $email_name = $_POST["email_name"];
+  $url_name = $_POST["url_name"];
+  $body_name = $_POST["body_name"];
+
+  $name = $_POST[$name_name];
+  $email = $_POST[$email_name];
+  $url = $_POST[$url_name];
+  $body = $_POST[$body_name];
   
   if (empty($blogid) || empty($name) || empty($body)) {
     echo "input name and comment";
@@ -51,7 +57,11 @@ if (!$template->is_cached('entry.tpl', $blogid)) {
   }
   $template->assign('entry', $entry);
   $template->assign('trackbacks', $entry->getTrackbacks());
-  $template->assign('comments', $entry->getComments());    
+  $template->assign('comments', $entry->getComments());
+  $template->assign('name_name', rand(1, 1000));
+  $template->assign('email_name', rand(1001, 2000));
+  $template->assign('url_name', rand(2001, 3000));
+  $template->assign('body_name', rand(3001, 4000));    
 }
 
 foreach (array('w_id','w_name','w_email','w_url') as $key) {
