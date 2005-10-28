@@ -24,7 +24,7 @@ Upload: <input type="file" name="file" />
 <td>
 <strong>
 <a href="#" onclick="return appendLink('{$baseurl}', '{$file.path|escape:'quotes'|escape}', '{$file.name|escape}');">append</a>
-<a href="{$baseurl}/upload.php?mode=delete&file={$file.path|escape:'url'|escape}">delete</a>
+<a href="{$baseurl}/upload.php?mode=delete&file={$file.path|escape:'url'|escape}" onClick="return confirm('Are you sure want to delete file?')">delete</a>
 </strong>
 </td>
 </tr>
