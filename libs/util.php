@@ -158,6 +158,47 @@ function getFirstLine($str) {
 }
 
 function locked_filewrite($filename, $data) {
+    ignore_user_abort(1);
+    $lockfile = $filename . '.lock';
+
+   // if a lockfile already exists, but it is more than 5 seconds old,
+   // we assume the last process failed to delete it
+   // this would be very rare, but possible and must be accounted for
+    if (file_exists($lockfile)) {
+        if (time() - filemtime($lockfile) > 5) unlink($lockfile);
+    }
+
+    $i = 0;
+    while (true) {
+        // lock 생성할때까지 20번 루프를 돌아본다
+        if (!file_exists($lockfile)) {
+            $acquired = true;
+            touch ($lockfile);
+            break;
+        } else if ($i < 20) {
+            clearstatcache();
+            usleep(rand(9,999));
+            $i += 1;
+        } else {
+            $acquired = false;
+            break;
+        }
+    }
+
+    $success = false;
+    if ($acquired) {
+        $fp = @fopen($filename, 'w');
+        if (@fwrite($fp, $data)) $success = true;
+        @fclose($fp);
+        unlink($lockfile);
+    }
+
+    ignore_user_abort(0);
+    return $success;
+}
+
+
+function locked_filewrite_($filename, $data) {
    ignore_user_abort(1);
    $lockfile = $filename . '.lock';
 
