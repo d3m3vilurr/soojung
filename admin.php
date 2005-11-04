@@ -175,7 +175,7 @@ if ($_GET["mode"] == "config") {
     }
     $template->assign('prev_page_link', $prev_link);
   }
-  if ($count > $page * 10) {
+  if ($count > $page * 25) {
     $next_link = "admin.php?mode=list&page=" . ($page + 1);
     if (isset($_GET["flag"])) {
       $next_link .= "&flag=" . urlencode($_GET["flag"]);
@@ -185,12 +185,12 @@ if ($_GET["mode"] == "config") {
 
 
   if ($_GET["flag"] == "static") {
-    $template->assign('entries', Entry::getStaticEntries(10, $page));
+    $template->assign('entries', Entry::getStaticEntries(25, $page));
   } else if (category_in_array($_GET["flag"], $categories)) {
     $cate = new Category($_GET["flag"]);
-    $template->assign('entries', $cate->getEntries(10, $page));
+    $template->assign('entries', $cate->getEntries(25, $page));
   } else {
-    $template->assign('entries', Entry::getEntries(10, $page, false));
+    $template->assign('entries', Entry::getEntries(25, $page, false));
   }
 
   $template->assign("categories", $categories);
