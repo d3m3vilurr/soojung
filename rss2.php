@@ -16,12 +16,12 @@ echo "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
 ?>
 <rss version="2.0">
 <channel>
-<title><?=htmlspecialchars(convenc($blog_name))?></title>
-<link><?=$blog_baseurl?></link>
-<description><?=htmlspecialchars(convenc($blog_desc))?></description>
+<title><?=htmlspecialchars(convenc($blog_name)) ?></title>
+<link><?php echo $blog_baseurl ?></link>
+<description><?php echo htmlspecialchars(convenc($blog_desc)) ?></description>
 <copyright></copyright>
-<pubDate><?=date('r')?></pubDate>
-<generator>soojung <?=$soojung_version?></generator>
+<pubDate><?php echo date('r') ?></pubDate>
+<generator>soojung <?php echo $soojung_version ?></generator>
 
 <?php
 if (isset($_GET['category'])) {

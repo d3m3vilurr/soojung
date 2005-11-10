@@ -81,37 +81,37 @@ if (isset($_POST["name"])) {
 
 <tr>
 <td>* Blog Name:</td>
-<td><input type="text" name="name" size="30" value="<?=isset($_POST['name']) ? $_POST['name'] : ""?>"></td>
+<td><input type="text" name="name" size="30" value="<?php echo isset($_POST['name']) ? $_POST['name'] : "" ?>"></td>
 </tr>
 
 <tr>
 <td>* Blog Description:</td>
-<td><input type="text" name="desc" size="50" value="<?=isset($_POST['desc']) ? $_POST['desc'] : ""?>"></td>
+<td><input type="text" name="desc" size="50" value="<?php echo isset($_POST['desc']) ? $_POST['desc'] : "" ?>"></td>
 </tr>
 
 <tr>
 <td>* Blog URL:</td>
-<td><input type="text" name="url" size="50" value="<?=isset($_POST['url']) ? $_POST['url'] : 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'])?>"></td>
+<td><input type="text" name="url" size="50" value="<?php echo isset($_POST['url']) ? $_POST['url'] : 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) ?>"></td>
 </tr>
 
 <tr>
 <td>* Admin name:</td>
-<td><input type="text" name="admin" value="<?=isset($_POST['admin']) ? $_POST['admin'] : ""?>"></td>
+<td><input type="text" name="admin" value="<?php echo isset($_POST['admin']) ? $_POST['admin'] : "" ?>"></td>
 </tr>
 
 <tr>
 <td>* Admin email:</td>
-<td><input type="text" name="email" value="<?=isset($_POST['email']) ? $_POST['email'] : ""?>"></td>
+<td><input type="text" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : "" ?>"></td>
 </tr>
 
 <tr>
 <td>* Admin password:</td>
-<td><input type="password" name="password" value="<?=isset($POST['password']) ? $_POST['password'] : ""?>"></td>
+<td><input type="password" name="password" value="<?php echo isset($POST['password']) ? $_POST['password'] : "" ?>"></td>
 </tr>
 
 <tr>
 <td>entries per page</td>
-<td><input type="text" name="perpage" size="2" value="<?=isset($_POST['perpage']) ? $_POST['perpage'] : 5?>"></td>
+<td><input type="text" name="perpage" size="2" value="<?php echo isset($_POST['perpage']) ? $_POST['perpage'] : 5 ?>"></td>
 </tr>
 
 <tr>
