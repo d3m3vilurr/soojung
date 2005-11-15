@@ -19,18 +19,27 @@ if ($_GET["mode"] == "delete" && !empty($_GET["file"])) {
 
 $template = new AdminTemplate;
 
-$list = array();
+$path = "contents/upload/";
 
-$dh = opendir("contents/upload");
+$list = array();
+$dh = opendir($path);
 if ($dh != false) {
   while (($file = readdir($dh)) !== false) {
     if ($file == "." || $file == "..") {
       continue;
     }
-    $list[] = array("path" => "contents/upload/" . $file, "name" => $file);
+    $list[] = array(filemtime($path . $file), $file);
   }
 }
-$template->assign("files", $list);
+closedir($dh);
+
+rsort($list);
+$files = array();
+foreach($list as $f) {
+  $files[] = array("path" = > $path . $f[1], "name" => $f[1]);
+}
+
+$template->assign("files", $files);
 
 $template->display("upload.tpl");
 
