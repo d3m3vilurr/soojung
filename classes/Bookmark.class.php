@@ -57,7 +57,7 @@ class Bookmark {
     if (empty($number) || !isset($number) || $number == 0) {
       /* get last number + 1 */
       $filenames = Soojung::queryFilenameMatch("^[0-9]+[.]bookmark$", "contents/.bookmark/");
-      sort($filenames);
+      usort($filenames, "cmp_base_filename_num");
       $last_index = count($filenames) - 1;
 
       if (empty($filenames[$last_index]) || !isset($filenames[$last_index]) || $filenames[$last_index] == "") {

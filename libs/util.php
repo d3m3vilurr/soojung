@@ -37,6 +37,14 @@ function cmp_base_filename($a, $b) {
   return ($filename1 < $filename2) ? 1 : -1;
 }
 
+function cmp_base_filename_num($a, $b) {
+  $n1 = explode(".", basename($a));
+  $n1 = $n1[0];
+  $n2 = explode(".", basename($b));
+  $n2 = $n2[0];
+  return ((int)$n1 < (int)$n2) ? -1 : 1;
+}
+
 function rmdirr($dirname)
 {
   if (file_exists($dirname) == false) {
