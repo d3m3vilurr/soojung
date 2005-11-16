@@ -42,7 +42,7 @@ closedir($dh);
 rsort($list);
 $files = array();
 foreach($list as $f) {
-  $files[] = array("path" = > $path . $f[1], "name" => $f[1]);
+  $files[] = array("path" => $path . $f[1], "name" => $f[1]);
 }
 
 $template->assign("files", $files);
