@@ -5,6 +5,10 @@
 <ul id="div_menu">
 	<li><a href="{$baseurl}/index.php">main</a></li>
 	<li><a href="{$baseurl}/admin.php">admin</a></li>
+	<li><a href="{$baseurl}/post.php">post</a></li>
+	{if $body_name !== null}
+	<li><a href="{$baseurl}/post.php?blogid={$entry->entryId}">edit</a></li>
+	{/if}
 	{foreach from=$static_entries item=static}
 	<li><a href="{$static->getHref()|escape}">{$static->title|escape}</a></li>
 	{/foreach}
