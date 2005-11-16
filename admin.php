@@ -161,6 +161,8 @@ if ($_GET["mode"] == "config") {
 
   if ($_GET["flag"] == "static") {
     $count = Entry::getStaticEntryCount();
+  } else if ($_GET["flag"] == "secret") {
+    $count = Entry::getSecretEntryCount();
   } else if (category_in_array($_GET["flag"], $categories)) {
     $cate = new Category($_GET["flag"]);
     $count = $cate->getEntryCount();
@@ -186,6 +188,8 @@ if ($_GET["mode"] == "config") {
 
   if ($_GET["flag"] == "static") {
     $template->assign('entries', Entry::getStaticEntries(25, $page));
+  } else if ($_GET["flag"] == "secret") {
+    $template->assign('entries', Entry::getSecretEntries(25, $page));
   } else if (category_in_array($_GET["flag"], $categories)) {
     $cate = new Category($_GET["flag"]);
     $template->assign('entries', $cate->getEntries(25, $page));

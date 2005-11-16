@@ -6,6 +6,7 @@
 <div class="submenu">
 <a href="{$baseurl}/admin.php?mode=list">show all</a> -
 <a href="{$baseurl}/admin.php?mode=list&amp;flag=static">show only static</a> -
+<a href="{$baseurl}/admin.php?mode=list&amp;flag=secret">show only secret</a> -
 show only 
 <select name="category" onchange="return changeCategory(this)">
 {foreach name=categories from=$categories item=cate}

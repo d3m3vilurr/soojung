@@ -264,6 +264,33 @@ class Entry {
   /**
    * static method
    */
+  function getSecretEntries($count = -1, $page = 1) {
+    $entries = array();
+    $query = "^[.][0-9]+.+[.]entry$";
+    $filenames = Soojung::queryFilenameMatch($query);
+    usort($filenames, "cmp_base_filename");
+
+    if ($count == -1) { //all
+      foreach($filenames as $filename) {
+	$entries[] = new Entry($filename);
+      }
+    } else {
+      $index = ($page - 1) * $count;
+      for ($i = $index; $i < count($filenames) && $i < ($index + $count); $i++) {
+	$entries[] = new Entry($filenames[$i]);
+      }
+    }
+
+    return $entries;
+  }
+
+  function getSecretEntryCount() {
+    return Soojung::queryNumFilenameMatch("^[.][0-9]+.+[.]entry$");
+  }
+
+  /**
+   * static method
+   */
   function search($keyword, $mode = "all") {
     $founds = array();
     if ($keyword == "") {
