@@ -8,8 +8,16 @@ if (!isset($_SESSION["auth"])) {
   exit;
 }
 
+$path = "contents/upload/";
+
 if ($_POST["mode"] == "upload") {
-  $dest = "contents/upload/" . basename($_FILES['file']['name']);
+  $dest = $path . $_FILES['file']['name'];
+  $t = 0;
+  while(file_exists($dest)) {
+    $dest = $path . $_FILES['file']['name'];
+    $dest = substr($dest, 0, strpos($dest, ".")) . "_$t" . strstr($dest, ".");
+    $t++;
+  }
   move_uploaded_file($_FILES['file']['tmp_name'], $dest);
 }
 
@@ -18,8 +26,6 @@ if ($_GET["mode"] == "delete" && !empty($_GET["file"])) {
 }
 
 $template = new AdminTemplate;
-
-$path = "contents/upload/";
 
 $list = array();
 $dh = opendir($path);
