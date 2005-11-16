@@ -6,7 +6,7 @@ function appendLink(baseurl, path, name) {
 
 	if (window.opener.document.postForm.format[0].checked ) {
 		/* plain */
-		link = '<a href="' + path + '">' + name + '</a>'
+		link = '<a href="' + baseurl + '/' + path + '">' + name + '</a>';
 	}
 	else if (window.opener.document.postForm.format[1].checked ) {
 		/* html */
@@ -14,14 +14,14 @@ function appendLink(baseurl, path, name) {
 	}
 	else if ( window.opener.document.postForm.format[2].checked ) {
 		/* bbcode */
-		link = '[url]' + path + '[/url]';
+		link = '[url]' + baseurl + '/' + path + '[/url]';
 	}
 	else if (window.opener.document.postForm.format[3].checked) {
 		/* moniwiki */
 		link = "attachment:" + escape(name);
 	}
 	else {
-		link = escape(path);
+		link = escape(baseurl + '/' + path);
 	}
 
 	if(window.opener) {
