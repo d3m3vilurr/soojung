@@ -2,6 +2,11 @@
 
 include_once("settings.php");
 
+if (!isset($_SESSION["auth"])) {
+  echo "<meta http-equiv='refresh' content='0;URL=admin.php'>";
+  exit;
+}
+
 if ($_POST["mode"] == "post") {
   $blogid = $_POST['blogid'];
   $trackback_url = $_POST["trackback_url"];
