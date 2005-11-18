@@ -58,6 +58,10 @@ if (!$template->is_cached('index.tpl', $cache_id)) {
     $template->assign('keyword', "all");
     $template->assign('entries', Entry::getEntries($blog_entries_per_page, $page));
   }
+  $template->assign('name_name', rand(1, 1000));
+  $template->assign('email_name', rand(1001, 2000));
+  $template->assign('url_name', rand(2001, 3000));
+  $template->assign('body_name', rand(3001, 4000));
 }
 $template->display('index.tpl', $cache_id);
 
