@@ -48,6 +48,28 @@ class Trackback {
     return $excerpt;
   }
 
+  function isSpam($text) {
+    if ($text == "") {
+      return false;
+    }
+    global $spam_words;
+    $text = br2nl($text);
+
+    $words = split("(\r\n|\n)", $spam_words);
+    foreach($words as $word) {
+      $word = trim($word);
+      if($word != '')
+        $spam_word[] = "(?:" . $word. ")";
+    }
+    if($spam_word != '') {
+      $p = "@(" . implode("|", $spam_word) . ")@i";
+      if(preg_match($p, $text))
+        return true;
+    }
+    return false;
+  }
+
+
   /**
    * need to check entryId is not null or anything. this is caused by tattertools.
    * static method
@@ -56,6 +78,10 @@ class Trackback {
 
     $e = Entry::getEntry($entryId);
     if ($e->isSetOption("NO_TRACKBACK")) {
+      return;
+    }
+
+    if (Trackback::isSpam($url) || Trackback::isSpam($name) || Trackback::isSpam($title) || Trackback::isSpam($excerpt)) {
       return;
     }
 
