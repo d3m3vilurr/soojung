@@ -29,18 +29,24 @@
 <div id="comment">
 {foreach from=$comments item=comment}
 	<div class="comment">
-	<div id="CO{$comment->date}">
-	On {$comment->date|date_format:"%B %d, %Y %I:%M %p"}, 
-	{if $comment->homepage != ""}
-		<a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
-	{elseif $comment->email != ""}
-		<a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
-	{else}
-		{$comment->name|escape}
-	{/if}
-	said: <br />
-	{$comment->getBody()}
-    </div>
+        <div id="CO{$comment->date}">
+        <strong>
+            {if $comment->homepage != ""}
+                <a href="{$comment->homepage|escape}">{$comment->name|escape}</a>
+            {elseif $comment->email != ""}
+                <a href="mailto:{$comment->email|escape}">{$comment->name|escape}</a>
+            {else}
+                {$comment->name|escape}
+            {/if}
+        </strong>
+        said
+        <span style="color: #777">
+            @
+            <i>{$comment->date|date_format:"%B %d, %Y %I:%M %p"}</i>
+        </span>
+        <br />
+        {$comment->getBody()}
+        </div>
 	</div>
 {/foreach}
 </div>
