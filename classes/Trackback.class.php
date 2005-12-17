@@ -69,6 +69,16 @@ class Trackback {
     return false;
   }
 
+  function isSpamURL($url) {
+    $u = parse_url($url);
+    if ($u === false) {
+      return true;
+    }
+    if ($u['path'] === '/') { //check url's path
+      return true;
+    }
+    return false;
+  }
 
   /**
    * need to check entryId is not null or anything. this is caused by tattertools.
@@ -81,7 +91,7 @@ class Trackback {
       return;
     }
 
-    if (Trackback::isSpam($url) || Trackback::isSpam($name) || Trackback::isSpam($title) || Trackback::isSpam($excerpt)) {
+    if (Trackback::isSpamURL($url) || Trackback::isSpam($name) || Trackback::isSpam($title) || Trackback::isSpam($excerpt)) {
       return;
     }
 
