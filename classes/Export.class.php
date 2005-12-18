@@ -19,7 +19,8 @@ class Export {
   function toXml($path) {
     if ($dh = opendir($path)) {
       while (($file = readdir($dh)) !== false) {
-	if ($file == ".." || $file == ".") {
+	if ($file == ".." || $file == "." || $file == 'upload') {
+	  // FIXME: export upload dir's binary files.
 	  continue;
 	}
 	$filename = $path . '/' . $file;
