@@ -40,16 +40,10 @@ if (isset($_POST["name"])) {
       || empty($_POST["perpage"])) {
     echo "<font color=\"red\">WARNING: Input blog name, description, url, name, email, password</font><br />";
   } else {
-    mkdir("contents", 0777);
-    mkdir("contents/upload", 0777);
-
-    mkdir("templates/.cache", 0777);
-    mkdir("templates/.configs", 0777);
-    mkdir("templates/.compile", 0777);
-
-    mkdir("templates/.admin_cache", 0777);
-    mkdir("templates/.admin_configs", 0777);
-    mkdir("templates/.admin_compile", 0777);
+    $dirs = array("contents", "contents/upload", "contents/.bookmark", "templates/.cache", "templates/.configs", "templates/.compile", "templates/.admin_cache", "templates/.admin_configs", "templates/.admin_compile");
+    foreach ($dirs as $_ => $dir) {
+      mkdir($dir, 0777);
+    }
 
     $f = fopen("contents/.info","w");
     fwrite($f, "1");
