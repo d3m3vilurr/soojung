@@ -49,31 +49,6 @@ class Comment {
 
   /**
    * static method
-   * if $text is spam comment return true
-   */ 
-  function isSpam($text) {
-    if ($text == "") {
-      return false;
-    }
-    global $spam_words;
-    $text = br2nl($text);
-
-    $words = split("(\r\n|\n)", $spam_words);
-    foreach($words as $word) {
-      $word = trim($word);
-      if($word != '')
-	$spam_word[] = "(?:" . $word. ")";
-    }
-    if($spam_word != '') {
-      $p = "@(" . implode("|", $spam_word) . ")@i";
-      if(preg_match($p, $text))
-	return true;
-    }
-    return false;
-  }
-
-  /**
-   * static method
    */
   function writeComment($entryId, $name, $email, $homepage, $body, $date) {
     $e = Entry::getEntry($entryId);
@@ -81,7 +56,7 @@ class Comment {
       return;
     }
     
-    if (Comment::isSpam($body) || Comment::isSpam($name) || Comment::isSpam($homepage)) {
+    if (Spam::isSpamBody($body) || Spam::isSpam($name) || Spam::isSpam($homepage)) {
       return;
     }
 
