@@ -123,13 +123,17 @@ class PlainFormatter extends Formatter {
   function toHtml($str) {
     $trans = array("\\\r\n"=>"", "\\\r"=>"", "\\\n"=>"");
     $text = "";
-	$spos = 0;
+    $spos = 0;
+    
     while (($pos = @strpos($str, "<pre", $spos)) !== FALSE) {
       $text .= nl2br(strtr(trim(substr($str, $spos, $pos-$spos)), $trans));
-	  $spos = strpos($str, "</pre>", $spos) + 6;
-	  $text .= substr($str, $pos, $spos-$pos);
+      $spos = strpos($str, "</pre>", $spos) + 6;
+      $text .= substr($str, $pos, $spos-$pos);
     }
     $text .= nl2br(strtr(trim(substr($str, $spos)), $trans));
+    $text = preg_replace(
+	"/(<br \/>)*[\n|\r]*(.+?)(<br \/>[\s|\r|\n]*<br \/>|\z)/s",
+	"<p>$2</p>\n", $text);
     return $text;
   }
 
