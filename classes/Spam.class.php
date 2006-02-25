@@ -42,7 +42,7 @@ class Spam {
     return Spam::check($text, Spam::getBodyPattern());
   }
 
-  function isSpamUrl($url) {
+  function validateUrl($url) {
     $u = parse_url($url);
     if ($u == false) {
       return true;

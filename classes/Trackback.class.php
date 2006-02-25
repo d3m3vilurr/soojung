@@ -59,7 +59,8 @@ class Trackback {
       return;
     }
 
-    if (Spam::isSpamURL($url) || Spam::isSpam($name) || Spam::isSpam($title) || Spam::isSpamBody($excerpt)) {
+    if (Spam::validateURL($url) || Spam::isSpam($name) || Spam::isSpam($title)
+	|| Spam::isSpam($url) || Spam::isSpamBody($excerpt)) {
       return;
     }
 
