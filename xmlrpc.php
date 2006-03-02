@@ -4,6 +4,8 @@ include_once("settings.php");
 include_once("libs/xmlrpcs.inc");
 include_once("libs/xmlrpc.inc");
 
+$xmlrpc_internalencoding = "UTF8";
+
 function _error($errcode, $errstring) {
   global $xmlrpcerruser;
   return new xmlrpcresp(0, $xmlrpcerruser + $errcode, $errstring);
@@ -57,7 +59,6 @@ function blogger_newPost($params) {
   $sp = $params->getParam(3);
   $sc = $params->getParam(4);
 
-  writewrite($params);
   $r = _login($su, $sp);
   if ($r !== TRUE) {
     return $r;
@@ -68,7 +69,7 @@ function blogger_newPost($params) {
   $category = _blogger_extractCategory($content);
   $body = _blogger_removeSpecialTags($content);
 
-  $blogid = Entry::createEntry($title, $body, time(), $category);
+  $blogid = Entry::createEntry($title, $body, time(), $category, array());
 
   return new xmlrpcresp(new xmlrpcval($blogid, "string"));
 }
@@ -220,7 +221,7 @@ function metaWeblog_newPost($params) {
   $category = $item['category'];
   $body = $content;
 
-  $blogid = Entry::createEntry($title, $body, time(), $category);
+  $blogid = Entry::createEntry($title, $body, time(), $category, array(), "html");
 
   return new xmlrpcresp(new xmlrpcval($blogid, "string"));
 }
