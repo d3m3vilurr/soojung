@@ -30,7 +30,7 @@ if ($_GET["__mode"] == "rss" && isset($_GET["blogid"])) {
   exit;
 }
 
-if (isset($_REQUEST["url"]) || isset($_REQUEST["blogid"])) {
+if (isset($_REQUEST["url"]) && isset($_REQUEST["blogid"]) && Entry::exists($_REQUEST["blogid"])) {
   $id = $_REQUEST["blogid"];
   $url = $_REQUEST["url"];
   $title = stripslashes($_REQUEST["title"]);

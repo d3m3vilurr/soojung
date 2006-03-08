@@ -288,6 +288,15 @@ class Entry {
     return Soojung::queryNumFilenameMatch("^[.][0-9]+.+[.]entry$");
   }
 
+
+  /**
+   * static method
+   */
+  function exists($blogid) {
+    $entry = Entry::getEntry($blogid);
+    return $entry->entryId != "";
+  }
+
   /**
    * static method
    */
