@@ -43,7 +43,7 @@ class Spam {
   }
 
   function validateUrl($url) {
-    $u = parse_url($url);
+    $u = parse_url(trim($url));
     if ($u == false) {
       return true;
     }
